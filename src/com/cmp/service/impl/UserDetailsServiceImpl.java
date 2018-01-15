@@ -1,5 +1,7 @@
 package com.cmp.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		 * Here we are using dummy data, you need to load user data from
 		 * database or other third party application
 		 */
-		User user = findUserbyUername(username);
+		User user = findUserByAccount(username);
 
 		UserBuilder builder = null;
 		if (user != null) {
@@ -42,12 +44,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 	
 	
-	private User findUserbyUername(String username) {
-		if (username.equalsIgnoreCase("admin")) {
-			return new User(username, "admin123", "ADMIN");
+	private User findUserByAccount(String account) {
+//		if (account.equalsIgnoreCase("admin")) {
+//			return new User(account, "admin123","ADMIN");
+//		}
+		
+		List<User> list = loginService.findUserByAccount(account);
+		if(!list.isEmpty()){
+			User user = list.get(0);
+			return new User(user.getAccount(), user.getPassword(), user.getRole().getName());
 		}
-//		List<User> list = loginService.listUsers();
-//		System.out.println(list.size());
 		return null;
 	}
 }

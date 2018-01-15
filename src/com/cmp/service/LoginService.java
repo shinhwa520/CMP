@@ -5,5 +5,5 @@ import java.util.List;
 import com.cmp.model.User;
 
 public interface LoginService {
-	List<User> listUsers();
+	List<User> findUserByAccount(String account);
 }

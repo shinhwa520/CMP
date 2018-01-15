@@ -136,66 +136,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li class="header">MENU</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="<c:if test="${menuopen eq 'SOURCE'}">active</c:if> treeview">
-        <a href="#">
-            <i class="fa fa-file-video-o"></i> <span>Source</span><i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu <c:if test="${menuopen eq 'SOURCE'}">menu-open</c:if>">
-              <li <c:if test="${active eq 'SESSION_LIST' || active eq 'SESSION_DETAIL'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/source/session/list"><i class="fa fa-circle-o"></i> Source Upload</a></li>
-              <!-- 
-              <li <c:if test="${active eq 'SOURCE_LIST'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/source/list"><i class="fa fa-circle-o"></i> Source Viewer</a></li>
-            	-->
-            </ul>
-        </li>
-        <li class="<c:if test="${active eq 'NODE_LIST' || active eq 'NODE_SETTING'}">active</c:if> treeview">
-          <a href="#">
-            <i class="fa fa-server"></i> <span>Node</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu <c:if test="${active eq 'NODE_LIST' || active eq 'NODE_SETTING'}">menu-open</c:if>">
-            <li <c:if test="${active eq 'NODE_SETTING'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/node/setting"><i class="fa fa-circle-o"></i> Node Setting</a></li>
-            <li <c:if test="${active eq 'NODE_LIST'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/node/list"><i class="fa fa-circle-o"></i> Node Status</a></li>
-          </ul>
-        </li>
-       <li class="<c:if test="${active eq 'JOB_LIST'}">active</c:if> treeview">
-         <a href="${pageContext.request.contextPath}/job/list/waiting">
-         	<i class="fa fa-briefcase"></i> <span>Job</span></a>
-         </li>
-       <li>
-        <a href="${pageContext.request.contextPath}/report/">
-        	<i class="fa fa-pie-chart"></i> <span>Report</span></a>
-        </li>
-        
-        <li>
-        <a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>User</span></a>
-        </li>
-        
-        <li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview">
-          <a href="#">
-            <i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu <c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">menu-open</c:if>">
-            <li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/retrieve"><i class="fa fa-circle-o"></i> 表單資料接收</a></li>
-            <li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/views/retrieve/retrieve_manage"><i class="fa fa-circle-o"></i> 資料接收排程管理</a></li>
-          </ul>
-        </li>
+
          
-        <li class="<c:if test="${active eq 'SETTING_DESTINATION' || active eq 'SETTING_PROFILE_PARAMETER' || active eq 'SETTING_PROFILE'|| active eq 'SETTING_PROFILE_GROUP' }">active</c:if> treeview">
-          <a href="#">
-            <i class="fa fa-server"></i> <span>Setting</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu <c:if test="${active eq 'SETTING_DESTINATION' || active eq 'SETTING_PROFILE_GROUP' || active eq 'SETTING_PROFILE'}">menu-open</c:if>">
-            <li <c:if test="${active eq 'SETTING_DESTINATION'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/setting/destination"><i class="fa fa-circle-o"></i> Destination</a></li>
-            <li <c:if test="${active eq 'SETTING_PROFILE_PARAMETER'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/setting/profile_parameter"><i class="fa fa-circle-o"></i> Profile Parameter</a></li>
-            <li <c:if test="${active eq 'SETTING_PROFILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/setting/profile"><i class="fa fa-circle-o"></i> Profile</a></li>
-            <li <c:if test="${active eq 'SETTING_PROFILE_GROUP'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/setting/profile_group"><i class="fa fa-circle-o"></i> Profile Group</a></li>
-          </ul>
-        </li>
-        
+         
+         
+         
         <li>
-        <a href="${pageContext.request.contextPath}/log/list"><i class="fa fa-user"></i> <span>Log</span></a>
-         </li>
+        	<a href="${pageContext.request.contextPath}/cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
+        </li>
+        <li>
+        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>USER</span></a>
+        </li>
+        <li>
+        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
+        </li>
+        <li>
+        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>STATUS</span></a>
+        </li>
+        <li>
+        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>REGISTRATION_STEPS</span></a>
+        </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

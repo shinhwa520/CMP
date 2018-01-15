@@ -15,19 +15,27 @@ import com.cmp.model.User;
 
 @Repository
 @Transactional
-public class UserDAOImpl implements UserDAO {
-	@Autowired
-	private SessionFactory sessionFactory;
+public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 
 	@Override
 	public void add(User user) {
-	   sessionFactory.getCurrentSession().save(user);
+		
+//	   sessionFactory.getCurrentSession().save(user);
 	}
 
 	@Override
 	public List<User> listUsers() {
-	   @SuppressWarnings("unchecked")
-	   TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
-	   return query.getResultList();
+		return getHibernateTemplate().loadAll(User.class);
+	}
+	
+	@Override
+	public List<User> findUserByAccount(String account) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from User u ")
+		  .append(" where 1=1 ")
+		  .append(" and u.account = ? ");
+		
+		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {account});
+		return returnList;
 	}
 }

@@ -53,9 +53,9 @@ public class BaseController {
 	public void setActiveMenu(Model model, MenuItem menuItem) {
 		model.addAttribute("active", menuItem.toString());
 		
-		if (menuItem.equals(MenuItem.SOURCE_LIST) || menuItem.equals(MenuItem.SESSION_LIST) || menuItem.equals(MenuItem.SESSION_CONTENT) || menuItem.equals(MenuItem.SESSION_DETAIL)) {
-			model.addAttribute("menuopen", "SOURCE");
-		}
+//		if (menuItem.equals(MenuItem.SOURCE_LIST) || menuItem.equals(MenuItem.SESSION_LIST) || menuItem.equals(MenuItem.SESSION_CONTENT) || menuItem.equals(MenuItem.SESSION_DETAIL)) {
+//			model.addAttribute("menuopen", "SOURCE");
+//		}
 		
 		boolean isAdmin = false;
 		boolean isAvailable = false;

@@ -18,7 +18,7 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Transactional(readOnly = true)
 	@Override
-	public List<User> listUsers() {
-	   return userDao.listUsers();
+	public List<User> findUserByAccount(String account) {
+	   return userDao.findUserByAccount(account);
 	}
 }
