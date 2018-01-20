@@ -1,10 +1,10 @@
 package com.cmp.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,27 +17,33 @@ public class User {
 	
 	public User() {
 	}
+	
+	public User(String email) {
+		super();
+		this.id = String.valueOf(new Date().getTime());
+		this.email = email;
+	}
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
 	private String id;
 
-	@Column(name = "user_name", nullable = false)
+	@Column(name = "user_name", nullable = true)
 	private String name;
 	
-	@Column(name = "account", nullable = false)
+	@Column(name = "account", nullable = true)
 	private String account;
 	
-	@Column(name = "password", nullable = false)
+	@Column(name = "password", nullable = true)
 	private String password;
 	
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = true)
     private Role role;
 	
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", nullable = true)
     private Status status;
 	
 	@Column(name = "phone", nullable = true)
@@ -46,7 +52,7 @@ public class User {
 	@Column(name = "email", nullable = true)
 	private String email;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id", nullable = true)
     private User channel;
     

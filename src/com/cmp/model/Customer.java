@@ -28,7 +28,7 @@ public class Customer {
     @Column(name = "phone", nullable = true)
 	private String phone;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id", nullable = false)
     private User channel;
     

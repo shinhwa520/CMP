@@ -1,15 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Spring Security 5</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CMP</title>
+	<script type="text/javascript">
+	
+		function doRegistration() {
+			window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/email';
+		}
+		
+	</script>
 </head>
 <body>
 	<h1>Login</h1>
 	<h2>${message}</h2>
-	���
+	   
 	<form name='f' method='POST'>
 		<table>
 			<tr>
@@ -21,7 +29,8 @@
 				<td><input type='password' name='password' /></td>
 			</tr>
 			<tr>
-				<td><input name="submit" type="submit" value="submit" /></td>
+				<td><input name="submit" type="submit" value="登入" /></td>
+				<td><input type="button" name="registrationBtn" value="註冊" onclick="doRegistration()"/></td>
 			</tr>
 		</table>
 	</form>

@@ -2,10 +2,6 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +14,8 @@ import com.cmp.model.User;
 public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 
 	@Override
-	public void add(User user) {
-		
+	public User saveUser(User user) {
+		return (User) getHibernateTemplate().merge(user);
 //	   sessionFactory.getCurrentSession().save(user);
 	}
 
@@ -34,8 +30,17 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		sb.append(" from User u ")
 		  .append(" where 1=1 ")
 		  .append(" and u.account = ? ");
-		
 		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {account});
 		return returnList;
+	}
+	
+	@Override
+	public User findUserById(String id) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from User u ")
+		  .append(" where 1=1 ")
+		  .append(" and u.id = ? ");
+		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {id});
+		return returnList.isEmpty() ? null : returnList.get(0);
 	}
 }
