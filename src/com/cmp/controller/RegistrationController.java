@@ -7,10 +7,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cmp.form.registration.EmailConfirmForm;
 import com.cmp.form.registration.UserInfoForm;
@@ -39,7 +40,7 @@ public class RegistrationController {
     		String mailAddress = form.getMailAddress();
     		StringBuffer sb = request.getRequestURL();
     		String appName = request.getContextPath();
-    		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user/";
+    		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
     		System.out.println("Confirm URL:"+url);
     		registrationService.initUser(mailAddress, url);
     	} catch (Exception e) {
@@ -48,11 +49,15 @@ public class RegistrationController {
     	return "registration/email";
     }
 	
-	@RequestMapping(value = { "/user/{tokenId}" }, method = RequestMethod.GET)
-    public String user(@PathVariable String tokenId, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "/user" }, params = "tokenId", method = RequestMethod.GET)
+    public String user(@RequestParam("tokenId") String tokenId, Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/user");
     	try {
-    		User user = registrationService.findUserByToken(tokenId);
+    		User user = registrationService.verifyToken(tokenId);
+    		if(null==user){
+    			model.addAttribute("message", "verifyToken error");
+    			return "registration/error";
+    		}
     		form.setUserId(user.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
