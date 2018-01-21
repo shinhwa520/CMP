@@ -29,19 +29,19 @@ public class Customer {
 	private String phone;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "channel_id", nullable = false)
-    private User channel;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     
 	public Customer() {
 	}
 	
-	public Customer(int id, String name, String city, String phone, User channel) {
+	public Customer(int id, String name, String city, String phone, User user) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.city = city;
 		this.phone = phone;
-		this.channel = channel;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -76,12 +76,12 @@ public class Customer {
 		this.phone = phone;
 	}
 
-	public User getChannel() {
-		return channel;
+	public User getUser() {
+		return user;
 	}
 
-	public void setChannel(User channel) {
-		this.channel = channel;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

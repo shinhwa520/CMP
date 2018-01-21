@@ -25,5 +25,8 @@ public class LoginContoller extends BaseController {
     	return "login";
     }
     
-
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String loginOutPage(Model model, Principal principal) {
+    	return "login";
+    }
 }

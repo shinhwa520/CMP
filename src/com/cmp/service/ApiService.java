@@ -8,6 +8,7 @@ public interface ApiService {
 	
 	static final String MAKA = "MAKA";
 	static final String LOGIN_API_SEQNO = "1";
+	static final String SEPERATOR = "@~";
 
 	public List<ApiServiceVO> findData(String webName);
 	

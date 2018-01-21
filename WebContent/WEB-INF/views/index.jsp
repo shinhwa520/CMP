@@ -8,7 +8,7 @@
 <h2>${message}</h2>
 <h2>${pageContext.request.contextPath}</h2>
 
-<form action="/cmp/logout" method="post">
+<form action="${pageContext.request.contextPath}/logout" method="post">
 	<input value="Logout" type="submit">
 </form>
 </div>

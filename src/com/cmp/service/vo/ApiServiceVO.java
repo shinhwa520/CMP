@@ -33,6 +33,7 @@ public class ApiServiceVO {
 	@RemoteProperty
 	private String[] apiUrls;
 	private String[] apiModelIds;
+	private String userActive;
 	
 	public String getWebName() {
 		return webName;
@@ -153,5 +154,11 @@ public class ApiServiceVO {
 	}
 	public void setApiModelIds(String[] apiModelIds) {
 		this.apiModelIds = apiModelIds;
+	}
+	public String getUserActive() {
+		return userActive;
+	}
+	public void setUserActive(String userActive) {
+		this.userActive = userActive;
 	}
 }

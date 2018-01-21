@@ -1,11 +1,15 @@
 package com.cmp.service.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -24,10 +28,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
+import com.cmp.dao.UserDAO;
 import com.cmp.dao.WebApiMasterDAO;
 import com.cmp.dao.WebApiSettingDAO;
 import com.cmp.dao.vo.WebApiDAOVO;
 import com.cmp.model.Customer;
+import com.cmp.model.User;
 import com.cmp.model.WebApiDetail;
 import com.cmp.model.WebApiMaster;
 import com.cmp.model.WebApiSetting;
@@ -45,6 +51,9 @@ public class ApiServiceImpl implements ApiService {
 	private WebApiMasterDAO webApiMasterDAO;
 	private WebApiSettingDAO webApiSettingDAO;
 	private CustomerDAO customerDAO;
+	private UserDAO userDAO;
+	
+	private Map<String, String> fieldMap = new HashMap<String, String>();
 	
 	@Override
 	public List<ApiServiceVO> findData(String webName) {
@@ -59,12 +68,23 @@ public class ApiServiceImpl implements ApiService {
 			
 			WebApiMaster wamModel;
 			WebApiDetail wadModel;
+			User userModel;
 			ApiServiceVO msVO;
 			
 			if (objList != null && !objList.isEmpty()) {
 				for (Object[] objs : objList) {
 					wamModel = (WebApiMaster)objs[0];
 					wadModel = (WebApiDetail)objs[1];
+					userModel = wadModel.getUser();
+					
+					boolean userActive = false;
+					if (StringUtils.isNotBlank(userModel.getId())) {
+						User user = userDAO.findUserById(userModel.getId());
+						
+						if (user != null) {
+							userActive = true;
+						}
+					}
 					
 					msVO = new ApiServiceVO();
 					
@@ -76,8 +96,8 @@ public class ApiServiceImpl implements ApiService {
 					
 					if (StringUtils.equals(wamModel.getApiMethodType(), "GET")) {
 						String url = wamModel.getApiUrl();
-						String[] paraName = StringUtils.split(wamModel.getParameterNames(), "@~");
-						String[] paraVal = StringUtils.split(wadModel.getParameterValues(), "@~");
+						String[] paraName = StringUtils.split(wamModel.getParameterNames(), SEPERATOR);
+						String[] paraVal = StringUtils.split(wadModel.getParameterValues(), SEPERATOR);
 						
 						for (int i=0; i<paraName.length; i++) {
 							System.out.println("url: "+url+", paraName: "+paraName[i]+", paraVal: "+paraVal[i]);
@@ -98,6 +118,7 @@ public class ApiServiceImpl implements ApiService {
 					msVO.setDetailDescription(wadModel.getDescription());
 					msVO.setParameterValues(wadModel.getParameterValues());
 					msVO.setApiMethodType(wamModel.getApiMethodType());
+					msVO.setUserActive(userActive ? "Y" : "N");
 					
 					returnList.add(msVO);
 				}
@@ -113,7 +134,14 @@ public class ApiServiceImpl implements ApiService {
 	@RemoteMethod
 	public ApiServiceVO doRetrieve(ApiServiceVO apiServiceVO) {
 		System.out.println("yo~man!!!");
+		
+		String userId = null;
+		Map<String, Map<String, String>> custInfoFromJsonMap;
+		Map<String, Boolean> custInfoFromDBMap;
 		try {
+			custInfoFromJsonMap = new HashMap<String, Map<String, String>>();
+			custInfoFromDBMap = new HashMap<String, Boolean>();
+			
 			//Step 1.查找登入API
 			WebApiDAOVO waDAOVO = new WebApiDAOVO();
 			waDAOVO.setMasterSeqNo(ApiService.LOGIN_API_SEQNO);
@@ -146,56 +174,124 @@ public class ApiServiceImpl implements ApiService {
 				throw new Exception("[連線異常]取得cookie異常");
 			}
 			
-			//Step 3.發送取得表單資料API,取得表單資料JSON data回傳
-			String returnJsonData = null;
-			Map<String, Boolean> userMap;
+			//Step 3.初始化JSON data、DB與JAVA VO欄位名稱對照表MAP
+			initFieldMap(apiServiceVO.getWebName());
+			
+			//Step 4.發送取得表單資料API,取得表單資料JSON data回傳
 			int index = 0;
 			for (String formApiUrl : apiServiceVO.getApiUrls()) {
-				returnJsonData = doRetrieve(apiServiceVO.getApiMethodType(), formApiUrl, false, null, cookie);
+				custInfoFromJsonMap = retrieveJsonAndTrans2CustInfoFromJsonMap(null, formApiUrl, apiServiceVO.getApiMethodType(), cookie);
 				
-				Gson gson = new Gson();
-				MakaFormDataVO mfdVO = gson.fromJson(returnJsonData, MakaFormDataVO.class);
-
-				if (mfdVO.getCode() != HttpStatus.SC_OK) {
+				if (custInfoFromJsonMap == null || (custInfoFromJsonMap != null && custInfoFromJsonMap.isEmpty())) {
 					continue;
+				}
+				
+				//Step 5.取得此MAKA H5模板ID歸屬的渠道商(USER)現有客戶(CUSTOMER)資料
+				List<Customer> custList = customerDAO.findCustByUserThroughApiModelId(apiServiceVO.getApiModelIds()[index]);
+				if (custList != null && !custList.isEmpty()) {
+					userId = custList.get(0).getUser().getId();
+					custInfoFromDBMap = transCustomer2CustVO(custList);
 					
 				} else {
-					userMap = new HashMap<String, Boolean>();
+					List<User> userList = userDAO.findUserByApiModelId(apiServiceVO.getApiModelIds()[index]);
 					
-					ApiServiceVO custVO;
-					Map<String, Map<String, String>> custInfoMap = new HashMap<String, Map<String, String>>();
-					for (DataList d : mfdVO.getData().getDataList()) {
-						System.out.println(d.getContent());
+					if (userList != null && !userList.isEmpty()) {
+						userId = userList.get(0).getId();
 						
-						custVO = transJsonContent2CustVO(d.getContent());
-						custInfoMap.put(custVO.getCustKey(), custVO.getCustInfoMap());
+					} else {
+						throw new Exception("[ApiServiceImpl] Can't find USER data! >> apiModelId: " + apiServiceVO.getApiModelIds()[index]);
 					}
-//					Type listType = new TypeToken<ArrayList<MakaFormDataVO>>() {}.getType();
-//					ArrayList<MakaFormDataVO> jsonArr = gson.fromJson(returnJsonData, listType);
-					
-					System.out.println(custInfoMap.size());
-					
 				}
 				
-				//Step 4.取得此MAKA H5模板ID歸屬的渠道商(USER)現有客戶(CUSTOMER)資料
-				List<Customer> customers = customerDAO.findCustByUserThroughApiModelId(apiServiceVO.getApiModelIds()[index]);
-				
-				for (Customer c : customers) {
-					
+				//Step 6.比對JSON回傳與DB既存客戶,寫入新增客戶資料
+				for (Entry<String, Map<String, String>> custInfoEntry : custInfoFromJsonMap.entrySet()) {
+					if (!custInfoFromDBMap.isEmpty() && custInfoFromDBMap.containsKey(custInfoEntry.getKey())) {
+						continue;
+						
+					} else {
+						Map<String, String> cusMap = custInfoEntry.getValue();
+						
+						Customer cust = new Customer();
+						for (Entry<String, String> cusEntry : cusMap.entrySet()) {
+							BeanUtils.setProperty(cust, cusEntry.getKey(), cusEntry.getValue());
+						}
+						User user = new User();
+						user.setId(userId);
+						cust.setUser(user);
+						
+						customerDAO.insertCustByModel(cust);
+					}
 				}
-				
-				
 				index++;
 			}
-			
-			
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	private void initFieldMap(String webName) throws Exception {
+		List<WebApiSetting> wasList = webApiSettingDAO.findWebApiSettingByWebNameAndModuleId(webName, null);
+		
+		if (wasList != null && !wasList.isEmpty()) {
+			for (WebApiSetting was : wasList) {
+				fieldMap.put(was.getModuleId(), was.getSeqNo().toString().concat(SEPERATOR).concat(was.getTableField()).concat(SEPERATOR).concat(was.getVoField()));
+			}
+		} else {
+			throw new Exception("[ApiServiceImpl] init fieldMap failed!! >> no setting found.");
+		}
+	}
+	
+	private Map<String, Map<String, String>> retrieveJsonAndTrans2CustInfoFromJsonMap(Map<String, Map<String, String>> custMap, String apiUrl, String apiMethodType, String cookie) {
+		Map<String, Map<String, String>> retMap = custMap;
+		String returnJsonData = null;
+		
+		try {
+			if (custMap == null) {
+				retMap = new HashMap<String, Map<String, String>>();
+			}
+			
+			returnJsonData = doRetrieve(apiMethodType, apiUrl, false, null, cookie);
+			
+			Gson gson = new Gson();
+			MakaFormDataVO mfdVO = gson.fromJson(returnJsonData, MakaFormDataVO.class);
+
+			
+			if (mfdVO.getCode() != HttpStatus.SC_OK) {
+				return null;
+				
+			} else {
+				BigDecimal totalNum = new BigDecimal(mfdVO.getData().getTotalNum());
+				BigDecimal perPageNum = new BigDecimal(mfdVO.getData().getPerPage());
+				int pageCount = totalNum.divide(perPageNum, RoundingMode.CEILING).intValue();
+				
+				ApiServiceVO custVO;
+				for (DataList d : mfdVO.getData().getDataList()) {
+					System.out.println(d.getContent());
+					
+					custVO = transJsonContent2CustVO(d.getContent());
+					retMap.put(custVO.getCustKey(), custVO.getCustInfoMap());
+				}
+				
+				if (pageCount > 1) {
+					for (int i=mfdVO.getData().getPageNumber()+1; i<pageCount; i++) {
+						String[] tmp = apiUrl.split("pageNumber");
+						apiUrl = tmp[0].concat("pageNumber=").concat(Integer.toString(i));
+						
+						retrieveJsonAndTrans2CustInfoFromJsonMap(retMap, apiUrl, apiMethodType, cookie);
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return retMap;
+	}
+	
+	
 	
 	private ApiServiceVO transJsonContent2CustVO(String content) {
 		ApiServiceVO retVO;
@@ -211,7 +307,7 @@ public class ApiServiceImpl implements ApiService {
 							 .replace("}", "")
 							 .replace("]", "");
 			
-			String custKey = "";
+			String[] custKey = new String[fieldMap.size()];
 			String moduleId = "";
 			String answer = "";
 			String[] cArray = content.split(",");
@@ -223,18 +319,29 @@ public class ApiServiceImpl implements ApiService {
 				} else if (c.startsWith("answer:")) {
 					answer = c.replace("answer:", "");
 					
-					WebApiSetting was = webApiSettingDAO.findWebApiSettingByModuleId(moduleId);
-					if (was == null) {
+					if (!fieldMap.containsKey(moduleId)) {
 						throw new Exception("[Web_Api_Setting] >> 查無指定Module_Id設定: " + moduleId);
 						
 					} else {
-						custKey = custKey.concat(answer);
-						custInfoMap.put(was.getTableField(), answer);
+						String seqNo = fieldMap.get(moduleId).split(SEPERATOR)[0];
+						String voField = fieldMap.get(moduleId).split(SEPERATOR)[2];
+						
+						if (StringUtils.isBlank(seqNo)) {
+							throw new Exception("[Web_Api_Setting] >> Seq_No設定錯誤 - tableField:" + voField);
+						}
+						
+						custKey[Integer.parseInt(seqNo)-1] = answer;
+						custInfoMap.put(voField, answer);
 					}
 				}
 			}
 			
-			retVO.setCustKey(custKey);
+			String key = "";
+			for (String ck : custKey) {
+				key = key.concat(ck);
+			}
+			
+			retVO.setCustKey(key);
 			retVO.setCustInfoMap(custInfoMap);
 			
 		} catch (Exception e) {
@@ -242,6 +349,43 @@ public class ApiServiceImpl implements ApiService {
 			return null;
 		}
 		return retVO;
+	}
+	
+	private Map<String, Boolean> transCustomer2CustVO(List<Customer> custList) throws Exception {
+		Map<String, Boolean> retMap;
+		String[] keys;
+		String key;
+		
+		try {
+			retMap = new HashMap<String, Boolean>();
+			
+			String seqNo;
+			String voField;
+			
+			for (Customer cust : custList) {
+				keys = new String[fieldMap.size()];
+				key = "";
+				
+				for (String value : fieldMap.values()) {
+					seqNo = value.split(SEPERATOR)[0];
+					voField = value.split(SEPERATOR)[2];
+					
+					keys[Integer.parseInt(seqNo)-1] = BeanUtils.getProperty(cust, voField);
+				}
+				
+				for (String k : keys) {
+					key = key.concat(k);
+				}
+				
+				retMap.put(key, true);
+			}
+			
+		} catch (Exception e) {
+			throw new Exception("[ApiServiceImpl] transCustomer2CustVO failed!!");
+			
+		}
+		
+		return retMap;
 	}
 	
 	private String transJsonData(String dbStr) {
@@ -387,5 +531,10 @@ public class ApiServiceImpl implements ApiService {
 	@Autowired
 	public void setCustomerDAO(CustomerDAO customerDAO) {
 		this.customerDAO = customerDAO;
+	}
+
+	@Autowired
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 }

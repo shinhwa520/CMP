@@ -10,4 +10,6 @@ public interface CustomerDAO {
 	int countCustByChannelId(String channelId);
 	
 	public List<Customer> findCustByUserThroughApiModelId(String apiModelId);
+	
+	public void insertCustByModel(Customer customer);
 }

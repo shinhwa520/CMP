@@ -15,23 +15,27 @@ import com.cmp.model.WebApiSetting;
 public class WebApiSettingDAOImpl extends BaseDaoHibernate implements WebApiSettingDAO {
 
 	@Override
-	public WebApiSetting findWebApiSettingByModuleId(String moduleId) {
+	public List<WebApiSetting> findWebApiSettingByWebNameAndModuleId(String webName, String moduleId) {
 		List<String> paraList = new ArrayList<String>();
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from WebApiSetting was ")
 		  .append(" where 1=1 ");
-		 
+		
+		if (StringUtils.isNotBlank(webName)) {
+			sb.append(" and was.webName = ? ");
+			paraList.add(webName);
+		}
 		if (StringUtils.isNotBlank(moduleId)) {
 			sb.append(" and was.moduleId = ? ");
 			paraList.add(moduleId);
 		}
 		
-		List<WebApiSetting> returnList = (List<WebApiSetting>)getHibernateTemplate().find(sb.toString(), paraList.toArray());
-		WebApiSetting retVal = 
-				returnList != null && !returnList.isEmpty() ? returnList.get(0) : null;
+		sb.append(" order by seqNo ");
 		
-		return retVal;
+		List<WebApiSetting> returnList = (List<WebApiSetting>)getHibernateTemplate().find(sb.toString(), paraList.toArray());
+		
+		return returnList;
 	}
 
 }

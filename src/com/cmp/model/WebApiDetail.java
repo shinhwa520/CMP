@@ -1,13 +1,17 @@
 package com.cmp.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -25,15 +29,16 @@ public class WebApiDetail {
 		super();
 		this.apiDetailId = apiDetailId;
 	}
-	
+
 	public WebApiDetail(String apiDetailId, String apiMasterId, Integer seqNo, String parameterValues,
-			String description) {
+			String description, User user) {
 		super();
 		this.apiDetailId = apiDetailId;
 		this.apiMasterId = apiMasterId;
 		this.seqNo = seqNo;
 		this.parameterValues = parameterValues;
 		this.description = description;
+		this.user = user;
 	}
 
 	@Id
@@ -53,6 +58,10 @@ public class WebApiDetail {
 	
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = true)
+	private User user;
 	
 	public String getApiDetailId() {
 		return apiDetailId;
@@ -83,5 +92,13 @@ public class WebApiDetail {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

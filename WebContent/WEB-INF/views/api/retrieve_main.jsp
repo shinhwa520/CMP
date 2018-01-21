@@ -30,6 +30,13 @@
 			ApiForm.apiModelIds[index].checked = ApiForm.chkedApiUrls[index].checked;
 		}
 		
+		function doCheckAll() {
+			for (var i=0; i<ApiForm.chkedApiUrls.length; i++) {
+				ApiForm.chkedApiUrls[i].checked = ApiForm.chkAll.checked;
+				ApiForm.apiModelIds[i].checked = ApiForm.chkAll.checked;
+			}
+		}
+		
 	</script>
 API
 
@@ -57,7 +64,7 @@ API
 					<td>序</td>
 					<td>ID</td>
 					<td>描述</td>
-					<td>操作<input type="checkbox" name="chkAll" /></td>
+					<td>操作<input type="checkbox" name="chkAll" onclick="doCheckAll()"/></td>
 				</tr>
 				<c:forEach var="vo" items="${ ApiForm.apiList }" varStatus="loop">
 					<tr>
@@ -66,8 +73,14 @@ API
 						<td>${vo.parameterValues }</td>
 						<td>${vo.detailDescription }</td>
 						<td>
-							<input type="checkbox" name="chkedApiUrls" value="${vo.apiUrl }" onchange="checkIdCheckBox(${loop.index })"/>
-							<input type="checkbox" name="apiModelIds" value="${vo.makaId }" style="display: none"/>
+							<c:if test="${vo.userActive == 'Y' }">
+								<input type="checkbox" name="chkedApiUrls" value="${vo.apiUrl }" onchange="checkIdCheckBox(${loop.index })"/>
+								<input type="checkbox" name="apiModelIds" value="${vo.makaId }" style="display: none"/>
+							</c:if>
+							<c:if test="${vo.userActive == 'N' }">
+								<input type="checkbox" name="chkedApiUrls" value="${vo.apiUrl }" onchange="checkIdCheckBox(${loop.index })" disabled="disabled"/>
+								<input type="checkbox" name="apiModelIds" value="${vo.makaId }" style="display: none" disabled="disabled"/>
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>

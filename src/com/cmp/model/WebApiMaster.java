@@ -1,9 +1,14 @@
 package com.cmp.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -24,9 +29,10 @@ public class WebApiMaster {
 		super();
 		this.apiMasterId = apiMasterId;
 	}
-	
+
 	public WebApiMaster(String apiMasterId, String webName, Integer seqNo, String description, String apiUrl,
-			String apiMethodType, String dataType, String parameterNames, String dataExample) {
+			String apiMethodType, String dataType, String parameterNames, String dataExample,
+			List<WebApiDetail> webApiDetail) {
 		super();
 		this.apiMasterId = apiMasterId;
 		this.webName = webName;
@@ -37,6 +43,7 @@ public class WebApiMaster {
 		this.dataType = dataType;
 		this.parameterNames = parameterNames;
 		this.dataExample = dataExample;
+		this.webApiDetail = webApiDetail;
 	}
 
 	@Id
@@ -68,6 +75,10 @@ public class WebApiMaster {
 	
     @Column(name = "DATA_EXAMPLE", nullable = true)
 	private String dataExample;
+    
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "API_MASTER_ID", nullable = true)
+    private List<WebApiDetail> webApiDetail;
 	
 	public String getApiMasterId() {
 		return apiMasterId;
@@ -122,5 +133,13 @@ public class WebApiMaster {
 	}
 	public void setDataExample(String dataExample) {
 		this.dataExample = dataExample;
+	}
+
+	public List<WebApiDetail> getWebApiDetail() {
+		return webApiDetail;
+	}
+
+	public void setWebApiDetail(List<WebApiDetail> webApiDetail) {
+		this.webApiDetail = webApiDetail;
 	}
 }

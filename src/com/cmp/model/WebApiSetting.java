@@ -20,12 +20,15 @@ public class WebApiSetting {
 		super();
 	}
 
-	public WebApiSetting(String apiSettingId, String moduleId, String tableName, String tableField) {
+	public WebApiSetting(String apiSettingId, String moduleId, String tableName, String tableField, String voField,
+			Integer seqNo) {
 		super();
 		this.apiSettingId = apiSettingId;
 		this.moduleId = moduleId;
 		this.tableName = tableName;
 		this.tableField = tableField;
+		this.voField = voField;
+		this.seqNo = seqNo;
 	}
 
 	@Id
@@ -42,6 +45,12 @@ public class WebApiSetting {
 	
 	@Column(name = "TABLE_FIELD", nullable = false)
 	private String tableField;
+	
+	@Column(name = "VO_FIELD", nullable = false)
+	private String voField;
+	
+	@Column(name = "SEQ_NO", nullable = false)
+	private Integer seqNo;
 
 	public String getApiSettingId() {
 		return apiSettingId;
@@ -73,5 +82,20 @@ public class WebApiSetting {
 
 	public void setTableField(String tableField) {
 		this.tableField = tableField;
+	}
+	public Integer getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
+	}
+
+	public String getVoField() {
+		return voField;
+	}
+
+	public void setVoField(String voField) {
+		this.voField = voField;
 	}
 }

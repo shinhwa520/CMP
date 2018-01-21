@@ -18,7 +18,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Customer c ")
 		  .append(" where 1=1 ")
-		  .append(" and c.channel.id = ? ");
+		  .append(" and c.user.id = ? ");
 		
 		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
 		return returnList;
@@ -29,7 +29,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Customer c ")
 		  .append(" where 1=1 ")
-		  .append(" and c.channel.id = ? ");
+		  .append(" and c.user.id = ? ");
 		
 		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
 		return returnList.size();
@@ -38,12 +38,18 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	@Override
 	public List<Customer> findCustByUserThroughApiModelId(String apiModelId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" from Customer c, User u, WebApiDetail wad ")
+		sb.append(" select c ")
+		  .append(" from Customer c, WebApiDetail wad ")
 		  .append(" where 1=1 ")
-		  .append(" and c.channel.id = wad.userId  ")
-		  .append(" wad.parameterValues = ? ");
+		  .append(" and c.user.id = wad.user.id  ")
+		  .append(" and wad.parameterValues = ? ");
 		
 		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {apiModelId});
 		return returnList;
+	}
+
+	@Override
+	public void insertCustByModel(Customer customer) {
+		getHibernateTemplate().save(customer);
 	}
 }

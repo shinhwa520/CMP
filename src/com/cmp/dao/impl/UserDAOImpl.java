@@ -43,4 +43,16 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {id});
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
+
+	@Override
+	public List<User> findUserByApiModelId(String apiModelId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select u ")
+		  .append(" from User u, WebApiDetail wad ")
+		  .append(" where 1 = 1 ")
+		  .append(" and u.id = wad.user.id ")
+		  .append(" and wad.parameterValues = ? ");
+		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {apiModelId});
+		return returnList;
+	}
 }
