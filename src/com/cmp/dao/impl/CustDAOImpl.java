@@ -34,4 +34,16 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
 		return returnList.size();
 	}
+	
+	@Override
+	public List<Customer> findCustByUserThroughApiModelId(String apiModelId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Customer c, User u, WebApiDetail wad ")
+		  .append(" where 1=1 ")
+		  .append(" and c.channel.id = wad.userId  ")
+		  .append(" wad.parameterValues = ? ");
+		
+		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {apiModelId});
+		return returnList;
+	}
 }

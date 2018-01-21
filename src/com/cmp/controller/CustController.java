@@ -20,7 +20,7 @@ import com.cmp.service.CustService;
 @Controller
 @RequestMapping(value="/cust")
 public class CustController extends BaseController {
-	private static Log log = LogFactory.getLog(MsgController.class);
+	private static Log log = LogFactory.getLog(CustController.class);
 	@Autowired
 	private CustService custService;
 	

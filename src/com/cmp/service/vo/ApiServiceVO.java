@@ -1,6 +1,12 @@
 package com.cmp.service.vo;
 
-public class MsgServiceVO {
+import java.util.Map;
+
+import org.directwebremoting.annotations.DataTransferObject;
+import org.directwebremoting.annotations.RemoteProperty;
+
+@DataTransferObject
+public class ApiServiceVO {
 
 	private String webName;
 	private String apiUrl;
@@ -16,6 +22,17 @@ public class MsgServiceVO {
 	private String detailDescription;
 	
 	private String apiDetailId;
+	private String makaId;
+	private String makaUrl;
+	
+	private Map<String, String> custInfoMap;
+	private String custKey;
+	private String custInfoKey;
+	private String custInfoVal;
+	
+	@RemoteProperty
+	private String[] apiUrls;
+	private String[] apiModelIds;
 	
 	public String getWebName() {
 		return webName;
@@ -88,5 +105,53 @@ public class MsgServiceVO {
 	}
 	public void setApiDetailId(String apiDetailId) {
 		this.apiDetailId = apiDetailId;
+	}
+	public String getMakaId() {
+		return makaId;
+	}
+	public void setMakaId(String makaId) {
+		this.makaId = makaId;
+	}
+	public String getMakaUrl() {
+		return makaUrl;
+	}
+	public void setMakaUrl(String makaUrl) {
+		this.makaUrl = makaUrl;
+	}
+	public String[] getApiUrls() {
+		return apiUrls;
+	}
+	public void setApiUrls(String[] apiUrls) {
+		this.apiUrls = apiUrls;
+	}
+	public String getCustKey() {
+		return custKey;
+	}
+	public void setCustKey(String custKey) {
+		this.custKey = custKey;
+	}
+	public Map<String, String> getCustInfoMap() {
+		return custInfoMap;
+	}
+	public void setCustInfoMap(Map<String, String> custInfoMap) {
+		this.custInfoMap = custInfoMap;
+	}
+	public String getCustInfoKey() {
+		return custInfoKey;
+	}
+	public void setCustInfoKey(String custInfoKey) {
+		this.custInfoKey = custInfoKey;
+	}
+	public String getCustInfoVal() {
+		return custInfoVal;
+	}
+	public void setCustInfoVal(String custInfoVal) {
+		this.custInfoVal = custInfoVal;
+	}
+	public String[] getApiModelIds() {
+		return apiModelIds;
+	}
+	public void setApiModelIds(String[] apiModelIds) {
+		this.apiModelIds = apiModelIds;
 	}
 }
