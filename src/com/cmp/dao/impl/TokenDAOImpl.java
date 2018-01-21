@@ -21,9 +21,9 @@ public class TokenDAOImpl extends BaseDaoHibernate implements TokenDAO {
 	@Override
 	public Token findTokenById(String id) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" from User u ")
+		sb.append(" from Token t ")
 		  .append(" where 1=1 ")
-		  .append(" and u.id = ? ");
+		  .append(" and t.id = ? ");
 		List<Token> returnList = (List<Token>)getHibernateTemplate().find(sb.toString(), new String[] {id});
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
