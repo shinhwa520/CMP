@@ -1,43 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ include file="../../common/taglib.jsp" %>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User Info.</title>
-
-
-</head>
-<body>
-
-<form:form method="POST" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/userInfo">
-	<table>
-		<tr>
-			<td>name :</td>
-			<td><form:input path="name" id="name" /></td>
-		</tr>
-		<tr>
-			<td>account :</td>
-			<td><form:input path="account" id="account" /></td>
-		</tr>
-		<tr>
-			<td>password :</td>
-			<td><form:input path="password" id="password" /></td>
-		</tr>
-		<tr>
-			<td>phone :</td>
-			<td><form:input path="phone" id="phone" /></td>
-		</tr>
-		<tr>
-			<td>channelUrl :</td>
-			<td><form:input path="channelUrl" id="channelUrl" /></td>
-		</tr>
-		<tr>
-			<td><input value="Confirm" type="submit"></td>
-		</tr>
-	</table>
-</form:form>
-</body>
-</html>
+<section class="content">
+	<div class="topic">please fill in your personal info. and press confirm :</div>
+	<form:form method="POST" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/userInfo">
+		<form:hidden path="userId" id="userId" />
+		<form:input class="form-control" path="name" id="name" placeholder="name"/>
+		<form:input class="form-control" path="account" id="account" placeholder="Account"/>
+		<form:input class="form-control" path="password" id="password" placeholder="Password"/>
+		<form:input class="form-control" path="phone" id="phone" placeholder="Phone"/>
+		<form:input class="form-control" path="channelUrl" id="channelUrl" placeholder="Channel URL"/>
+		<input class="btn btn-lg btn-success btn-block" value="Confirm" type="submit">
+	</form:form>
+</section>

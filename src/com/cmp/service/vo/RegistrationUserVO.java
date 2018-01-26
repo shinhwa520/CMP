@@ -1,5 +1,11 @@
 package com.cmp.service.vo;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
+import com.cmp.model.Question;
+import com.cmp.model.QuestionDetail;
+
 public class RegistrationUserVO {
 	
 
@@ -9,6 +15,11 @@ public class RegistrationUserVO {
 	private String password;
 	private String phone;
 	private String channelUrl;
+	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
+	
+	
+	public RegistrationUserVO() {
+	}
 	
 	public RegistrationUserVO(String userId, String name, String account, String password, String phone,
 			String channelUrl) {
@@ -57,6 +68,14 @@ public class RegistrationUserVO {
 	public void setChannelUrl(String channelUrl) {
 		this.channelUrl = channelUrl;
 	}
-	
+
+	public TreeMap<Question, ArrayList<QuestionDetail>> getQuesMap() {
+		return quesMap;
+	}
+
+	public void setQuesMap(TreeMap<Question, ArrayList<QuestionDetail>> quesMap) {
+		this.quesMap = quesMap;
+	}
+
 
 }

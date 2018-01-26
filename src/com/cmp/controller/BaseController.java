@@ -3,6 +3,8 @@ package com.cmp.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 
 import com.cmp.Constants;
 import com.cmp.MenuItem;
+import com.cmp.Response;
 
 
 
@@ -111,4 +114,38 @@ public class BaseController {
 		long diff = (nowTime - updateTime) / (24 * 60 * 60 * 1000);
 		return (int) diff;
 	}
+	
+    protected String jsonResponse(Response response) {
+        return jsonResponse(response, null, null, null);
+    }
+
+    protected String jsonResponse(Response response, JSONObject object) {
+        return jsonResponse(response, object, null, null);
+    }
+
+    protected String jsonResponse(Response response, JSONArray array) {
+        return jsonResponse(response, null, array, null);
+    }
+
+    protected String jsonResponse(Response response, JSONArray array, int count) {
+        return jsonResponse(response, null, array, count);
+    }
+
+    protected String jsonResponse(Response response, JSONObject object, JSONArray array, Integer count) {
+        JSONObject result = new JSONObject();
+
+        result.put("status", response.getStatus());
+        result.put("message", response.getMessage());
+        if (null != object) {
+            result.put(response.getKey(), object);
+        }
+        if (null != array) {
+            result.put(response.getKey(), array);
+        }
+        if (null != count) {
+            result.put("count", count);
+        }
+
+        return result.toString();
+    }
 }

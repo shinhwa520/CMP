@@ -2,6 +2,7 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +26,13 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	}
 	
 	@Override
-	public int countCustByChannelId(String channelId){
+	public long countCustByChannelId(String channelId){
 		StringBuffer sb = new StringBuffer();
-		sb.append(" from Customer c ")
+		sb.append(" select count(*) from Customer c ")
 		  .append(" where 1=1 ")
-		  .append(" and c.user.id = ? ");
+		  .append(" and c.channel.id = ? ");
 		
-		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
-		return returnList.size();
+		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {channelId}));
 	}
 	
 	@Override

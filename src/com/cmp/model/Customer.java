@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="CUSTOMER")
-public class Customer {
+public class Customer implements java.io.Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

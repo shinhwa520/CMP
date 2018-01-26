@@ -16,15 +16,13 @@ public class CustServiceImpl implements CustService {
 	@Autowired
 	private CustomerDAO customerDAO;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public List<Customer> findCustByChannelId(String channelId, Integer start,Integer length){
 		return customerDAO.findCustByChannelId(channelId, start, length);
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
-	public int countCustByChannelId(String channelId){
+	public long countCustByChannelId(String channelId){
 		return customerDAO.countCustByChannelId(channelId);
 	}
 }

@@ -7,5 +7,5 @@ import com.cmp.model.Customer;
 public interface CustService {
 	
 	List<Customer> findCustByChannelId(String channelId, Integer start,Integer length);
-	int countCustByChannelId(String channelId);
+	long countCustByChannelId(String channelId);
 }

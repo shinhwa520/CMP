@@ -39,13 +39,12 @@ public class CustController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="getCustByChannelId.json", method = RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public DatatableResponse getIngestSource(
+	public @ResponseBody DatatableResponse getIngestSource(
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		String channelId = "1";
 		List<Customer> custList = custService.findCustByChannelId(channelId, start, length);
-		int total = custService.countCustByChannelId(channelId);
-		return new DatatableResponse(new Long(total), custList, new Long(total));
+		long total = custService.countCustByChannelId(channelId);
+		return new DatatableResponse(total, custList, total);
 	}
 }

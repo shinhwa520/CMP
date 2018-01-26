@@ -3,10 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+
 <html>
 <head>
   <meta charset="utf-8">
@@ -51,6 +48,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+
+<script>
+  function successMessage(message) {
+  	var msg = $('#message');
+  	msg.addClass('alert-info');
+  	msg.append(message);
+      
+  	msg.fadeIn();
+setTimeout(function(){
+	msg.fadeOut();
+}, 3000);
+  }
+  function errorMessage(message) {
+  	var msg = $('#message');
+      $(window).scrollTop(msg.offset().top);
+      msg.addClass('alert-danger');
+      msg.append(message);
+      
+      msg.fadeIn();
+setTimeout(function(){
+	msg.fadeOut();
+}, 3000);
+  }
+</script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
   <!-- Main Header -->
@@ -105,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                  -->
                 <div class="pull-right">
-                <a href="<c:url value="/logout" />" class="btn btn-default btn-flat">Sign out</a>
+                <a href="<c:url value="/logoutEcs" />" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -155,15 +176,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li>
         <li>
         	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>REGISTRATION_STEPS</span></a>
-        </li>
-		<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview">
-          <a href="#">
-            <i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu <c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">menu-open</c:if>">
-            <li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api"><i class="fa fa-circle-o"></i> 表單資料接收</a></li>
-            <li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api/manageJob"><i class="fa fa-circle-o"></i> 資料接收排程管理</a></li>
-          </ul>
         </li>
       </ul>
       <!-- /.sidebar-menu -->
