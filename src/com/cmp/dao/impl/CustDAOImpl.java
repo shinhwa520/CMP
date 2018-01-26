@@ -2,6 +2,8 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +21,12 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Customer c ")
 		  .append(" where 1=1 ")
-		  .append(" and c.user.id = ? ");
-		
-		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
-		return returnList;
+		  .append(" and c.user.id = :channelId ");
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString()).setParameter("channelId", channelId).setFirstResult(start).setMaxResults(length);
+	    return (List<Customer>) q.list();
+//		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
+//		return returnList;
 	}
 	
 	@Override
@@ -30,7 +34,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select count(*) from Customer c ")
 		  .append(" where 1=1 ")
-		  .append(" and c.channel.id = ? ");
+		  .append(" and c.user.id = ? ");
 		
 		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {channelId}));
 	}
