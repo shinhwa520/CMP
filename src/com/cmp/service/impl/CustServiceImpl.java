@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
 import com.cmp.model.Customer;
+import com.cmp.security.SecurityUser;
+import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 
 @Service("custService")
@@ -17,12 +19,14 @@ public class CustServiceImpl implements CustService {
 	private CustomerDAO customerDAO;
 	
 	@Override
-	public List<Customer> findCustByChannelId(String channelId, Integer start,Integer length){
-		return customerDAO.findCustByChannelId(channelId, start, length);
+	public List<Customer> findCustByUserId(String userId, Integer start,Integer length){
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+//		System.out.println(securityUser.getUser().getId());
+		return customerDAO.findCustByUserId(userId, start, length);
 	}
 	
 	@Override
-	public long countCustByChannelId(String channelId){
-		return customerDAO.countCustByChannelId(channelId);
+	public long countCustByUserId(String userId){
+		return customerDAO.countCustByUserId(userId);
 	}
 }

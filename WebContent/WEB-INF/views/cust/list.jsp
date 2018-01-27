@@ -35,7 +35,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/cust/getCustByChannelId.json',
+				"url" : '${pageContext.request.contextPath}/cust/getCust4Admin.json',
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';

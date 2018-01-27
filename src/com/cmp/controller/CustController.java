@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.model.Customer;
+import com.cmp.security.SecurityUser;
+import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 
 @Controller
@@ -38,13 +40,35 @@ public class CustController extends BaseController {
 	 * @param length
 	 * @return
 	 */
-	@RequestMapping(value="getCustByChannelId.json", method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody DatatableResponse getIngestSource(
+	@RequestMapping(value="getCust4Admin.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse getCust4Admin(
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-		String channelId = "1";
-		List<Customer> custList = custService.findCustByChannelId(channelId, start, length);
-		long total = custService.countCustByChannelId(channelId);
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+//		System.out.println(securityUser.getUser().getId());
+		List<Customer> custList = custService.findCustByUserId(null, start, length);
+		long total = custService.countCustByUserId(null);
+		return new DatatableResponse(total, custList, total);
+	}
+	
+	
+	/**
+	 * 
+	 * 取得轉檔原始檔資料
+	 * 
+	 * @param start
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value="getCustByUserId.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse getCustByUserId(
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+		String userId = SecurityUtil.getSecurityUser().getUser().getId();
+		System.out.println("getCustByUserId [userId]:" + userId);
+		List<Customer> custList = custService.findCustByUserId(userId, start, length);
+		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, custList, total);
 	}
 }

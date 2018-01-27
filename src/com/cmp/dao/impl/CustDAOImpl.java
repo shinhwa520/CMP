@@ -2,6 +2,7 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.dao.support.DataAccessUtils;
@@ -17,26 +18,32 @@ import com.cmp.model.Customer;
 public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 
 	@Override
-	public List<Customer> findCustByChannelId(String channelId, Integer start,Integer length) {
+	public List<Customer> findCustByUserId(String userId, Integer start,Integer length) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" from Customer c ")
-		  .append(" where 1=1 ")
-		  .append(" and c.user.id = :channelId ");
+		sb.append(" from Customer c where 1=1 ");
+		if(StringUtils.isNotBlank(userId)){
+			sb.append(" and c.user.id = :userId ");
+		}
 	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-	    Query<?> q = session.createQuery(sb.toString()).setParameter("channelId", channelId).setFirstResult(start).setMaxResults(length);
+	    Query<?> q = session.createQuery(sb.toString());
+	    if(StringUtils.isNotBlank(userId)){
+	    	q.setParameter("userId", userId);
+	    }
+	    	q.setFirstResult(start).setMaxResults(length);
 	    return (List<Customer>) q.list();
-//		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {channelId});
+//		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
 //		return returnList;
 	}
 	
 	@Override
-	public long countCustByChannelId(String channelId){
+	public long countCustByUserId(String userId){
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select count(*) from Customer c ")
-		  .append(" where 1=1 ")
-		  .append(" and c.user.id = ? ");
-		
-		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {channelId}));
+		sb.append(" select count(*) from Customer c where 1=1 ");
+		if(StringUtils.isNotBlank(userId)){
+			  sb.append(" and c.user.id = ? ");
+			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {userId}));
+		}
+		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
 	}
 	
 	@Override

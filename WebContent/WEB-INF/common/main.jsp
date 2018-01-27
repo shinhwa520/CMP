@@ -126,7 +126,7 @@ setTimeout(function(){
                 </div>
                  -->
                 <div class="pull-right">
-                <a href="<c:url value="/logoutEcs" />" class="btn btn-default btn-flat">Sign out</a>
+                <a href="<c:url value="/logout" />" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
