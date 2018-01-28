@@ -2,42 +2,43 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
 
+<script type="text/javascript" src="/cmp/dwr/engine.js"></script>
+<script type='text/javascript' src='/cmp/dwr/interface/MsgDwr.js'></script>
+<script type="text/javascript">
+
+	function doQuery() {
+		ApiForm.action = "${pageContext.request.contextPath}/api/query";
+		ApiForm.submit();
+	}
+	
+	function doRetrieve() {
+		/*
+		var para = ["111"];
+		ApiDwr.doRetrieve(para, getRetrieve);
+		*/
+		ApiForm.action = "${pageContext.request.contextPath}/api/retrieve";
+		ApiForm.submit();
+	}
+	
+	function getRetrieve() {
+		alert("after retrieve");
+	}
+	
+	function checkIdCheckBox(index) {
+		ApiForm.apiModelIds[index].checked = ApiForm.chkedApiUrls[index].checked;
+	}
+	
+	function doCheckAll() {
+		for (var i=0; i<ApiForm.chkedApiUrls.length; i++) {
+			ApiForm.chkedApiUrls[i].checked = ApiForm.chkAll.checked;
+			ApiForm.apiModelIds[i].checked = ApiForm.chkAll.checked;
+		}
+	}
+	
+</script>
+	
 <section class="content">
 
-	<script type="text/javascript" src="/cmp/dwr/engine.js"></script>
-	<script type='text/javascript' src='/cmp/dwr/interface/MsgDwr.js'></script>
-	<script type="text/javascript">
-	
-		function doQuery() {
-			ApiForm.action = "${pageContext.request.contextPath}/api/query";
-			ApiForm.submit();
-		}
-		
-		function doRetrieve() {
-			/*
-			var para = ["111"];
-			ApiDwr.doRetrieve(para, getRetrieve);
-			*/
-			ApiForm.action = "${pageContext.request.contextPath}/api/retrieve";
-			ApiForm.submit();
-		}
-		
-		function getRetrieve() {
-			alert("after retrieve");
-		}
-		
-		function checkIdCheckBox(index) {
-			ApiForm.apiModelIds[index].checked = ApiForm.chkedApiUrls[index].checked;
-		}
-		
-		function doCheckAll() {
-			for (var i=0; i<ApiForm.chkedApiUrls.length; i++) {
-				ApiForm.chkedApiUrls[i].checked = ApiForm.chkAll.checked;
-				ApiForm.apiModelIds[i].checked = ApiForm.chkAll.checked;
-			}
-		}
-		
-	</script>
 API
 
 	<form:form method="POST" modelAttribute="ApiForm" action="" name="ApiForm">

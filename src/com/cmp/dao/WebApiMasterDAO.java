@@ -7,4 +7,6 @@ import com.cmp.dao.vo.WebApiDAOVO;
 public interface WebApiMasterDAO {
 
 	public List<Object[]> findWebApiMasterAndDetailByWebApiDAOVO(WebApiDAOVO webApiDAOVO);
+	
+	public long countWebApiMasterAndDetailByWebApiDAOVO(WebApiDAOVO webApiDAOVO);
 }

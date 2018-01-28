@@ -3,7 +3,9 @@ package com.cmp.service.impl;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,23 @@ public class ApiServiceImpl implements ApiService {
 	private Map<String, String> fieldMap = new HashMap<String, String>();
 	
 	@Override
-	public List<ApiServiceVO> findData(String webName) {
+	public long countData(String webName) throws Exception {
+		long rowCount = 0;
+		
+		try {
+			WebApiDAOVO waDAOVO = new WebApiDAOVO();
+			waDAOVO.setWebName(webName);
+			rowCount = webApiMasterDAO.countWebApiMasterAndDetailByWebApiDAOVO(waDAOVO);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rowCount;
+	}
+	
+	@Override
+	public List<ApiServiceVO> findData(String webName, Integer start, Integer length) throws Exception {
 		List<ApiServiceVO> returnList = null;
 		List<Object[]> objList = null;
 		
@@ -64,6 +82,8 @@ public class ApiServiceImpl implements ApiService {
 			returnList = new ArrayList<ApiServiceVO>();
 			WebApiDAOVO waDAOVO = new WebApiDAOVO();
 			waDAOVO.setWebName(webName);
+			waDAOVO.setStartRow(start);
+			waDAOVO.setPageLength(length);
 			objList = webApiMasterDAO.findWebApiMasterAndDetailByWebApiDAOVO(waDAOVO);
 			
 			WebApiMaster wamModel;
@@ -100,7 +120,6 @@ public class ApiServiceImpl implements ApiService {
 						String[] paraVal = StringUtils.split(wadModel.getParameterValues(), SEPERATOR);
 						
 						for (int i=0; i<paraName.length; i++) {
-							System.out.println("url: "+url+", paraName: "+paraName[i]+", paraVal: "+paraVal[i]);
 							url = StringUtils.replace(url, paraName[i], paraVal[i]);
 							
 							if (StringUtils.indexOf(paraName[i], "pid") != -1) {
@@ -131,9 +150,44 @@ public class ApiServiceImpl implements ApiService {
 		return returnList;
 	}
 	
+	@Override
+	public ApiServiceVO doRetrieveFromJob(String webName) throws Exception {
+		List<ApiServiceVO> apiList = null;
+		List<String> apiUrls = null;
+		List<String> apiModelIds = null;
+		ApiServiceVO msVO = null;
+				
+		try {
+			apiList = findData(webName, null, null);
+			
+			if (apiList != null && !apiList.isEmpty()) {
+				msVO = new ApiServiceVO();
+				msVO.setWebName(webName);
+				msVO.setApiMethodType(apiList.get(0).getApiMethodType());
+				
+				apiUrls = new ArrayList<String>();
+				apiModelIds = new ArrayList<String>();
+				
+				for (ApiServiceVO apiVO : apiList) {
+					apiUrls.add(apiVO.getApiUrl());
+					apiModelIds.add(apiVO.getMakaId());
+				}
+				
+				msVO.setApiUrls(apiUrls.toArray(new String[apiUrls.size()]));
+				msVO.setApiModelIds(apiModelIds.toArray(new String[apiModelIds.size()]));
+			}
+			
+			doRetrieve(msVO);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@RemoteMethod
-	public ApiServiceVO doRetrieve(ApiServiceVO apiServiceVO) {
-		System.out.println("yo~man!!!");
+	public ApiServiceVO doRetrieve(ApiServiceVO apiServiceVO) throws Exception {
+		System.out.println("doRetrieve");
 		
 		String userId = null;
 		Map<String, Map<String, String>> custInfoFromJsonMap;
@@ -185,6 +239,7 @@ public class ApiServiceImpl implements ApiService {
 				if (custInfoFromJsonMap == null || (custInfoFromJsonMap != null && custInfoFromJsonMap.isEmpty())) {
 					continue;
 				}
+				System.out.println("apiUrl: "+formApiUrl+", records: "+custInfoFromJsonMap.size());
 				
 				//Step 5.取得此MAKA H5模板ID歸屬的渠道商(USER)現有客戶(CUSTOMER)資料
 				List<Customer> custList = customerDAO.findCustByUserThroughApiModelId(apiServiceVO.getApiModelIds()[index]);
@@ -218,6 +273,10 @@ public class ApiServiceImpl implements ApiService {
 						User user = new User();
 						user.setId(userId);
 						cust.setUser(user);
+						cust.setCreateTime(new Timestamp(System.currentTimeMillis()));
+						cust.setCreateBy("SYS");
+						cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+						cust.setUpdateBy("SYS");
 						
 						customerDAO.insertCustByModel(cust);
 					}
@@ -268,8 +327,6 @@ public class ApiServiceImpl implements ApiService {
 				
 				ApiServiceVO custVO;
 				for (DataList d : mfdVO.getData().getDataList()) {
-					System.out.println(d.getContent());
-					
 					custVO = transJsonContent2CustVO(d.getContent());
 					retMap.put(custVO.getCustKey(), custVO.getCustInfoMap());
 				}

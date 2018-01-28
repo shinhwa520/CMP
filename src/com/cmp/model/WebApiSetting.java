@@ -37,6 +37,9 @@ public class WebApiSetting {
 	@Column(name = "API_SETTING_ID", unique = true)
 	private String apiSettingId;
 	
+	@Column(name = "WEB_NAME", nullable = false)
+	private String webName;
+	
 	@Column(name = "MODULE_ID", nullable = false)
 	private String moduleId;
 	
@@ -58,6 +61,14 @@ public class WebApiSetting {
 
 	public void setApiSettingId(String apiSettingId) {
 		this.apiSettingId = apiSettingId;
+	}
+
+	public String getWebName() {
+		return webName;
+	}
+
+	public void setWebName(String webName) {
+		this.webName = webName;
 	}
 
 	public String getModuleId() {
@@ -83,13 +94,6 @@ public class WebApiSetting {
 	public void setTableField(String tableField) {
 		this.tableField = tableField;
 	}
-	public Integer getSeqNo() {
-		return seqNo;
-	}
-
-	public void setSeqNo(Integer seqNo) {
-		this.seqNo = seqNo;
-	}
 
 	public String getVoField() {
 		return voField;
@@ -97,5 +101,13 @@ public class WebApiSetting {
 
 	public void setVoField(String voField) {
 		this.voField = voField;
+	}
+
+	public Integer getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
 	}
 }
