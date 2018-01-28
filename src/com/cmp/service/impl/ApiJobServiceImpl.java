@@ -54,7 +54,7 @@ public class ApiJobServiceImpl implements BaseJobService {
 	@Override
 	public void addJob(String webName, String jobGroupName, String cronExpression) throws Exception {
 		try {
-			// 啟動調度器  
+			//start scheduler
 	        scheduler.start(); 
 	
 	        //build job
@@ -116,15 +116,15 @@ public class ApiJobServiceImpl implements BaseJobService {
 	public void modifyJob(String jobName, String jobGroupName, String newCronExpression) throws Exception {
 		try {
             TriggerKey triggerKey = TriggerKey.triggerKey(jobClassName, jobGroupName);
-            // 表达式调度构建器
+            //build cron
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(newCronExpression);
 
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
-            // 按新的cronExpression表达式重新构建trigger
+            //build a new trigger with new cron
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
 
-            // 按新的trigger重新设置job执行
+            //reschedule job with new trigger
             scheduler.rescheduleJob(triggerKey, trigger);
             
         } catch (SchedulerException e) {
