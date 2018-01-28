@@ -36,7 +36,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
     public String email(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/email");
-    	setActiveMenu(model, MenuItem.CUST_LIST);
+    	setActiveMenu(model, MenuItem.MY_USER);
         return "registration/email";
     }
 	
@@ -47,7 +47,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
     public String emailConfirm(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/emailConfirm");
-    	setActiveMenu(model, MenuItem.CUST_LIST);
+    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
     		String mailAddress = form.getMailAddress();
     		StringBuffer sb = request.getRequestURL();
@@ -70,7 +70,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/user" }, params = "tokenId", method = RequestMethod.GET)
     public String user(@RequestParam("tokenId") String tokenId, Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/user");
-    	setActiveMenu(model, MenuItem.CUST_LIST);
+    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
     		User user = registrationService.verifyToken(tokenId);
     		if(null==user){
@@ -91,7 +91,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/userInfo");
-    	setActiveMenu(model, MenuItem.CUST_LIST);
+    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
@@ -118,7 +118,7 @@ public class RegistrationController extends BaseController {
     public @ResponseBody String ans(Model model, @RequestParam("id") String id, @RequestParam("results") String results
     		, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/ans");
-    	setActiveMenu(model, MenuItem.CUST_LIST);
+    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
     		registrationService.saveUserQues(id, results);
 		} catch (Exception e) {

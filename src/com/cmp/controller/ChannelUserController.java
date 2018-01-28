@@ -31,7 +31,7 @@ public class ChannelUserController extends BaseController {
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
-		setActiveMenu(model, MenuItem.USER_LIST);
+		setActiveMenu(model, MenuItem.MY_USER);
 		return "channel/user";
 	}
 	
@@ -56,7 +56,7 @@ public class ChannelUserController extends BaseController {
 	
 	@RequestMapping(value = "cust", method = RequestMethod.GET)
 	public String viewUserCust(@RequestParam(name="userId", required=true, defaultValue="0") String userId, Model model) {
-		setActiveMenu(model, MenuItem.USER_LIST);
+		setActiveMenu(model, MenuItem.MY_USER);
 		model.addAttribute("userId", userId);
 		return "channel/user_cust";
 	}
