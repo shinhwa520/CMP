@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.model.Customer;
-import com.cmp.security.SecurityUser;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 
@@ -28,7 +27,7 @@ public class ChannelCustController extends BaseController {
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
-		setActiveMenu(model, MenuItem.CUST_LIST);
+		setActiveMenu(model, MenuItem.MY_CUST);
 		return "channel/cust";
 	}
 	

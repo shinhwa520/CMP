@@ -26,7 +26,7 @@ public class AdminStatusController extends BaseController {
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
-		setActiveMenu(model, MenuItem.USER_LIST);
+		setActiveMenu(model, MenuItem.ADMIN_STATUS);
 		return "admin/status";
 	}
 	

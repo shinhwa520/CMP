@@ -28,7 +28,7 @@ public class AdminCustController extends BaseController {
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
-		setActiveMenu(model, MenuItem.CUST_LIST);
+		setActiveMenu(model, MenuItem.ADMIN_CUST);
 		return "admin/cust";
 	}
 	
