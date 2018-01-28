@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="question_detail")
-public class QuestionDetail {
+public class QuestionDetail implements java.io.Serializable {
 	
 	@Id
 	@Column(name = "ques_detail_id", nullable = false)

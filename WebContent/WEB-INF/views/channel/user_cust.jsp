@@ -4,20 +4,16 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Cust info.</h3>
+		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel_user/list">我的渠道商</a>/客戶</h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog">
 			<thead>
 				<tr>
-					<th style="width: 5%">＃</th>
-					<th style="width: 25%">name</th>
-					<th style="width: 15%">city</th>
-					<th style="width: 11%">phone</th>
-					<th style="width: 14%">create time</th>
-					<th style="width: 8%">create by</th>
-					<th style="width: 14%">update time</th>
-					<th style="width: 8%">update by</th>
+					<th style="width: 10%">＃</th>
+					<th style="width: 22%">name</th>
+					<th style="width: 22%">city</th>
+					<th style="width: 22%">phone</th>
 				</tr>
 			</thead>
 		</table>
@@ -28,7 +24,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 <script>
 var tblLog;
-
+var userId = ${userId};
 
 $(function() {
 	tblLog = $('#tblLog').DataTable(
@@ -39,7 +35,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/cust/getCust4Admin.json',
+				"url" : '${pageContext.request.contextPath}/channel_user/getCustByUserId.json?userId='+userId,
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';
@@ -49,12 +45,8 @@ $(function() {
 				{ "data" : "id" },
 				{ "data" : "name" },
 				{ "data" : "city" },
-				{ "data" : "phone" },
-				{ "data" : "createDateStr" },
-				{ "data" : "createBy" },
-				{ "data" : "updateDateStr" },
-				{ "data" : "updateBy" }
+				{ "data" : "phone" }
 			]
 		});
-	}); 
+	});
 </script>

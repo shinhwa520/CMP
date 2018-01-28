@@ -4,20 +4,20 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Cust info.</h3>
+		<h3 class="box-title">User info.</h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog">
 			<thead>
 				<tr>
-					<th style="width: 5%">＃</th>
-					<th style="width: 25%">name</th>
-					<th style="width: 15%">city</th>
-					<th style="width: 11%">phone</th>
-					<th style="width: 14%">create time</th>
-					<th style="width: 8%">create by</th>
-					<th style="width: 14%">update time</th>
-					<th style="width: 8%">update by</th>
+					<th>＃</th>
+					<th>name</th>
+					<th>account</th>
+					<th>password</th>
+					<th>status</th>
+					<th>phone</th>
+					<th>email</th>
+					<th>channel</th>
 				</tr>
 			</thead>
 		</table>
@@ -39,7 +39,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/cust/getCust4Admin.json',
+				"url" : '${pageContext.request.contextPath}/admin_user/getUser4Admin.json',
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';
@@ -48,13 +48,26 @@ $(function() {
 			"columns" : [
 				{ "data" : "id" },
 				{ "data" : "name" },
-				{ "data" : "city" },
+				{ "data" : "account" },
+				{ "data" : "password" },
+				{ "data" : "status.id" },
 				{ "data" : "phone" },
-				{ "data" : "createDateStr" },
-				{ "data" : "createBy" },
-				{ "data" : "updateDateStr" },
-				{ "data" : "updateBy" }
+				{ "data" : "email" },
+				{ "data" : "channel" },
+			],
+			"columnDefs": [
+				{
+					"targets": [7],
+					"render": function (data, type, row) {
+						var html = '';
+						if (row["channel"] != null) {
+							html += row["channel"].id;
+						}
+						
+						return html;
+					}
+				}
 			]
 		});
-	}); 
+	});
 </script>

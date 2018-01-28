@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements java.io.Serializable {
 	
 	public User() {
 	}

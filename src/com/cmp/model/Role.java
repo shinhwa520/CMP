@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="role")
-public class Role {
+public class Role implements java.io.Serializable {
 	public Role() {
 	}
 	@Id
