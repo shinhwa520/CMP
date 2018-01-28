@@ -9,8 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.cmp.dao.CustomerDAO;
-import com.cmp.service.impl.UserDetailsServiceImpl;
+import com.cmp.security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/registration/**").permitAll()
 			.anyRequest()
 //			.authenticated()
-			.hasAnyRole("ADMIN", "USER")
+			.hasAnyRole("ADMIN", "USER", "ROLE_USER")
 			.and()
 		.formLogin().loginPage("/login").permitAll()
 			.and()
