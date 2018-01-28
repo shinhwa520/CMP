@@ -37,7 +37,7 @@ public class JobController {
 	public String doAddJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doAddJob");
 		try {
-			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/10 * * * ?");
+			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/1 * * * ?");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
