@@ -65,6 +65,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
 		User user = userDao.findUserById(vo.getUserId());
 		BeanUtils.copyProperties(vo, user);
+		user.setChannel(userDao.findUserById("1"));
 		userDao.saveUser(user);
 	}
 	

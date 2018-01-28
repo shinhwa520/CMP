@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name="user_ques")
-public class UserQues {
+public class UserQues implements java.io.Serializable {
 	
 	@Id
 	@Column(name = "user_ques_id", nullable = false)

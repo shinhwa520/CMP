@@ -2,6 +2,10 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +16,34 @@ import com.cmp.model.User;
 @Repository
 @Transactional
 public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
-
+	@Override
+	public List<User> findUserByChannelId(String channelId, Integer start, Integer length) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from User u where 1=1 ");
+		if(StringUtils.isNotBlank(channelId)){
+			sb.append(" and u.channel.id = :channelId ");
+		}
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    if(StringUtils.isNotBlank(channelId)){
+	    	q.setParameter("channelId", channelId);
+	    }
+	    	q.setFirstResult(start).setMaxResults(length);
+	    return (List<User>) q.list();
+//		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
+//		return returnList;
+	}
+	
+	@Override
+	public long countUserByChannelId(String channelId){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(*) from User u where 1=1 ");
+		if(StringUtils.isNotBlank(channelId)){
+			  sb.append(" and u.channel.id = ? ");
+			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {channelId}));
+		}
+		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
+	}
 	@Override
 	public User saveUser(User user) {
 		return (User) getHibernateTemplate().merge(user);

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="status")
-public class Status {
+public class Status implements java.io.Serializable {
 	public Status() {
 		
 	}

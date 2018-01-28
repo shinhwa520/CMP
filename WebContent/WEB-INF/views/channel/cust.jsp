@@ -4,7 +4,7 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Cust info.</h3>
+		<h3 class="box-title">我的客戶</h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog">
@@ -35,7 +35,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/cust/getCust4Admin.json',
+				"url" : '${pageContext.request.contextPath}/channel_cust/getCustByUserId.json',
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';

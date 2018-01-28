@@ -157,25 +157,26 @@ setTimeout(function(){
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-
-         
-         
-         
-         
         <li>
-        	<a href="${pageContext.request.contextPath}/cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
+        	<a href="${pageContext.request.contextPath}/channel_user/list"><i class="fa fa-user"></i> <span>我的渠道商</span></a>
         </li>
         <li>
-        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>USER</span></a>
+        	<a href="${pageContext.request.contextPath}/channel_cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
         </li>
         <li>
-        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
+        	<a href="${pageContext.request.contextPath}/admin_user/list"><i class="fa fa-user"></i> <span>USER</span></a>
         </li>
         <li>
-        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>STATUS</span></a>
+        	<a href="${pageContext.request.contextPath}/admin_cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
         </li>
         <li>
-        	<a href="${pageContext.request.contextPath}/account/list"><i class="fa fa-user"></i> <span>REGISTRATION_STEPS</span></a>
+        	<a href="${pageContext.request.contextPath}/admin_role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
+        </li>
+        <li>
+        	<a href="${pageContext.request.contextPath}/admin_status/list"><i class="fa fa-user"></i> <span>STATUS</span></a>
+        </li>
+        <li>
+        	<a href="${pageContext.request.contextPath}/admin_registration/list"><i class="fa fa-user"></i> <span>REGISTRATION</span></a>
         </li>
       </ul>
       <!-- /.sidebar-menu -->
