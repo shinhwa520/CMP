@@ -10,7 +10,11 @@ public interface ApiService {
 	static final String LOGIN_API_SEQNO = "1";
 	static final String SEPERATOR = "@~";
 
-	public List<ApiServiceVO> findData(String webName);
+	public List<ApiServiceVO> findData(String webName, Integer start,Integer length) throws Exception;
 	
-	public ApiServiceVO doRetrieve(ApiServiceVO apiServiceVO);
+	public long countData(String webName) throws Exception;
+	
+	public ApiServiceVO doRetrieve(ApiServiceVO apiServiceVO) throws Exception;
+	
+	public ApiServiceVO doRetrieveFromJob(String webName) throws Exception;
 }

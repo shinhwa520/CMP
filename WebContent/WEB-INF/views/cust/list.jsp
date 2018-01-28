@@ -10,10 +10,14 @@
 		<table class="table table-striped" id="tblLog">
 			<thead>
 				<tr>
-					<th style="width: 10%">＃</th>
-					<th style="width: 22%">name</th>
-					<th style="width: 22%">city</th>
-					<th style="width: 22%">phone</th>
+					<th style="width: 5%">＃</th>
+					<th style="width: 25%">name</th>
+					<th style="width: 15%">city</th>
+					<th style="width: 11%">phone</th>
+					<th style="width: 14%">create time</th>
+					<th style="width: 8%">create by</th>
+					<th style="width: 14%">update time</th>
+					<th style="width: 8%">update by</th>
 				</tr>
 			</thead>
 		</table>
@@ -45,7 +49,11 @@ $(function() {
 				{ "data" : "id" },
 				{ "data" : "name" },
 				{ "data" : "city" },
-				{ "data" : "phone" }
+				{ "data" : "phone" },
+				{ "data" : "createDateStr" },
+				{ "data" : "createBy" },
+				{ "data" : "updateDateStr" },
+				{ "data" : "updateBy" }
 			]
 		});
 	});
