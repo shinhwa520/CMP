@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import com.cmp.Constants;
 import com.cmp.MenuItem;
 import com.cmp.Response;
+import com.cmp.security.SecurityUser;
+import com.cmp.security.SecurityUtil;
 
 
 
@@ -62,8 +64,9 @@ public class BaseController {
 		
 		boolean isAdmin = false;
 		boolean isAvailable = false;
-		String userName = getLoginUsername();
-
+		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+		String userName = securityUser.getUsername();
+		String userRole = securityUser.getUser().getRole().getName();
 		
 		
 		
@@ -72,6 +75,7 @@ public class BaseController {
 		model.addAttribute("username", userName);
 		model.addAttribute("isAdmin", isAdmin);
 		model.addAttribute("isAvailable", isAvailable);
+		model.addAttribute("userRole", userRole);
 //		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //		String currentPrincipalName = authentication.getName();
 //		logger.debug("currentPrincipalName: " + currentPrincipalName);

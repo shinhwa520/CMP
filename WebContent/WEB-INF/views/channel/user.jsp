@@ -37,7 +37,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/channel_user/getUserByChannelId.json',
+				"url" : '${pageContext.request.contextPath}/channel/user/getUserByChannelId.json',
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';
@@ -54,7 +54,7 @@ $(function() {
 				"targets" : 5,
 				"data" : 'id',
 				"render" : function(data, type, row) {
-					return '<a href="${pageContext.request.contextPath}/channel_user/cust?userId='+row['id']+'">' 
+					return '<a href="${pageContext.request.contextPath}/channel/user/cust?userId='+row['id']+'">' 
 							+ '<span class="label label-info" style="margin-right:10px" userId="' + row['id'] + '" ">' 
 							+ '<i class="fa fa-pencil" style="margin-right:5px"></i>view cust.</span></a>';
 				}

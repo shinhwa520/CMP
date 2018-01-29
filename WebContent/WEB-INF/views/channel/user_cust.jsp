@@ -4,7 +4,7 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel_user/list">我的渠道商</a>/客戶</h3>
+		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel/user/list">我的渠道商</a>/客戶</h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog">
@@ -35,7 +35,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/channel_user/getCustByUserId.json?userId='+userId,
+				"url" : '${pageContext.request.contextPath}/channel/user/getCustByUserId.json?userId='+userId,
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';

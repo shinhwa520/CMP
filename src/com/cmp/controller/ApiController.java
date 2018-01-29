@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,18 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmp.DatatableResponse;
+import com.cmp.MenuItem;
 import com.cmp.form.ApiForm;
 import com.cmp.service.ApiService;
 import com.cmp.service.vo.ApiServiceVO;
 
 @Controller
-public class ApiController {
+public class ApiController extends BaseController {
 	private static Log log = LogFactory.getLog(ApiController.class);
 	
 	private ApiService apiService;
 	
 	@RequestMapping(value = { "/api" }, method = RequestMethod.GET)
-    public String showMainPage(@ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
+    public String showMainPage(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
 //    		apiService.findMakaIds();
@@ -35,12 +37,12 @@ public class ApiController {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	
+    	setActiveMenu(model, MenuItem.API_MAIN);
         return "api/retrieve_main";
     }
 	
 	@RequestMapping(value = { "/api/list" }, method = RequestMethod.GET)
-    public String showApiData(@ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
+    public String showApiData(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
 //    		apiService.findMakaIds();
@@ -48,7 +50,7 @@ public class ApiController {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	
+    	setActiveMenu(model, MenuItem.API_MAIN);
         return "api/api_list";
     }
 	

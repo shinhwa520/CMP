@@ -21,7 +21,7 @@ import com.cmp.service.CustService;
 import com.cmp.service.UserService;
 
 @Controller
-@RequestMapping(value="/channel_user")
+@RequestMapping(value="/channel/user")
 public class ChannelUserController extends BaseController {
 	private static Log log = LogFactory.getLog(ChannelUserController.class);
 	@Autowired

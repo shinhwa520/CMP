@@ -34,7 +34,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/admin_role/getRole4Admin.json',
+				"url" : '${pageContext.request.contextPath}/admin/role/getRole4Admin.json',
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';

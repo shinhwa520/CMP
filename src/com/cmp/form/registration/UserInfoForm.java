@@ -17,6 +17,7 @@ public class UserInfoForm implements Serializable {
 	private String phone;
 	private String channelUrl;
 	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
+	private int quesMapkeySize;
 	
 	public String getUserId() {
 		return userId;
@@ -59,6 +60,16 @@ public class UserInfoForm implements Serializable {
 	}
 	public void setQuesMap(TreeMap<Question, ArrayList<QuestionDetail>> quesMap) {
 		this.quesMap = quesMap;
+	}
+	public int getQuesMapkeySize() {
+		if(null!=this.quesMap){
+			quesMapkeySize = quesMap.keySet().size();
+		}else
+			quesMapkeySize = 0;
+		return quesMapkeySize;
+	}
+	public void setQuesMapkeySize(int quesMapkeySize) {
+		this.quesMapkeySize = quesMapkeySize;
 	}
 
 }

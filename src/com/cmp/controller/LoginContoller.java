@@ -21,9 +21,12 @@ public class LoginContoller extends BaseController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model, Principal principal) {
-		model.addAttribute("message", "You are logged in as " + principal.getName());
-		setActiveMenu(model, MenuItem.CUST_LIST);
-		return "index";
+//		model.addAttribute("message", "You are logged in as " + principal.getName());
+		
+		if(null==principal) return "redirect:/login";
+		System.out.println(principal.getName());
+		setActiveMenu(model, MenuItem.MY_USER);
+		return "channel/user";
 	}
 	
     @RequestMapping(value = "/login", method = RequestMethod.GET)

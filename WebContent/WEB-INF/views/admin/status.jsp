@@ -35,7 +35,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/admin_status/getStatus4Admin.json',
+				"url" : '${pageContext.request.contextPath}/admin/status/getStatus4Admin.json',
 				"type" : 'GET',
 				"data" : function(d) {
 					//d.customParam = 'testestert';

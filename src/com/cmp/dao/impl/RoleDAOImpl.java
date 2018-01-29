@@ -15,7 +15,16 @@ import com.cmp.model.Role;
 @Repository
 @Transactional
 public class RoleDAOImpl extends BaseDaoHibernate implements RoleDAO {
-
+	@Override
+	public Role findRoleById(int id) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Role r ")
+		  .append(" where 1=1 ")
+		  .append(" and r.id = ? ");
+		List<Role> returnList = (List<Role>)getHibernateTemplate().find(sb.toString(), id);
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
+	
 	@Override
 	public List<Role> listRole(Integer start, Integer length){
 		StringBuffer sb = new StringBuffer();

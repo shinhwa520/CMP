@@ -18,7 +18,7 @@ import com.cmp.model.Role;
 import com.cmp.service.RoleService;
 
 @Controller
-@RequestMapping(value="/admin_role")
+@RequestMapping(value="/admin/role")
 public class AdminRoleController extends BaseController {
 	private static Log log = LogFactory.getLog(AdminRoleController.class);
 	@Autowired

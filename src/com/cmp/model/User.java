@@ -18,10 +18,12 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 	
-	public User(String email) {
+	public User(String email, Role role, Status status) {
 		super();
 		this.id = String.valueOf(new Date().getTime());
 		this.email = email;
+		this.role = role;
+		this.status = status;
 	}
 
 	@Id

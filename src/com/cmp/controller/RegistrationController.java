@@ -36,7 +36,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
     public String email(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/email");
-    	setActiveMenu(model, MenuItem.MY_USER);
+    	model.addAttribute("message", "");
         return "registration/email";
     }
 	
@@ -47,9 +47,14 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
     public String emailConfirm(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/emailConfirm");
-    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
     		String mailAddress = form.getMailAddress();
+    		//驗證email是否重複
+    		if(!registrationService.checkEmailAvailable(mailAddress)){
+    			model.addAttribute("message", "Email已被使用，請重新輸入");
+    			return "registration/email";
+    		}
+    		
     		StringBuffer sb = request.getRequestURL();
     		String appName = request.getContextPath();
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
@@ -68,15 +73,15 @@ public class RegistrationController extends BaseController {
 	 * return user 表單提供輸入
 	 */
 	@RequestMapping(value = { "/user" }, params = "tokenId", method = RequestMethod.GET)
-    public String user(@RequestParam("tokenId") String tokenId, Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+    public String user(Model model, @RequestParam("tokenId") String tokenId, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/user");
-    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
     		User user = registrationService.verifyToken(tokenId);
     		if(null==user){
     			model.addAttribute("message", "verifyToken error");
     			return "registration/error";
     		}
+    		model.addAttribute("message", "");
     		form.setUserId(user.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,8 +96,13 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/userInfo");
-    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
+    		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
+    			model.addAttribute("message", "Account已被使用，請重新輸入");
+    			return "registration/user";
+    		}
+    		
+    		
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
 			    			,form.getName()
@@ -103,6 +113,7 @@ public class RegistrationController extends BaseController {
 					);
 			RegistrationUserVO vo = registrationService.initQuestList();
 			form.setQuesMap(vo.getQuesMap());
+			form.setQuesMapkeySize(vo.getQuesMap().keySet().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,7 +129,6 @@ public class RegistrationController extends BaseController {
     public @ResponseBody String ans(Model model, @RequestParam("id") String id, @RequestParam("results") String results
     		, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/ans");
-    	setActiveMenu(model, MenuItem.MY_USER);
     	try {
     		registrationService.saveUserQues(id, results);
 		} catch (Exception e) {

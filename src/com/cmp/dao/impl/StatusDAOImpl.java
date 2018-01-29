@@ -15,7 +15,15 @@ import com.cmp.model.Status;
 @Repository
 @Transactional
 public class StatusDAOImpl extends BaseDaoHibernate implements StatusDAO {
-
+	@Override
+	public Status findStatusById(int id) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Status s ")
+		  .append(" where 1=1 ")
+		  .append(" and s.id = ? ");
+		List<Status> returnList = (List<Status>)getHibernateTemplate().find(sb.toString(), id);
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
 	@Override
 	public List<Status> listStatus(Integer start, Integer length){
 		StringBuffer sb = new StringBuffer();

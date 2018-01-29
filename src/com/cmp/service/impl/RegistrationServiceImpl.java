@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.RandomGenerator;
 import com.cmp.dao.QuestionDetailDAO;
+import com.cmp.dao.RoleDAO;
+import com.cmp.dao.StatusDAO;
 import com.cmp.dao.TokenDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.UserQuesDAO;
@@ -24,7 +26,6 @@ import com.cmp.model.Question;
 import com.cmp.model.QuestionDetail;
 import com.cmp.model.Token;
 import com.cmp.model.User;
-import com.cmp.model.UserQues;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
 
@@ -41,11 +42,21 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private QuestionDetailDAO questionDetailDAO;
 	@Autowired
 	private UserQuesDAO userQuesDAO;
+	@Autowired
+	private RoleDAO roleDAO;
+	@Autowired
+	private StatusDAO statusDAO;
 	
 	private long duration = 1000*60*60*24;
 	
+	
+	public boolean checkEmailAvailable(String mailAddress) throws Exception{
+		return null==userDao.findUserByEmail(mailAddress);//null =>可使用
+	}
+	
+	
 	public void initUser(String mailAddress, String mailContent) throws Exception {
-		User user = userDao.saveUser(new User(mailAddress));
+		User user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleById(2), statusDAO.findStatusById(1)));
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, new Date()));
 		sendSimpleMail(mailAddress, mailContent+"?tokenId="+token.getId());
 	}
@@ -101,6 +112,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		}
 		vo.setQuesMap(map);
 		return vo;
+	}
+	
+	@Override
+	public List<User> findUserByAccount(String account) {
+	   return userDao.findUserByAccount(account);
 	}
 	
 	public void saveUserQues(String userId, String results) throws Exception {

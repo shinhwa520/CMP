@@ -11,6 +11,6 @@ public interface UserDAO {
 	List<User> listUsers();
 	public List<User> findUserByAccount(String account);
 	User findUserById(String id);
-	
+	User findUserByEmail(String mailAddress);
 	public List<User> findUserByApiModelId(String apiModelId);
 }

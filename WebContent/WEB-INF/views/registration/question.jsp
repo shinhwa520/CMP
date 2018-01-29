@@ -8,7 +8,7 @@
 		<form:hidden path="userId" id="userId" />
 		<c:if test="${!UserInfoForm.quesMap.isEmpty() }">
 			<c:forEach var="vo" items="${ UserInfoForm.quesMap }">
-				${vo.key.content }<br/>
+				<span style="color: red;">＊ </span>${vo.key.content }<br/>
 					<c:forEach var="detail" items="${ vo.value }">
 						<input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.id }> ${detail.content }<br/>
 					</c:forEach>
@@ -19,9 +19,11 @@
 	</form:form>
 </section>
 
-<!-- jQuery 2.1.4 -->
-<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
 <script type="text/javascript">
+	var itemCount = ${UserInfoForm.quesMap.keySet().size()};
+	var results;
+	var resultCount;
 	function doSubmit() {
 		var getResult = function () {
 		    var result = [];
@@ -34,9 +36,14 @@
 		    return result;
 		};
 		results = getResult().join(',');
-		console.log(results);
-
-		
+		resultCount = results.split(',').length;
+		console.log("itemCount :" + itemCount);
+		console.log("results :" + results);
+		console.log("resultCount :" + resultCount);
+		if(''==results || resultCount<itemCount){
+			alert("下列問題皆為必選，請再次確認後提交!")
+			return false;
+		}
 		$.ajax({
 				url : '${pageContext.request.contextPath}/registration/ans?id=' + $('#userId').val() + '&results=' +results,
 				type : "GET",
@@ -62,25 +69,4 @@
 			});
 	}
 
-	function successMessage(message) {
-		var msg = $('#message');
-		msg.addClass('alert-info');
-		msg.html(message);
-		      
-		msg.fadeIn();
-		setTimeout(function(){
-			msg.fadeOut();
-		}, 2000);
-	}
-	function errorMessage(message) {
-		var msg = $('#message');
-		$(window).scrollTop(msg.offset().top);
-		msg.addClass('alert-danger');
-		msg.append(message);
-		      
-		msg.fadeIn();
-		setTimeout(function(){
-			msg.fadeOut();
-		}, 2000);
-	}
 </script>

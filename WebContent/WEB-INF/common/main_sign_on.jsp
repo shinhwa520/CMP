@@ -28,23 +28,23 @@
 		function successMessage(message) {
 		  	var msg = $('#message');
 		  	msg.addClass('alert-info');
-		  	msg.append(message);
+		  	msg.html(message);
 	      
 			msg.fadeIn();
 			setTimeout(function(){
 				msg.fadeOut();
-			}, 2000);
+			}, 1000);
 		}
 		function errorMessage(message) {
 			var msg = $('#message');
 			$(window).scrollTop(msg.offset().top);
 			msg.addClass('alert-danger');
-			msg.append(message);
+			msg.html(message);
 	      
 			msg.fadeIn();
 			setTimeout(function(){
 				msg.fadeOut();
-			}, 2000);
+			}, 1000);
 		}
 	</script>
 	<style type="text/css">
@@ -92,13 +92,13 @@
 		}
 		
 		 #container{     
-		     min-height: 600px;
+		 	margin-top: 40px;
+			min-height: 600px;
 		 }
-		 #message{
-		     margin: 0px 0px 10px 0px;
-		     padding: 0; 
-		     text-align: center;
-		 }
+		.alert{
+			margin-top: 40px;
+			display:none;
+		}
 		.topic{
 			font-size: 28px;
 			text-shadow: 1px 1px 0 #333;

@@ -18,7 +18,7 @@ import com.cmp.model.Status;
 import com.cmp.service.StatusService;
 
 @Controller
-@RequestMapping(value="/admin_status")
+@RequestMapping(value="/admin/status")
 public class AdminStatusController extends BaseController {
 	private static Log log = LogFactory.getLog(AdminStatusController.class);
 	@Autowired

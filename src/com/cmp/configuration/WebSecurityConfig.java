@@ -14,12 +14,12 @@ import com.cmp.security.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	};
-	
-
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -36,9 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/registration/**").permitAll()
-			.anyRequest()
-//			.authenticated()
-			.hasAnyRole("ADMIN", "USER", "ROLE_USER")
+			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/channel/**").hasAnyRole("ADMIN", "USER")
+//			.anyRequest().hasAnyRole("ADMIN", "USER", "ROLE_USER")
 			.and()
 		.formLogin().loginPage("/login").permitAll()
 			.and()

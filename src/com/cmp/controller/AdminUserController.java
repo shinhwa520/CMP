@@ -19,7 +19,7 @@ import com.cmp.security.SecurityUtil;
 import com.cmp.service.UserService;
 
 @Controller
-@RequestMapping(value="/admin_user")
+@RequestMapping(value="/admin/user")
 public class AdminUserController extends BaseController {
 	private static Log log = LogFactory.getLog(AdminUserController.class);
 	@Autowired

@@ -74,6 +74,16 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {id});
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
+	
+	@Override
+	public User findUserByEmail(String mailAddress) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from User u ")
+		  .append(" where 1=1 ")
+		  .append(" and u.email = ? ");
+		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {mailAddress});
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
 
 	@Override
 	public List<User> findUserByApiModelId(String apiModelId) {

@@ -21,8 +21,21 @@
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
-
+	<style type="text/css">
+	
+		.adminView{
+		    display:none;
+		}
+	
+	</style>
 	<script>
+		var userRole = '${userRole}';
+		$(function() {
+			if('ADMIN'==userRole) {
+				$('.adminView').show();
+			}
+		});
+		
 		function successMessage(message) {
 			var msg = $('#message');
 			msg.addClass('alert-info');
@@ -127,33 +140,34 @@
 			<!-- Sidebar Menu -->
 			<ul class="sidebar-menu">
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel_user/list"><i class="fa fa-user"></i> <span>我的渠道商</span></a>
+					<a href="${pageContext.request.contextPath}/channel/user/list"><i class="fa fa-user"></i> <span>我的渠道商</span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel_cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
+					<a href="${pageContext.request.contextPath}/channel/cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
 				</li>
-				<li class="<c:if test="${active eq 'ADMIN_USER'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/admin_user/list"><i class="fa fa-user"></i> <span>USER</span></a>
+				
+				<li class="<c:if test="${active eq 'ADMIN_USER'}">active</c:if> sidebar-item adminView" >
+					<a href="${pageContext.request.contextPath}/admin/user/list"><i class="fa fa-user"></i> <span>USER</span></a>
 				</li>
-				<li class="<c:if test="${active eq 'ADMIN_CUST'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/admin_cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
+				<li class="<c:if test="${active eq 'ADMIN_CUST'}">active</c:if> sidebar-item adminView">
+					<a href="${pageContext.request.contextPath}/admin/cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
 				</li>
-				<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/admin_role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
+				<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item adminView">
+					<a href="${pageContext.request.contextPath}/admin/role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
 				</li>
-				<li class="<c:if test="${active eq 'ADMIN_STATUS'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/admin_status/list"><i class="fa fa-user"></i> <span>STATUS</span></a>
+				<li class="<c:if test="${active eq 'ADMIN_STATUS'}">active</c:if> sidebar-item adminView">
+					<a href="${pageContext.request.contextPath}/admin/status/list"><i class="fa fa-user"></i> <span>STATUS</span></a>
 				</li>
-				<li class="<c:if test="${active eq 'ADMIN_REGISTRATION'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/admin_registration/list"><i class="fa fa-user"></i> <span>REGISTRATION</span></a>
+				<li class="<c:if test="${active eq 'ADMIN_REGISTRATION'}">active</c:if> sidebar-item adminView">
+					<a href="${pageContext.request.contextPath}/admin/registration/list"><i class="fa fa-user"></i> <span>REGISTRATION</span></a>
 				</li>
-				<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview">
+				<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview adminView">
 					<a href="#">
 						<i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu <c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">menu-open</c:if>">
 						<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api"><i class="fa fa-circle-o"></i> 表單資料接收</a></li>
-						<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api/list""><i class="fa fa-circle-o"></i> 表單資料查詢</a></li>
+						<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api/list"><i class="fa fa-circle-o"></i> 表單資料查詢</a></li>
 						<li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/job/manage"><i class="fa fa-circle-o"></i> 資料接收排程管理</a></li>
 					</ul>
 				</li>
@@ -167,7 +181,6 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h4></h4>
 		</section>
 		<!-- Main content -->
 		<section class="content">

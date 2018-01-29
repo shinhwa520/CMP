@@ -7,21 +7,23 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cmp.MenuItem;
 import com.cmp.form.JobForm;
 import com.cmp.service.BaseJobService;
 
 @Controller
-public class JobController {
+public class JobController extends BaseController {
 	private static Log log = LogFactory.getLog(JobController.class);
 	
 	private BaseJobService jobService;
 	
 	@RequestMapping(value = { "/job/manage" }, method = RequestMethod.GET)
-    public String retrieveManage(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
+    public String retrieveManage(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
     		jobService.queryJob("MAKA");
@@ -29,7 +31,7 @@ public class JobController {
     	} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	
+    	setActiveMenu(model, MenuItem.API_MANAGE);
         return "api/job_manage";
     }
 	
@@ -37,7 +39,7 @@ public class JobController {
 	public String doAddJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doAddJob");
 		try {
-			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/10 * * * ?");
+			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/1 * * * ?");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

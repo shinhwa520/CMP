@@ -19,7 +19,7 @@ import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 
 @Controller
-@RequestMapping(value="/channel_cust")
+@RequestMapping(value="/channel/cust")
 public class ChannelCustController extends BaseController {
 	private static Log log = LogFactory.getLog(ChannelCustController.class);
 	@Autowired

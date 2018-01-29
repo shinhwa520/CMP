@@ -20,7 +20,7 @@ import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 
 @Controller
-@RequestMapping(value="/admin_cust")
+@RequestMapping(value="/admin/cust")
 public class AdminCustController extends BaseController {
 	private static Log log = LogFactory.getLog(AdminCustController.class);
 	@Autowired
