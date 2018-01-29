@@ -41,7 +41,7 @@
 		console.log("results :" + results);
 		console.log("resultCount :" + resultCount);
 		if(''==results || resultCount<itemCount){
-			alert("下列問題皆為必選，請再次確認後提交!")
+			errorMessage("下列問題皆為必選，請再次確認後提交!");
 			return false;
 		}
 		$.ajax({

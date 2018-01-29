@@ -26,6 +26,7 @@ import com.cmp.model.Question;
 import com.cmp.model.QuestionDetail;
 import com.cmp.model.Token;
 import com.cmp.model.User;
+import com.cmp.model.UserQues;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
 
@@ -61,25 +62,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 		sendSimpleMail(mailAddress, mailContent+"?tokenId="+token.getId());
 	}
 	
-	public User verifyToken(String tokenId) throws Exception {
-		try {
-			Token token = tokenDAO.findTokenById(tokenId);
-			if(token.getCreateDateTime().getTime() + duration < new Date().getTime())
-				return null;
-			return token.getUser();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
-		User user = userDao.findUserById(vo.getUserId());
-		BeanUtils.copyProperties(vo, user);
-		user.setChannel(userDao.findUserById("1"));
-		userDao.saveUser(user);
-	}
-	
 	public void sendSimpleMail(String mailAddress, String mailContent) throws MessagingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
@@ -91,6 +73,27 @@ public class RegistrationServiceImpl implements RegistrationService {
 		System.out.println("---Done---");
 	}
 	
+	public User verifyToken(String tokenId) throws Exception {
+		try {
+			Token token = tokenDAO.findTokenById(tokenId);
+			if(token.getCreateDateTime().getTime() + duration < new Date().getTime())
+				return null;
+			User user = token.getUser();
+			user.setStatus(statusDAO.findStatusById(2));
+			return userDao.saveUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
+		User user = userDao.findUserById(vo.getUserId());
+		BeanUtils.copyProperties(vo, user);
+		user.setStatus(statusDAO.findStatusById(3));
+		user.setChannel(userDao.findUserById("1"));//todo
+		userDao.saveUser(user);
+	}
 	
 	public RegistrationUserVO initQuestList()throws MessagingException {
 		RegistrationUserVO vo = new RegistrationUserVO();
@@ -122,13 +125,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public void saveUserQues(String userId, String results) throws Exception {
 		System.out.println("userId:"+userId);
 		System.out.println("results:"+results);
-//		Date date = new Date();
-//		User user = userDao.findUserById(userId);
+		Date date = new Date();
+		User user = userDao.findUserById(userId);
 		String[] resultArray = results.split(",");
-//		for(int i=0; i<resultArray.length; i++){
-//			QuestionDetail qd = questionDetailDAO.findQuestionDetailById(resultArray[i]);
-//			UserQues uq = new UserQues(String.valueOf(date.getTime()+qd.getQuestion().getSort()), qd, user, date);
-//			userQuesDAO.saveUserQues(uq);
-//		}
+		for(int i=0; i<resultArray.length; i++){
+			QuestionDetail qd = questionDetailDAO.findQuestionDetailById(resultArray[i]);
+			UserQues uq = new UserQues(String.valueOf(date.getTime()+qd.getQuestion().getSort()), qd, user, date);
+			userQuesDAO.saveUserQues(uq);
+		}
+		user.setStatus(statusDAO.findStatusById(4));
 	}
 }
