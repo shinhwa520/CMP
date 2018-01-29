@@ -3,6 +3,7 @@ package com.cmp.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.DisallowConcurrentExecution;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.cmp.dao.QuartzDAO;
 import com.cmp.service.ApiService;
 import com.cmp.service.BaseJobService;
+import com.cmp.service.vo.JobServiceVO;
 import com.cmp.utils.ApplicationContextUtil;
 
 @Service("jobService")
@@ -29,7 +31,6 @@ import com.cmp.utils.ApplicationContextUtil;
 public class ApiJobServiceImpl implements BaseJobService {
 	private String webName;
 	
-	//加入Qulifier註解，通過名稱注入bean
     @Autowired @Qualifier("Scheduler")
     private Scheduler scheduler;
 	private ApiService apiService;
@@ -53,16 +54,16 @@ public class ApiJobServiceImpl implements BaseJobService {
 	@Override
 	public void addJob(String webName, String jobGroupName, String cronExpression) throws Exception {
 		try {
-			// 啟動調度器  
+			//start scheduler
 	        scheduler.start(); 
 	
-	        //構建job信息
+	        //build job
 	        JobDetail jobDetail = JobBuilder.newJob(getClass(jobClassName).getClass()).withIdentity(jobClassName, jobGroupName).build();
 	        
-	        //表達式調度構建器(即任務執行的時間)
+	        //build cron expression
 	        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
 	
-	        //按新的cronExpression表達式構建一個新的trigger
+	        //build a new trigger with new cron expression 
 	        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobClassName, jobGroupName)
 	            .withSchedule(scheduleBuilder).build();
 
@@ -70,8 +71,8 @@ public class ApiJobServiceImpl implements BaseJobService {
             scheduler.scheduleJob(jobDetail, trigger);
 
         } catch (Exception e) {
-            System.out.println("創建定時任務失敗"+e);
-            throw new Exception("創建定時任務失敗");
+            System.out.println("Build job faild!"+e);
+            throw new Exception("Build job faild!");
         }
 		
 	}
@@ -87,6 +88,15 @@ public class ApiJobServiceImpl implements BaseJobService {
 		List<Object[]> reList = null;
 		try {
 			reList = quartzDAO.findQuartzData();
+			
+			JobServiceVO jsVO = null;
+			for (Object[] obj : reList) {
+				jsVO = new JobServiceVO();
+				jsVO.setScheduleName(ObjectUtils.toString(obj[0]));
+				jsVO.setTriggerName(ObjectUtils.toString(obj[1]));
+				jsVO.setTriggerGroup(ObjectUtils.toString(obj[2]));
+//				jsVO.
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,20 +116,20 @@ public class ApiJobServiceImpl implements BaseJobService {
 	public void modifyJob(String jobName, String jobGroupName, String newCronExpression) throws Exception {
 		try {
             TriggerKey triggerKey = TriggerKey.triggerKey(jobClassName, jobGroupName);
-            // 表达式调度构建器
+            //build cron
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(newCronExpression);
 
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
-            // 按新的cronExpression表达式重新构建trigger
+            //build a new trigger with new cron
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
 
-            // 按新的trigger重新设置job执行
+            //reschedule job with new trigger
             scheduler.rescheduleJob(triggerKey, trigger);
             
         } catch (SchedulerException e) {
-            System.out.println("更新定时任务失败"+e);
-            throw new Exception("更新定时任务失败");
+            System.out.println("Modify job failed!"+e);
+            throw new Exception("Modify job failed!");
         }
 	}
 

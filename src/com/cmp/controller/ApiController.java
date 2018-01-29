@@ -65,7 +65,7 @@ public class ApiController extends BaseController {
         		form.setApiMethodType(returnList.get(0).getApiMethodType());
         		
     		} else {
-    			request.setAttribute("ErrorMessage", "查無資料");
+    			request.setAttribute("ErrorMessage", "Found no date!");
     		}
     		
     	} catch (Exception e) {
@@ -101,15 +101,13 @@ public class ApiController extends BaseController {
 	
 	/**
 	 * 
-	 * 取得轉檔原始檔資料
-	 * 
 	 * @param start
 	 * @param length
 	 * @return
 	 */
-	@RequestMapping(value="/api/getApiData.json", method = RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/api/getApiData.json", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody DatatableResponse getIngestSource(
-			@RequestParam(name="webName", required=false, defaultValue="MAKA") String webName,
+			@RequestParam(name="webName", required=false, defaultValue="") String webName,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		

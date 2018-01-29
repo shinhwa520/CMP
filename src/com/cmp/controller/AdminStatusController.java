@@ -31,7 +31,7 @@ public class AdminStatusController extends BaseController {
 	}
 	
 	/**
-	 * 取得Cust資料
+	 * Retrieve Cust data
 	 * 
 	 * @param start
 	 * @param length
