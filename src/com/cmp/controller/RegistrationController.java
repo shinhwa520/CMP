@@ -102,14 +102,23 @@ public class RegistrationController extends BaseController {
     			return "registration/user";
     		}
     		
+    		String channelUrl = form.getChannelUrl();
+    		int index = channelUrl.lastIndexOf("/");
     		
+    		if(-1==index){
+    			//user 輸入key
+    		}else{
+    			//user 輸入url
+    			channelUrl = channelUrl.substring(index+1);
+    		}
+    		System.out.println("[channelUrl]:"+channelUrl);
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
 			    			,form.getName()
 			    			,form.getAccount()
 			    			,form.getPassword()
 			    			,form.getPhone()
-			    			,form.getChannelUrl())
+			    			,channelUrl)
 					);
 			RegistrationUserVO vo = registrationService.initQuestList();
 			form.setQuesMap(vo.getQuesMap());

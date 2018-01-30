@@ -22,6 +22,7 @@ import com.cmp.dao.StatusDAO;
 import com.cmp.dao.TokenDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.UserQuesDAO;
+import com.cmp.dao.WebApiDetailDAO;
 import com.cmp.model.Question;
 import com.cmp.model.QuestionDetail;
 import com.cmp.model.Token;
@@ -47,6 +48,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private RoleDAO roleDAO;
 	@Autowired
 	private StatusDAO statusDAO;
+	@Autowired
+	private WebApiDetailDAO webApiDetailDAO;
+	
 	
 	private long duration = 1000*60*60*24;
 	
@@ -89,9 +93,17 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
 		User user = userDao.findUserById(vo.getUserId());
+		User channel;
+		try {
+			channel = webApiDetailDAO.findWebApiDetailByParameterValues(vo.getChannelUrl()).getUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+			channel = userDao.findUserById("1");
+		}
+		
 		BeanUtils.copyProperties(vo, user);
 		user.setStatus(statusDAO.findStatusById(3));
-		user.setChannel(userDao.findUserById("1"));//todo
+		user.setChannel(channel);
 		userDao.saveUser(user);
 	}
 	
