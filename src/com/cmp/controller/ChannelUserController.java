@@ -53,7 +53,6 @@ public class ChannelUserController extends BaseController {
 		return new DatatableResponse(total, datalist, total);
 	}
 	
-	
 	@RequestMapping(value = "cust", method = RequestMethod.GET)
 	public String viewUserCust(@RequestParam(name="userId", required=true, defaultValue="0") String userId, Model model) {
 		setActiveMenu(model, MenuItem.MY_USER);

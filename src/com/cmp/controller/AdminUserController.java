@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
+import com.cmp.model.Customer;
 import com.cmp.model.User;
-import com.cmp.security.SecurityUtil;
+import com.cmp.service.CustService;
 import com.cmp.service.UserService;
 
 @Controller
@@ -24,7 +25,12 @@ public class AdminUserController extends BaseController {
 	private static Log log = LogFactory.getLog(AdminUserController.class);
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CustService custService;
 	
+	/**
+	 * 導向渠道商列表
+	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
 		setActiveMenu(model, MenuItem.ADMIN_USER);
@@ -32,7 +38,7 @@ public class AdminUserController extends BaseController {
 	}
 	
 	/**
-	 * 取得Cust資料
+	 * 取得該渠道商列表
 	 * 
 	 * @param start
 	 * @param length
@@ -49,4 +55,31 @@ public class AdminUserController extends BaseController {
 		return new DatatableResponse(total, datalist, total);
 	}
 
+	/**
+	 * 導向該渠道商之客戶列表
+	 */
+	@RequestMapping(value = "cust", method = RequestMethod.GET)
+	public String viewUserCust(@RequestParam(name="userId", required=true, defaultValue="0") String userId, Model model) {
+		setActiveMenu(model, MenuItem.ADMIN_USER);
+		model.addAttribute("userId", userId);
+		return "admin/user_cust";
+	}
+	
+	/**
+	 * 取得該渠道商之客戶列表
+	 * 
+	 * @param start
+	 * @param length
+	 * @return DatatableResponse
+	 */
+	@RequestMapping(value="getCustByUserId.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse getCustByUserId(
+			@RequestParam(name="userId", required=true, defaultValue="0") String userId,
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+		System.out.println("getCustByUserId [userId]:" + userId);
+		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
+		long total = custService.countCustByUserId(userId);
+		return new DatatableResponse(total, datalist, total);
+	}
 }

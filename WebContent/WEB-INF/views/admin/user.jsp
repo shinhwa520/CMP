@@ -18,6 +18,7 @@
 					<th>phone</th>
 					<th>email</th>
 					<th>channel</th>
+					<th>option</th>
 				</tr>
 			</thead>
 		</table>
@@ -65,6 +66,15 @@ $(function() {
 						}
 						
 						return html;
+					}
+				},
+				{
+					"targets" : 8,
+					"data" : 'id',
+					"render" : function(data, type, row) {
+						return '<a href="${pageContext.request.contextPath}/admin/user/cust?userId='+row['id']+'">' 
+								+ '<span class="label label-info" style="margin-right:10px" userId="' + row['id'] + '" ">' 
+								+ '<i class="fa fa-pencil" style="margin-right:5px"></i>view cust.</span></a>';
 					}
 				}
 			]
