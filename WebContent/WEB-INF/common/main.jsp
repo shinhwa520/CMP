@@ -197,7 +197,7 @@
 			Ver.${versionCode}
 		</div>
 		<!-- Default to the left -->
-		<strong>Copyright &copy; 2015 <a href="#">VAS Creative Co.</a></strong> All rights reserved.
+		<strong>Copyright &copy; 2015 <a href="#">F tech Co.</a></strong> All rights reserved.
 	</footer> 
 </body>
 </html>

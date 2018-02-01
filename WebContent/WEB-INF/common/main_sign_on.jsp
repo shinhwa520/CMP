@@ -124,7 +124,7 @@
 	<footer>
 	<nav class="navbar navbar-HF navbar-fixed-bottom">
 		<div>
-			Powered by ShinhWa&nbsp;&copy;&nbsp;2018 <a href="#">ShinhWa</a> Co., Ltd. All Rights Reserved. <br />
+			Powered by F tech&nbsp;&copy;&nbsp;2018 <a href="#">F tech</a> Co., Ltd. All Rights Reserved. <br />
 		</div>
 	</nav>
 	</footer>
