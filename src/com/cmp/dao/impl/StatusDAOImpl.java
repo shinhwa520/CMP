@@ -24,6 +24,18 @@ public class StatusDAOImpl extends BaseDaoHibernate implements StatusDAO {
 		List<Status> returnList = (List<Status>)getHibernateTemplate().find(sb.toString(), id);
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
+	
+	@Override
+	public Status findStatus(String type, int sort){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Status s ")
+		  .append(" where 1=1 ")
+		  .append(" and s.type = :type ")
+		  .append(" and s.sort = :sort ");
+		List<Status> returnList = (List<Status>)getHibernateTemplate().findByNamedParam(sb.toString(), new String[] {"type", "sort"},new Object[] {type, new Integer(sort)});
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
+	
 	@Override
 	public List<Status> listStatus(Integer start, Integer length){
 		StringBuffer sb = new StringBuffer();

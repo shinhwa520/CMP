@@ -51,10 +51,10 @@ $(function() {
 				{ "data" : "name" },
 				{ "data" : "account" },
 				{ "data" : "password" },
-				{ "data" : "status.id" },
+				{ "data" : "status.name" },
 				{ "data" : "phone" },
 				{ "data" : "email" },
-				{ "data" : "channel" },
+				{ "data" : "channel" }
 			],
 			"columnDefs": [
 				{

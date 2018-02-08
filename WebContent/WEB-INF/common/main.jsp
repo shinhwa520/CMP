@@ -4,7 +4,7 @@
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <!DOCTYPE html>
 
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -16,6 +16,10 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/buttons.dataTables.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/editor.dataTables.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/select.dataTables.css">
+	
 	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
@@ -23,19 +27,37 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
 	<style type="text/css">
 	
+		.box-body .form-group label{
+			width: 10%;
+		}
+		.box-body .form-group .form-control{
+			display: inline-block;
+			width: 88%;
+		}
+		.content{
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}
+		.box-body{
+			padding-top: 0px;
+		}
+
+		.box.box-primary{
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	/*
 		.adminView{
 		    display:none;
 		}
-	
-	</style>
-	<script>
 		var userRole = '${userRole}';
 		$(function() {
 			if('ADMIN'==userRole) {
 				$('.adminView').show();
 			}
 		});
-		
+		*/
 		function successMessage(message) {
 			var msg = $('#message');
 			msg.addClass('alert-info');
@@ -145,10 +167,12 @@
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
 				</li>
-				
+<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 				<li class="<c:if test="${active eq 'ADMIN_USER'}">active</c:if> sidebar-item adminView" >
 					<a href="${pageContext.request.contextPath}/admin/user/list"><i class="fa fa-user"></i> <span>USER</span></a>
 				</li>
+
+				
 				<li class="<c:if test="${active eq 'ADMIN_CUST'}">active</c:if> sidebar-item adminView">
 					<a href="${pageContext.request.contextPath}/admin/cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
 				</li>
@@ -171,6 +195,7 @@
 						<li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/job/manage"><i class="fa fa-circle-o"></i> 資料接收排程管理</a></li>
 					</ul>
 				</li>
+</sec:authorize>
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>
@@ -179,13 +204,15 @@
   
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
+		<!-- Content Header (Page header)
 		<section class="content-header">
 		</section>
-		<!-- Main content -->
+		 -->
+		<!-- Main content
 		<section class="content">
-			<decorator:body />
 		</section>
+		 -->
+		<decorator:body />
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
@@ -197,7 +224,7 @@
 			Ver.${versionCode}
 		</div>
 		<!-- Default to the left -->
-		<strong>Copyright &copy; 2015 <a href="#">Ftech Co.</a></strong> All rights reserved.
+		<strong>Copyright &copy; 2018 <a href="#">Fede tech Co.</a></strong> All rights reserved.
 	</footer> 
 </body>
 </html>

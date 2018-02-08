@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <section class="content">
 <div class="box-body"></div>
 
@@ -21,6 +22,14 @@
 		</table>
 	</div>
 </div>
+
+	<div class="box-header with-border">
+			TEST
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		This content will only be visible to users who have the "supervisor" authority in their list
+		 of <tt>GrantedAuthority</tt>s.
+		</sec:authorize>
+	</div>
 </section>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>

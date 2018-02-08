@@ -1,6 +1,7 @@
 package com.cmp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
+import com.cmp.Response;
 import com.cmp.model.Customer;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
@@ -50,4 +52,42 @@ public class ChannelCustController extends BaseController {
 		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, datalist, total);
 	}
+	
+	@RequestMapping(value="create", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public Map<Object, Object> createCust(
+			@RequestParam(name="cust_name", required=true) String name,
+			@RequestParam(name="gender", required=true) String gender,
+			@RequestParam(name="birthday", required=false) String birthday,
+			@RequestParam(name="phone", required=false) String phone,
+			@RequestParam(name="email", required=false) String email,
+			@RequestParam(name="weChat", required=false) String weChat,
+			@RequestParam(name="city", required=false) String city,
+			@RequestParam(name="address", required=false) String address) {
+		try {
+			custService.createCust(name, gender, birthday, phone, email, weChat, city, address);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return super.apiError(super.getLineNumber(), e.getMessage());
+		}
+		//accountLogService.insertAccountLog(AccountLogService.LOG_NODE_INSERT, "");
+		return super.apiSuccess(200, "新增成功");
+	}
+	
+//	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
+//	@ResponseBody
+//	public String updateCust(
+//			@RequestParam(name="para_id", required=true) Integer id,
+//			@RequestParam(name="para_name", required=true) String name,
+//			@RequestParam(name="para_description", required=true) String description,
+//			@RequestParam(name="para_class", required=true) String parameterClass,
+//			@RequestParam(name="para_type", required=true) String type,
+//			@RequestParam(name="para_min", required=true) String min,
+//			@RequestParam(name="para_max", required=true) String max,
+//			@RequestParam(name="para_sort", required=true) String sort) {
+//		Map<Object, Object> result = custService.updateCust(id, name, description, parameterClass, type, min, max, sort);
+//		//accountLogService.insertAccountLog(AccountLogService.LOG_NODE_UPDATE, "");
+//		return result;
+//	}
 }
