@@ -124,7 +124,7 @@
 	<footer>
 	<nav class="navbar navbar-HF navbar-fixed-bottom">
 		<div>
-			Powered by Ftech&nbsp;&copy;&nbsp;2018 <a href="#">Ftech</a> Co., Ltd. All Rights Reserved. <br />
+			Powered by <strong><a href="#">Fede tech Co.</a></strong>&nbsp;&copy;&nbsp;2018 , Ltd. All Rights Reserved. <br />
 		</div>
 	</nav>
 	</footer>

@@ -32,6 +32,10 @@ public class Customer implements java.io.Serializable {
 	private String phone;
     
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", nullable = true)
+    private Status status;
+
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     
@@ -47,22 +51,46 @@ public class Customer implements java.io.Serializable {
     @Column(name = "update_by", nullable = true)
 	private String updateBy;
     
+    @Column(name = "address", nullable = true)
+	private String address;
+    
+    @Column(name = "birthday", nullable = true)
+	private Date birthday;
+    
+    @Column(name = "gender", nullable = true)
+	private Boolean gender;
+    
+    @Column(name = "email", nullable = true)
+	private String email;
+    
+    @Column(name = "weChat", nullable = true)
+	private String weChat;
+    
+
 	public Customer() {
 	}
-
-	public Customer(int id, String name, String city, String phone, User user, Timestamp createTime, String createBy,
-			Timestamp updateTime, String updateBy) {
+	
+	public Customer(int id, String name, String city, String phone, Status status, User user, Timestamp createTime,
+			String createBy, Timestamp updateTime, String updateBy, String address, Date birthday, Boolean gender,
+			String email, String weChat) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.city = city;
 		this.phone = phone;
+		this.status = status;
 		this.user = user;
 		this.createTime = createTime;
 		this.createBy = createBy;
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
+		this.address = address;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.email = email;
+		this.weChat = weChat;
 	}
+
 
 	public int getId() {
 		return id;
@@ -94,6 +122,14 @@ public class Customer implements java.io.Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public User getUser() {
@@ -135,4 +171,46 @@ public class Customer implements java.io.Serializable {
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public Boolean getGender() {
+		return gender;
+	}
+
+	public void setGender(Boolean gender) {
+		this.gender = gender;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWeChat() {
+		return weChat;
+	}
+
+	public void setWeChat(String weChat) {
+		this.weChat = weChat;
+	}
+
+
 }

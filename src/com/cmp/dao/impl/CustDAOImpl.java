@@ -11,12 +11,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
 import com.cmp.model.Customer;
+import com.cmp.model.User;
 
 
 @Repository
 @Transactional
 public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 
+	@Override
+	public Customer findCustById(int id) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Customer c ")
+		  .append(" where 1=1 ")
+		  .append(" and c.id = ? ");
+		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), id);
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
+	
+	
+	
+	
+	
 	@Override
 	public List<Customer> findCustByUserId(String userId, Integer start,Integer length) {
 		StringBuffer sb = new StringBuffer();

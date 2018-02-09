@@ -88,11 +88,11 @@ public class BaseController {
 	 * 
 	 * @return
 	 */
-	public Map<Object, Object> apiSuccess() {
+	public Map<Object, Object> apiSuccess(int code, String message) {
 		Map<Object, Object> result = new HashMap<Object, Object>();
 		
-		result.put("code", "0");
-		result.put("message", "成功");
+		result.put("code", code);
+		result.put("message", message);
 		
 		return result;
 	}
@@ -104,10 +104,10 @@ public class BaseController {
 	 * @param message
 	 * @return
 	 */
-	public Map<Object, Object> apiError(String message) {
+	public Map<Object, Object> apiError(int code, String message) {
 		Map<Object, Object> result = new HashMap<Object, Object>();
 		
-		result.put("code", "-1");
+		result.put("code", code);
 		result.put("message", "錯誤:" + message);
 		
 		return result;
@@ -151,5 +151,9 @@ public class BaseController {
         }
 
         return result.toString();
+    }
+    
+    public static int getLineNumber() {
+        return Thread.currentThread().getStackTrace()[2].getLineNumber();
     }
 }

@@ -6,6 +6,7 @@ import com.cmp.model.Customer;
 
 
 public interface CustomerDAO {
+	Customer findCustById(int id);
 	List<Customer> findCustByUserId(String userId, Integer start,Integer length);
 	long countCustByUserId(String userId);
 	
