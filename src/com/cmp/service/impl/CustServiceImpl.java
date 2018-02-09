@@ -27,6 +27,11 @@ public class CustServiceImpl implements CustService {
 	private StatusDAO statusDAO;
 	
 	@Override
+	public Customer findCustById(int id){
+		return customerDAO.findCustById(id);
+	}
+	
+	@Override
 	public List<Customer> findCustByUserId(String userId, Integer start,Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 //		System.out.println(securityUser.getUser().getId());

@@ -20,6 +20,7 @@
 					<th>City</th>
 					<th>Address</th>
 					<th>Status</th>
+					<th>Option</th>
 				</tr>
 			</thead>
 		</table>
@@ -37,7 +38,7 @@
       	</div>
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit">
-            	<input type="hidden" name="group_id" id="group_id" value="" />
+            	<input type="hidden" name="cust_id" id="cust_id" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
 	                  <label for="cust_name">Name</label>
@@ -47,7 +48,7 @@
 	            <div class="box-body">
 	                <div class="form-group">
 						<label>Gender</label>
-						<span style="position: relative; "><input type="radio" name="gender" id="male" value="M"/>男</span>
+						<span style="position: relative; ">					 <input type="radio" name="gender" id="male" value="M"  />男</span>
 						<span style="position: relative; margin-left: 10px;"><input type="radio" name="gender" id="female" value="F"/>女</span>
 	                </div>                              
 	            </div>
@@ -100,10 +101,85 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
 <script>
 var tblMain;
 var formAction;
 
+
+//[Add] 進入modal_Edit編輯
+function btnAddClicked() {
+	formAction = 'create';
+	$('#modal_Edit').modal();
+}
+//[Edit] 進入modal_Edit編輯
+function btnEditClicked(btn) {
+	console.log(btn.attr('custId'));
+	$.ajax({
+			url : '${pageContext.request.contextPath}/channel/cust/getCustById/' + btn.attr('custId'),
+			data : '',
+			type : "GET",
+			dataType : 'json',
+			async: false,
+
+			success : function(resp) {
+				console.log(resp);				
+				if (resp.code == "200") {
+					$('#cust_id').val(btn.attr('custId'));
+					$('#cust_name').val(resp.data.cust.name);
+					$('#gender').val(resp.data.cust.gender);
+					$('#birthday').val(resp.data.cust.birthday);
+					$('#phone').val(resp.data.cust.phone);
+					$('#email').val(resp.data.cust.email);
+					$('#weChat').val(resp.data.cust.weChat);
+					$('#city').val(resp.data.cust.city);
+					$('#address').val(resp.data.cust.address);
+					$('#status').val(resp.data.cust.status);
+					formAction = 'update';
+					$('#modal_Edit').modal();
+				} else {
+					alert(resp.message);
+				}
+			},
+
+			error : function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
+		});
+}
+
+//[Save] modal_Edit >>按下Save 儲存
+function btnGustSaveClicked() {
+	$.ajax({
+		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
+		data : $('#formEdit').serialize(),
+		type : "POST",
+		dataType : 'json',
+		async: false,
+		success : function(resp) {
+			console.log(resp);
+			
+			if (resp.code) {
+				alert(resp.message);
+				$('#modal_Edit').modal('hide');
+				
+				if (tblMain) {
+					tblMain.ajax.reload();
+				}
+			} else {
+				alert(resp);
+			}
+		},
+
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+	});
+}
+
+//[Init.]
 $(function() {
 	tblMain = $('#tblMain').DataTable(
 	{
@@ -115,9 +191,7 @@ $(function() {
 		"ajax" : {
 			"url" : '${pageContext.request.contextPath}/channel/cust/getCustByUserId.json',
 			"type" : 'GET',
-			"data" : function(d) {
-				//d.customParam = 'testestert';
-			}
+			"data" : function(d) {}
 		},
 		"columns" : [
 			{ "data" : "name" },
@@ -129,46 +203,17 @@ $(function() {
 			{ "data" : "city" },
 			{ "data" : "address" },
 			{ "data" : "status.name" }
-		]
+		],
+		"columnDefs" : [ {
+			"targets" : 9,
+			"data" : 'id',
+			"render" : function(data, type, row) {
+				return '<a href="#">'
+						+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
+						+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+			}
+		} ],
+		select: true
 	});
 });
-
-//按下Add 進入modal_Edit編輯
-function btnAddClicked() {
-	formAction = 'create';
-	$('#modal_Edit').modal();
-}
-//modal_Edit >>按下Save 儲存
-function btnGustSaveClicked() {
-	$.ajax({
-		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
-		data : $('#formEdit').serialize(),
-		type : "POST",
-		dataType : 'json',
-		async: false,
-		success : function(msg) {
-			console.log(msg);
-			
-			if (msg.code) {
-				if (msg.code == "0") {
-					alert('新增/修改成功');
-				} else {
-					alert('新增/修改失敗('+msg.message+')');
-				}
-				$('#modal_Edit').modal('hide');
-				
-				if (tblMain) {
-					tblMain.ajax.reload();
-				}
-			} else {
-				alert(msg);
-			}
-		},
-
-		error : function(xhr, ajaxOptions, thrownError) {
-			alert(xhr.status);
-			alert(thrownError);
-		}
-	});
-}
 </script>

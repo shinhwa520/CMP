@@ -26,7 +26,9 @@
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
 	<style type="text/css">
-	
+		.label{
+			font-size: 95%;
+		}
 		.box-body .form-group label{
 			width: 10%;
 		}

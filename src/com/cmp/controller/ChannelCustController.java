@@ -1,21 +1,23 @@
 package com.cmp.controller;
 
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
-import com.cmp.Response;
 import com.cmp.model.Customer;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
@@ -34,12 +36,8 @@ public class ChannelCustController extends BaseController {
 	}
 	
 	/**
-	 * 
-	 * 取得轉檔原始檔資料
-	 * 
-	 * @param start
-	 * @param length
-	 * @return
+	 * 取得Customer資料 by userId
+	 * @return DatatableResponse
 	 */
 	@RequestMapping(value="getCustByUserId.json", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody DatatableResponse getCustByUserId(
@@ -53,9 +51,27 @@ public class ChannelCustController extends BaseController {
 		return new DatatableResponse(total, datalist, total);
 	}
 	
+	/**
+	 * 取得Customer資料 by custId
+	 * @return AppResponse
+	 */
+	@RequestMapping(value="getCustById/{custId}", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody AppResponse getCustById(@PathVariable Integer custId) {
+		try {
+			Customer cust = custService.findCustById(custId);
+			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得Customer資料成功");
+			appResponse.putData("cust",  cust);
+			return appResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
+	
 	@RequestMapping(value="create", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
-	public Map<Object, Object> createCust(
+	public AppResponse createCust(
 			@RequestParam(name="cust_name", required=true) String name,
 			@RequestParam(name="gender", required=true) String gender,
 			@RequestParam(name="birthday", required=false) String birthday,
@@ -66,13 +82,14 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="address", required=false) String address) {
 		try {
 			custService.createCust(name, gender, birthday, phone, email, weChat, city, address);
+			return new AppResponse(HttpServletResponse.SC_OK, "新增成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
-			return super.apiError(super.getLineNumber(), e.getMessage());
+			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 		//accountLogService.insertAccountLog(AccountLogService.LOG_NODE_INSERT, "");
-		return super.apiSuccess(200, "新增成功");
+		
 	}
 	
 //	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")

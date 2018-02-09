@@ -55,7 +55,7 @@ $(function() {
 			"columns" : [
 				{ "data" : "id" },
 				{ "data" : "name" },
-				{ "data" : "status.id" },
+				{ "data" : "status.name" },
 				{ "data" : "phone" },
 				{ "data" : "email" }
 			],
