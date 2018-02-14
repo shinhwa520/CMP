@@ -88,23 +88,28 @@ public class ChannelCustController extends BaseController {
 			log.error(e);
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
-		//accountLogService.insertAccountLog(AccountLogService.LOG_NODE_INSERT, "");
 		
 	}
 	
-//	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
-//	@ResponseBody
-//	public String updateCust(
-//			@RequestParam(name="para_id", required=true) Integer id,
-//			@RequestParam(name="para_name", required=true) String name,
-//			@RequestParam(name="para_description", required=true) String description,
-//			@RequestParam(name="para_class", required=true) String parameterClass,
-//			@RequestParam(name="para_type", required=true) String type,
-//			@RequestParam(name="para_min", required=true) String min,
-//			@RequestParam(name="para_max", required=true) String max,
-//			@RequestParam(name="para_sort", required=true) String sort) {
-//		Map<Object, Object> result = custService.updateCust(id, name, description, parameterClass, type, min, max, sort);
-//		//accountLogService.insertAccountLog(AccountLogService.LOG_NODE_UPDATE, "");
-//		return result;
-//	}
+	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public AppResponse updateCust(
+			@RequestParam(name="cust_id", required=true) Integer id,
+			@RequestParam(name="cust_name", required=true) String name,
+			@RequestParam(name="gender", required=true) String gender,
+			@RequestParam(name="birthday", required=false) String birthday,
+			@RequestParam(name="phone", required=false) String phone,
+			@RequestParam(name="email", required=false) String email,
+			@RequestParam(name="weChat", required=false) String weChat,
+			@RequestParam(name="city", required=false) String city,
+			@RequestParam(name="address", required=false) String address) {
+		try {
+			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address);
+			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
 }

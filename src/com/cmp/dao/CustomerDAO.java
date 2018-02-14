@@ -13,4 +13,5 @@ public interface CustomerDAO {
 	public List<Customer> findCustByUserThroughApiModelId(String apiModelId);
 	
 	public void insertCustByModel(Customer customer);
+	public Customer saveCust(Customer cust);
 }

@@ -1,8 +1,7 @@
 package com.cmp.service;
 
+import java.util.Date;
 import java.util.List;
-
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cmp.model.Customer;
 
@@ -11,4 +10,5 @@ public interface CustService {
 	List<Customer> findCustByUserId(String userId, Integer start,Integer length);
 	long countCustByUserId(String userId);
 	void createCust(String name, String gender, String birthday, String phone, String email, String weChat, String city, String address);
+	void updateCust(int id, String name, String gender, Date birthday, String phone, String email, String weChat, String city, String address);
 }

@@ -1,6 +1,7 @@
 package com.cmp.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -58,7 +59,7 @@ public class Customer implements java.io.Serializable {
 	private Date birthday;
     
     @Column(name = "gender", nullable = true)
-	private Boolean gender;
+	private String gender;
     
     @Column(name = "email", nullable = true)
 	private String email;
@@ -66,12 +67,12 @@ public class Customer implements java.io.Serializable {
     @Column(name = "weChat", nullable = true)
 	private String weChat;
     
-
+    
 	public Customer() {
 	}
 	
 	public Customer(int id, String name, String city, String phone, Status status, User user, Timestamp createTime,
-			String createBy, Timestamp updateTime, String updateBy, String address, Date birthday, Boolean gender,
+			String createBy, Timestamp updateTime, String updateBy, String address, Date birthday, String gender,
 			String email, String weChat) {
 		super();
 		this.id = id;
@@ -188,11 +189,11 @@ public class Customer implements java.io.Serializable {
 		this.birthday = birthday;
 	}
 
-	public Boolean getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Boolean gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -210,6 +211,16 @@ public class Customer implements java.io.Serializable {
 
 	public void setWeChat(String weChat) {
 		this.weChat = weChat;
+	}
+
+	public String getBirthdayStr() {
+		if(null==getBirthday()){
+			return null;
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // HH是24小時制，hh是12小時制
+			return sdf.format(getBirthday());
+		}
+
 	}
 
 

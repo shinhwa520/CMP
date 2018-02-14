@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/buttons.dataTables.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/editor.dataTables.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/select.dataTables.css">
@@ -24,7 +25,11 @@
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
 	<style type="text/css">
 		.label{
 			font-size: 95%;
@@ -49,17 +54,41 @@
 		}
 	</style>
 	<script>
-	/*
-		.adminView{
-		    display:none;
+		Date.prototype.Format = function(fmt) { //author: meizz
+	
+		    var o = {
+		        "M+": this.getMonth() + 1,
+		        //月份
+	
+		        "d+": this.getDate(),
+		        //日
+	
+		        "h+": this.getHours(),
+		        //小时
+	
+		        "m+": this.getMinutes(),
+		        //分
+	
+		        "s+": this.getSeconds(),
+		        //秒
+	
+		        "q+": Math.floor((this.getMonth() + 3) / 3),
+		        //季度
+	
+		        "S": this.getMilliseconds() //毫秒
+	
+		    };
+		    if (/(y+)/.test(fmt)) {
+		        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		    }
+		    for (var k in o) {
+		        if (new RegExp("(" + k + ")").test(fmt)) {
+		            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		        }
+		    }
+		    return fmt;
 		}
-		var userRole = '${userRole}';
-		$(function() {
-			if('ADMIN'==userRole) {
-				$('.adminView').show();
-			}
-		});
-		*/
+		
 		function successMessage(message) {
 			var msg = $('#message');
 			msg.addClass('alert-info');
@@ -69,6 +98,7 @@
 				msg.fadeOut();
 			}, 3000);
 		}
+		
 		function errorMessage(message) {
 			var msg = $('#message');
 			$(window).scrollTop(msg.offset().top);
@@ -98,7 +128,7 @@
 	<nav class="navbar navbar-static-top" role="navigation">
 		<!-- Sidebar toggle button-->
 		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-			<span class="sr-only">Toggle navigation</span>
+		<span class="sr-only">Toggle navigation</span>
 		</a>
 		<!-- Navbar Right Menu -->
 		<div class="navbar-custom-menu">
@@ -163,6 +193,9 @@
 			
 			<!-- Sidebar Menu -->
 			<ul class="sidebar-menu">
+				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
+					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"><i class="fa fa-user"></i> <span>個人資訊</span></a>
+				</li>
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/user/list"><i class="fa fa-user"></i> <span>我的渠道商</span></a>
 				</li>

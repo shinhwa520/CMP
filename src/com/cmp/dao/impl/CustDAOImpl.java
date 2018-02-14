@@ -78,4 +78,10 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	public void insertCustByModel(Customer customer) {
 		getHibernateTemplate().save(customer);
 	}
+	
+	@Override
+	public Customer saveCust(Customer cust) {
+		return (Customer) getHibernateTemplate().merge(cust);
+//	   sessionFactory.getCurrentSession().save(user);
+	}
 }

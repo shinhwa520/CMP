@@ -98,10 +98,6 @@
   </div>
 </div>
 <!--/.燈箱 Edit -->
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
 <script>
 var tblMain;
 var formAction;
@@ -110,6 +106,17 @@ var formAction;
 //[Add] 進入modal_Edit編輯
 function btnAddClicked() {
 	formAction = 'create';
+	$('#cust_id').val('');
+	$('#cust_name').val('');
+	$("input[name=gender][value='M']").attr('checked',true);
+	$('#birthday').val('');
+	$('#phone').val('');
+	$('#email').val('');
+	$('#weChat').val('');
+	$('#city').val('');
+	$('#address').val('');
+	$('#status').val('');
+	
 	$('#modal_Edit').modal();
 }
 //[Edit] 進入modal_Edit編輯
@@ -125,17 +132,17 @@ function btnEditClicked(btn) {
 			success : function(resp) {
 				console.log(resp);				
 				if (resp.code == "200") {
+					formAction = 'update';
 					$('#cust_id').val(btn.attr('custId'));
 					$('#cust_name').val(resp.data.cust.name);
-					$('#gender').val(resp.data.cust.gender);
-					$('#birthday').val(resp.data.cust.birthday);
+					$("input[name=gender][value="+resp.data.cust.gender+"]").attr('checked',true);
+					$('#birthday').val(resp.data.cust.birthdayStr);
 					$('#phone').val(resp.data.cust.phone);
 					$('#email').val(resp.data.cust.email);
 					$('#weChat').val(resp.data.cust.weChat);
 					$('#city').val(resp.data.cust.city);
 					$('#address').val(resp.data.cust.address);
 					$('#status').val(resp.data.cust.status);
-					formAction = 'update';
 					$('#modal_Edit').modal();
 				} else {
 					alert(resp.message);
@@ -204,16 +211,30 @@ $(function() {
 			{ "data" : "address" },
 			{ "data" : "status.name" }
 		],
-		"columnDefs" : [ {
-			"targets" : 9,
-			"data" : 'id',
+		"columnDefs" : [ 
+			{
+			"targets" : 2,
 			"render" : function(data, type, row) {
-				return '<a href="#">'
-						+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-						+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+				return (new Date(data)).Format("yyyy-MM-dd");
+				}
+			},
+			{
+				"targets" : 9,
+				"data" : 'id',
+				"render" : function(data, type, row) {
+					return '<a href="#">'
+							+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
+							+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+				}
 			}
-		} ],
+		],
 		select: true
+	});
+
+	$('#birthday').datepicker({
+        dateFormat: 'yy-mm-dd',
+		yearRange: "-100:+0",
+		changeYear: true
 	});
 });
 </script>

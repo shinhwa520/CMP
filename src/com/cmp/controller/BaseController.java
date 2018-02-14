@@ -1,7 +1,11 @@
 package com.cmp.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,10 +27,13 @@ import com.cmp.security.SecurityUtil;
 
 public class BaseController {
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
-	
+    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	public BaseController() {
 		super();
+		sdfDate.setTimeZone(TimeZone.getTimeZone("GMT"));
+		sdfDateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}
 	
 	/**
@@ -151,6 +158,32 @@ public class BaseController {
         }
 
         return result.toString();
+    }
+    
+    protected Date validateDate(String date) {
+        Date d = null;
+        if (null == date) {
+            return d;
+        }
+        try {
+            d = sdfDate.parse(date);
+        } catch (ParseException e) {
+            return d;
+        }
+        return d;
+    }
+
+    protected Date validateDateTime(String date) {
+        Date d = null;
+        if (null == date) {
+            return d;
+        }
+        try {
+            d = sdfDateTime.parse(date);
+        } catch (ParseException e) {
+            return d;
+        }
+        return d;
     }
     
     public static int getLineNumber() {

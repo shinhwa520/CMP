@@ -17,6 +17,13 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	
 	@Override
+	public User findUserById(String id){
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+//		System.out.println(securityUser.getUser().getId());
+		return userDAO.findUserById(id);
+	}
+	
+	@Override
 	public List<User> findUserByChannelId(String channelId, Integer start, Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 //		System.out.println(securityUser.getUser().getId());

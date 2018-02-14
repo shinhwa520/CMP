@@ -1,6 +1,7 @@
 package com.cmp.service.impl;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +50,7 @@ public class CustServiceImpl implements CustService {
 		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
 		Customer cust = new Customer();
 		cust.setName(name);
-		cust.setGender(StringUtils.equals("M", gender));
+		cust.setGender(gender);
 //		cust.setBirthday(birthday);
 		cust.setPhone(phone);
 		cust.setEmail(email);
@@ -63,6 +64,30 @@ public class CustServiceImpl implements CustService {
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		cust.setUpdateBy(user.getName());
 		
-		customerDAO.insertCustByModel(cust);
+		customerDAO.saveCust(cust);
+	}
+	
+	
+	
+	@Override
+	public void updateCust(int id, String name, String gender, Date birthday, String phone, String email, String weChat, String city, String address){
+		System.out.println(SecurityUtil.getSecurityUser().getUser().getId());
+		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
+		Customer cust = customerDAO.findCustById(id);
+		cust.setName(name);
+		cust.setGender(gender);
+		cust.setBirthday(birthday);
+		cust.setPhone(phone);
+		cust.setEmail(email);
+		cust.setWeChat(weChat);
+		cust.setCity(city);
+		cust.setAddress(address);
+		cust.setUser(user);
+		cust.setStatus(statusDAO.findStatusById(1));
+//		cust.setCreateTime(new Timestamp(System.currentTimeMillis()));
+//		cust.setCreateBy(user.getName());
+		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		cust.setUpdateBy(user.getName());
+		customerDAO.saveCust(cust);
 	}
 }
