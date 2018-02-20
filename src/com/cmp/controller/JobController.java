@@ -30,13 +30,16 @@ public class JobController extends BaseController {
     		
     	} catch (Exception e) {
 			e.printStackTrace();
+			
+		} finally {
+			setActiveMenu(model, MenuItem.API_MANAGE);
 		}
-    	setActiveMenu(model, MenuItem.API_MANAGE);
+    	
         return "api/job_manage";
     }
 	
 	@RequestMapping(value = { "/job/add" }, method = RequestMethod.POST)
-	public String doAddJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String doAddJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doAddJob");
 		try {
 			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/1 * * * ?");
@@ -45,11 +48,11 @@ public class JobController extends BaseController {
 			e.printStackTrace();
 		}
 		
-		return "api/job_manage";
+		return retrieveManage(model, form, request, response);
 	}
 	
 	@RequestMapping(value = { "/job/delete" }, method = RequestMethod.POST)
-	public String doDeleteJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String doDeleteJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doDeleteJob");
 		try {
 			jobService.deleteJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
@@ -58,11 +61,11 @@ public class JobController extends BaseController {
 			e.printStackTrace();
 		}
 		
-		return "api/job_manage";
+		return retrieveManage(model, form, request, response);
 	}
 	
 	@RequestMapping(value = { "/job/modify" }, method = RequestMethod.POST)
-	public String doModifyJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String doModifyJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doModifyJob");
 		try {
 			
@@ -70,11 +73,11 @@ public class JobController extends BaseController {
 			e.printStackTrace();
 		}
 		
-		return "api/job_manage";
+		return retrieveManage(model, form, request, response);
 	}
 	
 	@RequestMapping(value = { "/job/pause" }, method = RequestMethod.POST)
-	public String doPauseJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String doPauseJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doPauseJob");
 		try {
 			jobService.pauseJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
@@ -83,11 +86,11 @@ public class JobController extends BaseController {
 			e.printStackTrace();
 		}
 		
-		return "api/job_manage";
+		return retrieveManage(model, form, request, response);
 	}
 	
 	@RequestMapping(value = { "/job/resume" }, method = RequestMethod.POST)
-	public String doResumeJob(@ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String doResumeJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doResumeJob");
 		try {
 			jobService.resumeJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
@@ -96,7 +99,7 @@ public class JobController extends BaseController {
 			e.printStackTrace();
 		}
 		
-		return "api/job_manage";
+		return retrieveManage(model, form, request, response);
 	}
 
 	@Autowired

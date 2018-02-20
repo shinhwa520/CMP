@@ -36,8 +36,11 @@ public class ApiController extends BaseController {
     		
     	} catch (Exception e) {
     		e.printStackTrace();
+    		
+    	} finally {
+    		setActiveMenu(model, MenuItem.API_MAIN);
     	}
-    	setActiveMenu(model, MenuItem.API_MAIN);
+    	
         return "api/retrieve_main";
     }
 	
@@ -49,13 +52,15 @@ public class ApiController extends BaseController {
     		
     	} catch (Exception e) {
     		e.printStackTrace();
+    		
+    	} finally {
+    		setActiveMenu(model, MenuItem.API_MAIN);
     	}
-    	setActiveMenu(model, MenuItem.API_MAIN);
         return "api/api_list";
     }
 	
 	@RequestMapping(value = { "/api/query" }, method = RequestMethod.POST)
-    public String doQuery(@ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
+    public String doQuery(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
     		List<ApiServiceVO> returnList = apiService.findData(form.getWebName(), null, null);
@@ -70,13 +75,16 @@ public class ApiController extends BaseController {
     		
     	} catch (Exception e) {
     		e.printStackTrace();
+    		
+    	} finally {
+    		setActiveMenu(model, MenuItem.API_MAIN);
     	}
     	
         return "api/retrieve_main";
     }
 	
 	@RequestMapping(value = { "/api/retrieve" }, method = RequestMethod.POST)
-	public String doRetrieve(@ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String doRetrieve(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doRetrieve");
 		try {
 			System.out.println(form.getChkedApiUrls().length);
@@ -91,7 +99,7 @@ public class ApiController extends BaseController {
 			e.printStackTrace();
 		}
 		
-		return doQuery(form, request, response);
+		return doQuery(model, form, request, response);
 	}
 	
 	@Autowired

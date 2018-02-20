@@ -1,32 +1,52 @@
 package com.cmp.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cmp.MenuItem;
+import com.cmp.form.IndexForm;
+import com.cmp.service.BillboardService;
+import com.cmp.service.vo.BillboardServiceVO;
 
 @Controller
 @RequestMapping("/")
 public class LoginContoller extends BaseController {
+	
+	BillboardService billboardService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model, Principal principal) {
-//		model.addAttribute("message", "You are logged in as " + principal.getName());
+	public String index(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form) {
+		List<BillboardServiceVO> billboardList;
+		try {
+			if (null == principal) {
+				return "redirect:/login";
+			}
+			System.out.println(principal.getName());
+			
+			billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
+			form.setBillboardList(billboardList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			setActiveMenu(model, MenuItem.INDEX);
+		}
 		
-		if(null==principal) return "redirect:/login";
-		System.out.println(principal.getName());
-		setActiveMenu(model, MenuItem.MY_USER);
-		return "channel/user";
+		return "index";
 	}
 	
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -44,4 +64,9 @@ public class LoginContoller extends BaseController {
 
 		return "redirect:/login";
     }
+
+    @Autowired
+	public void setBillboardService(BillboardService billboardService) {
+		this.billboardService = billboardService;
+	}
 }

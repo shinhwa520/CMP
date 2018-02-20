@@ -72,10 +72,13 @@ public class BaseController {
 		boolean isAdmin = false;
 		boolean isAvailable = false;
 		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-		String userName = securityUser.getUsername();
-		String userRole = securityUser.getUser().getRole().getName();
 		
-		
+		String userName = "";
+		String userRole = "";
+		if (securityUser != null) {
+			userName = securityUser.getUsername();
+			userRole = securityUser.getUser().getRole().getName();
+		}
 		
 		model.addAttribute("versionCode", Constants.VERSION_CODE);
 //		model.addAttribute("accountId", account.getId());
