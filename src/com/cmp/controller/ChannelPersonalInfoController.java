@@ -1,15 +1,21 @@
 package com.cmp.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmp.AppResponse;
 import com.cmp.MenuItem;
+import com.cmp.dao.StatusDAO;
 import com.cmp.dao.WebApiDetailDAO;
 import com.cmp.form.registration.UserInfoForm;
 import com.cmp.model.User;
@@ -25,7 +31,8 @@ public class ChannelPersonalInfoController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private WebApiDetailDAO webApiDetailDAO;
-	
+	@Autowired
+	private StatusDAO statusDAO;
 	/**
 	 * 取得 Personal Info.
 	 * 
@@ -35,18 +42,37 @@ public class ChannelPersonalInfoController extends BaseController {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
 		User user = userService.findUserById(userId);
-		form.setUserId(userId);
+		setUserInfoForm(user, form);
+		setActiveMenu(model, MenuItem.PERSONAL_INFO);
+		return "channel/personal_info";
+	}
+	
+	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public AppResponse updateUserPersonalInfo(@ModelAttribute("UserInfoForm")UserInfoForm form, Model model) {
+		try {
+			String userId = SecurityUtil.getSecurityUser().getUser().getId();
+			User user = userService.findUserById(userId);
+			BeanUtils.copyProperties(form, user, "id", "status");
+			userService.saveUserInfo(user);
+			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
+	
+	private void setUserInfoForm(User user, UserInfoForm form){
 		form.setName(user.getName());
 		form.setAccount(user.getAccount());
 		form.setPassword(user.getPassword());
 		form.setPhone(user.getPhone());
-		form.setChannelUrl("URL");
 		WebApiDetail apiDetail = webApiDetailDAO.findWebApiDetailByUserId(user.getId());
 		if(null == apiDetail)
 			form.setChannelUrl("系統生成中...請稍候");
 		else
-			form.setChannelUrl(apiDetail.getParameterValues());;
-		setActiveMenu(model, MenuItem.PERSONAL_INFO);
-		return "channel/personal_info";
+			form.setChannelUrl(apiDetail.getParameterValues());
+		form.setStatusName(user.getStatus().getName());
 	}
 }

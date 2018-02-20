@@ -46,7 +46,8 @@ $(function() {
 				{ "data" : "name" },
 				{ "data" : "type" },
 				{ "data" : "sort" }
-			]
+			],
+			select: true
 		});
 	});
 </script>

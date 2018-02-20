@@ -131,7 +131,7 @@ function btnEditClicked(btn) {
 
 			success : function(resp) {
 				console.log(resp);				
-				if (resp.code == "200") {
+				if (resp.code == '200') {
 					formAction = 'update';
 					$('#cust_id').val(btn.attr('custId'));
 					$('#cust_name').val(resp.data.cust.name);
@@ -167,7 +167,7 @@ function btnGustSaveClicked() {
 		success : function(resp) {
 			console.log(resp);
 			
-			if (resp.code) {
+			if (resp.code == '200') {
 				alert(resp.message);
 				$('#modal_Edit').modal('hide');
 				

@@ -44,7 +44,8 @@ $(function() {
 				{ "data" : "id" },
 				{ "data" : "name" },
 				{ "data" : "desc" }
-			]
+			],
+			select: true
 		});
 	});
 </script>

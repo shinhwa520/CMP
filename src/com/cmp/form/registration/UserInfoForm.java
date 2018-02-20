@@ -16,6 +16,7 @@ public class UserInfoForm implements Serializable {
 	private String password;
 	private String phone;
 	private String channelUrl;
+	private String statusName;
 	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
 	private int quesMapkeySize;
 	
@@ -70,6 +71,12 @@ public class UserInfoForm implements Serializable {
 	}
 	public void setQuesMapkeySize(int quesMapkeySize) {
 		this.quesMapkeySize = quesMapkeySize;
+	}
+	public String getStatusName() {
+		return statusName;
+	}
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
 
 }

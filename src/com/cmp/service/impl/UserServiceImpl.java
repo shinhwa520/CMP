@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public User saveUserInfo(User user){
+		return userDAO.saveUser(user);
+	}
+	
+	@Override
 	public List<User> findUserByChannelId(String channelId, Integer start, Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 //		System.out.println(securityUser.getUser().getId());

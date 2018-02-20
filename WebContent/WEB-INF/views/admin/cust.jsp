@@ -48,7 +48,8 @@ $(function() {
 				{ "data" : "city" },
 				{ "data" : "phone" },
 				{ "data" : "user.id" }
-			]
+			],
+			select: true
 		});
 	});
 </script>

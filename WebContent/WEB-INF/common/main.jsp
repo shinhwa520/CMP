@@ -202,15 +202,15 @@
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
 				</li>
-<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ASST','ROLE_VEN')">
 				<li class="<c:if test="${active eq 'ADMIN_USER'}">active</c:if> sidebar-item adminView" >
 					<a href="${pageContext.request.contextPath}/admin/user/list"><i class="fa fa-user"></i> <span>USER</span></a>
-				</li>
-
-				
+				</li>				
 				<li class="<c:if test="${active eq 'ADMIN_CUST'}">active</c:if> sidebar-item adminView">
 					<a href="${pageContext.request.contextPath}/admin/cust/list"><i class="fa fa-user"></i> <span>CUST</span></a>
 				</li>
+</sec:authorize>
+<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 				<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item adminView">
 					<a href="${pageContext.request.contextPath}/admin/role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
 				</li>

@@ -77,7 +77,8 @@ $(function() {
 								+ '<i class="fa fa-pencil" style="margin-right:5px"></i>view cust.</span></a>';
 					}
 				}
-			]
+			],
+			select: true
 		});
 	});
 </script>
