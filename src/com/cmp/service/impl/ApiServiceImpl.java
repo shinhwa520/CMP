@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +29,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
+import com.cmp.dao.StatusDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.WebApiMasterDAO;
 import com.cmp.dao.WebApiSettingDAO;
 import com.cmp.dao.vo.WebApiDAOVO;
 import com.cmp.model.Customer;
+import com.cmp.model.Status;
 import com.cmp.model.User;
 import com.cmp.model.WebApiDetail;
 import com.cmp.model.WebApiMaster;
@@ -54,6 +55,7 @@ public class ApiServiceImpl implements ApiService {
 	private WebApiSettingDAO webApiSettingDAO;
 	private CustomerDAO customerDAO;
 	private UserDAO userDAO;
+	private StatusDAO statusDAO;
 	
 	private Map<String, String> fieldMap = new HashMap<String, String>();
 	
@@ -264,6 +266,10 @@ public class ApiServiceImpl implements ApiService {
 						continue;
 						
 					} else {
+						//Step 6-1.查出Cust第一次抓回資料時的Status.status_id
+						Status status = statusDAO.findStatus("CUST", 1);
+						status = (status == null) ? new Status(1, null, null, 1) : status;
+						
 						Map<String, String> cusMap = custInfoEntry.getValue();
 						
 						Customer cust = new Customer();
@@ -277,6 +283,7 @@ public class ApiServiceImpl implements ApiService {
 						cust.setCreateBy("SYS");
 						cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 						cust.setUpdateBy("SYS");
+						cust.setStatus(status);
 						
 						customerDAO.insertCustByModel(cust);
 					}
@@ -593,5 +600,10 @@ public class ApiServiceImpl implements ApiService {
 	@Autowired
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	@Autowired
+	public void setStatusDAO(StatusDAO statusDAO) {
+		this.statusDAO = statusDAO;
 	}
 }
