@@ -31,6 +31,11 @@
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
 	<style type="text/css">
+		
+		.main-header .sidebar-toggle:before{
+			content: "\f0d9";
+		}
+		
 		.label{
 			font-size: 95%;
 		}
@@ -91,24 +96,50 @@
 		
 		function successMessage(message) {
 			var msg = $('#message');
-			msg.addClass('alert-info');
-			msg.append(message);
+			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
+			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
+			msg.html(message);
 			msg.fadeIn();
 			setTimeout(function(){
 				msg.fadeOut();
-			}, 3000);
+			}, 2000);
 		}
 		
 		function errorMessage(message) {
 			var msg = $('#message');
 			$(window).scrollTop(msg.offset().top);
-			msg.addClass('alert-danger');
-			msg.append(message);
+			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
+			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
+			msg.html(message);
 			
 			msg.fadeIn();
 			setTimeout(function(){
 				msg.fadeOut();
-			}, 3000);
+			}, 2000);
+		}
+
+		//[successMsgModal.]
+		function successMsgModal(message) {
+			var msg = $('.modal_msg');
+			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
+			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
+			msg.html(message);
+			$(msg).fadeIn();
+			setTimeout(function(){
+				$(msg).fadeOut();
+			}, 2000);
+		}
+
+		//[errorMsgModal.]
+		function errorMsgModal(message) {
+			var msg = $('.modal_msg');
+			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
+			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
+			msg.html(message);
+			$(msg).fadeIn();
+			setTimeout(function(){
+				$(msg).fadeOut();
+			}, 2000);
 		}
 	</script>
 </head>
@@ -136,35 +167,35 @@
 			
 				<!-- User Account Menu -->
 				<li class="dropdown user user-menu">
-				<!-- Menu Toggle Button -->
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<!-- The user image in the navbar-->
-					<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-					<!-- hidden-xs hides the username on small devices so only the image appears. -->
-					<span class="hidden-xs">${username}</span>
-				</a>
-				<ul class="dropdown-menu">
-					<!-- The user image in the menu -->
-					<li class="user-header">
-						<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-						<p>
-							<small>${username}</small>
-						</p>
-					</li>
-					<!-- Menu Body -->
-					
-					<!-- Menu Footer-->
-					<li class="user-footer">
-						<!-- 
-						<div class="pull-left">
-							<a href="#" class="btn btn-default btn-flat">Register</a>
-						</div>
-						-->
-						<div class="pull-right">
-							<a href="<c:url value="/logout" />" class="btn btn-default btn-flat">Sign out</a>
-						</div>
-					</li>
-				</ul>
+					<!-- Menu Toggle Button -->
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<!-- The user image in the navbar-->
+						<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+						<!-- hidden-xs hides the username on small devices so only the image appears. -->
+						<span class="hidden-xs">${username}</span>
+					</a>
+					<ul class="dropdown-menu">
+						<!-- The user image in the menu -->
+						<li class="user-header">
+							<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+							<p>
+								<small>${username}</small>
+							</p>
+						</li>
+						<!-- Menu Body -->
+						
+						<!-- Menu Footer-->
+						<li class="user-footer">
+							<!-- 
+							<div class="pull-left">
+								<a href="#" class="btn btn-default btn-flat">Register</a>
+							</div>
+							-->
+							<div class="pull-right">
+								<a href="<c:url value="/logout" />" class="btn btn-default btn-flat">Sign out</a>
+							</div>
+						</li>
+					</ul>
 				</li>
 				<!-- Control Sidebar Toggle Button -->
 			
@@ -175,7 +206,7 @@
   
   
 	<!-- Left side column. contains the logo and sidebar -->
-	<aside class="main-sidebar">
+	<aside id="main-sidebar" class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
 			
@@ -205,7 +236,6 @@
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
 				</li>
-				<!--<sec:authorize access="hasAnyRole('ROLE_ADMIN')">-->
 					<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item adminView">
 						<a href="${pageContext.request.contextPath}/admin/role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
 					</li>
@@ -236,7 +266,7 @@
 							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><i class="fa fa-circle-o"></i> 檔案維護</a></li>
 						</ul>
 					</li>
-				<!--</sec:authorize>-->
+				
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>

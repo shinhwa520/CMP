@@ -4,10 +4,10 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
 
-<SCRIPT type="text/javascript">
+<script>
 	$(function(){
 	    //+展開 -收合
-	    $("a").click(function(){ 
+	    $(".slideOption").click(function(){ 
 	    	var _this= $(this).attr("href"); 
 	    	if($(_this).css("display")=="none"){
 	      		$(_this).slideDown();
@@ -17,7 +17,7 @@
 	  	 	return false; 
 	 	}); 
 	});
-</SCRIPT>
+</script>
 
 <style>
 	.table {
@@ -60,7 +60,7 @@
 			<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
 				<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
 				 	<th width="5%">#${loop.count }</th>
-				   	<th width="80%"><a href="#bill_${loop.count }">${vo.title }</a></th>
+				   	<th width="80%"><a class="slideOption" href="#bill_${loop.count }">${vo.title }</a></th>
 				    <th width="15%">${vo.updateTime }</th>
 				</tr>
 				<tr>

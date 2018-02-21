@@ -36,12 +36,13 @@
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title">Edit</h4>
       	</div>
+		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit">
             	<input type="hidden" name="cust_id" id="cust_id" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="cust_name">Name</label>
+	                  <label for="cust_name">Name<span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="Enter Name">
 	                </div>                              
 	            </div>                         
@@ -60,7 +61,7 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="phone">Phone</label>
+	                  <label for="phone">Phone<span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone">
 	                </div>                              
 	            </div>  
@@ -106,6 +107,7 @@ var formAction;
 //[Add] 進入modal_Edit編輯
 function btnAddClicked() {
 	formAction = 'create';
+	$('.form-group').removeClass('has-error');
 	$('#cust_id').val('');
 	$('#cust_name').val('');
 	$("input[name=gender][value='M']").attr('checked',true);
@@ -119,9 +121,11 @@ function btnAddClicked() {
 	
 	$('#modal_Edit').modal();
 }
+
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
 	console.log(btn.attr('custId'));
+	$('.form-group').removeClass('has-error');
 	$.ajax({
 			url : '${pageContext.request.contextPath}/channel/cust/getCustById/' + btn.attr('custId'),
 			data : '',
@@ -158,6 +162,30 @@ function btnEditClicked(btn) {
 
 //[Save] modal_Edit >>按下Save 儲存
 function btnGustSaveClicked() {
+	var cust_name = $('#cust_name').val();
+	var phone = $('#phone').val();
+	//頁面輸入檢核
+	$('.form-group').removeClass('has-error');
+	var isError = false;
+	var errMsg = '';
+	if (''==cust_name.trim()) {
+		isError = true;
+		$('#cust_name').parents('.form-group').addClass('has-error');
+		errMsg += '！Name為必填<br/>';
+	}
+	if (''==phone.trim()) {
+		isError = true;
+		$('#phone').parents('.form-group').addClass('has-error');
+		errMsg += '！Phone為必填<br/>';
+	}
+
+	if(isError){
+		errorMsgModal(errMsg);
+		return false;
+	}
+	
+	
+	
 	$.ajax({
 		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
 		data : $('#formEdit').serialize(),
@@ -168,8 +196,11 @@ function btnGustSaveClicked() {
 			console.log(resp);
 			
 			if (resp.code == '200') {
-				alert(resp.message);
-				$('#modal_Edit').modal('hide');
+				successMsgModal(resp.message);
+				setTimeout(function(){
+					$('#modal_Edit').modal('hide');
+				}, 2000);
+				
 				
 				if (tblMain) {
 					tblMain.ajax.reload();
