@@ -104,14 +104,18 @@ public class BillboardServiceImpl implements BillboardService {
 			billContent.setUpdateBy("admin");
 			billContent.setUpdateTime(new Timestamp(new Date().getTime()));
 			
-			Date beginDate = 
-					(StringUtils.isNotBlank(bsVO.getBeginDateStr()) && StringUtils.isNotBlank(bsVO.getBeginTimeStr()))
-						? DATE_TIME_FORMAT.parse(bsVO.getBeginDateStr().concat(" ").concat(bsVO.getBeginTimeStr()))
-						: null;
-			Date endDate = 
-					(StringUtils.isNotBlank(bsVO.getEndDateStr()) && StringUtils.isNotBlank(bsVO.getEndTimeStr()))
-						? DATE_TIME_FORMAT.parse(bsVO.getEndDateStr().concat(" ").concat(bsVO.getEndTimeStr()))
-						: null;
+			String beginDateStr = 
+					StringUtils.isNotBlank(bsVO.getBeginDateStr()) ? 
+							bsVO.getBeginDateStr().concat(" ").concat(StringUtils.isNotBlank(bsVO.getBeginTimeStr()) ? bsVO.getBeginTimeStr() : "00:00:00")
+									: null;
+			Date beginDate = beginDateStr != null ? DATE_TIME_FORMAT.parse(beginDateStr) : null;
+			
+			String endDateStr = 
+					StringUtils.isNotBlank(bsVO.getEndDateStr()) ? 
+							bsVO.getEndDateStr().concat(" ").concat(StringUtils.isNotBlank(bsVO.getEndTimeStr()) ? bsVO.getEndTimeStr() : "00:00:00")
+									: null;
+			Date endDate = endDateStr != null ? DATE_TIME_FORMAT.parse(endDateStr) : null;
+			
 			billSetting.setId(isAdd ? UUID.randomUUID().toString().replace("-", "") : billSetting.getId());
 			billSetting.setOrderNum(1);
 			billSetting.setIsOpened(StringUtils.isNotBlank(bsVO.getIsOpenedChkbox()) ? bsVO.getIsOpenedChkbox() : "N");

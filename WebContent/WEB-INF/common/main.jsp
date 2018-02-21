@@ -260,8 +260,8 @@
 							<i class="fa fa-server"></i> <span>後台管理</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu <c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">menu-open</c:if>">
-							<li class="<c:if test="${active eq 'ADMIN_USER'}">active</c:if> sidebar-item adminView" ><a href="${pageContext.request.contextPath}/admin/user/list"><i class="fa fa-user"></i> <span>所有渠道商</span></a></li>
-							<li class="<c:if test="${active eq 'ADMIN_CUST'}">active</c:if> sidebar-item adminView"><a href="${pageContext.request.contextPath}/admin/cust/list"><i class="fa fa-user"></i> <span>所有客戶</span></a></li>
+							<li <c:if test="${active eq 'ADMIN_USER'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/user/list"><i class="fa fa-circle-o"></i> 所有渠道商</a></li>
+							<li <c:if test="${active eq 'ADMIN_CUST'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/cust/list"><i class="fa fa-circle-o"></i> 所有客戶</a></li>
 							<li <c:if test="${active eq 'MANAGE_BILLBOARD'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/billboard"><i class="fa fa-circle-o"></i> 公告維護</a></li>
 							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><i class="fa fa-circle-o"></i> 檔案維護</a></li>
 						</ul>

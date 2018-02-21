@@ -1,0 +1,154 @@
+package com.cmp.model;
+
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(
+	name = "files_public",
+	uniqueConstraints = {@UniqueConstraint(columnNames = {"seq_no"})}
+)
+public class FilesPublic {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "seq_no", unique = true)
+	private Integer seqNo;
+	
+	@Column(name = "file_name", nullable = false)
+	private String fileName;
+	
+	@Column(name = "file_extension", nullable = false)
+	private String fileEtension;
+	
+	@Column(name = "file_description", nullable = true)
+	private String fileDescription;
+	
+	@Column(name = "download_times", nullable = true)
+	private Integer downloadTimes;
+	
+	@Column(name = "create_time", nullable = true)
+	private Timestamp createTime;
+    
+    @Column(name = "create_by", nullable = true)
+	private String createBy;
+    
+    @Column(name = "update_time", nullable = true)
+	private Timestamp updateTime;
+    
+    @Column(name = "update_by", nullable = true)
+	private String updateBy;
+    
+    @OneToOne
+    @JoinColumn(name = "setting_id")
+	private FilesSetting filesSetting;
+    
+	public FilesPublic() {
+		super();
+	}
+
+	public FilesPublic(Integer seqNo, String fileName, String fileEtension, String fileDescription,
+			Integer downloadTimes, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
+			FilesSetting filesSetting) {
+		super();
+		this.seqNo = seqNo;
+		this.fileName = fileName;
+		this.fileEtension = fileEtension;
+		this.fileDescription = fileDescription;
+		this.downloadTimes = downloadTimes;
+		this.createTime = createTime;
+		this.createBy = createBy;
+		this.updateTime = updateTime;
+		this.updateBy = updateBy;
+		this.filesSetting = filesSetting;
+	}
+
+	public Integer getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileEtension() {
+		return fileEtension;
+	}
+
+	public void setFileEtension(String fileEtension) {
+		this.fileEtension = fileEtension;
+	}
+
+	public String getFileDescription() {
+		return fileDescription;
+	}
+
+	public void setFileDescription(String fileDescription) {
+		this.fileDescription = fileDescription;
+	}
+
+	public Integer getDownloadTimes() {
+		return downloadTimes;
+	}
+
+	public void setDownloadTimes(Integer downloadTimes) {
+		this.downloadTimes = downloadTimes;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public Timestamp getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public FilesSetting getFilesSetting() {
+		return filesSetting;
+	}
+
+	public void setFilesSetting(FilesSetting filesSetting) {
+		this.filesSetting = filesSetting;
+	}
+}

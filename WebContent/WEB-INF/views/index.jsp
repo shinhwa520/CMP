@@ -53,39 +53,42 @@
  
 <section class="content">
 <br />
-<div class="box-body" id="billboard">
-	<b>最新公告</b>
-	<c:if test="${!IndexForm.billboardList.isEmpty() }">
-		<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
-			<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
-				<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
-				 	<th width="5%">#${loop.count }</th>
-				   	<th width="80%"><a class="slideOption" href="#bill_${loop.count }">${vo.title }</a></th>
-				    <th width="15%">${vo.updateTime }</th>
-				</tr>
-				<tr>
-				 	<td colspan="9" class="content" bgcolor="#FFFFFF">
-				 		<c:choose>
-            				<c:when test="${vo.isOpenedChkbox eq 'Y'}">
-            					<div id="bill_${loop.count }"  style="display:inline;">  <!--控制細項顯示與隱藏 -->
-							      	${vo.content }
-							    </div>
-            				</c:when>
-            				<c:otherwise>
-            					<div id="bill_${loop.count }"  style="display:none;">  <!--控制細項顯示與隱藏 -->
-							      	${vo.content }
-							    </div>
-            				</c:otherwise>
-            			</c:choose>
-				   </td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if>
+<div class="box box-primary" id="billboard" style="padding:5px 5px;">
+	<b><font style="font-size: 1.5em;">最新公告</font>	</b>
+	<div style="height:40vh; overflow-y:scroll; ">
+		<c:if test="${!IndexForm.billboardList.isEmpty() }">
+			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
+				<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
+					<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
+					 	<th width="5%">#${loop.count }</th>
+					   	<th width="80%"><a class="slideOption" href="#bill_${loop.count }">${vo.title }</a></th>
+					    <th width="15%">${vo.updateTime }</th>
+					</tr>
+					<tr>
+					 	<td colspan="9" class="content" bgcolor="#FFFFFF">
+					 		<c:choose>
+	            				<c:when test="${vo.isOpenedChkbox eq 'Y'}">
+	            					<div id="bill_${loop.count }"  style="display:inline;">  <!--控制細項顯示與隱藏 -->
+								      	${vo.content }
+								    </div>
+	            				</c:when>
+	            				<c:otherwise>
+	            					<div id="bill_${loop.count }"  style="display:none;">  <!--控制細項顯示與隱藏 -->
+								      	${vo.content }
+								    </div>
+	            				</c:otherwise>
+	            			</c:choose>
+					   </td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+	</div>
+</div>
+<br/>
+<div class="box box-primary" id="file" style="padding:5px 5px;">
+	<b><font style="font-size: 1.5em;">共享資源</font></b>
 
 </div>
-<div class="box-body"></div>
-<div class="box box-primary">
 
-</div>
 </section>
