@@ -8,7 +8,7 @@
 		<h3 class="box-title">我的渠道商</h3>
 	</div>
 	<div class="box-body no-padding">
-		<table class="table table-striped" id="tblLog">
+		<table class="table table-striped" id="tblMain">
 			<thead>
 				<tr>
 					<th rowspan="2">Name</th>
@@ -74,21 +74,21 @@
 		        	<table style="width: 100%">
 		        		<tr>
 		        			<td style="width: 12%"><label>預計仲介渠道商</label></td>
-		        			<td style="width: 38%"><input type="text" class="form-control" name="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
 		        			<td style="width: 12%"><label>實際仲介渠道商</label></td>
-		        			<td style="width: 38%"><input type="text" readonly="true" class="form-control" name="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        		<tr>
 		        			<td style="width: 12%"><label>預計仲介客戶</label></td>
-		        			<td style="width: 38%"><input type="text" class="form-control" name="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
 		        			<td style="width: 12%"><label>實際仲介客戶</label></td>
-		        			<td style="width: 38%"><input type="text" readonly="true" class="form-control" name="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        		<tr>
 		        			<td style="width: 12%"><label>預計成交量</label></td>
-		        			<td style="width: 38%"><input type="text" class="form-control" name="volume" id="volume" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="volume" id="volume" style="width: 80%; text-align:right;"/></td>
 		        			<td style="width: 12%"><label>實際成交量</label></td>
-		        			<td style="width: 38%"><input type="text" readonly="true" class="form-control" name="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        	</table>                             
 		        </div>
@@ -107,11 +107,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 <script>
-var tblLog;
-
+var tblMain;
+var formAction = 'updateKpi';
 
 $(function() {
-	tblLog = $('#tblLog').DataTable(
+	tblMain = $('#tblMain').DataTable(
 		{
 			"bFilter" : false,
 			"ordering" : false,
@@ -168,12 +168,11 @@ function btnEditClicked(btn) {
 			success : function(resp) {
 				console.log(resp);				
 				if (resp.code == '200') {
-					formAction = 'update';
 					$('#user_id').val(btn.attr('userId'));
 					$('#user_name').val(resp.data.user.name);
 					$('#phone').val(resp.data.user.phone);
 					$('#email').val(resp.data.user.email);
-					$('#status').val(resp.data.user.status);
+					$('#statusName').val(resp.data.user.status.name);
 					$('#agent_user').val(resp.data.user.agent_user);
 					$('#_agent_user').val(resp.data.user._agent_user);
 					$('#agent_cust').val(resp.data.user.agent_cust);
@@ -197,22 +196,29 @@ function btnEditClicked(btn) {
 
 //[Save] modal_Edit >>按下Save 儲存
 function btnSaveClicked() {
-	var cust_name = $('#cust_name').val();
-	var phone = $('#phone').val();
+	var agent_user = $('#agent_user').val();
+	var agent_cust = $('#agent_cust').val();
+	var volume = $('#volume').val();
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
 	var errMsg = '';
-	if (''==cust_name.trim()) {
+	if (!validateInt(agent_user)) {
 		isError = true;
-		$('#cust_name').parents('.form-group').addClass('has-error');
-		errMsg += '！Name為必填<br/>';
+		$('#agent_user').parents('.form-group').addClass('has-error');
+		errMsg += '！預計仲介渠道商必須為數字<br/>';
 	}
-	if (''==phone.trim()) {
+	if (!validateInt(agent_cust)) {
 		isError = true;
-		$('#phone').parents('.form-group').addClass('has-error');
-		errMsg += '！Phone為必填<br/>';
+		$('#agent_cust').parents('.form-group').addClass('has-error');
+		errMsg += '！預計仲介客戶必須為數字<br/>';
 	}
+	if (!validateInt(volume)) {
+		isError = true;
+		$('#volume').parents('.form-group').addClass('has-error');
+		errMsg += '！預計成交量必須為數字<br/>';
+	}
+	
 
 	if(isError){
 		errorMsgModal(errMsg);
@@ -220,9 +226,8 @@ function btnSaveClicked() {
 	}
 	
 	
-	
 	$.ajax({
-		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
+		url : '${pageContext.request.contextPath}/channel/user/' + formAction,
 		data : $('#formEdit').serialize(),
 		type : "POST",
 		dataType : 'json',
@@ -250,6 +255,11 @@ function btnSaveClicked() {
 			alert(thrownError);
 		}
 	});
+}
+
+function validateInt(input) {
+	var regExp = /^\d+$/;
+	return regExp.test(input);
 }
 
 </script>

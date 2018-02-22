@@ -95,4 +95,22 @@ public class ChannelUserController extends BaseController {
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 	}
+	
+	@RequestMapping(value="updateKpi", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public AppResponse updateKpi(
+			@RequestParam(name="user_id", required=true) String userId,
+			@RequestParam(name="agent_user", required=true) int agent_user,
+			@RequestParam(name="agent_cust", required=true) int agent_cust,
+			@RequestParam(name="volume", required=true) int volume) {
+		try {
+			Date current = new Date();
+			userService.updateKpi(userId, sdfYearMonth.format(new Date()), agent_user, agent_cust, volume, current);
+			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
 }

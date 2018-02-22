@@ -25,7 +25,7 @@ public class UserKpi implements java.io.Serializable {
     private User user;
 
 
-	@Column(name = "year_month", nullable = false)
+	@Column(name = "year_mon", nullable = false)
 	private String yearMonth;
 	
 	@Column(name = "agent_user", nullable = false)

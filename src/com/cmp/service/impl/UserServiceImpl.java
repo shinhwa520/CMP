@@ -1,6 +1,7 @@
 package com.cmp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.cmp.dao.UserDAO;
 import com.cmp.dao.UserKpiDAO;
 import com.cmp.model.User;
 import com.cmp.model.UserKpi;
+import com.cmp.security.SecurityUtil;
 import com.cmp.service.UserService;
 
 @Service("userService")
@@ -77,5 +79,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public long countUserByChannelId(String channelId){
 		return userDAO.countUserByChannelId(channelId);
+	}
+	
+	
+	@Override
+	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current){
+		String editorId = SecurityUtil.getSecurityUser().getUser().getId();
+		UserKpi userKpi = new UserKpi(
+				String.valueOf(current.getTime())
+				,findUserById(userId)
+				,yearMonth
+				,agent_user
+				,agent_cust
+				,volume
+				,editorId
+				,current
+				,editorId
+				,current
+				);
+		userKpiDAO.saveUserKpi(userKpi);
 	}
 }
