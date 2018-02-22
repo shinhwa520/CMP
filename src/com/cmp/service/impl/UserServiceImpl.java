@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 			user.set_agent_user(((Long) objArray[1]).intValue());
 			user.set_agent_cust(((Long) objArray[2]).intValue());
 			user.set_volume(((Long) objArray[3]).intValue());
-			UserKpi kpi = userKpiDAO.findTokenByUserAndYearMonth(channelId, yearMonth);//查詢KPI設定
+			UserKpi kpi = userKpiDAO.findTokenByUserAndYearMonth(user.getId(), yearMonth);//查詢KPI設定
 			if( null!=kpi){
 				user.setAgent_user(kpi.getAgent_user());
 				user.setAgent_cust(kpi.getAgent_cust());
