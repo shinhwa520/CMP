@@ -59,7 +59,7 @@ public class ChannelCustController extends BaseController {
 	public @ResponseBody AppResponse getCustById(@PathVariable Integer custId) {
 		try {
 			Customer cust = custService.findCustById(custId);
-			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得Customer資料成功");
+			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得客戶資料成功");
 			appResponse.putData("cust",  cust);
 			return appResponse;
 		} catch (Exception e) {

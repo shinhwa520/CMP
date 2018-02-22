@@ -86,7 +86,7 @@ public class ChannelUserController extends BaseController {
 	public @ResponseBody AppResponse getUserById(@PathVariable String userId) {
 		try {
 			User user = userService.findUserAndKpiById(userId, sdfYearMonth.format(new Date()));
-			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得User資料成功");
+			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得渠道商資料成功");
 			appResponse.putData("user",  user);
 			return appResponse;
 		} catch (Exception e) {

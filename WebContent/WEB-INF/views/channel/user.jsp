@@ -11,14 +11,14 @@
 		<table class="table table-striped" id="tblLog">
 			<thead>
 				<tr>
-					<th rowspan="2">name</th>
-					<th rowspan="2">status</th>
-					<th rowspan="2">phone</th>
-					<th rowspan="2">email</th>
+					<th rowspan="2">Name</th>
+					<th rowspan="2">Phone</th>
+					<th rowspan="2">Email</th>
+					<th rowspan="2">Status</th>
 					<th colspan="2">仲介渠道商</th>
 					<th colspan="2">仲介客戶</th>
 					<th colspan="2">成交量</th>
-					<th rowspan="2">option</th>
+					<th rowspan="2">Option</th>
 				</tr>
 				<tr>
 					<th>預計</th>
@@ -95,7 +95,7 @@
 	            
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnGustSaveClicked();">Save</button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
 				</div>
 			</form>
 		</div>	
@@ -128,9 +128,9 @@ $(function() {
 			"columns" : [
 				
 				{ "data" : "name" },
-				{ "data" : "status.name" },
 				{ "data" : "phone" },
 				{ "data" : "email" },
+				{ "data" : "status.name" },
 				{ "data" : "agent_user" },
 				{ "data" : "_agent_user" },
 				{ "data" : "agent_cust" },
@@ -180,7 +180,9 @@ function btnEditClicked(btn) {
 					$('#_agent_cust').val(resp.data.user._agent_cust);
 					$('#volume').val(resp.data.user.volume);
 					$('#_volume').val(resp.data.user._volume);
+					
 					$('#modal_Edit').modal();
+					successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -192,4 +194,62 @@ function btnEditClicked(btn) {
 			}
 		});
 }
+
+//[Save] modal_Edit >>按下Save 儲存
+function btnSaveClicked() {
+	var cust_name = $('#cust_name').val();
+	var phone = $('#phone').val();
+	//頁面輸入檢核
+	$('.form-group').removeClass('has-error');
+	var isError = false;
+	var errMsg = '';
+	if (''==cust_name.trim()) {
+		isError = true;
+		$('#cust_name').parents('.form-group').addClass('has-error');
+		errMsg += '！Name為必填<br/>';
+	}
+	if (''==phone.trim()) {
+		isError = true;
+		$('#phone').parents('.form-group').addClass('has-error');
+		errMsg += '！Phone為必填<br/>';
+	}
+
+	if(isError){
+		errorMsgModal(errMsg);
+		return false;
+	}
+	
+	
+	
+	$.ajax({
+		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
+		data : $('#formEdit').serialize(),
+		type : "POST",
+		dataType : 'json',
+		async: false,
+		success : function(resp) {
+			console.log(resp);
+			
+			if (resp.code == '200') {
+				successMsgModal(resp.message);
+				setTimeout(function(){
+					$('#modal_Edit').modal('hide');
+				}, 2000);
+				
+				
+				if (tblMain) {
+					tblMain.ajax.reload();
+				}
+			} else {
+				alert(resp);
+			}
+		},
+
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+	});
+}
+
 </script>

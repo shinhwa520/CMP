@@ -91,7 +91,7 @@
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnGustSaveClicked();">Save</button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
 				</div>
 			</form>
 		</div>	
@@ -161,7 +161,7 @@ function btnEditClicked(btn) {
 }
 
 //[Save] modal_Edit >>按下Save 儲存
-function btnGustSaveClicked() {
+function btnSaveClicked() {
 	var cust_name = $('#cust_name').val();
 	var phone = $('#phone').val();
 	//頁面輸入檢核
