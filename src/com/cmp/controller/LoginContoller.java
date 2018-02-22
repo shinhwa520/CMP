@@ -38,12 +38,9 @@ public class LoginContoller extends BaseController {
 			
 			billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
 			form.setBillboardList(billboardList);
-			
+			setActiveMenu(model, MenuItem.INDEX);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-		} finally {
-			setActiveMenu(model, MenuItem.INDEX);
 		}
 		
 		return "index";
