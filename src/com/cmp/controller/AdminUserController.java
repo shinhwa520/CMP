@@ -1,5 +1,6 @@
 package com.cmp.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -50,7 +51,7 @@ public class AdminUserController extends BaseController {
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 //		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		List<User> datalist = userService.findUserByChannelId(null, start, length);
+		List<User> datalist = userService.findUserByChannelId(null, sdfYearMonth.format(new Date()), start, length);
 		long total = userService.countUserByChannelId(null);
 		return new DatatableResponse(total, datalist, total);
 	}
