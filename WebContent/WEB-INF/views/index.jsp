@@ -55,13 +55,18 @@
 <br />
 <div class="box box-primary" id="billboard" style="padding:5px 5px;">
 	<b><font style="font-size: 1.5em;">最新公告</font>	</b>
-	<div style="height:40vh; overflow-y:scroll; ">
+	<div style="height:75vh; overflow-y:scroll; ">
 		<c:if test="${!IndexForm.billboardList.isEmpty() }">
 			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
 				<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
 					<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
 					 	<th width="5%">#${loop.count }</th>
-					   	<th width="80%"><a class="slideOption" href="#bill_${loop.count }">${vo.title }</a></th>
+					   	<th width="80%">
+					   		<a class="slideOption" href="#bill_${loop.count }">${vo.title }</a>
+					   		<c:if test="${vo.onTopChkbox eq 'Y' }">
+					   			<img src="${pageContext.request.contextPath}/resources/images/on_top.gif" />
+					   		</c:if>
+					   	</th>
 					    <th width="15%">${vo.updateTime }</th>
 					</tr>
 					<tr>
@@ -85,10 +90,11 @@
 		</c:if>
 	</div>
 </div>
+<!-- 
 <br/>
 <div class="box box-primary" id="file" style="padding:5px 5px;">
 	<b><font style="font-size: 1.5em;">共享資源</font></b>
 
 </div>
-
+ -->
 </section>

@@ -33,6 +33,7 @@ public class FileController extends BaseController {
 			fileList = fileService.findAllPublicFiles(true, 0, 500);
 			form.setFileList(fileList);
 			form.setAdminRole(true);
+			model.addAttribute("message", "coming soon...");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
