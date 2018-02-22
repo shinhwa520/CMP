@@ -17,9 +17,14 @@ import com.cmp.model.User;
 @Transactional
 public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 	@Override
-	public List<User> findUserByChannelId(String channelId, Integer start, Integer length) {
+	public List<Object[]> findUserByChannelId(String channelId, String yearMonth, Integer start, Integer length) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" from User u where 1=1 ");
+		sb.append(" select u ")
+		.append(" ,(select count(u1.id) from User u1 where 1=1 and u1.channel.id = u.id and DATE_FORMAT(u1.createDateTime,'%Y%m') = :yearMonth) ")
+		.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
+		.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
+		.append(" from User u ")
+		.append(" where 1=1 ");
 		if(StringUtils.isNotBlank(channelId)){
 			sb.append(" and u.channel.id = :channelId ");
 		}
@@ -28,8 +33,11 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 	    if(StringUtils.isNotBlank(channelId)){
 	    	q.setParameter("channelId", channelId);
 	    }
+	    if(StringUtils.isNotBlank(yearMonth)){
+	    	q.setParameter("yearMonth", yearMonth);
+	    }
 	    	q.setFirstResult(start).setMaxResults(length);
-	    return (List<User>) q.list();
+	    return (List<Object[]>) q.list();
 //		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
 //		return returnList;
 	}
@@ -74,6 +82,21 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {id});
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
+	
+	@Override
+	public Object[] findUserAndKpiById(String id, String yearMonth){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select u ")
+			.append(" ,(select count(u1.id) from User u1 where 1=1 and u1.channel.id = u.id and DATE_FORMAT(u1.createDateTime,'%Y%m') = :yearMonth) ")
+			.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
+			.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
+			.append(" from User u ")
+			.append(" where 1=1 ")
+			.append(" and u.id = :id ");
+		List<Object[]> returnList = (List<Object[]>)getHibernateTemplate().findByNamedParam(sb.toString(), new String[] {"id", "yearMonth"},new Object[] {id, yearMonth});
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
+	
 	
 	@Override
 	public User findUserByEmail(String mailAddress) {

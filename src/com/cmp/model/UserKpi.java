@@ -26,7 +26,7 @@ public class UserKpi implements java.io.Serializable {
 
 
 	@Column(name = "year_month", nullable = false)
-	private String year_month;
+	private String yearMonth;
 	
 	@Column(name = "agent_user", nullable = false)
 	private int agent_user=0;
@@ -56,12 +56,12 @@ public class UserKpi implements java.io.Serializable {
 	public UserKpi() {
 	}
 
-	public UserKpi(String id, User user, String year_month, int agent_user, int agent_cust, int volume, String createBy,
+	public UserKpi(String id, User user, String yearMonth, int agent_user, int agent_cust, int volume, String createBy,
 			Date createDateTime, String updateBy, Date updateDateTime) {
 		super();
 		this.id = id;
 		this.user = user;
-		this.year_month = year_month;
+		this.yearMonth = yearMonth;
 		this.agent_user = agent_user;
 		this.agent_cust = agent_cust;
 		this.volume = volume;
@@ -87,12 +87,12 @@ public class UserKpi implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public String getYear_month() {
-		return year_month;
+	public String getYearMonth() {
+		return yearMonth;
 	}
 
-	public void setYear_month(String year_month) {
-		this.year_month = year_month;
+	public void setYearMonth(String yearMonth) {
+		this.yearMonth = yearMonth;
 	}
 
 	public int getAgent_user() {

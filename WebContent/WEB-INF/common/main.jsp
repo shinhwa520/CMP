@@ -237,7 +237,7 @@
 					<a href="${pageContext.request.contextPath}/channel/cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
 				</li>
 				
-				<sec:authorize access="hasAnyRole('ROLE_SU')">
+				<sec:authorize access="hasRole('SU')">
 					<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item adminView">
 						<a href="${pageContext.request.contextPath}/admin/role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
 					</li>

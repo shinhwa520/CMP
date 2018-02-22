@@ -27,11 +27,13 @@ import com.cmp.security.SecurityUtil;
 
 public class BaseController {
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
+	SimpleDateFormat sdfYearMonth = new SimpleDateFormat("yyyyMM");
     SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	public BaseController() {
 		super();
+		sdfYearMonth.setTimeZone(TimeZone.getTimeZone("GMT"));
 		sdfDate.setTimeZone(TimeZone.getTimeZone("GMT"));
 		sdfDateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}

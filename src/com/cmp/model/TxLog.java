@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
-@Table(name="txLog")
+@Table(name="tx_log")
 public class TxLog implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -5,12 +5,13 @@ import java.util.List;
 import com.cmp.model.User;
 
 public interface UserDAO {
-	List<User> findUserByChannelId(String channelId, Integer start, Integer length);
+	List<Object[]> findUserByChannelId(String channelId, String yearMonth, Integer start, Integer length);
 	long countUserByChannelId(String channelId);
 	User saveUser(User user);
 	List<User> listUsers();
 	public List<User> findUserByAccount(String account);
 	User findUserById(String id);
+	Object[] findUserAndKpiById(String id, String yearMonth);
 	User findUserByEmail(String mailAddress);
 	public List<User> findUserByApiModelId(String apiModelId);
 }

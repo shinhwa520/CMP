@@ -1,5 +1,7 @@
 package com.cmp.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -39,9 +41,10 @@ public class ChannelPersonalInfoController extends BaseController {
 	 */
 	@RequestMapping(value="/info", method = RequestMethod.GET, produces="application/json")
 	public String getUserPersonalInfo(@ModelAttribute("UserInfoForm")UserInfoForm form, Model model) {
-//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		User user = userService.findUserById(userId);
+//		User user = userService.findUserById(userId);
+		User user = userService.findUserAndKpiById(userId, sdfYearMonth.format(new Date()));
+		
 		setUserInfoForm(user, form);
 		setActiveMenu(model, MenuItem.PERSONAL_INFO);
 		return "channel/personal_info";
@@ -68,11 +71,19 @@ public class ChannelPersonalInfoController extends BaseController {
 		form.setAccount(user.getAccount());
 		form.setPassword(user.getPassword());
 		form.setPhone(user.getPhone());
+		form.setAgent_user(user.getAgent_user());
+		form.setAgent_cust(user.getAgent_cust());
+		form.setVolume(user.getVolume());
+		form.set_agent_user(user.get_agent_user());
+		form.set_agent_cust(user.get_agent_cust());		
+		form.set_volume(user.get_volume());
+		
+		
 		WebApiDetail apiDetail = webApiDetailDAO.findWebApiDetailByUserId(user.getId());
 		if(null == apiDetail)
 			form.setChannelUrl("系統生成中...請稍候");
 		else
-			form.setChannelUrl(apiDetail.getParameterValues());
+			form.setChannelUrl("http://u5669258.viewer.maka.im/k/"+apiDetail.getParameterValues());
 		form.setStatusName(user.getStatus().getName());
 	}
 }
