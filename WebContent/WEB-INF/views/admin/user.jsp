@@ -74,7 +74,10 @@ $(function() {
 					"render" : function(data, type, row) {
 						return '<a href="${pageContext.request.contextPath}/admin/user/cust?userId='+row['id']+'">' 
 								+ '<span class="label label-info" style="margin-right:10px" userId="' + row['id'] + '" ">' 
-								+ '<i class="fa fa-pencil" style="margin-right:5px"></i>view cust.</span></a>';
+								+ '<i class="fa fa-pencil" style="margin-right:5px"></i>view cust.</span></a>'
+								+'<a href="#">'
+								+'<span class="label label-warning" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
+								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
 					}
 				}
 			],
