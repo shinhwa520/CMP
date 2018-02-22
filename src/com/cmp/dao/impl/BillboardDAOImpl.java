@@ -2,7 +2,6 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -24,10 +23,10 @@ public class BillboardDAOImpl extends BaseDaoHibernate implements BillboardDAO {
 		sb.append(" select bc from BillboardContent bc ")
 		  .append(" where 1=1 ");
 		  if (!isAdmin) {
-			  sb.append(" and bc.billboardSetting.activationBegin <= sysdate() ");
+			  sb.append(" and (bc.billboardSetting.activationBegin is null or bc.billboardSetting.activationBegin <= sysdate()) ");
 		  }
 		  
-		sb.append(" and bc.billboardSetting.activationEnd >= sysdate() ")
+		sb.append(" and (bc.billboardSetting.activationEnd is null or bc.billboardSetting.activationEnd >= sysdate()) ")
 		  .append(" order by bc.billboardSetting.onTop desc, bc.seqNo desc ");
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();

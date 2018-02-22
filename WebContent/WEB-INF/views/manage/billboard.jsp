@@ -165,7 +165,7 @@
             	<input type="hidden" name="seqNo" id="seqNo" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="title">標題</label>
+	                  <label for="title"><span class="pull-right" style="color: red;">＊ </span>標題</label>
 	                  <input type="text" class="form-control" id="title" name="title" placeholder="輸入標題">
 	                </div>                              
 	            </div>                         
@@ -186,15 +186,17 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="beginTime">發佈時間</label>
-	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" />
-		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" />
+	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" placeholder="年-月-日" />
+		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" placeholder="時:分:秒" />
+		  				<span style="color: red;">(留白表示永久有效；日期有選、時間未選則預設為當日00:00:00)</span>
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="beginTime">結束時間</label>
-	                  	<input id="date-input2" type="text" value="" style="width: 90px;" name="endDateStr" />
-		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" />
+	                  	<input id="date-input2" type="text" style="width: 90px;" name="endDateStr" placeholder="年-月-日" />
+		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" placeholder="時:分:秒" />
+		  				<span style="color: red;">(留白表示永久有效；日期有選、時間未選則預設為當日00:00:00)</span>
 	                </div>                              
 	            </div>
 	            <div class="box-body">
