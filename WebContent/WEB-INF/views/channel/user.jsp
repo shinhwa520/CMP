@@ -18,7 +18,7 @@
 					<th colspan="2">仲介渠道商</th>
 					<th colspan="2">仲介客戶</th>
 					<th colspan="2">成交量</th>
-					<th rowspan="2">Option</th>
+					<th rowspan="2" style="width: 100px;">Option</th>
 				</tr>
 				<tr>
 					<th>預計</th>

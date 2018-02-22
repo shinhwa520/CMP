@@ -20,7 +20,7 @@
 					<th>City</th>
 					<th>Address</th>
 					<th>Status</th>
-					<th>Option</th>
+					<th style="width: 100px;">Option</th>
 				</tr>
 			</thead>
 		</table>
@@ -89,6 +89,12 @@
 	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
 	                </div>                              
 	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="status">Status</label>
+	                  <input type="text" class="form-control" id="status" name="status" readonly="true" >
+	                </div>                              
+	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
@@ -148,6 +154,7 @@ function btnEditClicked(btn) {
 					$('#address').val(resp.data.cust.address);
 					$('#status').val(resp.data.cust.status);
 					$('#modal_Edit').modal();
+					successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}

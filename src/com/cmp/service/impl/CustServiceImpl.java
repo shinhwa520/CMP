@@ -70,7 +70,7 @@ public class CustServiceImpl implements CustService {
 	
 	
 	@Override
-	public void updateCust(int id, String name, String gender, Date birthday, String phone, String email, String weChat, String city, String address){
+	public void updateCust(int id, String name, String gender, Date birthday, String phone, String email, String weChat, String city, String address, String status){
 		System.out.println(SecurityUtil.getSecurityUser().getUser().getId());
 		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
 		Customer cust = customerDAO.findCustById(id);
@@ -83,7 +83,9 @@ public class CustServiceImpl implements CustService {
 		cust.setCity(city);
 		cust.setAddress(address);
 		cust.setUser(user);
-		cust.setStatus(statusDAO.findStatusById(1));
+		if(null!=status){
+			cust.setStatus(statusDAO.findStatus("CUST", Integer.valueOf(status)));
+		}
 //		cust.setCreateTime(new Timestamp(System.currentTimeMillis()));
 //		cust.setCreateBy(user.getName());
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));

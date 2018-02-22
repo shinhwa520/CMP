@@ -33,7 +33,7 @@
 	<style type="text/css">
 		
 		.main-header .sidebar-toggle:before{
-			content: "\f0d9";
+			content: "\f0d9" !important;
 		}
 		
 		.label{
@@ -158,8 +158,7 @@
 	<!-- Header Navbar -->
 	<nav class="navbar navbar-static-top" role="navigation">
 		<!-- Sidebar toggle button-->
-		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-		<span class="sr-only">Toggle navigation</span>
+		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><i class="fa fa-bars"></i>
 		</a>
 		<!-- Navbar Right Menu -->
 		<div class="navbar-custom-menu">
@@ -261,9 +260,8 @@
 						</ul>
 					</li>
 				</sec:authorize>
-				
 				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_ASST')">
-					<li class="<c:if test="${active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
+					<li class="<c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span>後台管理</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
@@ -279,7 +277,6 @@
 						</ul>
 					</li>
 				</sec:authorize>
-				
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>

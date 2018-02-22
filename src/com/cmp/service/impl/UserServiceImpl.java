@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cmp.dao.StatusDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.UserKpiDAO;
 import com.cmp.model.User;
@@ -22,6 +23,8 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	@Autowired
 	private UserKpiDAO userKpiDAO;
+	@Autowired
+	private StatusDAO statusDAO;
 	
 	
 	@Override
@@ -98,5 +101,18 @@ public class UserServiceImpl implements UserService {
 				,current
 				);
 		userKpiDAO.saveUserKpi(userKpi);
+	}
+	
+	@Override
+	public void update(String userId, String userName, String phone, String email, String status){
+		String editorId = SecurityUtil.getSecurityUser().getUser().getId();
+		User user = findUserById(userId);
+		user.setName(userName);
+		user.setPhone(phone);
+		user.setEmail(email);
+		user.setStatus(statusDAO.findStatus("USER", Integer.valueOf(status)));
+		user.setUpdateBy(editorId);
+		user.setUpdateDateTime(new Date());
+		userDAO.saveUser(user);
 	}
 }

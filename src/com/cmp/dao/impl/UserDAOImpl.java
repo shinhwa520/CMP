@@ -24,7 +24,8 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
 		.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
 		.append(" from User u ")
-		.append(" where 1=1 ");
+		.append(" where 1=1 ")
+		.append(" and u.role.id = 4 ");
 		if(StringUtils.isNotBlank(channelId)){
 			sb.append(" and u.channel.id = :channelId ");
 		}

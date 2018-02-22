@@ -96,7 +96,7 @@ public class ChannelCustController extends BaseController {
 	public AppResponse updateCust(
 			@RequestParam(name="cust_id", required=true) Integer id,
 			@RequestParam(name="cust_name", required=true) String name,
-			@RequestParam(name="gender", required=true) String gender,
+			@RequestParam(name="gender", required=false) String gender,
 			@RequestParam(name="birthday", required=false) String birthday,
 			@RequestParam(name="phone", required=false) String phone,
 			@RequestParam(name="email", required=false) String email,
@@ -104,7 +104,7 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="city", required=false) String city,
 			@RequestParam(name="address", required=false) String address) {
 		try {
-			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address);
+			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address, null);
 			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
 		} catch (Exception e) {
 			e.printStackTrace();
