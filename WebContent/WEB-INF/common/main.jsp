@@ -236,6 +236,7 @@
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/cust/list"><i class="fa fa-user"></i> <span>我的客戶</span></a>
 				</li>
+				<sec:authorize access="hasAnyRole('ROLE_SU')">
 					<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item adminView">
 						<a href="${pageContext.request.contextPath}/admin/role/list"><i class="fa fa-user"></i> <span>ROLE</span></a>
 					</li>
@@ -245,6 +246,8 @@
 					<li class="<c:if test="${active eq 'ADMIN_REGISTRATION'}">active</c:if> sidebar-item adminView">
 						<a href="${pageContext.request.contextPath}/admin/registration/list"><i class="fa fa-user"></i> <span>REGISTRATION</span></a>
 					</li>
+				</sec:authorize>
+				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN')">
 					<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
@@ -255,18 +258,22 @@
 							<li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/job/manage"><i class="fa fa-circle-o"></i> 資料接收排程管理</a></li>
 						</ul>
 					</li>
+				</sec:authorize>
+				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_ASST')">
 					<li class="<c:if test="${active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span>後台管理</span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu <c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">menu-open</c:if>">
+							<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN')">
 							<li class="<c:if test="${active eq 'ADMIN_USER'}">active</c:if> sidebar-item adminView" ><a href="${pageContext.request.contextPath}/admin/user/list"><i class="fa fa-user"></i> <span>所有渠道商</span></a></li>
+							</sec:authorize>
 							<li class="<c:if test="${active eq 'ADMIN_CUST'}">active</c:if> sidebar-item adminView"><a href="${pageContext.request.contextPath}/admin/cust/list"><i class="fa fa-user"></i> <span>所有客戶</span></a></li>
 							<li <c:if test="${active eq 'MANAGE_BILLBOARD'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/billboard"><i class="fa fa-circle-o"></i> 公告維護</a></li>
 							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><i class="fa fa-circle-o"></i> 檔案維護</a></li>
 						</ul>
 					</li>
-				
+				</sec:authorize>
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>
