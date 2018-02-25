@@ -76,12 +76,6 @@ public class BillboardDAOImpl extends BaseDaoHibernate implements BillboardDAO {
 			getHibernateTemplate().update(billContent);
 		}
 		
-//		if (oldBillPermissions != null) {
-//			for (BillboardPermission oldBillPermission : oldBillPermissions) {
-//				getHibernateTemplate().delete(oldBillPermission);
-//			}
-//		}
-		
 		if (isAdd) {
 			for (BillboardPermission newBillPermission : newBillPermissions) {
 				newBillPermission.setBillboardContent(billContent);

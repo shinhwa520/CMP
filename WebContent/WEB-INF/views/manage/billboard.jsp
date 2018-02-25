@@ -76,7 +76,7 @@
 <form:form method="POST" modelAttribute="BillboardForm" action="">
 
 	<div class="box-body" id="billboard">
-		<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+		<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
 		<c:if test="${!BillboardForm.billboardList.isEmpty() }">
 			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
 				<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
@@ -99,7 +99,7 @@
 					   	</td>
 					    <td width="15%">${vo.updateTime }</td>
 					    <td width="5%">
-					    	<a href="#"><span class="label label-warning" style="margin-right:10px" seqNo="${vo.seqNo }" onclick="btnEditClicked($(this));"><i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>
+					    	<a href="#"><span class="label label-warning" style="width:70px; margin-right:10px" seqNo="${vo.seqNo }" onclick="btnEditClicked($(this));"><i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>
 					    </td>
 					    <td width="5%"><input type="checkbox" name="delChkbox" class="delChkbox" value="${vo.seqNo }"/></td>
 					</tr>
@@ -123,7 +123,7 @@
 					<tr>  <!--(主)標題 -->
 					 	<td colspan="4">&nbsp;</td>
 					   	<td>
-					   		<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
+					   		<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
 					   	</td>
 					</tr>
 			</table>

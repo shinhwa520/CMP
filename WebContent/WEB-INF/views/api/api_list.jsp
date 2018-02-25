@@ -75,7 +75,7 @@
 	        columnDefs: [ {
 	            orderable: false,
 	            className: 'select-checkbox',
-	            targets:   0
+	            targets:   4
 	        } ],
 	        select: {
 	            style:    'os',

@@ -24,7 +24,6 @@ public class JobController extends BaseController {
 	
 	@RequestMapping(value = { "/job/manage" }, method = RequestMethod.GET)
     public String retrieveManage(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("oh ya~~~");
     	try {
     		jobService.queryJob("MAKA");
     		
@@ -43,9 +42,11 @@ public class JobController extends BaseController {
 		System.out.println("doAddJob");
 		try {
 			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/1 * * * ?");
+			model.addAttribute("message", "新增成功");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("message", "[ERROR]"+e.toString());
 		}
 		
 		return retrieveManage(model, form, request, response);
@@ -53,12 +54,13 @@ public class JobController extends BaseController {
 	
 	@RequestMapping(value = { "/job/delete" }, method = RequestMethod.POST)
 	public String doDeleteJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doDeleteJob");
 		try {
 			jobService.deleteJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
+			model.addAttribute("message", "刪除成功");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("message", "[ERROR]"+e.toString());
 		}
 		
 		return retrieveManage(model, form, request, response);
@@ -66,7 +68,6 @@ public class JobController extends BaseController {
 	
 	@RequestMapping(value = { "/job/modify" }, method = RequestMethod.POST)
 	public String doModifyJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doModifyJob");
 		try {
 			
 		} catch (Exception e) {
@@ -78,12 +79,13 @@ public class JobController extends BaseController {
 	
 	@RequestMapping(value = { "/job/pause" }, method = RequestMethod.POST)
 	public String doPauseJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doPauseJob");
 		try {
 			jobService.pauseJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
+			model.addAttribute("message", "暫停成功");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("message", "[ERROR]"+e.toString());
 		}
 		
 		return retrieveManage(model, form, request, response);
@@ -91,12 +93,13 @@ public class JobController extends BaseController {
 	
 	@RequestMapping(value = { "/job/resume" }, method = RequestMethod.POST)
 	public String doResumeJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doResumeJob");
 		try {
 			jobService.resumeJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
+			model.addAttribute("message", "重啟成功");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			model.addAttribute("message", "[ERROR]"+e.toString());
 		}
 		
 		return retrieveManage(model, form, request, response);

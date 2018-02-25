@@ -40,4 +40,5 @@ Job management
 	
 	</form:form>
 
+<h2>${message}</h2>
 </section>
