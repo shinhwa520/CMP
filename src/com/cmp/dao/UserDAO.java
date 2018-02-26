@@ -10,6 +10,7 @@ public interface UserDAO {
 	User saveUser(User user);
 	List<User> listUsers();
 	public List<User> findUserByAccount(String account);
+	public List<User> findUserByRoleName(String roleName);
 	User findUserById(String id);
 	Object[] findUserAndKpiById(String id, String yearMonth);
 	User findUserByEmail(String mailAddress);

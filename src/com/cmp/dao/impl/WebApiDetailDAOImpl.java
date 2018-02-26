@@ -11,7 +11,9 @@ import com.cmp.model.WebApiDetail;
 @Repository
 @Transactional
 public class WebApiDetailDAOImpl extends BaseDaoHibernate implements WebApiDetailDAO {
-
+	public WebApiDetail saveWebApiDetail(WebApiDetail webApiDetail) {
+		return (WebApiDetail) getHibernateTemplate().merge(webApiDetail);
+	}
 	@Override
 	public WebApiDetail findWebApiDetailByParameterValues(String parameterValues) {
 		StringBuffer sb = new StringBuffer();

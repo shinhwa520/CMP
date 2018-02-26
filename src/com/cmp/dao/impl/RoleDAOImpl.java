@@ -26,6 +26,16 @@ public class RoleDAOImpl extends BaseDaoHibernate implements RoleDAO {
 	}
 	
 	@Override
+	public Role findRoleByName(String name){//role_name_UNIQUE
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Role r ")
+		  .append(" where 1=1 ")
+		  .append(" and r.name = ? ");
+		List<Role> returnList = (List<Role>)getHibernateTemplate().find(sb.toString(), name);
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
+	
+	@Override
 	public List<Role> listRole(Integer start, Integer length){
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Role r where 1=1 ");

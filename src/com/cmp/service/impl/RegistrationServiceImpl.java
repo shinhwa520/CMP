@@ -28,6 +28,7 @@ import com.cmp.model.QuestionDetail;
 import com.cmp.model.Token;
 import com.cmp.model.User;
 import com.cmp.model.UserQues;
+import com.cmp.model.WebApiDetail;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
 
@@ -61,7 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	
 	public void initUser(String mailAddress, String mailContent) throws Exception {
-		User user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleById(2), statusDAO.findStatusById(1)));
+		User user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleByName("USER"), statusDAO.findStatus("USER", 1)));//登錄帳號
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, new Date()));
 		sendSimpleMail(mailAddress, mailContent+"?tokenId="+token.getId());
 	}
@@ -83,7 +84,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			if(token.getCreateDateTime().getTime() + duration < new Date().getTime())
 				return null;
 			User user = token.getUser();
-			user.setStatus(statusDAO.findStatusById(2));
+			user.setStatus(statusDAO.findStatus("USER", 2));//確認email
 			return userDao.saveUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,15 +95,15 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
 		User user = userDao.findUserById(vo.getUserId());
 		User channel;
-		try {
-			channel = webApiDetailDAO.findWebApiDetailByParameterValues(vo.getChannelUrl()).getUser();
-		} catch (Exception e) {
-			e.printStackTrace();
-			channel = userDao.findUserById("1");
-		}
+		
+		WebApiDetail webApiDetail = webApiDetailDAO.findWebApiDetailByParameterValues(vo.getChannelUrl());
+		if(null==webApiDetail)
+			channel = userDao.findUserByRoleName("ADMIN").get(0);
+		else
+			channel = webApiDetail.getUser();
 		
 		BeanUtils.copyProperties(vo, user);
-		user.setStatus(statusDAO.findStatusById(3));
+		user.setStatus(statusDAO.findStatus("USER", 3));//維護個資
 		user.setChannel(channel);
 		userDao.saveUser(user);
 	}
@@ -145,6 +146,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 			UserQues uq = new UserQues(String.valueOf(date.getTime()+qd.getQuestion().getSort()), qd, user, date);
 			userQuesDAO.saveUserQues(uq);
 		}
-		user.setStatus(statusDAO.findStatusById(4));
+		user.setStatus(statusDAO.findStatus("USER", 4));//提交提問
+		userDao.saveUser(user);
+		
+		//註冊完成, 綁定webApiDetail
+		WebApiDetail webApiDetail = webApiDetailDAO.findWebApiDetailByUserId("");
+		webApiDetail.setUser(user);
+		webApiDetailDAO.saveWebApiDetail(webApiDetail);
 	}
 }

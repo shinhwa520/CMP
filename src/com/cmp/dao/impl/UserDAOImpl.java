@@ -75,6 +75,16 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 	}
 	
 	@Override
+	public List<User> findUserByRoleName(String roleName) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from User u ")
+		  .append(" where 1=1 ")
+		  .append(" and u.role.name = ? ");
+		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), roleName);
+		return returnList;
+	}
+	
+	@Override
 	public User findUserById(String id) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from User u ")
