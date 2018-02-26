@@ -10,19 +10,17 @@ import com.cmp.model.FilesSetting;
 
 public interface FileDAO {
 
-	public List<FilesPublic> findAllPublicFile(boolean isAdmin, Integer startRow, Integer pageLength); 
+	public List<Object> findAllPublicFile(boolean isAdmin, Integer startRow, Integer pageLength); 
 	
-	public List<FilesPublic> findAllCustomerFile(boolean isAdmin, Integer startRow, Integer pageLength); 
+	public List<Object> findAllCustomerFile(boolean isAdmin, Integer startRow, Integer pageLength); 
 	
-	public List<FilesPublic> findPublicFileByDAOVO(FileDAOVO fileDAOVO);
+	public List<Object> findPublicFileByDAOVO(FileDAOVO fileDAOVO);
 	
-	public List<FilesCustomer> findCustomerFileByDAOVO(FileDAOVO fileDAOVO);
+	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO);
 	
-	public void addPublicFile(FilesPublic fPublic, FilesSetting fSetting, FilesPermission fPermission);
+	public void addFile(Object entity, FilesSetting fSetting, List<FilesPermission> fPermissions);
 	
-	public void addCustomerFile(FilesCustomer fCustomer, FilesSetting fSetting, FilesPermission fPermission);
+	public void modifyFile(List<Object> modelList);
 	
-	public void deletePublicFile(FilesPublic fPublic, FilesSetting fSetting, FilesPermission fPermission);
-	
-	public void deleteCustomerFile(FilesCustomer fCustomer, FilesSetting fSetting, FilesPermission fPermission);
+	public void deleteFile(List<Object> modelList);
 }

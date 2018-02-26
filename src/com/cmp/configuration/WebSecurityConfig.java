@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import com.cmp.security.UserDetailsServiceImpl;
 
@@ -48,6 +49,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin().loginPage("/login").permitAll()
 			.and()
 		.logout().permitAll()
+			.and()
+		.headers()
+			.frameOptions()
+			.disable()
+			.addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", "ALLOW-FROM http://u5669258.viewer.maka.im"))
 			.and()
 		.csrf().disable();
 	}

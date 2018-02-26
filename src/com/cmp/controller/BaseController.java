@@ -78,7 +78,7 @@ public class BaseController {
 		String userName = "";
 		String userRole = "";
 		if (securityUser != null) {
-			userName = securityUser.getUsername();
+			userName = securityUser.getUser().getName();
 			userRole = securityUser.getUser().getRole().getName();
 		}
 		

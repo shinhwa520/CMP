@@ -28,7 +28,7 @@ public class FilesPublic {
 	private String fileName;
 	
 	@Column(name = "file_extension", nullable = false)
-	private String fileEtension;
+	private String fileExtension;
 	
 	@Column(name = "file_description", nullable = true)
 	private String fileDescription;
@@ -56,13 +56,13 @@ public class FilesPublic {
 		super();
 	}
 
-	public FilesPublic(Integer seqNo, String fileName, String fileEtension, String fileDescription,
+	public FilesPublic(Integer seqNo, String fileName, String fileExtension, String fileDescription,
 			Integer downloadTimes, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
 			FilesSetting filesSetting) {
 		super();
 		this.seqNo = seqNo;
 		this.fileName = fileName;
-		this.fileEtension = fileEtension;
+		this.fileExtension = fileExtension;
 		this.fileDescription = fileDescription;
 		this.downloadTimes = downloadTimes;
 		this.createTime = createTime;
@@ -88,12 +88,12 @@ public class FilesPublic {
 		this.fileName = fileName;
 	}
 
-	public String getFileEtension() {
-		return fileEtension;
+	public String getFileExtension() {
+		return fileExtension;
 	}
 
-	public void setFileEtension(String fileEtension) {
-		this.fileEtension = fileEtension;
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
 	}
 
 	public String getFileDescription() {

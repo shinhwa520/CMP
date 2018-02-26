@@ -249,7 +249,7 @@
 					</li>
 				</sec:authorize>
 				
-				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN')">
+				<sec:authorize access="hasAnyRole('ROLE_SU')">
 					<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
