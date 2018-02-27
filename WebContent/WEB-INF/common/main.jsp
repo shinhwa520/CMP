@@ -261,7 +261,7 @@
 						</ul>
 					</li>
 				</sec:authorize>
-				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_ASST')">
+				<!--<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_ASST')">-->
 					<li class="<c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span>後台管理</span> <i class="fa fa-angle-left pull-right"></i>
@@ -277,7 +277,7 @@
 							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"> 檔案維護</a></li>
 						</ul>
 					</li>
-				</sec:authorize>
+				<!--</sec:authorize>-->
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>

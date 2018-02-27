@@ -1,5 +1,6 @@
 package com.cmp.configuration;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -26,6 +27,7 @@ public class AppInitializer implements WebApplicationInitializer {
                 "dispatcher", new DispatcherServlet(ctx));
  
         servlet.setLoadOnStartup(1);
+//        servlet.setMultipartConfig(new MultipartConfigElement(null, 10485760, 1048576, 1048576));
         servlet.addMapping("/");
     }
  
