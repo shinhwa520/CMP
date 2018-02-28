@@ -19,9 +19,16 @@ public class FileServiceVO {
 	private String accessKeySecret;
 	private String bucketName;
 	private String updateTime;
+	private Integer fileSize;
+	
+	private String originFileName;	//上傳的檔案原始名稱
+	private String upperFileName;
 	
 	private String fileType;
-
+	
+	private Integer addedSeqNo;
+	private String errMsg;
+	
 	public Integer getSeqNo() {
 		return seqNo;
 	}
@@ -164,5 +171,45 @@ public class FileServiceVO {
 
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
+	}
+
+	public String getOriginFileName() {
+		return originFileName;
+	}
+
+	public void setOriginFileName(String originFileName) {
+		this.originFileName = originFileName;
+	}
+
+	public Integer getAddedSeqNo() {
+		return addedSeqNo;
+	}
+
+	public void setAddedSeqNo(Integer addedSeqNo) {
+		this.addedSeqNo = addedSeqNo;
+	}
+
+	public String getErrMsg() {
+		return errMsg;
+	}
+
+	public void setErrMsg(String errMsg) {
+		this.errMsg = errMsg;
+	}
+
+	public String getUpperFileName() {
+		return upperFileName;
+	}
+
+	public void setUpperFileName(String upperFileName) {
+		this.upperFileName = upperFileName;
+	}
+
+	public Integer getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Integer fileSize) {
+		this.fileSize = fileSize;
 	}
 }

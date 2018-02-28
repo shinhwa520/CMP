@@ -117,6 +117,11 @@
 var tblMain;
 var formAction = 'update';
 
+Number.prototype.format = function(n, x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+};
+
 $(function() {
 	tblMain = $('#tblMain').DataTable(
 		{
@@ -129,13 +134,15 @@ $(function() {
 				"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
 				"type" : 'GET',
 				"data" : function(d) {
-					//d.customParam = 'testestert';
+					d.isAdmin = false
 				}
 			},
 			"columns" : [
 				{ "data" : "dataSeq" },
 				{ "data" : "fullFileName" },
-				{ "data" : "fileName" },
+				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
+												      return data.format() + ' KB';
+											    } },
 				{ "data" : "downloadTimes" },
 				{ "data" : "fileDescription" },
 				{ "data" : "updateTime" }
@@ -146,7 +153,7 @@ $(function() {
 					"data" : 'seqNo',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
-								+'<span class="label label-success pull-center" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnDonwloadClicked($(this));">'
+								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
 								+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
 					}
 				}
@@ -155,4 +162,9 @@ $(function() {
 		});
 	});
 
+//[Download] 按下Download按鈕
+function btnDownloadClicked(btn) {
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType');
+    window.location.href = downloadUrl;
+}
 </script>
