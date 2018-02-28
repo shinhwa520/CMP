@@ -1,13 +1,16 @@
 package com.cmp.controller;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,12 +52,15 @@ public class ChannelUserController extends BaseController {
 	 */
 	@RequestMapping(value="getUserByChannelId.json", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody DatatableResponse getCust4Admin(
+			Principal principal, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
 		List<User> datalist = userService.findUserByChannelId(userId, sdfYearMonth.format(new Date()), start, length);
 		long total = userService.countUserByChannelId(userId);
+		System.out.println("UserInRole[SU]:" + request.isUserInRole("SU"));
+		System.out.println("UserInRole[ROLE_SU]:" + request.isUserInRole("ROLE_SU"));
 		return new DatatableResponse(total, datalist, total);
 	}
 	

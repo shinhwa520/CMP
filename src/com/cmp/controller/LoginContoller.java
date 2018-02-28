@@ -1,7 +1,9 @@
 package com.cmp.controller;
 
+
 import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,17 +30,15 @@ public class LoginContoller extends BaseController {
 	BillboardService billboardService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form) {
-		List<BillboardServiceVO> billboardList;
+	public String index(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			if (null == principal) {
 				return "redirect:/login";
 			}
-			System.out.println(principal.getName());
-			
-			billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
+			List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
 			form.setBillboardList(billboardList);
 			setActiveMenu(model, MenuItem.INDEX);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,12 +46,20 @@ public class LoginContoller extends BaseController {
 		return "index";
 	}
 	
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(Model model, Principal principal) {
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public String indexPage(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form, HttpServletRequest request, HttpServletResponse response) {
+		List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
+		form.setBillboardList(billboardList);
+		setActiveMenu(model, MenuItem.INDEX);
+		return "index";
+    }
+	
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginPage(Locale locale, Model model, Principal principal) {
     	return "login";
     }
     
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String loginOutPage(HttpServletRequest request, HttpServletResponse response, Model model, Principal principal) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {

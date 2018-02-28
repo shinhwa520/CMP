@@ -2,10 +2,14 @@ package com.cmp.security;
 
 import java.util.Collection;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import com.cmp.model.User;
 
+@Component
+@Scope("session")
 public class SecurityUser  extends org.springframework.security.core.userdetails.User {
 	private static final long serialVersionUID = 1L;
 
