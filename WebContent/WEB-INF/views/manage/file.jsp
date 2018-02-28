@@ -75,7 +75,7 @@
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
-            <form role="form" id="formEdit" name="formEdit">
+            <form role="form" id="formEdit" name="formEdit" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
             	<input type="hidden" name="fileType" id="editFileType" value="" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
@@ -120,8 +120,19 @@
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
+	        		<button type="button" class="btn btn-primary" id="btnFileUpload" onclick="btnUploadClicked();">Upload</button>
 				</div>
 			</form>
+			<br />
+
+		    <!-- Bootstrap Progress bar -->
+		    <div class="progress">
+		      <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar"
+		        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+		    </div>
+		
+		    <!-- Alert -->
+		    <div id="alertMsg" style="color: red;font-size: 18px;"></div>
 		</div>	
 	</div><!-- /.modal-content -->
   </div>
@@ -257,6 +268,65 @@ function btnEditClicked(btn) {
 				alert(thrownError);
 			}
 		});
+}
+
+//[Upload] modal_Upload >>按下Upload
+function btnUploadClicked() {
+	formAction = 'upload';
+	
+	// Get form
+    var form = $('#formEdit')[0];
+    var data = new FormData(form);
+ 
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: '${pageContext.request.contextPath}/manage/file/' + formAction,
+        data: data,
+        processData: false, //prevent jQuery from automatically transforming the data into a query string
+        contentType: false,
+        cache: false,
+        xhr: function(){
+	        //Get XmlHttpRequest object
+	         var xhr = $.ajaxSettings.xhr() ;
+	        
+	        //Set onprogress event handler 
+	         xhr.upload.onprogress = function(event){
+	          	var perc = Math.round((event.loaded / event.total) * 100);
+	          	$('#progressBar').text(perc + '%');
+	          	$('#progressBar').css('width',perc + '%');
+	         };
+	         return xhr ;
+    	},
+    	beforeSend: function( xhr ) {
+    		//Reset alert message and progress bar
+    		$('#alertMsg').text('');
+    		$('#progressBar').text('');
+    		$('#progressBar').css('width','0%');
+	    },
+	    
+	    success : function(resp) {
+			console.log(resp);
+			
+			if (resp.code == '200') {
+				successMsgModal(resp.message);
+				setTimeout(function(){
+					$('#modal_Edit').modal('hide');
+				}, 2000);
+				
+				if (tblMain) {
+					tblMain.ajax.reload();
+				}
+			} else {
+				alert(resp);
+			}
+		},
+
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+    });
 }
 
 //[Save] modal_Edit >>按下Save 儲存

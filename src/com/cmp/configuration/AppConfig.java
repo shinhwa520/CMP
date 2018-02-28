@@ -9,6 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -98,12 +100,12 @@ public class AppConfig implements WebMvcConfigurer {
 	@Bean
 	public JavaMailSenderImpl javaMailSenderImpl(){
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost("smtp.gmail.com");
-		mailSender.setPort(587);
+		mailSender.setHost("smtp.aliyun.com");
+		mailSender.setPort(25);
 		//Set gmail email id
-		mailSender.setUsername("hector811130@gmail.com");
+		mailSender.setUsername("cmp.message@aliyun.com");
 		//Set gmail email password
-		mailSender.setPassword("11261130");
+		mailSender.setPassword("y7u8i9g0@CMPmail");
 		Properties prop = mailSender.getJavaMailProperties();
 		prop.put("mail.transport.protocol", "smtp");
 		prop.put("mail.smtp.auth", "true");
@@ -124,4 +126,12 @@ public class AppConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 	    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
+    
+    @Bean
+    public MultipartResolver multipartResolver() {
+       CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+       multipartResolver.setMaxUploadSize(10485760); // 10MB
+       multipartResolver.setMaxUploadSizePerFile(10485760); // 10MB
+       return multipartResolver;
+    }
 }	

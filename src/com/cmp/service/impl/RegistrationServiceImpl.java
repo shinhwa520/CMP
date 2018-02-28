@@ -69,11 +69,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	public void sendSimpleMail(String mailAddress, String mailContent) throws MessagingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
-		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
-		mailMsg.setFrom("hector811130@gmail.com");
+		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "utf-8");
+		mailMsg.setFrom("cmp.message@aliyun.com");
 		mailMsg.setTo(mailAddress);
 		mailMsg.setSubject("Test mail");
-		mailMsg.setText(mailContent);
+		mailMsg.setText(mailContent, true);
 		mailSender.send(mimeMessage);
 		System.out.println("---Done---");
 	}

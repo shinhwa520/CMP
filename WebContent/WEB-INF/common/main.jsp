@@ -274,7 +274,6 @@
 						</ul>
 					</li>
 				</sec:authorize>
-			
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>

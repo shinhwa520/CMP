@@ -1,10 +1,13 @@
 package com.cmp.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
-import com.cmp.form.BillboardForm;
 import com.cmp.form.FileForm;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
+import com.cmp.utils.PostObject2Aliyun;
 
 @Controller
 @RequestMapping("/")
@@ -55,6 +59,44 @@ public class FileController extends BaseController {
 			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得File資料成功");
 			appResponse.putData("fileInfo",  retVO);
 			return appResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/manage/file/upload")
+	@ResponseBody
+	public AppResponse uploadFile(
+			@RequestParam(value = "uploadFile") MultipartFile uploadFile,
+			HttpServletRequest request, HttpServletResponse response) {
+		try {
+			if (uploadFile != null) {
+				//获取保存的路径，
+				String realPath = request.getSession().getServletContext()
+						.getRealPath("/upload/temp");
+				if (uploadFile.isEmpty()) {
+					// 未选择文件
+				} else{
+					// 文件原名称
+					String originFileName = uploadFile.getOriginalFilename();
+					try {
+						//这里使用Apache的FileUtils方法来进行保存
+						FileUtils.copyInputStreamToFile(uploadFile.getInputStream(),
+								new File(realPath, originFileName));
+						
+						new PostObject2Aliyun().PostObject(realPath.concat(File.separator).concat(originFileName));
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+						throw new Exception("文件上传失败");
+					}
+				}
+			}
+			
+			return new AppResponse(HttpServletResponse.SC_OK, "上傳成功");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
