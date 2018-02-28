@@ -38,8 +38,9 @@ import com.cmp.utils.PostObject2Aliyun;
 @Controller
 @RequestMapping("/")
 public class FileController extends BaseController {
-	private static Log log = LogFactory.getLog(BillboardController.class);
+	private static Log log = LogFactory.getLog(FileController.class);
 	
+	@Autowired
 	FileService fileService;
 	
 	@RequestMapping(value = { "/manage/file" }, method = RequestMethod.GET)
@@ -50,11 +51,10 @@ public class FileController extends BaseController {
 	
 	@RequestMapping(value="/manage/file/getAllPublicFiles.json", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody DatatableResponse getPublicFiles(
-			@RequestParam(name="isAdmin", required=true) boolean isAdmin,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		
-		List<FileServiceVO> datalist = fileService.findAllPublicFiles(isAdmin, start, length);
+		List<FileServiceVO> datalist = fileService.findAllPublicFiles(true, start, length);
 		
 		long total = 0;
 		if (datalist != null && !datalist.isEmpty()) {
@@ -217,7 +217,6 @@ public class FileController extends BaseController {
     }
 	
 	@RequestMapping(value="/manage/file/download", method = RequestMethod.GET)
-//	@ResponseBody
 	public String downloadBillboard(
 			@RequestParam(name="seqNo", required=true) Integer seqNo,
 			@RequestParam(name="fileType", required=true) String fileType,
@@ -241,10 +240,5 @@ public class FileController extends BaseController {
 		}
 		
 		return null;
-	}
-
-	@Autowired
-	public void setFileService(FileService fileService) {
-		this.fileService = fileService;
 	}
 }

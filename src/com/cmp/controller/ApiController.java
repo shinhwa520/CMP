@@ -26,6 +26,7 @@ import com.cmp.service.vo.ApiServiceVO;
 public class ApiController extends BaseController {
 	private static Log log = LogFactory.getLog(ApiController.class);
 	
+	@Autowired
 	private ApiService apiService;
 	
 	@RequestMapping(value = { "/api" }, method = RequestMethod.GET)
@@ -100,11 +101,6 @@ public class ApiController extends BaseController {
 		}
 		
 		return doQuery(model, form, request, response);
-	}
-	
-	@Autowired
-	public void setApiService(ApiService apiService) {
-		this.apiService = apiService;
 	}
 	
 	/**

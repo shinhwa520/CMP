@@ -20,6 +20,7 @@ import com.cmp.service.BaseJobService;
 public class JobController extends BaseController {
 	private static Log log = LogFactory.getLog(JobController.class);
 	
+	@Autowired
 	private BaseJobService jobService;
 	
 	@RequestMapping(value = { "/job/manage" }, method = RequestMethod.GET)
@@ -103,10 +104,5 @@ public class JobController extends BaseController {
 		}
 		
 		return retrieveManage(model, form, request, response);
-	}
-
-	@Autowired
-	public void setJobService(BaseJobService jobService) {
-		this.jobService = jobService;
 	}
 }

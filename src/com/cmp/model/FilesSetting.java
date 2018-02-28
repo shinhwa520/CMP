@@ -57,7 +57,7 @@ public class FilesSetting {
     @JoinColumn(name = "config_id")
 	private FilesBaseConfig filesBaseConfig;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "filesSetting")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "filesSetting")
 	private List<FilesPermission> filesPermissions;
 
     @OneToOne(optional = false, mappedBy = "filesSetting")

@@ -53,7 +53,7 @@
 <br />
 <div class="box box-primary" id="billboard" style="padding:5px 5px;">
 	<b><font style="font-size: 1.5em;">最新公告</font>	</b>
-	<div style="height:45vh; overflow-y:auto; ">
+	<div style="height:75vh; overflow-y:auto; ">
 		<c:if test="${!IndexForm.billboardList.isEmpty() }">
 			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
 				<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
@@ -88,6 +88,7 @@
 		</c:if>
 	</div>
 </div>
+<!-- 
 <br/>
 <div class="box box-primary">
 	<div class="box-header with-border">
@@ -109,8 +110,10 @@
 		</table>
 	</div>
 </div>
+ -->
 </section>
 
+<!-- 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 <script>
@@ -168,3 +171,4 @@ function btnDownloadClicked(btn) {
     window.location.href = downloadUrl;
 }
 </script>
+ -->

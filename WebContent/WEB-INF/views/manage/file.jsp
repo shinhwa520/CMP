@@ -33,7 +33,7 @@
 	<input type="hidden" name="fileType" id="queryFileType" value="" />
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<h3 class="box-title">共享檔案</h3>
+			<b><font style="font-size: 1.5em;">共享資源</font></b>
 			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
 			<span class="pull-right">&nbsp;</span>
 			<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
@@ -97,7 +97,7 @@
             	
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="fullFileName">檔案名稱 </label>
+						<label for="fullFileName">檔案名稱<span class="pull-right" style="color: red;">＊ </span> </label>
             			<input type="text" class="form-control" name="fullFileName" id="editFullFileName" readonly="true" />
             			<input type="file" name="uploadFile" id="uploadFile" />
 		            </div>                              
@@ -184,7 +184,7 @@ $(function() {
 				"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
 				"type" : 'GET',
 				"data" : function(d) {
-					d.isAdmin = true
+					//d.isAdmin = true
 				}
 			},
 			"columns" : [
@@ -313,6 +313,7 @@ function btnUploadClicked() {
 	formAction = 'upload';
 	
 	var fileDesc = $('#editFileDescription').val();
+	var uploadFile = $('#uploadFile').val();
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
@@ -321,6 +322,11 @@ function btnUploadClicked() {
 		isError = true;
 		$('#editFileDescription').parents('.form-group').addClass('has-error');
 		errMsg += '！Name為必填<br/>';
+	}
+	if (''==uploadFile.trim()) {
+		isError = true;
+		$('#uploadFile').parents('.form-group').addClass('has-error');
+		errMsg += '！請選擇檔案<br/>';
 	}
 
 	if(isError){

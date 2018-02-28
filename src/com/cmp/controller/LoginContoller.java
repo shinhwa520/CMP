@@ -27,6 +27,7 @@ import com.cmp.service.vo.BillboardServiceVO;
 @RequestMapping("/")
 public class LoginContoller extends BaseController {
 	
+	@Autowired
 	BillboardService billboardService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -69,9 +70,4 @@ public class LoginContoller extends BaseController {
 
 		return "redirect:/login";
     }
-
-    @Autowired
-	public void setBillboardService(BillboardService billboardService) {
-		this.billboardService = billboardService;
-	}
 }

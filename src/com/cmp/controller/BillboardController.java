@@ -27,6 +27,7 @@ import com.cmp.service.vo.BillboardServiceVO;
 public class BillboardController extends BaseController {
 	private static Log log = LogFactory.getLog(BillboardController.class);
 	
+	@Autowired
 	BillboardService billboardService;
 	
 	@RequestMapping(value = { "/manage/billboard" }, method = RequestMethod.GET)
@@ -111,10 +112,5 @@ public class BillboardController extends BaseController {
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 		
-	}
-	
-	@Autowired
-	public void setBillboardService(BillboardService billboardService) {
-		this.billboardService = billboardService;
 	}
 }

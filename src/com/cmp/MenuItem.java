@@ -2,7 +2,9 @@ package com.cmp;
 
 public enum MenuItem {
 	INDEX,
+	SHARE_FILE,
 	PERSONAL_INFO, 
+	PRODUCT_INFO,
 	MY_USER, 
 	MY_CUST, 
 	ADMIN_USER, 

@@ -62,9 +62,8 @@ public class FilesCustomer {
     @JoinColumn(name = "setting_id")
 	private FilesSetting filesSetting;
     
-    @ManyToOne
-    @JoinColumn(name = "cust_id")
-	private Customer customer;
+    @Column(name = "cust_id", nullable = false)
+    private Integer custId;
 
 	public FilesCustomer() {
 		super();
@@ -72,7 +71,7 @@ public class FilesCustomer {
 
 	public FilesCustomer(Integer seqNo, String upperFileName, String originFileName, String fileName,
 			String fileExtension, String fileDescription, Integer fileSize, Integer downloadTimes, Timestamp createTime,
-			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting, Customer customer) {
+			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting) {
 		super();
 		this.seqNo = seqNo;
 		this.upperFileName = upperFileName;
@@ -87,7 +86,6 @@ public class FilesCustomer {
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
 		this.filesSetting = filesSetting;
-		this.customer = customer;
 	}
 
 	public Integer getSeqNo() {
@@ -192,13 +190,5 @@ public class FilesCustomer {
 
 	public void setFilesSetting(FilesSetting filesSetting) {
 		this.filesSetting = filesSetting;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
 	}
 }

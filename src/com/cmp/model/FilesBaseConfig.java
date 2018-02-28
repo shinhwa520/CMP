@@ -52,7 +52,7 @@ public class FilesBaseConfig {
     @Column(name = "update_by", nullable = true)
 	private String updateBy;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "filesBaseConfig")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "filesBaseConfig")
     private List<FilesSetting> filesSettings;
     
 	public FilesBaseConfig() {

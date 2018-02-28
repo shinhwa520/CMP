@@ -69,15 +69,12 @@ public class Customer implements java.io.Serializable {
     @Column(name = "weChat", nullable = true)
 	private String weChat;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
-    private List<FilesCustomer> filesCustomers;
-    
 	public Customer() {
 	}
 
 	public Customer(int id, String name, String city, String phone, Status status, User user, Timestamp createTime,
 			String createBy, Timestamp updateTime, String updateBy, String address, Date birthday, String gender,
-			String email, String weChat, List<FilesCustomer> filesCustomers) {
+			String email, String weChat) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -94,7 +91,6 @@ public class Customer implements java.io.Serializable {
 		this.gender = gender;
 		this.email = email;
 		this.weChat = weChat;
-		this.filesCustomers = filesCustomers;
 	}
 
 	public int getId() {
@@ -215,13 +211,5 @@ public class Customer implements java.io.Serializable {
 
 	public void setWeChat(String weChat) {
 		this.weChat = weChat;
-	}
-
-	public List<FilesCustomer> getFilesCustomers() {
-		return filesCustomers;
-	}
-
-	public void setFilesCustomers(List<FilesCustomer> filesCustomers) {
-		this.filesCustomers = filesCustomers;
 	}
 }

@@ -50,11 +50,16 @@ import com.google.gson.Gson;
 @Transactional
 @RemoteProxy(name = "ApiDwr")  
 public class ApiServiceImpl implements ApiService {
-
+	
+	@Autowired
 	private WebApiMasterDAO webApiMasterDAO;
+	@Autowired
 	private WebApiSettingDAO webApiSettingDAO;
+	@Autowired
 	private CustomerDAO customerDAO;
+	@Autowired
 	private UserDAO userDAO;
+	@Autowired
 	private StatusDAO statusDAO;
 	
 	private Map<String, String> fieldMap = new HashMap<String, String>();
@@ -580,30 +585,5 @@ public class ApiServiceImpl implements ApiService {
 		}
 		
 		return resultStr;
-	}
-
-	@Autowired
-	public void setWebApiMasterDAO(WebApiMasterDAO webApiMasterDAO) {
-		this.webApiMasterDAO = webApiMasterDAO;
-	}
-
-	@Autowired
-	public void setWebApiSettingDAO(WebApiSettingDAO webApiSettingDAO) {
-		this.webApiSettingDAO = webApiSettingDAO;
-	}
-
-	@Autowired
-	public void setCustomerDAO(CustomerDAO customerDAO) {
-		this.customerDAO = customerDAO;
-	}
-
-	@Autowired
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	@Autowired
-	public void setStatusDAO(StatusDAO statusDAO) {
-		this.statusDAO = statusDAO;
 	}
 }
