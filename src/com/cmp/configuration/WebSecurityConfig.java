@@ -2,6 +2,8 @@ package com.cmp.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,12 +12,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
+import com.cmp.security.AuthSuccessHandler;
 import com.cmp.security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+	
+	@Bean
+	public AuthSuccessHandler authSuccessHandler() {
+		return new AuthSuccessHandler();
+	};
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
@@ -29,7 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+		UserDetailsService userDetailsService = userDetailsService();
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//		auth.inMemoryAuthentication().withUser("admin").password("admin123").roles("SU");
 	}
 
 	@Override
@@ -47,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.anyRequest().hasAnyRole("ADMIN", "USER", "ROLE_USER")
 			.and()
 		.formLogin().loginPage("/login").permitAll()
+			.successHandler(authSuccessHandler())
 			.and()
 		.logout().permitAll()
 			.and()

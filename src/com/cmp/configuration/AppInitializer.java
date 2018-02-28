@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -18,14 +19,15 @@ public class AppInitializer implements WebApplicationInitializer {
         ctx.register(AppConfig.class);
         ctx.register(HibernateConfiguration.class);
         ctx.register(WebSecurityConfig.class);
-        
-        container.addFilter("SiteMeshFilter", new SiteMeshFilter()).addMappingForUrlPatterns(null, false, "*");;
+        container.addListener(new ContextLoaderListener(ctx));
         ctx.setServletContext(container);
- 
-        ServletRegistration.Dynamic servlet = container.addServlet(
-                "dispatcher", new DispatcherServlet(ctx));
+        
+        ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
+        container.addFilter("SiteMeshFilter", new SiteMeshFilter()).addMappingForUrlPatterns(null, false, "*");
+
  
         servlet.setLoadOnStartup(1);
+//        servlet.setMultipartConfig(new MultipartConfigElement(null, 10485760, 1048576, 1048576));
         servlet.addMapping("/");
     }
  

@@ -28,29 +28,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		/*
-		 * Here we are using dummy data, you need to load user data from
-		 * database or other third party application
-		 */
 		User user = findUserByAccount(username);
-
-//		UserBuilder builder = null;
-//		if (user != null) {
-//			builder = org.springframework.security.core.userdetails.User.withUsername(username);
-//			builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
-//			builder.roles(user.getRoles());
-//		} else {
-//			throw new UsernameNotFoundException("User not found.");
-//		}
-//		return builder.build();
-		
 		if(null == user) throw new UsernameNotFoundException("User not found.");
+		
 		boolean accountEnabled = true;
 		boolean accountNonExpired = true;
 	    boolean credentialsNonExpired = true;
 	    boolean accountNonLocked = true;
-	    
-		return new SecurityUser(
+
+		SecurityUser securityUser = new SecurityUser(
 				user,
 				user.getAccount(),
 				new BCryptPasswordEncoder().encode(user.getPassword()),
@@ -60,17 +46,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				accountNonLocked,
 				getAuthorities(user.getRole().getName())
 			);
+		return securityUser;
 	}
 	
 	
 	private User findUserByAccount(String account) {
-//		if (account.equalsIgnoreCase("admin")) {
-//			return new User(account, "admin123","ADMIN");
-//		}
-		
+
 		List<User> list = loginService.findUserByAccount(account);
 		if(!list.isEmpty()){
-//			User user = list.get(0);
 			return list.get(0);
 		}
 		return null;

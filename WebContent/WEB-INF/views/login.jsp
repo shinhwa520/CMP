@@ -2,7 +2,7 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <section class="content">
-	<div class="topic">Login</div>
+	<div class="topic">Login ${welcome}</div>
 	<form name='f' method='POST'>
 		<input class="form-control" type='text' name='username' placeholder="Account"/>
 		<input class="form-control" type='password' name='password' placeholder="Password"/>

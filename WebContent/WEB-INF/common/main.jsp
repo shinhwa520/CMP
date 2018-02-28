@@ -4,7 +4,7 @@
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="cache-control" content="no-cache" />
@@ -221,9 +221,9 @@
 					<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 				</div>
 			</div>
-			
 			<!-- Sidebar Menu -->
 			<ul class="sidebar-menu">
+			
 				<li class="<c:if test="${active eq 'INDEX'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/"> <span>回首頁</span></a>
 				</li>
@@ -236,20 +236,16 @@
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/cust/list"> <span>我的客戶</span></a>
 				</li>
-				
-				<sec:authorize access="hasRole('SU')">
-					<li class="<c:if test="${active eq 'ADMIN_ROLE'}">active</c:if> sidebar-item adminView">
+				<sec:authorize access="hasAnyRole('ROLE_SU')">
+					<li class="sidebar-item adminView" >
 						<a href="${pageContext.request.contextPath}/admin/role/list"> <span>ROLE</span></a>
 					</li>
-					<li class="<c:if test="${active eq 'ADMIN_STATUS'}">active</c:if> sidebar-item adminView">
+					<li class="sidebar-item adminView" >
 						<a href="${pageContext.request.contextPath}/admin/status/list"> <span>STATUS</span></a>
 					</li>
-					<li class="<c:if test="${active eq 'ADMIN_REGISTRATION'}">active</c:if> sidebar-item adminView">
+					<li class="sidebar-item adminView" >
 						<a href="${pageContext.request.contextPath}/admin/registration/list"> <span>REGISTRATION</span></a>
 					</li>
-				</sec:authorize>
-				
-				<sec:authorize access="hasAnyRole('ROLE_SU')">
 					<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
@@ -278,6 +274,7 @@
 						</ul>
 					</li>
 				</sec:authorize>
+			
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>
@@ -298,7 +295,7 @@
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
-  
+	<div class="hidden_div" style="display: none">principal.authorities : <sec:authentication property="principal.authorities" /></div>
 	<!-- Main Footer -->
 	<footer class="main-footer">
 		<!-- To the right -->

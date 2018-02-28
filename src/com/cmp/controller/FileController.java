@@ -42,7 +42,7 @@ public class FileController extends BaseController {
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		List<FileServiceVO> datalist = fileService.findAllPublicFiles(true, start, length);
-		long total = datalist.size();
+		long total = null==datalist ? 0 : datalist.size();
 		return new DatatableResponse(total, datalist, total);
 	}
 	

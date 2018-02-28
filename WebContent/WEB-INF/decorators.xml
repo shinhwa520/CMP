@@ -2,7 +2,7 @@
 <decorators defaultdir="/WEB-INF/common">
 
 	<decorator name="main" page="main.jsp">
-		<pattern>/*</pattern>	
+		<pattern>/*</pattern>
 	</decorator>
 	<decorator name="main_sign_on" page="main_sign_on.jsp">
 		<pattern>/login*</pattern>

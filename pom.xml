@@ -273,10 +273,10 @@
 		    <artifactId>quartz</artifactId>
 		    <version>2.3.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
+		<!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
 		<dependency>
 		    <groupId>org.thymeleaf</groupId>
-		    <artifactId>thymeleaf</artifactId>
+		    <artifactId>thymeleaf-spring5</artifactId>
 		    <version>3.0.9.RELEASE</version>
 		</dependency>
 		<dependency>

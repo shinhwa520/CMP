@@ -4,19 +4,25 @@ import java.util.Properties;
 
 import javax.servlet.Filter;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+
+import com.cmp.dao.I18nDAO;
+import com.cmp.dao.impl.I18nDAOImpl;
+import com.cmp.i18n.DatabaseMessageSourceBase;
 
 @Configuration
 @EnableWebMvc
@@ -29,15 +35,65 @@ public class AppConfig implements WebMvcConfigurer {
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
+        viewResolver.setOrder(1);
         return viewResolver;
     }
-     
+    
+    /*
+     * Create SpringResourceTemplateResolver
+     * */
     @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
-        return messageSource;
+    public SpringResourceTemplateResolver templateResolver() {
+       SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+//       templateResolver.setApplicationContext(applicationContext);
+       templateResolver.setPrefix("/WEB-INF/views/");
+       templateResolver.setSuffix(".html");
+       templateResolver.setOrder(2);
+       return templateResolver;
     }
+     
+    /*
+    * Create SpringTemplateEngine
+    * */
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+    	SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+    	templateEngine.setTemplateResolver(templateResolver());
+    	templateEngine.setEnableSpringELCompiler(true);
+    	return templateEngine;
+    }
+
+    /*
+    * Register ThymeleafViewResolver
+    * */
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+    	ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+    	resolver.setTemplateEngine(templateEngine());
+    	registry.viewResolver(resolver);
+    }
+    
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        messageSource.setBasename("messages");
+//        return messageSource;
+//    }
+    
+
+	@Bean
+	public DatabaseMessageSourceBase databaseMessageSourceBase() {
+		DatabaseMessageSourceBase messageSource = new DatabaseMessageSourceBase();
+//		messageSource.setBasename("messages");
+		return messageSource;
+	}
+	
+	@Bean
+	public I18nDAO i18nDAO() {
+		I18nDAO i18nDAO = new I18nDAOImpl();
+//		messageSource.setBasename("messages");
+		return i18nDAO;
+	}
     
 	@Bean
 	public JavaMailSenderImpl javaMailSenderImpl(){
