@@ -1,12 +1,13 @@
 package com.cmp.utils;
 
-import javax.activation.MimetypesFileTypeMap;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.InvalidKeyException;
@@ -15,6 +16,14 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.activation.MimetypesFileTypeMap;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+
+import com.cmp.model.FilesBaseConfig;
 
 /**
  * This sample demonstrates how to post object under specfied bucket from Aliyun
@@ -25,17 +34,25 @@ public class PostObject2Aliyun {
     // 需要上传的本地文件，确保该文件存在
 //    private String localFilePath = "C:\\Users\\User\\Desktop\\MAKA\\OSS\\logOssProbe20180208235758.txt";
     // OSS域名，如http://oss-cn-hangzhou.aliyuncs.com
-    private String endpoint = "http://oss-ap-southeast-1.aliyuncs.com";
+    private String endpoint;
     // AccessKey请登录https://ak-console.aliyun.com/#/查看
-    private String accessKeyId = "LTAIHKfEZlDvXXVB";
-    private String accessKeySecret = "aGoBU5ZPMMHCKB8cHM8OlxmgLz0fmR";
+    private String accessKeyId;
+    private String accessKeySecret;
     // 你之前创建的bucket，确保这个bucket已经创建
-    private String bucketName = "fetech-cmp";
+    private String bucketName;
     // 上传文件后的object名称
-    private String key = "test";
+//    private String key = "test";
 
+    private void initConfig(FilesBaseConfig config) {
+    	endpoint = config.getEndPoint();
+    	accessKeyId = config.getAccessKeyId();
+    	accessKeySecret = config.getAccessKeySecret();
+    	bucketName = config.getBucketName();
+    }
     
-    public void PostObject(String localFilePath) throws Exception {
+    public void postObject(FilesBaseConfig config, String localFilePath, String originFileName) throws Exception {
+    	initConfig(config);
+    	
         // 提交表单的URL为bucket域名
         String urlStr = endpoint.replace("http://", "http://" + bucketName+ ".");
         
@@ -43,10 +60,9 @@ public class PostObject2Aliyun {
         Map<String, String> formFields = new LinkedHashMap<String, String>();
         
         // key
-        formFields.put("key", this.key);
+        formFields.put("key", originFileName);
         // Content-Disposition
-        formFields.put("Content-Disposition", "attachment;filename="
-                + localFilePath);
+        formFields.put("Content-Disposition", "attachment;filename=" + localFilePath);
         // OSSAccessKeyId
         formFields.put("OSSAccessKeyId", accessKeyId);
         // policy
@@ -59,7 +75,7 @@ public class PostObject2Aliyun {
 
         String ret = formUpload(urlStr, formFields, localFilePath);
         
-        System.out.println("Post Object [" + this.key + "] to bucket [" + bucketName + "]");
+        System.out.println("Post Object [" + originFileName + "] to bucket [" + bucketName + "]");
         System.out.println("post reponse:" + ret);
     }
     

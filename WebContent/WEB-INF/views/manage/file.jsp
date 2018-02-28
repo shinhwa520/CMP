@@ -4,10 +4,24 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/laydate/laydate.js"></script>
 
 <SCRIPT type="text/javascript">
+	
 	function doDelete() {
-		FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
-		FileForm.queryFileType.value = "PUBLIC";
-		FileForm.submit();
+		var haveOneChecked = false;
+		$(':checkbox.delChkbox').each(function() {
+		    if (this.checked) {
+		    	haveOneChecked = true;
+		    	return false;
+		    }
+		});
+		
+		if (!haveOneChecked) {
+			alert("請至少選擇一項要刪除的檔案!");
+			
+		} else {
+			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
+			FileForm.queryFileType.value = "PUBLIC";
+			FileForm.submit();
+		}
 	}
 	
 </SCRIPT>
@@ -34,6 +48,7 @@
 						<th>下載次數</th>
 						<th>檔案描述</th>
 						<th>更新時間</th>
+						<th style="width: 100px;">Option</th>
 						<th style="width: 100px;">編輯</th>
 						<th style="width: 100px;"><input type="checkbox" id="delChkAll" /> 全選</th>
 					</tr>
@@ -119,8 +134,8 @@
 	            
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
-	        		<button type="button" class="btn btn-primary" id="btnFileUpload" onclick="btnUploadClicked();">Upload</button>
+	        		<button type="button" class="btn btn-primary" id="btnSave" onclick="btnSaveClicked();" style="display: none">Save</button>
+	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();" style="display: none">Upload</button>
 				</div>
 			</form>
 			<br />
@@ -152,6 +167,11 @@
 var tblMain;
 var formAction = 'update';
 
+Number.prototype.format = function(n, x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+};
+
 $(function() {
 	tblMain = $('#tblMain').DataTable(
 		{
@@ -164,13 +184,15 @@ $(function() {
 				"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
 				"type" : 'GET',
 				"data" : function(d) {
-					//d.customParam = 'testestert';
+					d.isAdmin = true
 				}
 			},
 			"columns" : [
 				{ "data" : "dataSeq" },
 				{ "data" : "fullFileName" },
-				{ "data" : "fileName" },
+				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
+												      return data.format() + ' KB';
+											    } },
 				{ "data" : "downloadTimes" },
 				{ "data" : "fileDescription" },
 				{ "data" : "updateTime" }
@@ -181,15 +203,25 @@ $(function() {
 					"data" : 'seqNo',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
+								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
+								+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
+					}
+				},
+				{
+					
+					"targets" : 7,
+					"data" : 'seqNo',
+					"render" : function(data, type, row) {
+						return '<a href="#">'
 								+'<span class="label label-warning" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnEditClicked($(this));">'
 								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
 					}
 				},
 				{
-					"targets" : 7,
+					"targets" : 8,
 					data:   "seqNo",
 	                render: function ( data, type, row ) {
-	                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'">';
+	                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';
 	                },
 	                className: "dt-body-center"
 				}
@@ -203,9 +235,9 @@ function btnAddClicked() {
 	formAction = 'modify';
 	$('#isAdd').val('Y');
 	$('#editSeqNo').val('');
-	$('#editFileType').val('');
+	$('#editFileType').val('PUBLIC');
 	$('#editFullFileName').val('');
-	
+	$('#uploadFile').val('');
 	$('#uploadFile').show();
 	$('#editFullFileName').hide();
 	
@@ -217,10 +249,16 @@ function btnAddClicked() {
 	$('#time-input2').val('');
 
 	$('#modal_Edit').modal();
+	
+	$('#btnSave').hide();
+	$('#btnUpload').show();
 }
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
+	$('#btnSave').show();
+	$('#btnUpload').hide();
+	
 	formAction = 'getFileInfo';
 	console.log(btn.attr('seqNo'));
 	$('.form-group').removeClass('has-error');
@@ -257,7 +295,7 @@ function btnEditClicked(btn) {
 					$('#time-input2').val(resp.data.fileInfo.endTimeStr);
 					
 					$('#modal_Edit').modal();
-					successMsgModal(resp.message);
+					//successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -273,6 +311,22 @@ function btnEditClicked(btn) {
 //[Upload] modal_Upload >>按下Upload
 function btnUploadClicked() {
 	formAction = 'upload';
+	
+	var fileDesc = $('#editFileDescription').val();
+	//頁面輸入檢核
+	$('.form-group').removeClass('has-error');
+	var isError = false;
+	var errMsg = '';
+	if (''==fileDesc.trim()) {
+		isError = true;
+		$('#editFileDescription').parents('.form-group').addClass('has-error');
+		errMsg += '！Name為必填<br/>';
+	}
+
+	if(isError){
+		errorMsgModal(errMsg);
+		return false;
+	}
 	
 	// Get form
     var form = $('#formEdit')[0];
@@ -312,13 +366,13 @@ function btnUploadClicked() {
 				successMsgModal(resp.message);
 				setTimeout(function(){
 					$('#modal_Edit').modal('hide');
-				}, 2000);
+				}, 1000);
 				
 				if (tblMain) {
 					tblMain.ajax.reload();
 				}
 			} else {
-				alert(resp);
+				alert(resp.message);
 			}
 		},
 
@@ -361,7 +415,7 @@ function btnSaveClicked() {
 				successMsgModal(resp.message);
 				setTimeout(function(){
 					$('#modal_Edit').modal('hide');
-				}, 2000);
+				}, 1000);
 				
 				if (tblMain) {
 					tblMain.ajax.reload();
@@ -376,5 +430,46 @@ function btnSaveClicked() {
 			alert(thrownError);
 		}
 	});
+}
+
+//[Download] 按下Download按鈕
+function btnDownloadClicked(btn) {
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType');
+    window.location.href = downloadUrl;
+	/*
+	formAction = 'download';
+	console.log(btn.attr('seqNo'));
+	$('.form-group').removeClass('has-error');
+	$.ajax({
+			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
+			data : {
+					fileType: btn.attr('fileType'),
+					seqNo: btn.attr('seqNo')
+				   },
+			type : "POST",
+			dataType : 'json',
+			async: false,
+
+			success : function(resp) {
+				console.log(resp);		
+				if (resp.code == '200') {
+					//successMsgModal(resp.message);
+					//alert(resp.message);
+					
+					if (tblMain) {
+						tblMain.ajax.reload();
+					}
+					
+				} else {
+					alert(resp.message);
+				}
+			},
+
+			error : function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
+		});
+	*/
 }
 </script>

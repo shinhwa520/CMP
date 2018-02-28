@@ -1,5 +1,6 @@
 package com.cmp.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.TreeMap;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,12 +69,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 		sendSimpleMail(mailAddress, mailContent+"?tokenId="+token.getId());
 	}
 	
-	public void sendSimpleMail(String mailAddress, String mailContent) throws MessagingException {
+	public void sendSimpleMail(String mailAddress, String mailContent) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "utf-8");
 		mailMsg.setFrom("cmp.message@aliyun.com");
 		mailMsg.setTo(mailAddress);
-		mailMsg.setSubject("Test mail");
+		mailMsg.setSubject(MimeUtility.encodeText("Test mail", "UTF-8", "B"));
 		mailMsg.setText(mailContent, true);
 		mailSender.send(mimeMessage);
 		System.out.println("---Done---");

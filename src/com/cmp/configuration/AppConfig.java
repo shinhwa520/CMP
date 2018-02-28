@@ -107,10 +107,10 @@ public class AppConfig implements WebMvcConfigurer {
 		//Set gmail email password
 		mailSender.setPassword("y7u8i9g0@CMPmail");
 		Properties prop = mailSender.getJavaMailProperties();
-		prop.put("mail.transport.protocol", "smtp");
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.starttls.enable", "true");
-		prop.put("mail.debug", "true");
+		prop.setProperty("mail.transport.protocol", "smtp");
+		prop.setProperty("mail.smtp.auth", "true");
+		prop.setProperty("mail.smtp.starttls.enable", "true");
+		prop.setProperty("mail.debug", "false");
 		return mailSender;
 	}
 	

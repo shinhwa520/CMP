@@ -25,6 +25,12 @@ public class FilesCustomer {
 	@Column(name = "seq_no", unique = true)
 	private Integer seqNo;
 	
+	@Column(name = "upper_file_name", nullable = false)
+	private String upperFileName;
+	
+	@Column(name = "origin_file_name", nullable = false)
+	private String originFileName;
+	
 	@Column(name = "file_name", nullable = false)
 	private String fileName;
 	
@@ -33,6 +39,9 @@ public class FilesCustomer {
 	
 	@Column(name = "file_description", nullable = true)
 	private String fileDescription;
+	
+	@Column(name = "file_size", nullable = true)
+	private Integer fileSize;
 	
 	@Column(name = "download_times", nullable = true)
 	private Integer downloadTimes;
@@ -61,14 +70,17 @@ public class FilesCustomer {
 		super();
 	}
 
-	public FilesCustomer(Integer seqNo, String fileName, String fileExtension, String fileDescription,
-			Integer downloadTimes, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
-			FilesSetting filesSetting, Customer customer) {
+	public FilesCustomer(Integer seqNo, String upperFileName, String originFileName, String fileName,
+			String fileExtension, String fileDescription, Integer fileSize, Integer downloadTimes, Timestamp createTime,
+			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting, Customer customer) {
 		super();
 		this.seqNo = seqNo;
+		this.upperFileName = upperFileName;
+		this.originFileName = originFileName;
 		this.fileName = fileName;
 		this.fileExtension = fileExtension;
 		this.fileDescription = fileDescription;
+		this.fileSize = fileSize;
 		this.downloadTimes = downloadTimes;
 		this.createTime = createTime;
 		this.createBy = createBy;
@@ -84,6 +96,22 @@ public class FilesCustomer {
 
 	public void setSeqNo(Integer seqNo) {
 		this.seqNo = seqNo;
+	}
+
+	public String getUpperFileName() {
+		return upperFileName;
+	}
+
+	public void setUpperFileName(String upperFileName) {
+		this.upperFileName = upperFileName;
+	}
+
+	public String getOriginFileName() {
+		return originFileName;
+	}
+
+	public void setOriginFileName(String originFileName) {
+		this.originFileName = originFileName;
 	}
 
 	public String getFileName() {
@@ -108,6 +136,14 @@ public class FilesCustomer {
 
 	public void setFileDescription(String fileDescription) {
 		this.fileDescription = fileDescription;
+	}
+
+	public Integer getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(Integer fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	public Integer getDownloadTimes() {
