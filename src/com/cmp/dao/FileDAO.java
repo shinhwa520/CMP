@@ -15,7 +15,7 @@ public interface FileDAO {
 	
 	public List<Object> findPublicFileByDAOVO(FileDAOVO fileDAOVO);
 	
-	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO);
+	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
 	
 	public Integer addFile(Object entity, FilesSetting fSetting, List<FilesPermission> fPermissions);
 	

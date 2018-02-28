@@ -76,7 +76,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	}
 
 	@Override
-	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO) {
+	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select fc from FilesCustomer fc ")
 		  .append(" where 1=1 ");
@@ -84,8 +84,11 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		if (fileDAOVO.getSeqNo() != null) {
 			sb.append(" and fc.seqNo = :seqNo ");
 		}
-		if (fileDAOVO.getUpperFileName() != null) {
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
 			sb.append(" and fc.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getCustId() != null) {
+			sb.append(" and fc.custId = :custId ");
 		}
 		
 		sb.append(" and (fc.filesSetting.activationBegin is null or fc.filesSetting.activationBegin <= sysdate()) ")
@@ -94,12 +97,19 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
+	    if (startRow != null && pageLength != null) {
+	    	q.setFirstResult(startRow);
+		    q.setMaxResults(pageLength);
+	    }
 	    
 	    if (fileDAOVO.getSeqNo() != null) {
 	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
 		}
 	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
 	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getCustId() != null) {
+	    	q.setParameter("custId", fileDAOVO.getCustId());
 		}
 	    
 		return (List<Object>) q.list();

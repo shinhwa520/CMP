@@ -14,6 +14,8 @@ public interface FileService {
 	
 	public List<FileServiceVO> findAllCustomerFiles(boolean isAdmin, Integer startRow, Integer pageLength);
 	
+	public List<FileServiceVO> findCustomerFilesByCustId(Integer custId, Integer startRow, Integer pageLength);
+	
 	public FileServiceVO getFileByFileTypeAndSeqNoOrFileName(String fileType, Integer seqNo, String oriFileName);
 	
 	public List<FileServiceVO> findFilesByDAOVO(FileServiceVO fileServiceVO);

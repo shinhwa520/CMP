@@ -28,6 +28,7 @@ public class BillboardServiceImpl implements BillboardService {
 	private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
 	
+	@Autowired
 	private BillboardDAO billboardDAO;
 
 	@Override
@@ -200,10 +201,5 @@ public class BillboardServiceImpl implements BillboardService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Autowired
-	public void setBillboardContentDAO(BillboardDAO billboardDAO) {
-		this.billboardDAO = billboardDAO;
 	}
 }

@@ -33,6 +33,7 @@ public class FileServiceImpl implements FileService {
 	private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
 	
+	@Autowired
 	FileDAO fileDAO;
 
 	@Override
@@ -99,7 +100,7 @@ public class FileServiceImpl implements FileService {
 				fsVO.setEndTimeStr(TIME_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() : filesCustomer.getFilesSetting().getActivationEnd()));
 			}
 			
-			BeanUtils.copyProperties(filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() : filesCustomer.getFilesSetting().getFilesBaseConfig(), fsVO, new String[] {"updateTime"});
+//			BeanUtils.copyProperties(filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() : filesCustomer.getFilesSetting().getFilesBaseConfig(), fsVO, new String[] {"updateTime"});
 			fsVO.setFileType(FILE_TYPE_PUBLIC);
 			reList.add(fsVO);
 			
@@ -124,7 +125,7 @@ public class FileServiceImpl implements FileService {
 				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
-				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO);
+				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 				
 			} else {
 				
@@ -253,7 +254,7 @@ public class FileServiceImpl implements FileService {
 					reList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
 					
 				} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
-					reList = fileDAO.findCustomerFileByDAOVO(fileDAOVO);
+					reList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 				}
 				
 				if (reList != null && !reList.isEmpty()) {
@@ -310,7 +311,7 @@ public class FileServiceImpl implements FileService {
 				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
 				
 			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
-				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO);
+				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 				
 			} else {
 				throw new Exception("[ERROR] fileType not exists! >> " + fileServiceVO.getFileType());
@@ -359,7 +360,7 @@ public class FileServiceImpl implements FileService {
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				entity = "FilesCustomer";
-				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO);
+				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 			}
 			
 			if (modelList != null && !modelList.isEmpty()) {
@@ -387,9 +388,26 @@ public class FileServiceImpl implements FileService {
 		
 		return fbc;
 	}
-	
-	@Autowired
-	public void setFileDAO(FileDAO fileDAO) {
-		this.fileDAO = fileDAO;
+
+	@Override
+	public List<FileServiceVO> findCustomerFilesByCustId(Integer custId, Integer startRow, Integer pageLength) {
+		List<FileServiceVO> reList = null;
+		List<Object> fpList;
+		FileDAOVO fileDAOVO;
+		
+		try {
+			fileDAOVO = new FileDAOVO();
+			fileDAOVO.setCustId(custId);
+			fpList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, startRow, pageLength);
+			
+			if (fpList != null && !fpList.isEmpty()) {
+				reList = transModel2ServiceVO(fpList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return reList;
 	}
 }

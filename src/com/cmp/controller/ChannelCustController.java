@@ -1,5 +1,6 @@
 package com.cmp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import com.cmp.MenuItem;
 import com.cmp.model.Customer;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
+import com.cmp.service.FileService;
+import com.cmp.service.vo.FileServiceVO;
 
 @Controller
 @RequestMapping(value="/channel/cust")
@@ -28,6 +31,8 @@ public class ChannelCustController extends BaseController {
 	private static Log log = LogFactory.getLog(ChannelCustController.class);
 	@Autowired
 	private CustService custService;
+	@Autowired
+	private FileService fileService;
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
@@ -67,6 +72,34 @@ public class ChannelCustController extends BaseController {
 			log.error(e);
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
+	}
+	
+	/**
+	 * 取得Customer資料 by custId
+	 * @return AppResponse
+	 */
+	@RequestMapping(value="getCustFileById", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse getCustFileById(
+			@RequestParam(name="custId", required=true) Integer custId,
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+		
+		System.out.println(">>> custId: " + custId);
+		long total = 0;
+		List<FileServiceVO> fileList = null;
+		try {
+			fileList = fileService.findCustomerFilesByCustId(custId, start, length);
+			
+			if (fileList != null && !fileList.isEmpty()) {
+				 total = fileList.size();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		
+		return new DatatableResponse(total, fileList, total);
 	}
 	
 	@RequestMapping(value="create", method = RequestMethod.POST, produces="application/json")

@@ -6,6 +6,8 @@ public class FileDAOVO {
 	private String originFileName;
 	private String upperFileName;
 
+	private Integer custId;
+	
 	public Integer getSeqNo() {
 		return seqNo;
 	}
@@ -28,5 +30,13 @@ public class FileDAOVO {
 
 	public void setUpperFileName(String upperFileName) {
 		this.upperFileName = upperFileName;
+	}
+
+	public Integer getCustId() {
+		return custId;
+	}
+
+	public void setCustId(Integer custId) {
+		this.custId = custId;
 	}
 }

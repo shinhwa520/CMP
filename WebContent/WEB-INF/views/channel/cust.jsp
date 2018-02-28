@@ -105,6 +105,50 @@
   </div>
 </div>
 <!--/.燈箱 Edit -->
+
+<!--.燈箱 File -->         
+<div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">File</h4>
+      	</div>
+		<div class="modal_msg" style="display: none"></div>
+      	<div class="modal-body">                    
+            <form role="form" id="formFile" name="formFile">
+				<input type="hidden" name="fileType" id="queryFileType" value="" />
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<b><font style="font-size: 1.5em;">共享資源</font></b>
+						<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+						<span class="pull-right">&nbsp;</span>
+						<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
+					</div>
+					<div class="box-body no-padding">
+						<table class="table table-striped" id="custFileMain">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>檔案名稱</th>
+									<th>檔案大小</th>
+									<th>下載次數</th>
+									<th>檔案描述</th>
+									<th>更新時間</th>
+									<th style="width: 100px;">Option</th>
+									<th style="width: 100px;"><input type="checkbox" id="delChkAll" /> 全選</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>	
+	</div><!-- /.modal-content -->
+  </div>
+</div>
+<!--/.燈箱 File -->
+
 <script>
 var tblMain;
 var formAction;
@@ -154,7 +198,7 @@ function btnEditClicked(btn) {
 					$('#address').val(resp.data.cust.address);
 					$('#status').val(resp.data.cust.status);
 					$('#modal_Edit').modal();
-					successMsgModal(resp.message);
+					//successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -191,8 +235,6 @@ function btnSaveClicked() {
 		return false;
 	}
 	
-	
-	
 	$.ajax({
 		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
 		data : $('#formEdit').serialize(),
@@ -222,6 +264,62 @@ function btnSaveClicked() {
 			alert(thrownError);
 		}
 	});
+}
+
+//[File] 進入modal_File
+function btnFileClicked(btn) {
+	$('#modal_File').modal();
+	
+	if ( $.fn.dataTable.isDataTable( '#custFileMain' ) ) {
+		if (custFileMain) {
+			custFileMain.destroy();
+		}
+	}
+	custFileMain = $('#custFileMain').DataTable(
+		{
+			"bFilter" : false,
+			"ordering" : false,
+			"info" : false,
+			"serverSide" : true,
+			"bLengthChange" : false,
+			"ajax" : {
+				"url" : '${pageContext.request.contextPath}/channel/cust/getCustFileById.json',
+				"type" : 'GET',
+				"data" : function(d) {
+							d.custId = btn.attr('custId')
+						}
+			},
+			"columns" : [
+				{ "data" : "dataSeq" },
+				{ "data" : "fullFileName" },
+				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
+												      return data.format() + ' KB';
+											    } },
+				{ "data" : "downloadTimes" },
+				{ "data" : "fileDescription" },
+				{ "data" : "updateTime" }
+			],
+			"columnDefs": [
+				{
+					"targets" : 6,
+					"data" : 'seqNo',
+					"render" : function(data, type, row) {
+						return '<a href="#">'
+								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
+								+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
+					}
+				},
+				{
+					"targets" : 7,
+					data:   "seqNo",
+	                render: function ( data, type, row ) {
+	                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';
+	                },
+	                className: "dt-body-center"
+				}
+			],
+			select: true
+		});
 }
 
 //[Init.]
@@ -262,7 +360,11 @@ $(function() {
 				"render" : function(data, type, row) {
 					return '<a href="#">'
 							+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-							+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+							+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>'
+							+'&nbsp;'
+							+'<a href="#">'
+							+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnFileClicked($(this));">'
+							+'<i class="fa fa-close" style="margin-right:5px"></i>File</span></a>';
 				}
 			}
 		],

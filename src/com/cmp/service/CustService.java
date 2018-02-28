@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.cmp.model.Customer;
+import com.cmp.service.vo.CustServiceVO;
 
 public interface CustService {
 	Customer findCustById(int id);
