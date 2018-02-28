@@ -181,5 +181,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 			webApiDetail.setUser(user);
 			webApiDetailDAO.saveWebApiDetail(webApiDetail);
 		}
+		userDao.saveUser(user);
 	}
 }
