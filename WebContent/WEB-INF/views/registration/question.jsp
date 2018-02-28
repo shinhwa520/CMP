@@ -24,7 +24,9 @@
 	var itemCount = ${UserInfoForm.quesMap.keySet().size()};
 	var results;
 	var resultCount;
+	
 	function doSubmit() {
+		var _userId = $('#userId').val();
 		var getResult = function () {
 		    var result = [];
 		    $('input:radio').each(function () {
@@ -45,18 +47,14 @@
 			return false;
 		}
 		$.ajax({
-				url : '${pageContext.request.contextPath}/registration/ans?id=' + $('#userId').val() + '&results=' +results,
+				url : '${pageContext.request.contextPath}/registration/ans?id=' + _userId + '&results=' +results,
 				type : "GET",
 				dataType : 'json',
 				async: false,
 				contentType:"application/json;charset=utf-8", 
 				success : function(data) {
                     if (data.status === 200) {
-                        successMessage(data.message);
-                		setTimeout(function(){
-                			window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/login';
-                		}, 3000);
-                        
+                    	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/upstream?userId='+_userId;                        
                     } else {
                         errorMessage(data.message);
                     }

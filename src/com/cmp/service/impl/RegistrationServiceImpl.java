@@ -96,17 +96,17 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
 		User user = userDao.findUserById(vo.getUserId());
-		User channel;
-		
-		WebApiDetail webApiDetail = webApiDetailDAO.findWebApiDetailByParameterValues(vo.getChannelUrl());
-		if(null==webApiDetail)
-			channel = userDao.findUserByRoleName("ADMIN").get(0);
-		else
-			channel = webApiDetail.getUser();
+//		User channel;
+//		
+//		WebApiDetail webApiDetail = webApiDetailDAO.findWebApiDetailByParameterValues(vo.getChannelUrl());
+//		if(null==webApiDetail)
+//			channel = userDao.findUserByRoleName("ADMIN").get(0);
+//		else
+//			channel = webApiDetail.getUser();
 		
 		BeanUtils.copyProperties(vo, user);
 		user.setStatus(statusDAO.findStatus("USER", 3));//維護個資
-		user.setChannel(channel);
+//		user.setChannel(channel);
 		userDao.saveUser(user);
 	}
 	
@@ -132,7 +132,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return vo;
 	}
 	
-	@Override
 	public List<User> findUserByAccount(String account) {
 	   return userDao.findUserByAccount(account);
 	}
@@ -150,10 +149,37 @@ public class RegistrationServiceImpl implements RegistrationService {
 		}
 		user.setStatus(statusDAO.findStatus("USER", 4));//提交提問
 		userDao.saveUser(user);
-		
-		//註冊完成, 綁定webApiDetail
+	}
+	
+	
+	//user 輸入上游 user.account
+	public boolean upstream(String userId, String upstreamAccount) throws Exception {
+		boolean findUpstream;
+		User user = userDao.findUserById(userId);
+		user.setStatus(statusDAO.findStatus("USER", 5));//輸入上游
+		List<User> upstreamList = findUserByAccount(upstreamAccount);
+		if(null!=upstreamList && !upstreamList.isEmpty()){
+			user.setChannel(upstreamList.get(0));
+			findUpstream = true;
+		}else{
+			user.setChannel(userDao.findUserByRoleName("MA").get(0));
+			findUpstream = false;
+		}
+		userDao.saveUser(user);
+		return findUpstream;
+	}
+	
+	//user 簽署合同
+	public void agreement(String userId) throws Exception {
+		User user = userDao.findUserById(userId);
+		//綁定webApiDetail
 		WebApiDetail webApiDetail = webApiDetailDAO.findWebApiDetailByUserId("");
-		webApiDetail.setUser(user);
-		webApiDetailDAO.saveWebApiDetail(webApiDetail);
+		if(null==webApiDetail){
+			user.setStatus(statusDAO.findStatus("USER", 6));//同意條款
+		}else{
+			user.setStatus(statusDAO.findStatus("USER", 7));//註冊完成
+			webApiDetail.setUser(user);
+			webApiDetailDAO.saveWebApiDetail(webApiDetail);
+		}
 	}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cmp.MenuItem;
 import com.cmp.Response;
 import com.cmp.form.registration.EmailConfirmForm;
 import com.cmp.form.registration.UserInfoForm;
@@ -131,18 +130,35 @@ public class RegistrationController extends BaseController {
 	
 	
 	/**
-	 * user 輸入提問答案
-	 * return login頁面
+	 * user 輸入上游 user.account
+	 * return jsonResponse
 	 */
-	@RequestMapping(value = { "/ans" }, method = RequestMethod.GET)
-    public @ResponseBody String ans(Model model, @RequestParam("id") String id, @RequestParam("results") String results
-    		, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/ans");
+	@RequestMapping(value = { "/upstream" }, method = RequestMethod.GET)
+    public @ResponseBody String upstream(@RequestParam("id") String id, @ModelAttribute("UserInfoForm") UserInfoForm form) {
+    	System.out.println("registration/upstream");
     	try {
-    		registrationService.saveUserQues(id, results);
+    		String upstreamAccount = "";
+    		registrationService.upstream(id, upstreamAccount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         return jsonResponse(Response.REGISTRATION_SUCCESS);
     }
+	
+	/**
+	 * user 簽署合同
+	 * return jsonResponse
+	 */
+	@RequestMapping(value = { "/agreement" }, method = RequestMethod.GET)
+    public @ResponseBody String agreement(@RequestParam("id") String id, @ModelAttribute("UserInfoForm") UserInfoForm form) {
+    	System.out.println("registration/agreement");
+    	try {
+    		registrationService.agreement(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return jsonResponse(Response.REGISTRATION_SUCCESS);
+    }
+	
+	
 }

@@ -13,4 +13,6 @@ public interface RegistrationService {
 	RegistrationUserVO initQuestList() throws Exception;
 	List<User> findUserByAccount(String account);
 	void saveUserQues(String userId, String results) throws Exception;
+	boolean upstream(String userId, String upstreamAccount) throws Exception;
+	void agreement(String userId) throws Exception;
 }
