@@ -16,13 +16,13 @@ public class RegistrationUserVO {
 	private String phone;
 	private String channelUrl;
 	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
+	private String ans;
 	
 	
 	public RegistrationUserVO() {
 	}
 	
-	public RegistrationUserVO(String userId, String name, String account, String password, String phone,
-			String channelUrl) {
+	public RegistrationUserVO(String userId, String name, String account, String password, String phone, String channelUrl) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -31,7 +31,7 @@ public class RegistrationUserVO {
 		this.phone = phone;
 		this.channelUrl = channelUrl;
 	}
-	
+
 	public String getUserId() {
 		return userId;
 	}
@@ -75,6 +75,14 @@ public class RegistrationUserVO {
 
 	public void setQuesMap(TreeMap<Question, ArrayList<QuestionDetail>> quesMap) {
 		this.quesMap = quesMap;
+	}
+
+	public String getAns() {
+		return ans;
+	}
+
+	public void setAns(String ans) {
+		this.ans = ans;
 	}
 
 

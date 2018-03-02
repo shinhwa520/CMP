@@ -105,7 +105,7 @@ public class RegistrationController extends BaseController {
 	 * user 輸入userInfo
 	 * return 問題頁面
 	 */
-	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.GET)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/userInfo");
     	try {
@@ -114,26 +114,27 @@ public class RegistrationController extends BaseController {
     			return "registration/user";
     		}
     		
-    		String channelUrl = form.getChannelUrl();
-    		int index = channelUrl.lastIndexOf("/");
-    		
-    		if(-1==index){
-    			//user 輸入key
-    		}else{
-    			//user 輸入url
-    			channelUrl = channelUrl.substring(index+1);
-    		}
-    		System.out.println("[channelUrl]:"+channelUrl);
+//    		String channelUrl = form.getChannelUrl();
+//    		int index = channelUrl.lastIndexOf("/");
+//    		
+//    		if(-1==index){
+//    			//user 輸入key
+//    		}else{
+//    			//user 輸入url
+//    			channelUrl = channelUrl.substring(index+1);
+//    		}
+//    		System.out.println("[channelUrl]:"+channelUrl);
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
 			    			,form.getName()
 			    			,form.getAccount()
 			    			,form.getPassword()
 			    			,form.getPhone()
-			    			,channelUrl)
+			    			,null)
 					);
 			RegistrationUserVO vo = registrationService.initQuestList();
 			form.setQuesMap(vo.getQuesMap());
+			form.setAns(vo.getAns());
 			form.setQuesMapkeySize(vo.getQuesMap().keySet().size());
 		} catch (Exception e) {
 			e.printStackTrace();

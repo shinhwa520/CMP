@@ -116,6 +116,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		TreeMap<Question, ArrayList<QuestionDetail>> map = new TreeMap<Question, ArrayList<QuestionDetail>>();
 		ArrayList<QuestionDetail> tmp;
 		Question q;
+		String ans = "";
 		for(QuestionDetail detail : detailList){
 			q = detail.getQuestion();
 			if(map.containsKey(q)){
@@ -128,7 +129,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 				map.put(detail.getQuestion(), tmp);
 			}
 		}
+		for(Question ques : map.keySet()){
+			ans += ques.getAns() + ",";
+		}
+		ans = ans.substring(0, ans.length()-1);
 		vo.setQuesMap(map);
+		vo.setAns(ans);
 		return vo;
 	}
 	

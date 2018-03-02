@@ -26,6 +26,7 @@ public class UserInfoForm implements Serializable {
 	private int _agent_user=0;	//實際仲介user數
 	private int _agent_cust=0;	//實際仲介cust數
 	private int _volume=0;		//實際成交量
+	private String ans;
 	
 	public String getUserId() {
 		return userId;
@@ -126,6 +127,12 @@ public class UserInfoForm implements Serializable {
 	}
 	public void setChannelAccount(String channelAccount) {
 		this.channelAccount = channelAccount;
+	}
+	public String getAns() {
+		return ans;
+	}
+	public void setAns(String ans) {
+		this.ans = ans;
 	}
 
 }

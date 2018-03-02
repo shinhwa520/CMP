@@ -20,15 +20,20 @@ public class Question implements Comparable<Question>{
 	@Column(name = "sort", nullable = false)
 	private int sort;
 
+	@Column(name = "ans", nullable = false)
+	private int ans;
 	
 	public Question() {
 	}
-	public Question(String id, String content, int sort) {
+	
+	public Question(String id, String content, int sort, int ans) {
 		super();
 		this.id = id;
 		this.content = content;
 		this.sort = sort;
+		this.ans = ans;
 	}
+
 
 	public String getId() {
 		return id;
@@ -59,6 +64,16 @@ public class Question implements Comparable<Question>{
 	    if(this.sort > o.getSort()){return 1;}
 	    if(this.sort < o.getSort()){return -1;}
 	    else{return 0;}
+	}
+
+
+	public int getAns() {
+		return ans;
+	}
+
+
+	public void setAns(int ans) {
+		this.ans = ans;
 	}
 
 }

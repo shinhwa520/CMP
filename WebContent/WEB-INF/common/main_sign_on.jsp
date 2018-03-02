@@ -37,7 +37,7 @@
 		}
 		function errorMessage(message) {
 			var msg = $('#message');
-			$(window).scrollTop(msg.offset().top);
+			$(document).scrollTop(0);
 			msg.addClass('alert-danger');
 			msg.html(message);
 	      

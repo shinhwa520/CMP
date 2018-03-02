@@ -2,20 +2,33 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ include file="../../common/taglib.jsp" %>
 
-<section class="content">
+<section class="content" style="padding-bottom: 50px;">
 	<div class="topic">please answer the following questions :</div>
 	<form:form method="POST" modelAttribute="UserInfoForm">
 		<form:hidden path="userId" id="userId" />
+		<form:hidden path="ans" id="ans" />
+		<table>
 		<c:if test="${!UserInfoForm.quesMap.isEmpty() }">
 			<c:forEach var="vo" items="${ UserInfoForm.quesMap }">
-				<span style="color: red;">＊ </span>${vo.key.content }<br/>
+				<tr>
+					<td style="vertical-align:text-top;"><span style="color: blue;">${vo.key.sort }.</span></td>
+					<td><span style="color: blue;">${vo.key.content }</span></td>
+				</tr>
 					<c:forEach var="detail" items="${ vo.value }">
-						<input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.id }> ${detail.content }<br/>
+					<tr>
+						<td style="vertical-align:text-top;"><input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.id }></td>
+						<td>${detail.content }</td>
+					</tr>
 					</c:forEach>
-					<br/>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+					
 			</c:forEach>
-					<input class="btn btn-lg btn-success btn-block" type="button" name="submitBtn" value="提交答案  完成註冊" onclick="doSubmit()"/>
 		</c:if>
+		</table>
+		<div><input class="btn btn-lg btn-success btn-block" type="button" name="submitBtn" value="提交答案  完成註冊" onclick="doSubmit()"/></div>
+		
 	</form:form>
 </section>
 
@@ -42,10 +55,15 @@
 		console.log("itemCount :" + itemCount);
 		console.log("results :" + results);
 		console.log("resultCount :" + resultCount);
+		if(results != $('#ans').val()){
+			errorMessage("有答錯的題目，請再次確認後提交!");
+			return false;
+		}
 		if(''==results || resultCount<itemCount){
 			errorMessage("下列問題皆為必選，請再次確認後提交!");
 			return false;
 		}
+		
 		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/upstream?userId='+_userId;
 		/*
 		$.ajax({
