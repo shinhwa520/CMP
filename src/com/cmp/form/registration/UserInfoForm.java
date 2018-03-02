@@ -16,6 +16,7 @@ public class UserInfoForm implements Serializable {
 	private String password;
 	private String phone;
 	private String channelUrl;
+	private String channelAccount;
 	private String statusName;
 	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
 	private int quesMapkeySize;
@@ -119,6 +120,12 @@ public class UserInfoForm implements Serializable {
 	}
 	public void set_volume(int _volume) {
 		this._volume = _volume;
+	}
+	public String getChannelAccount() {
+		return channelAccount;
+	}
+	public void setChannelAccount(String channelAccount) {
+		this.channelAccount = channelAccount;
 	}
 
 }

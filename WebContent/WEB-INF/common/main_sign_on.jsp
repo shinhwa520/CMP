@@ -33,7 +33,7 @@
 			msg.fadeIn();
 			setTimeout(function(){
 				msg.fadeOut();
-			}, 1000);
+			}, 2000);
 		}
 		function errorMessage(message) {
 			var msg = $('#message');
@@ -44,7 +44,7 @@
 			msg.fadeIn();
 			setTimeout(function(){
 				msg.fadeOut();
-			}, 1000);
+			}, 2000);
 		}
 	</script>
 	<style type="text/css">

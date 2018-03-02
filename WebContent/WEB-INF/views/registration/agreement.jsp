@@ -3,29 +3,43 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-	<div class="topic">please fill in your upstream account :</div>
-	<form:form method="POST" onsubmit="return validateInput();" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/emailConfirm">
+	<div class="topic">同意合作夥伴委任協議 :</div>
+	<form:form method="POST" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/agreeAgreement">
 		<form:hidden path="userId" id="userId" />
-		<form:input class="form-control" path="mailAddress" id="mailAddress" placeholder="Email"/>
-		<form:errors class="form-control" path="mailAddress" cssClass="error" />
-		<input class="btn btn-lg btn-success btn-block" value="Confirm" type="submit">
+		<input class="btn btn-lg btn-info btn-block" type=button value="合作夥伴委任協議" onclick="agreementPdf();" >
+		是否同意
+		同意合作夥伴委任協議?
+		<input class="btn btn-lg btn-success btn-block" type="button" value="同意" onclick="agreeAgreement();" >
+		<input class="btn btn-lg btn-danger btn-block" type="button" value="不同意" >
 	</form:form>
 </section>
 <script>
-	function validateInput() {
-	  	var mailAddress = $('#mailAddress').val();
-	  	if(mailAddress.trim()==''){
-	  		errorMessage('請輸入Email');
-		  	return false;
-		}
-	  	if(!validateEmail(mailAddress)){
-	  		errorMessage('Email格式錯誤，請重新輸入！');
-		  	return false;
-		}
+	function agreeAgreement() {
+		$.ajax({
+			url : '${pageContext.request.contextPath}/registration/agreeAgreement?userId=' + $('#userId').val(),
+			type : "GET",
+			dataType : 'json',
+			async: false,
+			contentType:"application/json;charset=utf-8", 
+			success : function(data) {
+                if (data.status === 200) {
+                	successMessage(data.message);
+        			setTimeout(function(){
+        				window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/login';
+        			}, 2000);
+                } else {
+                    errorMessage(data.message);
+                }
+			},
+
+			error : function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
+		});
 	}
 
-	function validateEmail(email) {
-		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(email);
+	function agreementPdf() {
+		window.open("${pageContext.request.contextPath}/registration/agreementPdf");
 	}
 </script>

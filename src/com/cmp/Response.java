@@ -3,7 +3,7 @@ package com.cmp;
 import javax.servlet.http.HttpServletResponse;
 
 public enum Response {
-	REGISTRATION_SUCCESS(HttpServletResponse.SC_OK, "registration success!! redirect to login page..."),
+	REGISTRATION_SUCCESS(HttpServletResponse.SC_OK, "註冊成功!! 導向登入頁面..."),
 	CREATE_SUCCESS(HttpServletResponse.SC_OK, "新增資料成功"),
 	UPDATE_SUCCESS(HttpServletResponse.SC_OK, "維護資料成功"),
 	PARAMETER_ERROR(HttpServletResponse.SC_BAD_REQUEST, "參數錯誤");

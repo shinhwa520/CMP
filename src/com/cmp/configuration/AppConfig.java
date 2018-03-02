@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -30,7 +31,18 @@ import com.cmp.i18n.DatabaseMessageSourceBase;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.cmp")
 public class AppConfig implements WebMvcConfigurer {
-     
+    
+    /*
+    * Register BeanNameViewResolver for pdf
+    * */
+    @Bean
+    public ViewResolver beanNameViewResolver() {
+        BeanNameViewResolver resolver = new BeanNameViewResolver();
+        resolver.setOrder(0);
+        return resolver;
+    }
+
+    
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -74,6 +86,7 @@ public class AppConfig implements WebMvcConfigurer {
     	resolver.setTemplateEngine(templateEngine());
     	registry.viewResolver(resolver);
     }
+
     
 //    @Bean
 //    public MessageSource messageSource() {

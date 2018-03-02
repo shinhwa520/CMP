@@ -46,6 +46,8 @@
 			errorMessage("下列問題皆為必選，請再次確認後提交!");
 			return false;
 		}
+		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/upstream?userId='+_userId;
+		/*
 		$.ajax({
 				url : '${pageContext.request.contextPath}/registration/ans?id=' + _userId + '&results=' +results,
 				type : "GET",
@@ -65,6 +67,7 @@
 					alert(thrownError);
 				}
 			});
+		*/
 	}
 
 </script>
