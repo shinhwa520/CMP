@@ -11,6 +11,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
 	<title>Sign In</title>
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons/2.0.1/css/ionicons.min.css">
@@ -48,51 +49,63 @@
 		}
 	</script>
 	<style type="text/css">
-		header nav.navbar-HF {
-		    min-height: 41px;
+		body {
+			background: -webkit-linear-gradient(#555555, #FFFFFF);
+			background: -o-linear-gradient(#555555, #FFFFFF);
+			background: -moz-linear-gradient(#555555, #FFFFFF);
+			background: linear-gradient(#555555, #FFFFFF);
 		}
-
-		nav.navbar-HF {
-		    background-color: #555;
-		    border-bottom: 1px solid #333;
+		header nav.navbar-HF {
+		    min-height: 60px;
 		    color: #fff;
+		}
+		nav.navbar-HF .navbar-header{
+		    width: 100%;
+		    margin-top: 10px;
+		    margin-left: 50px;
 		}
 		nav.navbar-HF .navbar-header .navbar-brand{
 			font-size: 20px;
-		    text-shadow: 2px 2px 0 #333;
-		    color: #fff;
-		    padding: 10px 0 0 10px;
+			font-weight: bold;
+		    text-shadow: 2px 2px 0 #000000;
+		    color: #ffffff;
+		    text-align: center;
 		    height: auto;
 		}
 		nav.navbar-HF .navbar-header .appVersion{
-		    color: #fff;
-		    padding: 15px 0 0 15px;
-		    float: left;
+			font-size: 10px;
+		    color: #ffffff;
 		}
 		footer nav.navbar-HF{
 			padding: 10px;
-		    min-width: 980px;
+		    min-width: 300px;
+		    max-width: 100%;
 		    height: 36px;
-		    color: #fff;
+		    color: #ffffff;
+		    font-size: 10px;
 		    background-color: #555;
 		    border-top: 1px solid #333;
 		    text-align: center;
 		}
 		form {
-			min-width: 500px;
-		    max-width: 500px;
-		    padding: 15px;
+			min-width: 300px;
+		    max-width: 450px;
+		    padding: 30px;
 		    margin: 0 auto;
+			background-color: #FFFFFF;
+		    border-bottom-left-radius: 6px;
+		    border-bottom-right-radius: 6px;
 		}
 		form input.form-control {
 			height: auto;
 			margin-bottom: 5px;
 		    padding: 10px;
 		    font-size: 16px;
+		    border-radius: 4px;
 		}
 		
 		 #container{     
-		 	margin-top: 40px;
+		 	margin-top: 60px;
 			min-height: 600px;
 		 }
 		.alert{
@@ -100,9 +113,20 @@
 			display:none;
 		}
 		.topic{
-			font-size: 28px;
-			text-shadow: 1px 1px 0 #333;
-			text-align: center;
+			min-width: 300px;
+		    max-width: 450px;
+			min-height: 60px;
+			max-height: 90px;
+		    margin: 0 auto;
+		    background: -webkit-linear-gradient(left top,#FFFFFF, #CCCCCC);
+			background: -o-linear-gradient(bottom right,#FFFFFF, #CCCCCC);
+			background: -moz-linear-gradient(bottom right,#FFFFFF, #CCCCCC);
+			background: linear-gradient(to bottom right,#FFFFFF, #CCCCCC);
+			font-size: 20px;
+			text-shadow: 1px 1px 0 #CCCCCC;
+			padding: 30px;
+		    border-top-left-radius: 6px;
+		    border-top-right-radius: 6px;
 		}
 	</style>
 </head>
@@ -110,7 +134,8 @@
 	<header>
 	<nav class="navbar navbar-HF navbar-fixed-top">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">CMP - 渠道商管理平台</a><span class="appVersion">Version: ${versionCode}</span>
+			<span class="navbar-brand">CMP - 渠道商管理平台</span><br />
+			<span class="appVersion">Version: ${versionCode}</span>
 		</div>
 	</nav>
 	</header>
@@ -123,9 +148,7 @@
 	
 	<footer>
 	<nav class="navbar navbar-HF navbar-fixed-bottom">
-		<div>
-			Powered by <strong><a href="#">Fede tech Co.</a></strong>&nbsp;&copy;&nbsp;2018 , Ltd. All Rights Reserved. <br />
-		</div>
+		<div>Powered by <strong><a href="#">Fede tech Co.</a></strong>&nbsp;&copy;&nbsp;2018 , Ltd. All Rights Reserved.</div>
 	</nav>
 	</footer>
 </body>
