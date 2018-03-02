@@ -78,7 +78,7 @@ $(function() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/share/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType');
+	var downloadUrl = "${pageContext.request.contextPath}/share/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=share/file";
     window.location.href = downloadUrl;
 }
 </script>

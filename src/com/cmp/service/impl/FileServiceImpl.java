@@ -101,7 +101,8 @@ public class FileServiceImpl implements FileService {
 			}
 			
 //			BeanUtils.copyProperties(filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() : filesCustomer.getFilesSetting().getFilesBaseConfig(), fsVO, new String[] {"updateTime"});
-			fsVO.setFileType(FILE_TYPE_PUBLIC);
+			FilesBaseConfig config = filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() : filesCustomer.getFilesSetting().getFilesBaseConfig();
+			fsVO.setFileType(config.getConfigName());
 			reList.add(fsVO);
 			
 			dataSeq += 1;
@@ -167,10 +168,11 @@ public class FileServiceImpl implements FileService {
 				
 			} else {
 				fileServiceVO.setDownloadTimes(0);
+				String oriName = fileServiceVO.getOriginFileName();
 				fileServiceVO.setFileName(
-						fileServiceVO.getOriginFileName().indexOf(".") != -1 ? fileServiceVO.getOriginFileName().split("\\.")[0] : fileServiceVO.getOriginFileName());
+						oriName.lastIndexOf(".") != -1 ? oriName.substring(0, oriName.lastIndexOf(".")) : oriName);
 				fileServiceVO.setFileExtension(
-						fileServiceVO.getOriginFileName().indexOf(".") != -1 ? fileServiceVO.getOriginFileName().split("\\.")[1] : null);
+						oriName.lastIndexOf(".") != -1 ? oriName.substring(oriName.lastIndexOf(".")+1, oriName.length()) : null);
 				fileServiceVO.setUpperFileName(fileServiceVO.getOriginFileName().toUpperCase());
 				
 				// Model >> FilesPublic / FilesCustomer
@@ -179,6 +181,7 @@ public class FileServiceImpl implements FileService {
 					entity = new FilesPublic();
 				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
 					entity = new FilesCustomer();
+					((FilesCustomer)entity).setCustId(fileServiceVO.getCustId());
 				}
 				
 				if (entity != null) {
@@ -246,26 +249,28 @@ public class FileServiceImpl implements FileService {
 			}
 			
 			for (Integer seqNo : seqNos) {
-				modelList = new ArrayList<Object>();
-				fileDAOVO = new FileDAOVO();
-				fileDAOVO.setSeqNo(seqNo);
-				
-				if (StringUtils.equals(fileType, FILE_TYPE_PUBLIC)) {
-					reList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
+				if (seqNo != null) {
+					modelList = new ArrayList<Object>();
+					fileDAOVO = new FileDAOVO();
+					fileDAOVO.setSeqNo(seqNo);
 					
-				} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
-					reList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
-				}
-				
-				if (reList != null && !reList.isEmpty()) {
-					bucketKeys.add((String)reList.get(0).getClass().getMethod("getOriginFileName").invoke(reList.get(0)));
+					if (StringUtils.equals(fileType, FILE_TYPE_PUBLIC)) {
+						reList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
+						
+					} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
+						reList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
+					}
 					
-					FilesSetting fs = (FilesSetting)reList.get(0).getClass().getMethod("getFilesSetting").invoke(reList.get(0));
-					modelList.addAll(fs.getFilesPermissions());
-					modelList.add(reList.get(0));
-					modelList.add(fs);
-					
-					fileDAO.deleteFile(modelList);
+					if (reList != null && !reList.isEmpty()) {
+						bucketKeys.add((String)reList.get(0).getClass().getMethod("getOriginFileName").invoke(reList.get(0)));
+						
+						FilesSetting fs = (FilesSetting)reList.get(0).getClass().getMethod("getFilesSetting").invoke(reList.get(0));
+						modelList.addAll(fs.getFilesPermissions());
+						modelList.add(reList.get(0));
+						modelList.add(fs);
+						
+						fileDAO.deleteFile(modelList);
+					}
 				}
 			}
 			
