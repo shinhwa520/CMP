@@ -170,10 +170,13 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	@Override
 	public FilesBaseConfig findFilesBaseConfigByConfigName(String configName) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select fbc from FilesBaseConfig fbc ");
+		sb.append(" select fbc from FilesBaseConfig fbc ")
+		  .append(" where 1=1 ")
+		  .append(" and configName = :configName ");
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
+	    q.setParameter("configName", configName);
 
 	    List retList = q.list();
 		return (retList != null && !retList.isEmpty()) ? (FilesBaseConfig)retList.get(0) : null;

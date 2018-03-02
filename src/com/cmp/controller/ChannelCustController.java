@@ -84,7 +84,6 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		
-		System.out.println(">>> custId: " + custId);
 		long total = 0;
 		List<FileServiceVO> fileList = null;
 		try {
@@ -92,6 +91,10 @@ public class ChannelCustController extends BaseController {
 			
 			if (fileList != null && !fileList.isEmpty()) {
 				 total = fileList.size();
+				 
+			} else {
+				fileList = new ArrayList<FileServiceVO>();
+				total = 0;
 			}
 			
 		} catch (Exception e) {

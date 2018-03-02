@@ -24,6 +24,7 @@
 				</tr>
 			</thead>
 		</table>
+		<input type="hidden" name="clickedCustId" id="clickedCustId" value="-1" />
 	</div>
 </div>
 </section>
@@ -120,13 +121,13 @@
 				<input type="hidden" name="fileType" id="queryFileType" value="" />
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<b><font style="font-size: 1.5em;">共享資源</font></b>
+						<b><font style="font-size: 1.5em;">客戶檔案</font></b>
 						<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
 						<span class="pull-right">&nbsp;</span>
-						<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
+						<a href="#" onclick="btnDeleteClicked();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
 					</div>
 					<div class="box-body no-padding">
-						<table class="table table-striped" id="custFileMain">
+						<table class="table table-striped" id="custFileMain" width="100%">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -149,8 +150,61 @@
 </div>
 <!--/.燈箱 File -->
 
+<!--.燈箱 Upload -->         
+<div class="modal fade bs-example-modal-lg" id="modal_Upload" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">Upload</h4>
+      	</div>
+		<div class="modal_msg" style="display: none"></div>
+      	<div class="modal-body">                    
+            <form role="form" id="formUpload" name="formUpload" enctype="multipart/form-data">
+            	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
+            	<input type="hidden" name="fileType" id="editFileType" value="CUSTOMER" />
+            	<input type="hidden" name="isAdd" id="isAdd" value="Y" />
+            	<input type="hidden" name="onTopChkbox" id="onTopChkbox" value="N" />
+            	<input type="hidden" name="custId" id="custId" value="" />
+            	
+		        <div class="box-body">
+		        	<div class="form-upload-group">
+						<label for="fullFileName">檔案名稱<span class="pull-right" style="color: red;">＊ </span> </label>
+            			<input type="text" class="form-control" name="fullFileName" id="editFullFileName" readonly="true" />
+            			<input type="file" name="uploadFile" id="uploadFile" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-upload-group">
+						<label for="phone">檔案描述<span class="pull-right" style="color: red;">＊ </span></label>
+						<input type="text" class="form-control" name="fileDescription" id="editFileDescription" />
+		            </div>                              
+		        </div>
+	            
+				<div class="modal-footer">
+	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();">Upload</button>
+				</div>
+			</form>
+			<br />
+
+		    <!-- Bootstrap Progress bar -->
+		    <div class="progress">
+		      <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar"
+		        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+		    </div>
+		
+		    <!-- Alert -->
+		    <div id="alertMsg" style="color: red;font-size: 18px;"></div>
+		</div>	
+	</div><!-- /.modal-content -->
+  </div>
+</div>
+<!--/.燈箱 Upload -->
+
 <script>
 var tblMain;
+var custFileMain;
 var formAction;
 
 
@@ -268,58 +322,12 @@ function btnSaveClicked() {
 
 //[File] 進入modal_File
 function btnFileClicked(btn) {
+	$('#clickedCustId').val(btn.attr('custId'));
+	$('#custId').val(btn.attr('custId'));
+	
+	custFileMain.ajax.reload();	//重查資料
 	$('#modal_File').modal();
 	
-	if ( $.fn.dataTable.isDataTable( '#custFileMain' ) ) {
-		if (custFileMain) {
-			custFileMain.destroy();
-		}
-	}
-	custFileMain = $('#custFileMain').DataTable(
-		{
-			"bFilter" : false,
-			"ordering" : false,
-			"info" : false,
-			"serverSide" : true,
-			"bLengthChange" : false,
-			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/channel/cust/getCustFileById.json',
-				"type" : 'GET',
-				"data" : function(d) {
-							d.custId = btn.attr('custId')
-						}
-			},
-			"columns" : [
-				{ "data" : "dataSeq" },
-				{ "data" : "fullFileName" },
-				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
-												      return data.format() + ' KB';
-											    } },
-				{ "data" : "downloadTimes" },
-				{ "data" : "fileDescription" },
-				{ "data" : "updateTime" }
-			],
-			"columnDefs": [
-				{
-					"targets" : 6,
-					"data" : 'seqNo',
-					"render" : function(data, type, row) {
-						return '<a href="#">'
-								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
-					}
-				},
-				{
-					"targets" : 7,
-					data:   "seqNo",
-	                render: function ( data, type, row ) {
-	                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';
-	                },
-	                className: "dt-body-center"
-				}
-			],
-			select: true
-		});
 }
 
 //[Init.]
@@ -376,5 +384,214 @@ $(function() {
 		yearRange: "-100:+0",
 		changeYear: true
 	});
+	
+	custFileMain = $('#custFileMain').DataTable(
+	{
+		"bFilter" : false,
+		"ordering" : false,
+		"info" : false,
+		"serverSide" : true,
+		"bLengthChange" : false,
+		"ajax" : {
+			"url" : '${pageContext.request.contextPath}/channel/cust/getCustFileById.json',
+			"type" : 'GET',
+			"data" : function(d) {
+						d.custId = $('#clickedCustId').val()
+					}
+		},
+		"columns" : [
+			{ "data" : "dataSeq" },
+			{ "data" : "fullFileName" },
+			{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
+											      return data.format() + ' KB';
+										    } },
+			{ "data" : "downloadTimes" },
+			{ "data" : "fileDescription" },
+			{ "data" : "updateTime" }
+		],
+		"columnDefs": [
+			{
+				"targets" : 6,
+				"data" : 'seqNo',
+				"render" : function(data, type, row) {
+					return '<a href="#">'
+							+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
+							+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
+				}
+			},
+			{
+				"targets" : 7,
+				data:   "seqNo",
+                render: function ( data, type, row ) {
+                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';
+                },
+                className: "dt-body-center"
+			}
+		],
+		select: true
+	});
+	
+	 $('#delChkAll').click(function () {
+		    $(':checkbox.delChkbox').prop('checked', this.checked);    
+		});
 });
+
+Number.prototype.format = function(n, x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+};
+
+//[Add] 進入modal_Edit編輯
+function btnAddClicked() {
+	formAction = 'upload';
+	$('#editSeqNo').val('');
+	$('#editFullFileName').val('');
+	$('#uploadFile').val('');
+	$('#uploadFile').show();
+	$('#editFullFileName').hide();
+	$('#editFileDescription').val('');
+
+	$('#modal_Upload').modal();
+}
+
+//[Upload] modal_Upload >>按下Upload
+function btnUploadClicked() {
+	formAction = 'upload';
+	
+	var fileDesc = $('#editFileDescription').val();
+	var uploadFile = $('#uploadFile').val();
+	//頁面輸入檢核
+	$('.form-upload-group').removeClass('has-error');
+	var isError = false;
+	var errMsg = '';
+	if (''==fileDesc.trim()) {
+		isError = true;
+		$('#editFileDescription').parents('.form-group').addClass('has-error');
+		errMsg += '！Name為必填<br/>';
+	}
+	if (''==uploadFile.trim()) {
+		isError = true;
+		$('#uploadFile').parents('.form-group').addClass('has-error');
+		errMsg += '！請選擇檔案<br/>';
+	}
+
+	if(isError){
+		errorMsgModal(errMsg);
+		return false;
+	}
+	
+	// Get form
+    var form = $('#formUpload')[0];
+    var data = new FormData(form);
+ 
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: '${pageContext.request.contextPath}/manage/file/' + formAction,
+        data: data,
+        processData: false, //prevent jQuery from automatically transforming the data into a query string
+        contentType: false,
+        cache: false,
+        xhr: function(){
+	        //Get XmlHttpRequest object
+	         var xhr = $.ajaxSettings.xhr() ;
+	        
+	        //Set onprogress event handler 
+	         xhr.upload.onprogress = function(event){
+	          	var perc = Math.round((event.loaded / event.total) * 100);
+	          	$('#progressBar').text(perc + '%');
+	          	$('#progressBar').css('width',perc + '%');
+	         };
+	         return xhr ;
+    	},
+    	beforeSend: function( xhr ) {
+    		//Reset alert message and progress bar
+    		$('#alertMsg').text('');
+    		$('#progressBar').text('');
+    		$('#progressBar').css('width','0%');
+	    },
+	    
+	    success : function(resp) {
+			console.log(resp);
+			
+			if (resp.code == '200') {
+				successMsgModal(resp.message);
+				setTimeout(function(){
+					$('#modal_Upload').modal('hide');
+				}, 1000);
+				
+				if (custFileMain) {
+					custFileMain.ajax.reload();
+				}
+			} else {
+				alert(resp.message);
+			}
+		},
+
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+    });
+}
+
+function btnDeleteClicked() {
+	formAction = "deleteAj";
+	
+	var seqNos = "";
+	var haveOneChecked = false;
+	$(':checkbox.delChkbox').each(function() {
+	    if (this.checked) {
+	    	haveOneChecked = true;
+	    	seqNos += this.value;
+	    	seqNos += ",";
+	    }
+	});
+	
+	alert(seqNos);
+	if (!haveOneChecked) {
+		alert("請至少選擇一項要刪除的檔案!");
+		
+	} else {
+		$.ajax({
+			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
+			data : {
+				fileType: "CUSTOMER",
+				seqNo: seqNos
+			},
+			type : "POST",
+			dataType : 'json',
+			async: false,
+			success : function(resp) {
+				console.log(resp);
+				
+				if (resp.code == '200') {
+					successMsgModal(resp.message);
+					
+					if (custFileMain) {
+						custFileMain.ajax.reload();
+					}
+				} else {
+					alert(resp);
+				}
+			},
+
+			error : function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
+		});
+	}
+}
+
+//[Download] 按下Download按鈕
+function btnDownloadClicked(btn) {
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=channel/cust";
+  	window.location.href = downloadUrl;
+  	
+  	if (custFileMain) {
+		custFileMain.ajax.reload();
+	}
+}
+
 </script>

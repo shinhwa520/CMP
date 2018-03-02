@@ -440,42 +440,7 @@ function btnSaveClicked() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType');
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/file;
     window.location.href = downloadUrl;
-	/*
-	formAction = 'download';
-	console.log(btn.attr('seqNo'));
-	$('.form-group').removeClass('has-error');
-	$.ajax({
-			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
-			data : {
-					fileType: btn.attr('fileType'),
-					seqNo: btn.attr('seqNo')
-				   },
-			type : "POST",
-			dataType : 'json',
-			async: false,
-
-			success : function(resp) {
-				console.log(resp);		
-				if (resp.code == '200') {
-					//successMsgModal(resp.message);
-					//alert(resp.message);
-					
-					if (tblMain) {
-						tblMain.ajax.reload();
-					}
-					
-				} else {
-					alert(resp.message);
-				}
-			},
-
-			error : function(xhr, ajaxOptions, thrownError) {
-				alert(xhr.status);
-				alert(thrownError);
-			}
-		});
-	*/
 }
 </script>

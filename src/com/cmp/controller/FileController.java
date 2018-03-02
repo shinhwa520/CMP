@@ -117,7 +117,7 @@ public class FileController extends BaseController {
 				String realPath = request.getSession().getServletContext()
 						.getRealPath("/upload/temp");
 				// 文件原名称
-				String originFileName = uploadFile.getOriginalFilename();
+				String originFileName = new String(uploadFile.getOriginalFilename().getBytes("iso-8859-1"), "utf-8");
 				// 文件大小
 				BigDecimal fileSize = new BigDecimal(uploadFile.getSize()).divide(new BigDecimal(1024), 2, BigDecimal.ROUND_HALF_UP);
 				
@@ -167,7 +167,7 @@ public class FileController extends BaseController {
 	
 	@RequestMapping(value="/manage/file/modify", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
-	public AppResponse modifyBillboard(
+	public AppResponse modifyFile(
 			@RequestParam(name="seqNo", required=false) Integer seqNo,
 			@RequestParam(name="fileType", required=true) String fileType,
 			@RequestParam(name="fullFileName", required=true) String fullFileName,
@@ -210,16 +210,50 @@ public class FileController extends BaseController {
 			e.printStackTrace();
 			
 		} finally {
-			setActiveMenu(model, MenuItem.MANAGE_BILLBOARD);
+			setActiveMenu(model, MenuItem.MANAGE_FILE);
 		}
 		
 		return fileMain(model, form, request, response);
     }
 	
+	@RequestMapping(value="/manage/file/deleteAj", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public AppResponse deleteFileByAjax(
+			@RequestParam(name="seqNos", required=true) String seqNos,
+			@RequestParam(name="fileType", required=true) String fileType) {
+		
+		String[] tmpArray;
+		Integer[] seqNoArray;
+		try {
+			tmpArray = seqNos.split(",");
+			
+			if (tmpArray != null) {
+				seqNoArray = new Integer[tmpArray.length];
+				
+				int idx = 0;
+				for (String seqNo : tmpArray) {
+					if (StringUtils.isNotBlank(seqNo)) {
+						seqNoArray[idx] = Integer.parseInt(seqNo);
+						idx += 1;
+					}
+				}
+				
+				fileService.deleteFile(fileType, seqNoArray, true);
+			}
+			
+			return new AppResponse(HttpServletResponse.SC_OK, "刪除成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
+	
 	@RequestMapping(value="/manage/file/download", method = RequestMethod.GET)
-	public String downloadBillboard(
+	public String downloadFile(
 			@RequestParam(name="seqNo", required=true) Integer seqNo,
 			@RequestParam(name="fileType", required=true) String fileType,
+			@RequestParam(name="fromPage", required=true) String fromPage,
 			Model model, @ModelAttribute("FileForm") FileForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 		
@@ -232,13 +266,19 @@ public class FileController extends BaseController {
 			
 			String key = fileService.modifyDownloadCount(fileType, seqNo);
 			
-			new GetObject2Aliyun().getObject(config, key, response);
+			try {
+				new GetObject2Aliyun().getObject(config, key, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("message", "檔案下載失敗");
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
 		}
 		
-		return null;
+		return fromPage;
 	}
 }

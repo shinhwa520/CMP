@@ -29,6 +29,8 @@ public class FileServiceVO {
 	private Integer addedSeqNo;
 	private String errMsg;
 	
+	private Integer custId;
+	
 	public Integer getSeqNo() {
 		return seqNo;
 	}
@@ -211,5 +213,13 @@ public class FileServiceVO {
 
 	public void setFileSize(Integer fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public Integer getCustId() {
+		return custId;
+	}
+
+	public void setCustId(Integer custId) {
+		this.custId = custId;
 	}
 }

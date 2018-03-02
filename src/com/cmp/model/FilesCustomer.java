@@ -71,7 +71,7 @@ public class FilesCustomer {
 
 	public FilesCustomer(Integer seqNo, String upperFileName, String originFileName, String fileName,
 			String fileExtension, String fileDescription, Integer fileSize, Integer downloadTimes, Timestamp createTime,
-			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting) {
+			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting, Integer custId) {
 		super();
 		this.seqNo = seqNo;
 		this.upperFileName = upperFileName;
@@ -86,6 +86,7 @@ public class FilesCustomer {
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
 		this.filesSetting = filesSetting;
+		this.custId = custId;
 	}
 
 	public Integer getSeqNo() {
@@ -190,5 +191,13 @@ public class FilesCustomer {
 
 	public void setFilesSetting(FilesSetting filesSetting) {
 		this.filesSetting = filesSetting;
+	}
+
+	public Integer getCustId() {
+		return custId;
+	}
+
+	public void setCustId(Integer custId) {
+		this.custId = custId;
 	}
 }
