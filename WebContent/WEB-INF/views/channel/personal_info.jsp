@@ -18,7 +18,7 @@
         <div class="box-body">
         	<div class="form-group">
 				<label for="account"><span class="pull-right" style="color: red;">＊ </span>Account</label>
-				<form:input class="form-control" path="account" id="account" />
+				<form:input class="form-control" path="account" id="account" readonly="true" />
             </div>                              
         </div>
         <div class="box-body">
@@ -33,6 +33,19 @@
 				<form:input class="form-control" path="phone" id="phone" />
             </div>                              
         </div>
+        <div class="box-body">
+        	<div class="form-group">
+				<label for="phone"><span class="pull-right" style="color: red;">＊ </span>Email</label>
+				<form:input class="form-control" path="email" id="email" />
+            </div>                              
+        </div>
+        <div class="box-body">
+        	<div class="form-group">
+				<label for="phone"><span class="pull-right" style="color: red;">＊ </span>WeChat</label>
+				<form:input class="form-control" path="weChat" id="weChat" />
+            </div>                              
+        </div>
+        <%--  註解 
         <div class="box-body">
         	<div class="form-group">
 				<label for="status">Status</label>
@@ -67,7 +80,7 @@
         		</tr>
         	</table>                             
         </div>
-
+		--%>
 		<div class="modal-footer">
        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
 		</div>
@@ -83,6 +96,9 @@ function btnSaveClicked() {
 	var account = $('#account').val();
 	var password = $('#password').val();
 	var phone = $('#phone').val();
+	var email = $('#email').val();
+	var weChat = $('#weChat').val();
+	
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
@@ -107,6 +123,17 @@ function btnSaveClicked() {
 		$('#phone').parents('.form-group').addClass('has-error');
 		errMsg += '！Phone為必填<br/>';
 	}
+	if (''==email.trim()) {
+		isError = true;
+		$('#email').parents('.form-group').addClass('has-error');
+		errMsg += '！Email為必填<br/>';
+	}
+	if (''==weChat.trim()) {
+		isError = true;
+		$('#weChat').parents('.form-group').addClass('has-error');
+		errMsg += '！WeChat為必填<br/>';
+	}
+	
 	//頁面輸入檢核Error
 	if(isError){
 		errorMessage(errMsg);

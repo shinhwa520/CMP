@@ -70,6 +70,9 @@ public class Customer implements java.io.Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     
+    @Column(name = "remark", nullable = true)
+	private String remark;
+	
     @Column(name = "create_time", nullable = true)
 	private Timestamp createTime;
     
@@ -86,24 +89,18 @@ public class Customer implements java.io.Serializable {
 	public Customer() {
 	}
 	
-	public Customer(int id, String name, String city, String phone, Status status, User user, Timestamp createTime,
-			String createBy, Timestamp updateTime, String updateBy, String address, Date birthday, String gender,
-			String email, String weChat, Integer identity1_id, String identity1_code, Integer identity2_id,
-			String identity2_code, String census) {
+
+	
+	public Customer(int id, String name, String gender, Date birthday, String phone, String email, String weChat,
+			Integer identity1_id, String identity1_code, Integer identity2_id, String identity2_code, String census,
+			String city, String address, Status status, User user, String remark, Timestamp createTime, String createBy,
+			Timestamp updateTime, String updateBy) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.city = city;
-		this.phone = phone;
-		this.status = status;
-		this.user = user;
-		this.createTime = createTime;
-		this.createBy = createBy;
-		this.updateTime = updateTime;
-		this.updateBy = updateBy;
-		this.address = address;
-		this.birthday = birthday;
 		this.gender = gender;
+		this.birthday = birthday;
+		this.phone = phone;
 		this.email = email;
 		this.weChat = weChat;
 		this.identity1_id = identity1_id;
@@ -111,8 +108,19 @@ public class Customer implements java.io.Serializable {
 		this.identity2_id = identity2_id;
 		this.identity2_code = identity2_code;
 		this.census = census;
+		this.city = city;
+		this.address = address;
+		this.status = status;
+		this.user = user;
+		this.remark = remark;
+		this.createTime = createTime;
+		this.createBy = createBy;
+		this.updateTime = updateTime;
+		this.updateBy = updateBy;
 	}
-	
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -271,5 +279,13 @@ public class Customer implements java.io.Serializable {
 
 	public void setCensus(String census) {
 		this.census = census;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }
