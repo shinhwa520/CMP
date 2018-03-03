@@ -157,9 +157,9 @@
 	<!-- Logo -->
     <a href="${pageContext.request.contextPath}" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><i><b>CMP</b></i></span>
+		<span class="logo-mini"><b>CMP</b></span>
 		<!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><i><b>CMP-渠道商管理平台</b></i></span>
+		<span class="logo-lg"><b>CMP-渠道商管理平台</b></span>
     </a>
 	
 	<!-- Header Navbar -->

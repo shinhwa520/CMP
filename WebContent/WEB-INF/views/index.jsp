@@ -51,11 +51,11 @@
  
 <section class="content">
 <br />
-<div class="box box-primary" id="billboard" style="padding:5px 5px;">
+<div class="box box-primary" id="billboard" style="padding:15px 15px;">
 	<b><font style="font-size: 1.5em;">最新公告</font>	</b>
 	<div style="height:75vh; overflow-y:auto; ">
 		<c:if test="${!IndexForm.billboardList.isEmpty() }">
-			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
+			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped">
 				<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
 					<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
 					 	<th width="5%">#${loop.count }</th>
