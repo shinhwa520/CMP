@@ -74,10 +74,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.logout().permitAll()
 			.and()
 		.headers()
+			//.contentSecurityPolicy("default-src 'self'")	//http://www.ruanyifeng.com/blog/2016/09/csp.html
+			//.and()
 			.frameOptions()
 			.disable()
 			.addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", "ALLOW-FROM http://u5669258.viewer.maka.im"))
-			.addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", "ALLOW-FROM http://localhost"))
 			.and()
 		.csrf().disable();
 	}

@@ -41,8 +41,6 @@ public class ApiJobServiceImpl implements BaseJobService {
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		try {
-			System.out.println("Run ApiJobService ... "+new Date());
-			
 			apiService = (ApiService) ApplicationContextUtil.getBean("apiService");
 			apiService.doRetrieveFromJob("MAKA");
 			
@@ -71,7 +69,6 @@ public class ApiJobServiceImpl implements BaseJobService {
             scheduler.scheduleJob(jobDetail, trigger);
 
         } catch (Exception e) {
-            System.out.println("Build job faild!"+e);
             throw new Exception("Build job faild!");
         }
 		
@@ -128,7 +125,6 @@ public class ApiJobServiceImpl implements BaseJobService {
             scheduler.rescheduleJob(triggerKey, trigger);
             
         } catch (SchedulerException e) {
-            System.out.println("Modify job failed!"+e);
             throw new Exception("Modify job failed!");
         }
 	}

@@ -18,7 +18,6 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Role> listRole(Integer start, Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-//		System.out.println(securityUser.getUser().getId());
 		return roleDAO.listRole(start, length);
 	}
 	

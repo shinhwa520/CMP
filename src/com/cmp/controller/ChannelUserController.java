@@ -59,8 +59,6 @@ public class ChannelUserController extends BaseController {
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
 		List<User> datalist = userService.findUserByChannelId(userId, sdfYearMonth.format(new Date()), start, length);
 		long total = userService.countUserByChannelId(userId);
-		System.out.println("UserInRole[SU]:" + request.isUserInRole("SU"));
-		System.out.println("UserInRole[ROLE_SU]:" + request.isUserInRole("ROLE_SU"));
 		return new DatatableResponse(total, datalist, total);
 	}
 	
@@ -78,7 +76,6 @@ public class ChannelUserController extends BaseController {
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 //		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		System.out.println("getCustByUserId [userId]:" + userId);
 		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
 		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, datalist, total);

@@ -1,10 +1,9 @@
 package com.cmp.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cmp.model.User;
 import com.cmp.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 
 @Controller
 @RequestMapping("/outsite")
@@ -28,7 +26,6 @@ public class OutsiteController extends BaseController {
 	public String viewCustPublicInfo(Model model, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String referrer = request.getHeader("referer");
-			System.out.println("referrer: " + referrer);
 			
 			if (StringUtils.isNotBlank(referrer)) {
 				String makaId = referrer.lastIndexOf("/") != -1 ? referrer.substring(referrer.lastIndexOf("/")+1, referrer.length()) : null;

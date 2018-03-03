@@ -13,10 +13,14 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.OSSObject;
+import com.cmp.controller.OutsiteController;
 import com.cmp.model.FilesBaseConfig;
 
 /**
@@ -24,7 +28,7 @@ import com.cmp.model.FilesBaseConfig;
  * using the OSS SDK for Java.
  */
 public class GetObject2Aliyun {
-    
+	private static Log log = LogFactory.getLog(GetObject2Aliyun.class);
     private static String endpoint;
     private static String accessKeyId;
     private static String accessKeySecret;
@@ -58,16 +62,12 @@ public class GetObject2Aliyun {
             /*
              * Download an object from your bucket
              */
-            System.out.println("Downloading an object");
             OSSObject object = ossClient.getObject(bucketName, key);
-            System.out.println("Content-Type: "  + object.getObjectMetadata().getContentType());
             
             is = object.getObjectContent();
             response.setContentType("multipart/form-data");
             
-//            downloadFileName = new String(downloadFileName.getBytes(), "ISO8859-1");
             response.setHeader("Content-Disposition","attachment; filename="  + downloadFileName);  
-//            response.setHeader("Content-Disposition","attachment; filename=\""  + URLEncoder.encode(downloadFileName, "ISO8859-1") + "\"");  
             OutputStream output = response.getOutputStream();
 			
 			try {
@@ -89,18 +89,18 @@ public class GetObject2Aliyun {
 			}
 
         } catch (OSSException oe) {
-            System.out.println("Caught an OSSException, which means your request made it to OSS, "
+            log.error("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
-            System.out.println("Error Message: " + oe.getErrorCode());
-            System.out.println("Error Code:       " + oe.getErrorCode());
-            System.out.println("Request ID:      " + oe.getRequestId());
-            System.out.println("Host ID:           " + oe.getHostId());
+            log.error("Error Message: " + oe.getErrorCode());
+            log.error("Error Code:       " + oe.getErrorCode());
+            log.error("Request ID:      " + oe.getRequestId());
+            log.error("Host ID:           " + oe.getHostId());
             isOutputed = false;
         } catch (ClientException ce) {
-            System.out.println("Caught an ClientException, which means the client encountered "
+            log.error("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
-            System.out.println("Error Message: " + ce.getMessage());
+            log.error("Error Message: " + ce.getMessage());
             isOutputed = false;
         } catch (Exception e) {
         	e.printStackTrace();

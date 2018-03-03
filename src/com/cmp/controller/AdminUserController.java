@@ -82,7 +82,6 @@ public class AdminUserController extends BaseController {
 			@RequestParam(name="userId", required=true, defaultValue="0") String userId,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-		System.out.println("getCustByUserId [userId]:" + userId);
 		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
 		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, datalist, total);

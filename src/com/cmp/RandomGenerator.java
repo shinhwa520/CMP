@@ -20,8 +20,6 @@ public class RandomGenerator {
 			MessageDigest sha = MessageDigest.getInstance("SHA-1");
 			byte[] result =  sha.digest(randomNum.getBytes());
 			random = hexEncode(result);
-			System.out.println("Random number: " + randomNum);
-			System.out.println("Message digest: " + random);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

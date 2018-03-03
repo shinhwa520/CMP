@@ -32,7 +32,6 @@ public class ApiController extends BaseController {
 	
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
     public String showMainPage(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("oh ya~~~");
     	try {
 //    		apiService.findMakaIds();
     		
@@ -48,7 +47,6 @@ public class ApiController extends BaseController {
 	
 	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
     public String showApiData(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("oh ya~~~");
     	try {
 //    		apiService.findMakaIds();
     		
@@ -63,7 +61,6 @@ public class ApiController extends BaseController {
 	
 	@RequestMapping(value = { "query" }, method = RequestMethod.POST)
     public String doQuery(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("oh ya~~~");
     	try {
     		List<ApiServiceVO> returnList = apiService.findData(form.getWebName(), null, null);
     		
@@ -87,9 +84,7 @@ public class ApiController extends BaseController {
 	
 	@RequestMapping(value = { "retrieve" }, method = RequestMethod.POST)
 	public String doRetrieve(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doRetrieve");
 		try {
-			System.out.println(form.getChkedApiUrls().length);
 			ApiServiceVO msVO = new ApiServiceVO();
 			msVO.setWebName(form.getWebName());
 			msVO.setApiUrls(form.getChkedApiUrls());
