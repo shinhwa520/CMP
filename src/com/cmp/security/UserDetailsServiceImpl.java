@@ -65,7 +65,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			Assert.isTrue(!role.startsWith("ROLE_"), role + " cannot start with ROLE_ (it is automatically added)");
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
-		System.out.println(authorities);
 		return authorities;
 	}
 	

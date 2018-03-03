@@ -36,7 +36,6 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public List<Customer> findCustByUserId(String userId, Integer start,Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-//		System.out.println(securityUser.getUser().getId());
 		return customerDAO.findCustByUserId(userId, start, length);
 	}
 	
@@ -47,7 +46,6 @@ public class CustServiceImpl implements CustService {
 	
 	@Override
 	public void createCust(String name, String gender, String birthday, String phone, String email, String weChat, String city, String address){
-		System.out.println(SecurityUtil.getSecurityUser().getUser().getId());
 		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
 		Customer cust = new Customer();
 		cust.setName(name);
@@ -72,7 +70,6 @@ public class CustServiceImpl implements CustService {
 	
 	@Override
 	public void updateCust(int id, String name, String gender, Date birthday, String phone, String email, String weChat, String city, String address, String status){
-		System.out.println(SecurityUtil.getSecurityUser().getUser().getId());
 		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
 		Customer cust = customerDAO.findCustById(id);
 		cust.setName(name);

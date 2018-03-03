@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserAndKpiById(String id, String yearMonth){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-//		System.out.println(securityUser.getUser().getId());
 		Object[] objArray = userDAO.findUserAndKpiById(id, yearMonth);
 		User user = (User) objArray[0];
 		user.set_agent_user(((Long) objArray[1]).intValue());
@@ -49,7 +48,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserById(String id){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-//		System.out.println(securityUser.getUser().getId());
 		return userDAO.findUserById(id);
 	}
 	

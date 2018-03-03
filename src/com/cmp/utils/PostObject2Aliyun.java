@@ -74,9 +74,6 @@ public class PostObject2Aliyun {
         formFields.put("Signature", signaturecom);
 
         String ret = formUpload(urlStr, formFields, localFilePath);
-        
-        System.out.println("Post Object [" + originFileName + "] to bucket [" + bucketName + "]");
-        System.out.println("post reponse:" + ret);
     }
     
     private static String computeSignature(String accessKeySecret, String encodePolicy) 

@@ -41,7 +41,6 @@ public class JobController extends BaseController {
 	
 	@RequestMapping(value = { "add" }, method = RequestMethod.POST)
 	public String doAddJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doAddJob");
 		try {
 			jobService.addJob("MAKA", BaseJobService.jobGroupName, "0 0/1 * * * ?");
 			model.addAttribute("message", "新增成功");

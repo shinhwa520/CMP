@@ -50,7 +50,6 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		System.out.println("getCustByUserId [userId]:" + userId);
 		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
 		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, datalist, total);

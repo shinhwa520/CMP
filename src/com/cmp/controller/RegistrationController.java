@@ -47,7 +47,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
     public String email(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/email");
     	model.addAttribute("message", "");
         return "registration/email";
     }
@@ -58,7 +57,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
     public String emailConfirm(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/emailConfirm");
     	try {
     		String mailAddress = form.getMailAddress();
     		//驗證email是否重複
@@ -70,7 +68,6 @@ public class RegistrationController extends BaseController {
     		StringBuffer sb = request.getRequestURL();
     		String appName = request.getContextPath();
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
-    		System.out.println("Confirm URL:"+url);
     		registrationService.initUser(mailAddress, url);
     		
     		model.addAttribute("message", "please confirm email!");
@@ -86,7 +83,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/user" }, params = "tokenId", method = RequestMethod.GET)
     public String user(Model model, @RequestParam("tokenId") String tokenId, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/user");
     	try {
     		User user = registrationService.verifyToken(tokenId);
     		if(null==user){
@@ -107,7 +103,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.GET)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/userInfo");
     	try {
     		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
     			model.addAttribute("message", "Account已被使用，請重新輸入");
@@ -123,7 +118,6 @@ public class RegistrationController extends BaseController {
 //    			//user 輸入url
 //    			channelUrl = channelUrl.substring(index+1);
 //    		}
-//    		System.out.println("[channelUrl]:"+channelUrl);
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
 			    			,form.getName()
@@ -150,7 +144,6 @@ public class RegistrationController extends BaseController {
     public String upstream(
     		@RequestParam(name="userId", required=true) String userId, 
     		@ModelAttribute("UserInfoForm") UserInfoForm form) {
-    	System.out.println("registration/upstream");
     	form.setUserId(userId);
         return "registration/upstream";
     }
@@ -161,7 +154,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)
     public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form) {
-    	System.out.println("registration/upstream");
     	try {
     		if(StringUtils.isBlank(form.getChannelAccount())){
     			model.addAttribute("message", "您未輸入上游帳號，系統預設主渠道商為您的上游");
@@ -192,7 +184,6 @@ public class RegistrationController extends BaseController {
 			FileInputStream fis = new FileInputStream(templatePath);
 			XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
 			XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
-//			System.out.println(extractor.getText());
 			result = extractor.getText();
 			
 //			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
@@ -201,7 +192,6 @@ public class RegistrationController extends BaseController {
 //			while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行 
 //				result = result + "\n" + s;
 //			}
-//			System.out.println(result);
 //			br.close();
 			
 		} catch (Exception e) {
@@ -219,7 +209,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
     public @ResponseBody String agreeAgreement(@ModelAttribute("UserInfoForm") UserInfoForm form) {
-    	System.out.println("registration/agreeAgreement");
     	try {
 //    		registrationService.agreement(form.getUserId());
 		} catch (Exception e) {

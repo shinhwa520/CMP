@@ -77,7 +77,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 		mailMsg.setSubject(MimeUtility.encodeText("Test mail", "UTF-8", "B"));
 		mailMsg.setText(mailContent, true);
 		mailSender.send(mimeMessage);
-		System.out.println("---Done---");
 	}
 	
 	public User verifyToken(String tokenId) throws Exception {
@@ -143,8 +142,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 	
 	public void saveUserQues(String userId, String results) throws Exception {
-		System.out.println("userId:"+userId);
-		System.out.println("results:"+results);
 		Date date = new Date();
 		User user = userDao.findUserById(userId);
 		String[] resultArray = results.split(",");
