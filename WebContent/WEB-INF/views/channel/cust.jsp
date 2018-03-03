@@ -12,14 +12,19 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<%--  註解 
 					<th>Gender</th>
 					<th>Birthday</th>
+					--%>
 					<th>Phone</th>
 					<th>Email</th>
 					<th>WeChat</th>
+					<%--  註解 
 					<th>City</th>
 					<th>Address</th>
+					--%>
 					<th>Status</th>
+					<th></th>
 					<th style="width: 100px;">Option</th>
 				</tr>
 			</thead>
@@ -334,6 +339,7 @@ function btnFileClicked(btn) {
 
 //[Init.]
 $(function() {
+	//bsStep(3);
 	tblMain = $('#tblMain').DataTable(
 	{
 		"bFilter" : false,
@@ -348,24 +354,31 @@ $(function() {
 		},
 		"columns" : [
 			{ "data" : "name" },
-			{ "data" : "gender" },
-			{ "data" : "birthday" },
 			{ "data" : "phone" },
 			{ "data" : "email" },
 			{ "data" : "weChat" },
-			{ "data" : "city" },
-			{ "data" : "address" },
-			{ "data" : "status.name" }
+			{ "data" : "status.name" },
+			{ "data" : "status.sort" }
 		],
 		"columnDefs" : [ 
 			{
-			"targets" : 2,
-			"render" : function(data, type, row) {
-				return (new Date(data)).Format("yyyy-MM-dd");
-				}
+				"targets" : [5],
+				"render" : function(data, type, row) {
+							var sort = row['status'].sort;
+							console.log(sort);
+							var html = '<ul class="nav nav-pills nav-justified step step-arrow">';
+							for(var i=0; i<10; i++){
+								if(i<sort)
+									html += '<li class="active"><a></a></li>';
+								else
+									html += '<li><a></a></li>';
+							}
+							html+='</ul>';
+							return html;
+						}
 			},
 			{
-				"targets" : 9,
+				"targets" : 6,
 				"data" : 'id',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
@@ -598,4 +611,22 @@ function btnDownloadClicked(btn) {
   	}, 2000);
 }
 
+
+function bsStep(i) {
+	$('.step').each(function() {
+		var a, $this = $(this);
+		if(i > $this.find('li').length) {
+			console.log('您输入数值已超过步骤最大数量' + $this.find('li').length + '！！！');
+			a=$this.find('li').length;
+		} else if(i == undefined && $this.data('step') == undefined) {
+			a = 1
+		} else if(i == undefined && $this.data('step') != undefined) {
+			a = $(this).data('step');
+		} else {
+			a = i
+		}
+		$(this).find('li').removeClass('active');
+		$(this).find('li:lt(' + a + ')').addClass('active');
+	})
+}
 </script>

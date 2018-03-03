@@ -14,7 +14,8 @@
 					<th rowspan="2">Name</th>
 					<th rowspan="2">Phone</th>
 					<th rowspan="2">Email</th>
-					<th rowspan="2">Status</th>
+					<th rowspan="2">WeChat</th>
+					<th rowspan="2">酬庸%</th>
 					<th colspan="2">仲介渠道商</th>
 					<th colspan="2">仲介客戶</th>
 					<th colspan="2">成交量</th>
@@ -54,6 +55,19 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
+						<label for="user_name">Remark</label>
+						<input type="text" class="form-control" name="remark" id="remark" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
+						<label for="user_name">Reward</label>
+						<input type="text" class="form-control" name="reward" id="reward" />%
+		            </div>                              
+		        </div>
+		        <%--  註解 
+		        <div class="box-body">
+		        	<div class="form-group">
 						<label for="phone">Phone</label>
 						<input type="text" readonly="true" class="form-control" name="phone" id="phone" />
 		            </div>                              
@@ -70,6 +84,7 @@
 						<input type="text" readonly="true" class="form-control" name="statusName" id="statusName" />
 		            </div>                              
 		        </div>
+		        --%>
 		        <div class="box-body">
 		        	<table style="width: 100%">
 		        		<tr>
@@ -130,7 +145,8 @@ $(function() {
 				{ "data" : "name" },
 				{ "data" : "phone" },
 				{ "data" : "email" },
-				{ "data" : "status.name" },
+				{ "data" : "weChat" },
+				{ "data" : "reward" },
 				{ "data" : "agent_user" },
 				{ "data" : "_agent_user" },
 				{ "data" : "agent_cust" },
@@ -138,8 +154,15 @@ $(function() {
 				{ "data" : "volume" },
 				{ "data" : "_volume" }
 			],
-			"columnDefs" : [ {
-				"targets" : 10,
+			"columnDefs" : [ 
+				{
+					"targets": [4],
+					"render": function (data, type, row) {
+						return row['reward'] + '%';
+					}
+				},
+				{
+				"targets" : 11,
 				"data" : 'id',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
@@ -168,9 +191,13 @@ function btnEditClicked(btn) {
 				if (resp.code == '200') {
 					$('#user_id').val(btn.attr('userId'));
 					$('#user_name').val(resp.data.user.name);
+					$('#remark').val(resp.data.user.remark);
+					$('#reward').val(resp.data.user.reward);
+					/*
 					$('#phone').val(resp.data.user.phone);
 					$('#email').val(resp.data.user.email);
 					$('#statusName').val(resp.data.user.status.name);
+					*/
 					$('#agent_user').val(resp.data.user.agent_user);
 					$('#_agent_user').val(resp.data.user._agent_user);
 					$('#agent_cust').val(resp.data.user.agent_cust);
@@ -194,6 +221,7 @@ function btnEditClicked(btn) {
 
 //[Save] modal_Edit >>按下Save 儲存
 function btnSaveClicked() {
+	var reward = $('#reward').val();
 	var agent_user = $('#agent_user').val();
 	var agent_cust = $('#agent_cust').val();
 	var volume = $('#volume').val();
@@ -201,6 +229,11 @@ function btnSaveClicked() {
 	$('.form-group').removeClass('has-error');
 	var isError = false;
 	var errMsg = '';
+	if (!validateInt(reward)) {
+		isError = true;
+		$('#reward').parents('.form-group').addClass('has-error');
+		errMsg += '！Reward必須為數字<br/>';
+	}
 	if (!validateInt(agent_user)) {
 		isError = true;
 		$('#agent_user').parents('.form-group').addClass('has-error');
