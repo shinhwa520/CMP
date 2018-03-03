@@ -24,7 +24,7 @@ public class AppInitializer implements WebApplicationInitializer {
         ctx.setServletContext(container);
         
         ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
-        container.addFilter("SiteMeshFilter", new SiteMeshFilter()).addMappingForUrlPatterns(null, false, "*");
+        container.addFilter("SiteMeshFilter", new SiteMeshFilter()).addMappingForUrlPatterns(null, true, "*");
 
  
         servlet.setLoadOnStartup(1);
