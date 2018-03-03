@@ -13,4 +13,6 @@ public interface UserService {
 	long countUserByChannelId(String channelId);
 	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current);
 	public void update(String userId, String userName, String phone, String email, String status);
+	
+	public User findUserByApiId(String apiId);
 }

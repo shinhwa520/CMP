@@ -228,8 +228,14 @@
 				<li class="<c:if test="${active eq 'INDEX'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/"> <span>回首頁</span></a>
 				</li>
+				<li class="<c:if test="${active eq 'SHARE_FILE'}">active</c:if> sidebar-item">
+					<a href="${pageContext.request.contextPath}/share/file"> <span>共享資源</span></a>
+				</li>
 				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span>個人資訊</span></a>
+				</li>
+				<li class="<c:if test="${active eq 'PRODUCT_INFO'}">active</c:if> sidebar-item">
+					<a href="${pageContext.request.contextPath}/channel/productInfo/info"> <span>產品資訊</span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/user/list"> <span>我的渠道商</span></a>

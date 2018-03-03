@@ -115,4 +115,21 @@ public class UserServiceImpl implements UserService {
 		user.setUpdateDateTime(new Date());
 		userDAO.saveUser(user);
 	}
+
+	@Override
+	public User findUserByApiId(String apiId) {
+		User user = null;
+		try {
+			List<User> userList = userDAO.findUserByApiModelId(apiId);
+			
+			if (userList != null && !userList.isEmpty()) {
+				user = userList.get(0);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 }

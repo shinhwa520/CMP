@@ -4,7 +4,7 @@
   <artifactId>CMP</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
-  <name>CMP</name> 
+  <name>CMP</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

@@ -37,9 +37,10 @@ public class GetObject2Aliyun {
     	bucketName = config.getBucketName();
     }
     
-    public InputStream getObject(FilesBaseConfig config, String key, HttpServletResponse response) throws IOException {
+    public boolean getObject(FilesBaseConfig config, String key, String downloadFileName, HttpServletResponse response) throws IOException {
     	initConfig(config);
     	
+    	boolean isOutputed = true;
     	InputStream is = null;
         /*
          * Constructs a client instance with your account for accessing OSS
@@ -63,7 +64,10 @@ public class GetObject2Aliyun {
             
             is = object.getObjectContent();
             response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition","attachment; filename=\""  + URLEncoder.encode(key, "UTF-8") + "\"");  
+            
+//            downloadFileName = new String(downloadFileName.getBytes(), "ISO8859-1");
+            response.setHeader("Content-Disposition","attachment; filename="  + downloadFileName);  
+//            response.setHeader("Content-Disposition","attachment; filename=\""  + URLEncoder.encode(downloadFileName, "ISO8859-1") + "\"");  
             OutputStream output = response.getOutputStream();
 			
 			try {
@@ -91,11 +95,13 @@ public class GetObject2Aliyun {
             System.out.println("Error Code:       " + oe.getErrorCode());
             System.out.println("Request ID:      " + oe.getRequestId());
             System.out.println("Host ID:           " + oe.getHostId());
+            isOutputed = false;
         } catch (ClientException ce) {
             System.out.println("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
             System.out.println("Error Message: " + ce.getMessage());
+            isOutputed = false;
         } catch (Exception e) {
         	e.printStackTrace();
         } finally {
@@ -104,6 +110,6 @@ public class GetObject2Aliyun {
              */
             ossClient.shutdown();
         }
-		return is;
+		return isOutputed;
     }
 }

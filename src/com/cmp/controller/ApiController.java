@@ -23,13 +23,14 @@ import com.cmp.service.ApiService;
 import com.cmp.service.vo.ApiServiceVO;
 
 @Controller
+@RequestMapping("/api")
 public class ApiController extends BaseController {
 	private static Log log = LogFactory.getLog(ApiController.class);
 	
 	@Autowired
 	private ApiService apiService;
 	
-	@RequestMapping(value = { "/api" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
     public String showMainPage(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
@@ -45,7 +46,7 @@ public class ApiController extends BaseController {
         return "api/retrieve_main";
     }
 	
-	@RequestMapping(value = { "/api/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
     public String showApiData(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
@@ -60,7 +61,7 @@ public class ApiController extends BaseController {
         return "api/api_list";
     }
 	
-	@RequestMapping(value = { "/api/query" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "query" }, method = RequestMethod.POST)
     public String doQuery(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("oh ya~~~");
     	try {
@@ -84,7 +85,7 @@ public class ApiController extends BaseController {
         return "api/retrieve_main";
     }
 	
-	@RequestMapping(value = { "/api/retrieve" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "retrieve" }, method = RequestMethod.POST)
 	public String doRetrieve(Model model, @ModelAttribute("ApiForm") ApiForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doRetrieve");
 		try {
@@ -109,7 +110,7 @@ public class ApiController extends BaseController {
 	 * @param length
 	 * @return
 	 */
-	@RequestMapping(value="/api/getApiData.json", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="getApiData.json", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody DatatableResponse getIngestSource(
 			@RequestParam(name="webName", required=false, defaultValue="") String webName,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,

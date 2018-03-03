@@ -121,8 +121,8 @@
 				<input type="hidden" name="fileType" id="queryFileType" value="" />
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<b><font style="font-size: 1.5em;">客戶檔案</font></b>
-						<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+						<b><font style="font-size: 1.5em;">客戶檔案&nbsp;&nbsp;>&nbsp;&nbsp;<span id="custNameLabel"></span></font></b>
+						<a href="#" onclick="btnAddFileClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
 						<span class="pull-right">&nbsp;</span>
 						<a href="#" onclick="btnDeleteClicked();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
 					</div>
@@ -324,6 +324,8 @@ function btnSaveClicked() {
 function btnFileClicked(btn) {
 	$('#clickedCustId').val(btn.attr('custId'));
 	$('#custId').val(btn.attr('custId'));
+	$('#custNameLabel').text(btn.attr('custName'));
+	$('#delChkAll').prop('checked', false);
 	
 	custFileMain.ajax.reload();	//重查資料
 	$('#modal_File').modal();
@@ -371,7 +373,7 @@ $(function() {
 							+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>'
 							+'&nbsp;'
 							+'<a href="#">'
-							+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnFileClicked($(this));">'
+							+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));">'
 							+'<i class="fa fa-close" style="margin-right:5px"></i>File</span></a>';
 				}
 			}
@@ -423,7 +425,7 @@ $(function() {
 				"targets" : 7,
 				data:   "seqNo",
                 render: function ( data, type, row ) {
-                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';
+                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'">';
                 },
                 className: "dt-body-center"
 			}
@@ -442,7 +444,7 @@ Number.prototype.format = function(n, x) {
 };
 
 //[Add] 進入modal_Edit編輯
-function btnAddClicked() {
+function btnAddFileClicked() {
 	formAction = 'upload';
 	$('#editSeqNo').val('');
 	$('#editFullFileName').val('');
@@ -548,7 +550,6 @@ function btnDeleteClicked() {
 	    }
 	});
 	
-	alert(seqNos);
 	if (!haveOneChecked) {
 		alert("請至少選擇一項要刪除的檔案!");
 		
@@ -556,9 +557,9 @@ function btnDeleteClicked() {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
 			data : {
-				fileType: "CUSTOMER",
-				seqNo: seqNos
-			},
+					fileType: "CUSTOMER",
+					seqNos: seqNos
+				   },
 			type : "POST",
 			dataType : 'json',
 			async: false,
@@ -568,6 +569,7 @@ function btnDeleteClicked() {
 				if (resp.code == '200') {
 					successMsgModal(resp.message);
 					
+					$('#delChkAll').prop('checked', false);
 					if (custFileMain) {
 						custFileMain.ajax.reload();
 					}
@@ -586,12 +588,14 @@ function btnDeleteClicked() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=channel/cust";
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=channel/cust/list";
   	window.location.href = downloadUrl;
   	
-  	if (custFileMain) {
-		custFileMain.ajax.reload();
-	}
+  	setTimeout(function(){
+  		if (custFileMain) {
+  			custFileMain.ajax.reload();
+  		}
+  	}, 2000);
 }
 
 </script>

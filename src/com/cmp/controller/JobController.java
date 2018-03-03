@@ -17,13 +17,14 @@ import com.cmp.form.JobForm;
 import com.cmp.service.BaseJobService;
 
 @Controller
+@RequestMapping("/job")
 public class JobController extends BaseController {
 	private static Log log = LogFactory.getLog(JobController.class);
 	
 	@Autowired
 	private BaseJobService jobService;
 	
-	@RequestMapping(value = { "/job/manage" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "manage" }, method = RequestMethod.GET)
     public String retrieveManage(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
     	try {
     		jobService.queryJob("MAKA");
@@ -38,7 +39,7 @@ public class JobController extends BaseController {
         return "api/job_manage";
     }
 	
-	@RequestMapping(value = { "/job/add" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "add" }, method = RequestMethod.POST)
 	public String doAddJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doAddJob");
 		try {
@@ -53,7 +54,7 @@ public class JobController extends BaseController {
 		return retrieveManage(model, form, request, response);
 	}
 	
-	@RequestMapping(value = { "/job/delete" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "delete" }, method = RequestMethod.POST)
 	public String doDeleteJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			jobService.deleteJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
@@ -67,7 +68,7 @@ public class JobController extends BaseController {
 		return retrieveManage(model, form, request, response);
 	}
 	
-	@RequestMapping(value = { "/job/modify" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "modify" }, method = RequestMethod.POST)
 	public String doModifyJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			
@@ -78,7 +79,7 @@ public class JobController extends BaseController {
 		return retrieveManage(model, form, request, response);
 	}
 	
-	@RequestMapping(value = { "/job/pause" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "pause" }, method = RequestMethod.POST)
 	public String doPauseJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			jobService.pauseJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);
@@ -92,7 +93,7 @@ public class JobController extends BaseController {
 		return retrieveManage(model, form, request, response);
 	}
 	
-	@RequestMapping(value = { "/job/resume" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "resume" }, method = RequestMethod.POST)
 	public String doResumeJob(Model model, @ModelAttribute("JobForm") JobForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			jobService.resumeJob(BaseJobService.jobClassName, BaseJobService.jobGroupName);

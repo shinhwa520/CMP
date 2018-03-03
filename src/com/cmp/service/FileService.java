@@ -28,7 +28,7 @@ public interface FileService {
 	
 	public void modifyFile(FileServiceVO fileServiceVO);
 	
-	public String modifyDownloadCount(String fileType, Integer seqNo);
+	public FileServiceVO modifyDownloadCount(String fileType, Integer seqNo);
 	
 	public FilesBaseConfig findFilesConfig(String configName);
 }

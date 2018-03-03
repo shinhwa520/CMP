@@ -36,20 +36,20 @@ import com.cmp.utils.GetObject2Aliyun;
 import com.cmp.utils.PostObject2Aliyun;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/manage/file")
 public class FileController extends BaseController {
 	private static Log log = LogFactory.getLog(FileController.class);
 	
 	@Autowired
 	FileService fileService;
 	
-	@RequestMapping(value = { "/manage/file" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
     public String fileMain(Model model, @ModelAttribute("FileForm") FileForm form, HttpServletRequest request, HttpServletResponse response) {
 		setActiveMenu(model, MenuItem.MANAGE_FILE);
 		return "manage/file";
     }
 	
-	@RequestMapping(value="/manage/file/getAllPublicFiles.json", method = RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="getAllPublicFiles.json", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody DatatableResponse getPublicFiles(
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
@@ -64,7 +64,7 @@ public class FileController extends BaseController {
 		return new DatatableResponse(total, datalist, total);
 	}
 	
-	@RequestMapping(value="/manage/file/getFileInfo", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="getFileInfo", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody AppResponse getFileBySeqNo(
 			@RequestParam(name="fileType", required=true) String fileType,
 			@RequestParam(name="seqNo", required=true) Integer seqNo) {
@@ -106,7 +106,7 @@ public class FileController extends BaseController {
 		return fsVO;
 	}
 	
-	@RequestMapping(value = "/manage/file/upload")
+	@RequestMapping(value = "upload")
 	@ResponseBody
 	public AppResponse uploadFile(
 			@RequestParam(value = "uploadFile") MultipartFile uploadFile,
@@ -136,9 +136,9 @@ public class FileController extends BaseController {
 					try {
 						//这里使用Apache的FileUtils方法来进行保存
 						FileUtils.copyInputStreamToFile(uploadFile.getInputStream(),
-								new File(realPath, originFileName));
+								new File(realPath, retVO.getUpperFileName()));
 						
-						new PostObject2Aliyun().postObject(config, realPath.concat(File.separator).concat(originFileName), originFileName);
+						new PostObject2Aliyun().postObject(config, realPath.concat(File.separator).concat(retVO.getUpperFileName()), retVO.getUpperFileName());
 						
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -165,7 +165,7 @@ public class FileController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value="/manage/file/modify", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="modify", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse modifyFile(
 			@RequestParam(name="seqNo", required=false) Integer seqNo,
@@ -200,7 +200,7 @@ public class FileController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value = { "/manage/file/delete" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "delete" }, method = RequestMethod.POST)
     public String deleteRecords(Model model, @ModelAttribute("FileForm") FileForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			fileService.deleteFile(form.getFileType(), form.getDelChkbox(), true);
@@ -216,7 +216,7 @@ public class FileController extends BaseController {
 		return fileMain(model, form, request, response);
     }
 	
-	@RequestMapping(value="/manage/file/deleteAj", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="deleteAj", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse deleteFileByAjax(
 			@RequestParam(name="seqNos", required=true) String seqNos,
@@ -249,7 +249,7 @@ public class FileController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value="/manage/file/download", method = RequestMethod.GET)
+	@RequestMapping(value="download", method = RequestMethod.GET)
 	public String downloadFile(
 			@RequestParam(name="seqNo", required=true) Integer seqNo,
 			@RequestParam(name="fileType", required=true) String fileType,
@@ -257,6 +257,7 @@ public class FileController extends BaseController {
 			Model model, @ModelAttribute("FileForm") FileForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 		
+		boolean isOutputed = false;
 		try {
 			FilesBaseConfig config = fileService.findFilesConfig(fileType);
 			
@@ -264,10 +265,23 @@ public class FileController extends BaseController {
 				throw new Exception("[ERROR]未設定FilesBaseConfig >> configName: " + fileType);
 			}
 			
-			String key = fileService.modifyDownloadCount(fileType, seqNo);
+			FileServiceVO retVO = fileService.modifyDownloadCount(fileType, seqNo);
 			
 			try {
-				new GetObject2Aliyun().getObject(config, key, response);
+				if (retVO != null) {
+					String downloadFileName = "";
+					//處理中文檔名問題
+					String userAgent = request.getHeader("User-Agent");
+					if((userAgent.contains("MSIE")) || (userAgent.contains("Trident")) || (userAgent.contains("Edge"))) {
+						downloadFileName = java.net.URLEncoder.encode(retVO.getOriginFileName(),"UTF-8");
+						//IE6.11正常、FF的中文部分會出現%XX%XX的代碼
+					}else{
+						downloadFileName = new String(retVO.getOriginFileName().getBytes("UTF-8"),"ISO-8859-1");
+						//Firefox / google Chrome正常，IE6檔名整個亂碼 (連副檔名都看不見)
+					}
+					
+					isOutputed = new GetObject2Aliyun().getObject(config, retVO.getUpperFileName(), downloadFileName, response);
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -279,6 +293,6 @@ public class FileController extends BaseController {
 			log.error(e);
 		}
 		
-		return fromPage;
+		return isOutputed ? null : "redirect:/"+fromPage;
 	}
 }
