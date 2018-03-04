@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ include file="taglib.jsp" %>
 <!DOCTYPE html>
 
 <html>
@@ -10,7 +11,7 @@
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
-	<title>Sign In</title>
+	<title><spring:message code="contactUs"/></title>
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome/4.4.0/css/font-awesome.min.css">

@@ -2,6 +2,7 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +29,18 @@ public class WebApiDetailDAOImpl extends BaseDaoHibernate implements WebApiDetai
 	public WebApiDetail findWebApiDetailByUserId(String userId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from WebApiDetail d ")
-		  .append(" where 1=1 ")
-		  .append(" and d.user.id = ? ");
-		List<WebApiDetail> returnList = (List<WebApiDetail>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
+		  .append(" where 1=1 ");
+		
+		List<WebApiDetail> returnList = null;
+		if (StringUtils.isBlank(userId)) {
+			sb.append(" and d.user.id is null ");
+			returnList = (List<WebApiDetail>)getHibernateTemplate().find(sb.toString());
+			
+		} else {
+			sb.append(" and d.user.id = ? ");
+			returnList = (List<WebApiDetail>)getHibernateTemplate().find(sb.toString(), userId);
+		}
+		  
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
 }

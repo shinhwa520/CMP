@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<th><spring:message code="phoneNo"/></th>
-					<td>${userPhone}</td>
+					<td><span onclick="location.href='tel:${userPhone}'">${userPhone}</span></td>
 				</tr>
 			</thead>
 		</table>
