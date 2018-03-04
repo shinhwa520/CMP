@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -31,6 +32,7 @@ import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.form.FileForm;
+import com.cmp.i18n.DatabaseMessageSourceBase;
 import com.cmp.model.FilesBaseConfig;
 import com.cmp.model.FilesProduct;
 import com.cmp.model.User;
@@ -51,6 +53,8 @@ public class FileController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private DatabaseMessageSourceBase databaseMessageSourceBase;
 	
 	@Autowired
 	FileService fileService;
@@ -362,16 +366,16 @@ public class FileController extends BaseController {
 						waterMarks = new ArrayList<String>();
 						
 						if (StringUtils.isNotBlank(user.getName())) {	//Name
-							waterMarks.add(user.getName());
+							waterMarks.add(databaseMessageSourceBase.getText("contactPerson", Locale.CHINA).concat(": ").concat(user.getName()));
 						}
 						if (StringUtils.isNotBlank(user.getPhone())) {	//Phone
-							waterMarks.add(user.getPhone());
+							waterMarks.add(databaseMessageSourceBase.getText("phoneNo", Locale.CHINA).concat(": ").concat(user.getPhone()));
 						}
 						if (StringUtils.isNotBlank(user.getWeChat())) {	//WeChat
-							waterMarks.add(user.getWeChat());
+							waterMarks.add(databaseMessageSourceBase.getText("wechatID", Locale.CHINA).concat(": ").concat(user.getWeChat()));
 						}
 						if (StringUtils.isNotBlank(user.getEmail())) {	//E-mail
-							waterMarks.add(user.getEmail());
+							waterMarks.add(databaseMessageSourceBase.getText("email", Locale.CHINA).concat(": ").concat(user.getEmail()));
 						}
 					}
 					

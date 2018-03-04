@@ -17,16 +17,20 @@
 			<thead>
 				<tr>
 					<th><spring:message code="name"/></th>
+					<!-- 
 					<th><spring:message code="gender"/></th>
 					<th><spring:message code="birthday"/></th>
+					 -->
 					<th><spring:message code="email"/></th>
-					<th><spring:message code="census"/></th>
+					<th><spring:message code="residentialAddress"/></th>
 					<th><spring:message code="IDType"/></th>
 					<th><spring:message code="IDNumber"/></th>
 					<th><spring:message code="IDName"/></th>
+					<!--
 					<th><spring:message code="secondIDType"/></th>
 					<th><spring:message code="secondIDNo"/></th>
 					<th><spring:message code="secondIDName"/></th>
+					 -->
 					<th><spring:message code="user"/></th>
 					<th style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
@@ -51,7 +55,7 @@
 	            <div class="box-body">
 	            	<div class="form-group">
 	                  <label for="cust_name"><spring:message code="name"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="Enter Name">
+	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="<spring:message code="name"/>">
 	                </div>                              
 	            </div>                         
 	            <div class="box-body">
@@ -64,25 +68,25 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="birthday"><spring:message code="birthday"/></label>
-	                  <input type="text" class="form-control" id="birthday" name="birthday" placeholder="Enter Birthday">
+	                  <input type="text" class="form-control" id="birthday" name="birthday" placeholder="<spring:message code="birthday"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="phone"><spring:message code="phoneNo"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone">
+	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="<spring:message code="phoneNo"/>">
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="email"><spring:message code="email"/></label>
-	                  <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email">
+	                  <input type="text" class="form-control" id="email" name="email" placeholder="<spring:message code="email"/>">
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="weChat"><spring:message code="wechatID"/></label>
-	                  <input type="text" class="form-control" id="weChat" name="weChat" placeholder="Enter WeChat">
+	                  <input type="text" class="form-control" id="weChat" name="weChat" placeholder="<spring:message code="wechatID"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
@@ -118,25 +122,25 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="city"><spring:message code="city"/></label>
-	                  <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+	                  <input type="text" class="form-control" id="city" name="city" placeholder="<spring:message code="city"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="census"><spring:message code="census"/></label>
-	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
+	                  <label for="census"><spring:message code="residentialAddress"/></label>
+	                  <input type="text" class="form-control" id="census" name="census" placeholder="<spring:message code="residentialAddress"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="address"><spring:message code="address"/></label>
-	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+	                  <input type="text" class="form-control" id="address" name="address" placeholder="<spring:message code="address"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="remark"><spring:message code="remarks"/></label>
-	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remark">
+	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="<spring:message code="remarks"/>">
 	                </div>                              
 	            </div>
 		        <div class="box-body">
