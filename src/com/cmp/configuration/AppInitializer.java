@@ -1,6 +1,5 @@
 package com.cmp.configuration;
 
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
