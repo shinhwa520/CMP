@@ -36,7 +36,7 @@ public class OutsiteController extends BaseController {
 					if (user != null) {
 						model.addAttribute("userName", user.getName());
 						model.addAttribute("userEmail", user.getEmail());
-						model.addAttribute("userWeChat", "");
+						model.addAttribute("userWeChat", user.getWeChat());
 						model.addAttribute("userPhone", user.getPhone());
 					}
 				}

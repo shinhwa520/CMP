@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 
 public class WaterMarkUtils {  
 	
-	private final static String FONT_NAME = "新細明體";
+	private final static String FONT_NAME = "AR PL UMing";
 	private final static int FONT_STYLE = Font.PLAIN;
 	private final static int FONT_SIZE = 18;
 	private final static int PADDING_WIDTH = 3;
