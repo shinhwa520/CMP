@@ -164,8 +164,7 @@
 		}
 
         function doChangeLang(lang) {
-        	var redirectPage = (window.location.pathname).replace("/CMP","");
-            var url = '${pageContext.request.contextPath}/changeLanguage?langType='+lang+'&refresh='+redirectPage;
+            var url = '${pageContext.request.contextPath}/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;
             window.location.href = url;
         }
 	</script>
