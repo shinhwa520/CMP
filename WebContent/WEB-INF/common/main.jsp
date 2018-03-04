@@ -164,7 +164,7 @@
 		}
 
         function doChangeLang(lang) {
-            var url = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;
+            var url = '${pageContext.request.contextPath}/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;
             window.location.href = url;
         }
 	</script>
