@@ -45,6 +45,17 @@ public class CustServiceImpl implements CustService {
 	}
 	
 	@Override
+	public List<Customer> findCust4Search(String keyword, Integer start,Integer length){
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+		return customerDAO.findCust4Search(keyword, start, length);
+	}
+	
+	@Override
+	public long countCust4Search(String keyword){
+		return customerDAO.countCust4Search(keyword);
+	}
+	
+	@Override
 	public void createCust(String name, String gender, String birthday, String phone, String email, String weChat, String city, String address){
 		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
 		Customer cust = new Customer();

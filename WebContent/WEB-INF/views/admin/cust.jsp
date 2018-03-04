@@ -5,6 +5,11 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">Cust info.</h3>
+		<form id="formSearch" name="formSearch">
+			<input type="text" id="keyword" name="keyword" placeholder="Search Keyword">
+			<input type="button" name="query" value="查詢" onclick="doQuery()" />
+			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+		</form>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblMain">
@@ -323,4 +328,54 @@ $('#birthday').datepicker({
 	yearRange: "-100:+0",
 	changeYear: true
 });
+
+
+function doQuery() {
+	_keyword  = $('#keyword').val();
+	if (tblMain) {
+		$('#tblMain').DataTable().destroy();
+	}
+		tblMain = $('#tblMain').DataTable(
+			{
+				"bFilter" : false,
+				"ordering" : false,
+				"info" : false,
+				"serverSide" : true,
+				"bLengthChange" : false,
+				"ajax" : {
+					"url" : '${pageContext.request.contextPath}/admin/cust/searchCust4Admin.json',
+					"type" : 'GET',
+					"data" : function(d) {
+						//d.customParam = 'testestert';
+						d.keyword = _keyword;
+					}
+				},
+				"columns" : [
+					{ "data" : "name" },
+					{ "data" : "gender" },
+					{ "data" : "birthday" },
+					{ "data" : "email" },
+					{ "data" : "census" },
+					{ "data" : "identity1Str" },
+					{ "data" : "identity1_code" },
+					{ "data" : "identity1_name" },
+					{ "data" : "identity2Str" },
+					{ "data" : "identity2_code" },
+					{ "data" : "identity2_name" },
+					{ "data" : "user.name" }
+				],
+				"columnDefs" : [ 
+					{
+						"targets" : 12,
+						"data" : 'id',
+						"render" : function(data, type, row) {
+							return '<a href="#">'
+									+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
+									+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+						}
+					}
+				],
+				select: true
+			});
+}
 </script>

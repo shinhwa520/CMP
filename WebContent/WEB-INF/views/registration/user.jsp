@@ -10,7 +10,7 @@
 		<form:input class="form-control" path="account" id="account" placeholder="Account"/>
 		<form:input class="form-control" path="password" id="password" placeholder="Password"/>
 		<form:input class="form-control" path="phone" id="phone" placeholder="Phone"/>
-		<form:input class="form-control" path="channelUrl" id="channelUrl" placeholder="Channel URL"/>
+		<form:input class="form-control" path="weChat" id="weChat" placeholder="WeChat"/>
 		<input class="btn btn-lg btn-success btn-block" value="Confirm" type="submit">
 	</form:form>
 </section>
@@ -38,7 +38,10 @@
 	  		errorMessage('請輸入password');
 		  	return false;
 		}
-
-		
+	  	validateString = $('#weChat').val();
+	  	if(validateString.trim()==''){
+	  		errorMessage('請輸入weChat');
+		  	return false;
+		}
 	}
 </script>
