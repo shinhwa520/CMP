@@ -223,7 +223,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
     public @ResponseBody String agreeAgreement(@ModelAttribute("UserInfoForm") UserInfoForm form) {
     	try {
-//    		registrationService.agreement(form.getUserId());
+    		registrationService.agreement(form.getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
