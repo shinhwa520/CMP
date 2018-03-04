@@ -367,11 +367,9 @@ public class FileController extends BaseController {
 						if (StringUtils.isNotBlank(user.getPhone())) {	//Phone
 							waterMarks.add(user.getPhone());
 						}
-						/* 
-						if (StringUtils.isNotBlank(user.getPhone())) {	//WeChat
-							waterMarks.add(user.getPhone());
+						if (StringUtils.isNotBlank(user.getWeChat())) {	//WeChat
+							waterMarks.add(user.getWeChat());
 						}
-						*/
 						if (StringUtils.isNotBlank(user.getEmail())) {	//E-mail
 							waterMarks.add(user.getEmail());
 						}
