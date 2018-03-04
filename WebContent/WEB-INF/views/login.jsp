@@ -3,7 +3,7 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <section class="content">
-	<div class="topic"><spring:message code="signIn"/></div>
+	<div class="topic"><spring:message code="userLogin"/></div>
 	<form name='f' method='POST'>
 		<input class="form-control" type='text' name='username' placeholder="<spring:message code='account'/>"/>
 		<input class="form-control" type='password' name='password' placeholder="<spring:message code='password'/>"/>
