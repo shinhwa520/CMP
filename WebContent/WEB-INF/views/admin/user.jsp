@@ -49,7 +49,7 @@
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="user_name">Name<span class="pull-right" style="color: red;">＊ </span></label>
-						<input type="text" class="form-control" name="user_name" id="user_name" />
+						<input type="text" class="form-control" name="user_name" id="user_name" maxlength="8"/>
 		            </div>                              
 		        </div>
 		        <div class="box-body">
