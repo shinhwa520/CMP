@@ -113,7 +113,7 @@ public class AdminCustController extends BaseController {
 			@RequestParam(name="census", required=false) String census,
 			@RequestParam(name="address", required=false) String address,
 			@RequestParam(name="remark", required=false) String remark,
-			@RequestParam(name="status", required=true) String status) {
+			@RequestParam(name="status", required=true) String status,
 			HttpServletRequest request) {
 		try {
 			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat
