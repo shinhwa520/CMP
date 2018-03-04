@@ -152,7 +152,7 @@ public class AppConfig implements WebMvcConfigurer {
 		prop.setProperty("mail.smtps.auth", "true");
 		prop.setProperty("mail.smtps.ssl.enable", "true");
 		//prop.setProperty("mail.smtp.starttls.enable", "true");
-		prop.setProperty("mail.debug", "true");
+		prop.setProperty("mail.debug", "false");
 		return mailSender;
 	}
 	
