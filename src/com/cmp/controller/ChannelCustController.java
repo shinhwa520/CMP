@@ -3,8 +3,10 @@ package com.cmp.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,12 @@ import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.model.Customer;
+import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/cust")
@@ -48,10 +52,19 @@ public class ChannelCustController extends BaseController {
 	public @ResponseBody DatatableResponse getCustByUserId(
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
-		long total = custService.countCustByUserId(userId);
+		User user = SecurityUtil.getSecurityUser().getUser();
+		List<Customer> datalist;
+		long total;
+		String roleName = "MA";
+		if(StringUtils.equals(roleName, user.getRole().getName())){
+			datalist = custService.findCust4MA(roleName, start, length);
+			total = custService.countCust4MA(roleName);
+		}else{
+			String userId = SecurityUtil.getSecurityUser().getUser().getId();
+			datalist = custService.findCustByUserId(userId, start, length);
+			total = custService.countCustByUserId(userId);
+		}
+
 		return new DatatableResponse(total, datalist, total);
 	}
 	
@@ -136,23 +149,25 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="phone", required=false) String phone,
 			@RequestParam(name="email", required=false) String email,
 			@RequestParam(name="weChat", required=false) String weChat,
-			
+
 			@RequestParam(name="identity1_id", required=true) Integer identity1_id,
 			@RequestParam(name="identity1_code", required=false) String identity1_code,
 			@RequestParam(name="identity1_name", required=false) String identity1_name,
 			@RequestParam(name="identity2_id", required=true) Integer identity2_id,
 			@RequestParam(name="identity2_code", required=false) String identity2_code,
 			@RequestParam(name="identity2_name", required=false) String identity2_name,
-			
+
 			@RequestParam(name="city", required=false) String city,
 			@RequestParam(name="census", required=false) String census,
 			@RequestParam(name="address", required=false) String address,
-			@RequestParam(name="remark", required=false) String remark) {
+			@RequestParam(name="remark", required=false) String remark,
+            HttpServletRequest request) {
 		try {
+			RequestContext req = new RequestContext(request);
 			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat
 					, identity1_id, identity1_code, identity1_name, identity2_id, identity2_code, identity2_name
 					, city, census, address, remark, null);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+            return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

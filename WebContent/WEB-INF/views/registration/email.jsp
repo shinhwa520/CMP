@@ -3,11 +3,12 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-	<div class="topic">please fill in your email and press confirm :</div>
+	<div class="topic"><spring:message code='enterEmail'/></div>
 	<form:form method="POST" onsubmit="return validateInput();" modelAttribute="EmailConfirmForm" action="${pageContext.request.contextPath}/registration/emailConfirm">
-		<form:input class="form-control" path="mailAddress" id="mailAddress" placeholder="Email"/>
+		<spring:message code='email' var="email"/>
+		<form:input class="form-control" path="mailAddress" id="mailAddress" placeholder="${email}"/>
 		<form:errors class="form-control" path="mailAddress" cssClass="error" />
-		<input class="btn btn-lg btn-success btn-block" value="Confirm" type="submit">
+		<input class="btn btn-lg btn-success btn-block" value="<spring:message code='confirm'/>" type="submit">
 	</form:form>
 </section>
 <script>
@@ -20,11 +21,11 @@
 	function validateInput() {
 	  	var mailAddress = $('#mailAddress').val();
 	  	if(mailAddress.trim()==''){
-	  		errorMessage('請輸入Email');
+	  		errorMessage('<spring:message code="error.enterEmail"/>');
 		  	return false;
 		}
 	  	if(!validateEmail(mailAddress)){
-	  		errorMessage('Email格式錯誤，請重新輸入！');
+	  		errorMessage('<spring:message code="error.emailFormat"/>');
 		  	return false;
 		}
 	}

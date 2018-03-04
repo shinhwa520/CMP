@@ -1,21 +1,29 @@
 package com.cmp.configuration;
 
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.servlet.Filter;
 
+import com.cmp.Constants;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -94,15 +102,38 @@ public class AppConfig implements WebMvcConfigurer {
 //        messageSource.setBasename("messages");
 //        return messageSource;
 //    }
-    
 
-	@Bean
-	public DatabaseMessageSourceBase databaseMessageSourceBase() {
+    @Bean
+    public MessageSource propertiesMessageSource() {
+        ResourceBundleMessageSource propertiesMessageSource = new ResourceBundleMessageSource();
+        propertiesMessageSource.setBasenames("messages");
+        propertiesMessageSource.setDefaultEncoding("utf8");
+        return propertiesMessageSource;
+    }
+
+    @Bean
+    public CookieLocaleResolver localeResolver() {
+        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+        cookieLocaleResolver.setDefaultLocale(new Locale("zh", "CN"));
+//        cookieLocaleResolver.setCookieName(Constants.CMP_LANGUAGE);
+        return cookieLocaleResolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("locale");
+        return localeChangeInterceptor;
+    }
+
+    @Bean
+	public DatabaseMessageSourceBase messageSource() {
 		DatabaseMessageSourceBase messageSource = new DatabaseMessageSourceBase();
+		messageSource.setParentMessageSource(propertiesMessageSource());
 //		messageSource.setBasename("messages");
 		return messageSource;
 	}
-	
+
 	@Bean
 	public I18nDAO i18nDAO() {
 		I18nDAO i18nDAO = new I18nDAOImpl();

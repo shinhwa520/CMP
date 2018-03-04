@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ include file="taglib.jsp" %>
 <!DOCTYPE html>
 
 <html>
@@ -10,7 +11,7 @@
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
-	<title>Sign In</title>
+	<title><spring:message code="signIn"/></title>
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -134,7 +135,7 @@
 	<header>
 	<nav class="navbar navbar-HF navbar-fixed-top">
 		<div class="navbar-header">
-			<span class="navbar-brand">CMP - 渠道商管理平台</span><br />
+			<span class="navbar-brand"><spring:message code="cmp"/></span><br />
 			<span class="appVersion">Version: ${versionCode}</span>
 		</div>
 	</nav>
@@ -148,7 +149,7 @@
 	
 	<footer>
 	<nav class="navbar navbar-HF navbar-fixed-bottom">
-		<div>Powered by <strong><a href="#">Fede tech Co.</a></strong>&nbsp;&copy;&nbsp;2018 , Ltd. All Rights Reserved.</div>
+		<div>Powered by <strong><a href="#">><spring:message code="corpName"/></a></strong>&nbsp;&copy;&nbsp;<spring:message code="allRightsReserved"/></div>
 	</nav>
 	</footer>
 </body>

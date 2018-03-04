@@ -82,6 +82,31 @@ public class UserServiceImpl implements UserService {
 		return userDAO.countUserByChannelId(channelId);
 	}
 	
+	@Override
+	public List<User> findUser4MA(String roleName, String yearMonth, Integer start, Integer length){
+		List<User> resultList = new ArrayList<User>();
+		List<Object[]> objArrayList = userDAO.findUser4MA(roleName, yearMonth, start, length);
+		for(Object[] objArray : objArrayList){
+			User user = (User) objArray[0];
+			user.set_agent_user(((Long) objArray[1]).intValue());
+			user.set_agent_cust(((Long) objArray[2]).intValue());
+			user.set_volume(((Long) objArray[3]).intValue());
+			UserKpi kpi = userKpiDAO.findTokenByUserAndYearMonth(user.getId(), yearMonth);//查詢KPI設定
+			if( null!=kpi){
+				user.setAgent_user(kpi.getAgent_user());
+				user.setAgent_cust(kpi.getAgent_cust());
+				user.setVolume(kpi.getVolume());
+			}
+			resultList.add(user);
+		}
+
+		return resultList;
+	}
+	
+	@Override
+	public long countUser4MA(String roleName){
+		return userDAO.countUser4MA(roleName);
+	}
 	
 	@Override
 	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current, String remark, int reward){

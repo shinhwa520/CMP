@@ -90,6 +90,30 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
 	}
 	
+	public List<Customer> findCust4MA(String roleName, Integer start,Integer length){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Customer c where 1=1 ");
+		if(StringUtils.isNotBlank(roleName)){
+			sb.append(" and c.user.role.name = :roleName ");
+		}
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    if(StringUtils.isNotBlank(roleName)){
+	    	q.setParameter("roleName", roleName);
+	    }
+	    	q.setFirstResult(start).setMaxResults(length);
+	    return (List<Customer>) q.list();
+	}
+	
+	public long countCust4MA(String roleName){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(*) from Customer c where 1=1 ");
+		if(StringUtils.isNotBlank(roleName)){
+			  sb.append(" and c.user.role.name = ? ");
+			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {roleName}));
+		}
+		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
+	}
 	
 	@Override
 	public List<Customer> findCustByUserThroughApiModelId(String apiModelId) {

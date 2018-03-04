@@ -8,7 +8,7 @@
 		<form:hidden path="userId" id="userId" />
 		<form:input class="form-control" path="channelAccount" id="channelAccount" placeholder="Account"/>
 		<form:errors class="form-control" path="channelAccount" cssClass="error" />
-		<input class="btn btn-lg btn-success btn-block" value="Confirm" type="submit">
+		<input class="btn btn-lg btn-success btn-block" value="<spring:message code='confirm'/>" type="submit">
 	</form:form>
 </section>
 <script>
@@ -17,7 +17,7 @@
 function validateInput() {
   	var channelAccount = $('#channelAccount').val();
   	if(''==channelAccount.trim()){
-  		errorMessage('請輸入上游渠道商');
+  		errorMessage("<spring:message code='fillParentChannel'/>");
 	  	return false;
 	}
 }

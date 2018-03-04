@@ -76,16 +76,16 @@
 <form:form method="POST" modelAttribute="BillboardForm" action="">
 
 	<div class="box-body" id="billboard">
-		<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+		<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
 		<c:if test="${!BillboardForm.billboardList.isEmpty() }">
 			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
 				<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
 				 	<th width="5%">#</th>
-				   	<th width="70%">標題</th>
-				    <th width="15%">公告時間</th>
-				    <th width="5%">編輯</th>
+				   	<th width="70%"><spring:message code="title"/></th>
+				    <th width="15%"><spring:message code="announcementTime"/></th>
+				    <th width="5%"><spring:message code="edit"/></th>
 				    <th width="5%">
-				    	<input type="checkbox" id="delChkAll" onClick="doChkAll()" value="${vo.seqNo }" /> 全選
+				    	<input type="checkbox" id="delChkAll" onClick="doChkAll()" value="${vo.seqNo }" /> <spring:message code="selectAll"/>
 				    </th>
 				</tr>
 				<c:forEach var="vo" items="${ BillboardForm.billboardList }" varStatus="loop">
@@ -94,12 +94,12 @@
 					   	<td width="70%">
 					   		<a href="#bill_${loop.count }">${vo.title }</a>
 					   		<c:if test="${ BillboardForm.adminRole }">
-					   			&nbsp;&nbsp;&nbsp;&nbsp;(生效期間: ${vo.beginDateStr } ${vo.beginTimeStr } ~ ${vo.endDateStr } ${vo.endTimeStr })
+					   			&nbsp;&nbsp;&nbsp;&nbsp;(<spring:message code="timeFrame"/>: ${vo.beginDateStr } ${vo.beginTimeStr } ~ ${vo.endDateStr } ${vo.endTimeStr })
 					   		</c:if>
 					   	</td>
 					    <td width="15%">${vo.updateTime }</td>
 					    <td width="5%">
-					    	<a href="#"><span class="label label-warning" style="width:70px; margin-right:10px" seqNo="${vo.seqNo }" onclick="btnEditClicked($(this));"><i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>
+					    	<a href="#"><span class="label label-warning" style="width:70px; margin-right:10px" seqNo="${vo.seqNo }" onclick="btnEditClicked($(this));"><i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>
 					    </td>
 					    <td width="5%"><input type="checkbox" name="delChkbox" class="delChkbox" value="${vo.seqNo }"/></td>
 					</tr>
@@ -158,45 +158,45 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">Edit</h4>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
       	</div>
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit">
             	<input type="hidden" name="seqNo" id="seqNo" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="title"><span class="pull-right" style="color: red;">＊ </span>標題</label>
-	                  <input type="text" class="form-control" id="title" name="title" placeholder="輸入標題">
+	                  <label for="title"><span class="pull-right" style="color: red;">＊ </span><spring:message code="title"/></label>
+	                  <input type="text" class="form-control" id="title" name="title" placeholder="<spring:message code='fillTitle'/>">
 	                </div>                              
 	            </div>                         
 	            <div class="box-body">
 	                <div class="form-group">
-						<label>是否置頂</label>
+						<label><spring:message code='isPin'/></label>
 						<span style="position: relative; ">					 <input type="radio" name="onTopChkbox" id="onTop_Yes" value="Y"  /> Y</span>
 						<span style="position: relative; margin-left: 10px;"><input type="radio" name="onTopChkbox" id="onTop_No" value="N" /> N</span>
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-						<label>預設展開</label>
+						<label><spring:message code='defaultUnfold'/></label>
 						<span style="position: relative; ">					 <input type="radio" name="isOpenedChkbox" id="isOpened_Yes" value="Y"  /> Y</span>
 						<span style="position: relative; margin-left: 10px;"><input type="radio" name="isOpenedChkbox" id="isOpened_No" value="N" /> N</span>
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="beginTime">發佈時間</label>
+	                  <label for="beginTime"><spring:message code='postTime'/></label>
 	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" placeholder="年-月-日" />
 		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" placeholder="時:分:秒" />
-		  				<span style="color: red;">(留白表示永久有效；日期有選、時間未選則預設為當日00:00:00)</span>
+		  				<span style="color: red;"><spring:message code='aliveTimeDesc'/></span>
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="beginTime">結束時間</label>
+	                  <label for="beginTime"><spring:message code='endTime'/></label>
 	                  	<input id="date-input2" type="text" style="width: 90px;" name="endDateStr" placeholder="年-月-日" />
 		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" placeholder="時:分:秒" />
-		  				<span style="color: red;">(留白表示永久有效；日期有選、時間未選則預設為當日00:00:00)</span>
+		  				<span style="color: red;"><spring:message code='aliveTimeDesc'/></span>
 	                </div>                              
 	            </div>
 	            <div class="box-body">
@@ -205,8 +205,8 @@
 	                </div>                              
 	            </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnGustSaveClicked();">Save</button>
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnGustSaveClicked();"><spring:message code='save'/></button>
 				</div>
 			</form>
 		</div>	

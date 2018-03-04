@@ -6,19 +6,19 @@
 <br />
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<b><font style="font-size: 1.5em;">共享資源</font></b>
+		<b><font style="font-size: 1.5em;"><spring:message code="shareResource"/></font></b>
 	</div>
 	<div class="box-body no-padding" >
 		<table class="table table-striped" id="tblMain" width="100%">
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>檔案名稱</th>
-					<th>檔案大小</th>
-					<th>下載次數</th>
-					<th>檔案描述</th>
-					<th>更新時間</th>
-					<th style="width: 100px;">Option</th>
+					<th><spring:message code="fileName"/></th>
+					<th><spring:message code="fileSize"/></th>
+					<th><spring:message code="downloadTimes"/></th>
+					<th><spring:message code="fileDescription"/></th>
+					<th><spring:message code="updatedTime"/></th>
+					<th style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
 			</thead>
 		</table>
@@ -68,7 +68,7 @@ $(function() {
 					"render" : function(data, type, row) {
 						return '<a href="#">'
 								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
+								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="download"/></span></a>';
 					}
 				}
 			],
