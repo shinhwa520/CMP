@@ -101,7 +101,7 @@ public class RegistrationController extends BaseController {
 	 * user 輸入userInfo
 	 * return 問題頁面
 	 */
-	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.GET)//POST
+	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	try {
     		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
@@ -124,7 +124,7 @@ public class RegistrationController extends BaseController {
 			    			,form.getAccount()
 			    			,form.getPassword()
 			    			,form.getPhone()
-			    			,null)
+			    			,form.getWeChat())
 					);
 			RegistrationUserVO vo = registrationService.initQuestList();
 			form.setQuesMap(vo.getQuesMap());

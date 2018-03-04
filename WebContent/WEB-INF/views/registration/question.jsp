@@ -16,7 +16,7 @@
 				</tr>
 					<c:forEach var="detail" items="${ vo.value }">
 					<tr>
-						<td style="vertical-align:text-top;"><input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.id }></td>
+						<td style="vertical-align:text-top;"><input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.sort } ></td>
 						<td>${detail.content }</td>
 					</tr>
 					</c:forEach>

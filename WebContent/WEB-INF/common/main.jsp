@@ -14,6 +14,7 @@
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/step_arrow.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
@@ -24,6 +25,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/jquery.jscrollpane.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/style.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.css">
+	
 	
 	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -67,6 +69,10 @@
 		.box.box-primary{
 			margin-bottom: 0px;
 		}
+		
+		.step-arrow li a{
+			height: 33px;
+		}
 	</style>
 	<script>
 		Date.prototype.Format = function(fmt) { //author: meizz
@@ -106,6 +112,7 @@
 		
 		function successMessage(message) {
 			var msg = $('#message');
+			$(document).scrollTop(0);
 			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
 			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
 			msg.html(message);
@@ -117,7 +124,7 @@
 		
 		function errorMessage(message) {
 			var msg = $('#message');
-			$(window).scrollTop(msg.offset().top);
+			$(document).scrollTop(0);
 			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
 			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
 			msg.html(message);
@@ -131,6 +138,7 @@
 		//[successMsgModal.]
 		function successMsgModal(message) {
 			var msg = $('.modal_msg');
+			$('#modal_Edit').animate({ scrollTop: 0 }, 'slow');
 			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
 			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
 			msg.html(message);
@@ -143,6 +151,7 @@
 		//[errorMsgModal.]
 		function errorMsgModal(message) {
 			var msg = $('.modal_msg');
+			$('#modal_Edit').animate({ scrollTop: 0 }, 'slow');
 			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
 			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
 			msg.html(message);
@@ -160,9 +169,9 @@
 	<!-- Logo -->
     <a href="${pageContext.request.contextPath}" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><i><b>CMP</b></i></span>
+		<span class="logo-mini"><b>CMP</b></span>
 		<!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><i><b>CMP-渠道商管理平台</b></i></span>
+		<span class="logo-lg"><b>CMP-渠道商管理平台</b></span>
     </a>
 	
 	<!-- Header Navbar -->

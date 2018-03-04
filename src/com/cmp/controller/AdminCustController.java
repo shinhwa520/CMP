@@ -53,6 +53,23 @@ public class AdminCustController extends BaseController {
 		return new DatatableResponse(total, datalist, total);
 	}
 
+	/**
+	 * Search Cust資料 
+	 * 
+	 * @param start
+	 * @param length
+	 * @return DatatableResponse
+	 */
+	@RequestMapping(value="searchCust4Admin.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse searchCust4Admin(
+			@RequestParam(name="keyword", required=false, defaultValue="") String keyword,
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+		List<Customer> datalist = custService.findCust4Search(keyword, start, length);
+		long total = custService.countCust4Search(keyword);
+		return new DatatableResponse(total, datalist, total);
+	}
 	
 	/**
 	 * 取得Customer資料 by custId
@@ -82,11 +99,23 @@ public class AdminCustController extends BaseController {
 			@RequestParam(name="phone", required=false) String phone,
 			@RequestParam(name="email", required=false) String email,
 			@RequestParam(name="weChat", required=false) String weChat,
+			
+			@RequestParam(name="identity1_id", required=false) Integer identity1_id,
+			@RequestParam(name="identity1_code", required=false) String identity1_code,
+			@RequestParam(name="identity1_name", required=false) String identity1_name,
+			@RequestParam(name="identity2_id", required=false) Integer identity2_id,
+			@RequestParam(name="identity2_code", required=false) String identity2_code,
+			@RequestParam(name="identity2_name", required=false) String identity2_name,
+			
 			@RequestParam(name="city", required=false) String city,
+			@RequestParam(name="census", required=false) String census,
 			@RequestParam(name="address", required=false) String address,
+			@RequestParam(name="remark", required=false) String remark,
 			@RequestParam(name="status", required=true) String status) {
 		try {
-			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address, status);
+			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat
+					, identity1_id, identity1_code, identity1_name, identity2_id, identity2_code, identity2_name
+					, city, census, address, remark, status);
 			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -62,6 +62,36 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	}
 	
 	@Override
+	public List<Customer> findCust4Search(String keyword, Integer start,Integer length) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Customer c where 1=1 ");
+		if(StringUtils.isNotBlank(keyword)){
+			sb.append(" and c.name like :keyword ");
+		}
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    if(StringUtils.isNotBlank(keyword)){
+	    	q.setParameter("keyword", "%"+keyword+"%");
+	    }
+	    	q.setFirstResult(start).setMaxResults(length);
+	    return (List<Customer>) q.list();
+//		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
+//		return returnList;
+	}
+	
+	@Override
+	public long countCust4Search(String keyword){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(*) from Customer c where 1=1 ");
+		if(StringUtils.isNotBlank(keyword)){
+			  sb.append(" and c.name = ? ");
+			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {"%"+keyword+"%"}));
+		}
+		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
+	}
+	
+	
+	@Override
 	public List<Customer> findCustByUserThroughApiModelId(String apiModelId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select c ")

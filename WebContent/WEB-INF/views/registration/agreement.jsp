@@ -14,6 +14,13 @@
 	</form:form>
 </section>
 <script>
+
+var msg = '${message}';
+$(function() {
+	if(''!=msg) {
+		errorMessage(msg);
+	}
+});
 	function agreeAgreement() {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/registration/agreeAgreement?userId=' + $('#userId').val(),

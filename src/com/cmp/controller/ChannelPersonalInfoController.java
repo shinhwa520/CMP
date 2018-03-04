@@ -109,7 +109,8 @@ public class ChannelPersonalInfoController extends BaseController {
 		form.set_agent_user(user.get_agent_user());
 		form.set_agent_cust(user.get_agent_cust());		
 		form.set_volume(user.get_volume());
-		
+		form.setEmail(user.getEmail());
+		form.setWeChat(user.getWeChat());
 		
 		WebApiDetail apiDetail = webApiDetailDAO.findWebApiDetailByUserId(user.getId());
 		if(null == apiDetail)

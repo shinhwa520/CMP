@@ -12,14 +12,19 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<%--  註解 
 					<th>Gender</th>
 					<th>Birthday</th>
+					--%>
 					<th>Phone</th>
 					<th>Email</th>
 					<th>WeChat</th>
+					<%--  註解 
 					<th>City</th>
 					<th>Address</th>
+					--%>
 					<th>Status</th>
+					<th></th>
 					<th style="width: 100px;">Option</th>
 				</tr>
 			</thead>
@@ -80,14 +85,56 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
+	                  <label for="identity1_id">身分證件1</label>
+	                  <select id="identity1_id" name="identity1_id">
+	                  	<option value="0">=== 請選擇 ===</option>
+						<option value="1">身分證</option>
+						<option value="2">護照</option>
+						<option value="3">台胞證</option>
+	                  </select>
+	                  <label for="identity1_code" style="text-align: right;" >證件號碼</label>
+	                  <input type="text" id="identity1_code" name="identity1_code" >
+	                  <label for="identity1_name" style="text-align: right;" >證件姓名</label>
+	                  <input type="text" id="identity1_name" name="identity1_name" >
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity2_id">身分證件2</label>
+	                  <select id="identity2_id" name="identity2_id">
+	                  	<option value="0">=== 請選擇 ===</option>
+						<option value="1">身分證</option>
+						<option value="2">護照</option>
+						<option value="3">台胞證</option>
+	                  </select>
+	                  <label for="identity2_code" style="text-align: right;" >證件號碼</label>
+	                  <input type="text" id="identity2_code" name="identity2_code" >
+	                  <label for="identity2_name" style="text-align: right;" >證件姓名</label>
+	                  <input type="text" id="identity2_name" name="identity2_name" >
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
 	                  <label for="city">City</label>
 	                  <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
+	                  <label for="census">Census</label>
+	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
 	                  <label for="address">Address</label>
 	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="remark">Remark</label>
+	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remark">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
@@ -219,8 +266,18 @@ function btnAddClicked() {
 	$('#phone').val('');
 	$('#email').val('');
 	$('#weChat').val('');
+
+	$('#identity1_id').val('0');
+	$('#identity1_code').val('');
+	$('#identity1_name').val('');
+	$('#identity2_id').val('0');
+	$('#identity2_code').val('');
+	$('#identity2_name').val('');
+	
 	$('#city').val('');
+	$('#census').val('');
 	$('#address').val('');
+	$('#remark').val('');
 	$('#status').val('');
 	
 	$('#modal_Edit').modal();
@@ -248,11 +305,22 @@ function btnEditClicked(btn) {
 					$('#phone').val(resp.data.cust.phone);
 					$('#email').val(resp.data.cust.email);
 					$('#weChat').val(resp.data.cust.weChat);
+					
+					$('#identity1_id').val(resp.data.cust.identity1_id);
+					$('#identity1_code').val(resp.data.cust.identity1_code);
+					$('#identity1_name').val(resp.data.cust.identity1_name);
+					$('#identity2_id').val(resp.data.cust.identity2_id);
+					$('#identity2_code').val(resp.data.cust.identity2_code);
+					$('#identity2_name').val(resp.data.cust.identity2_name);
+
+				
 					$('#city').val(resp.data.cust.city);
+					$('#census').val(resp.data.cust.census);
 					$('#address').val(resp.data.cust.address);
-					$('#status').val(resp.data.cust.status);
+					$('#remark').val(resp.data.cust.remark);
+					$('#status').val(resp.data.cust.status.name);
 					$('#modal_Edit').modal();
-					//successMsgModal(resp.message);
+					successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -334,6 +402,7 @@ function btnFileClicked(btn) {
 
 //[Init.]
 $(function() {
+	//bsStep(3);
 	tblMain = $('#tblMain').DataTable(
 	{
 		"bFilter" : false,
@@ -348,24 +417,31 @@ $(function() {
 		},
 		"columns" : [
 			{ "data" : "name" },
-			{ "data" : "gender" },
-			{ "data" : "birthday" },
 			{ "data" : "phone" },
 			{ "data" : "email" },
 			{ "data" : "weChat" },
-			{ "data" : "city" },
-			{ "data" : "address" },
-			{ "data" : "status.name" }
+			{ "data" : "status.name" },
+			{ "data" : "status.sort" }
 		],
 		"columnDefs" : [ 
 			{
-			"targets" : 2,
-			"render" : function(data, type, row) {
-				return (new Date(data)).Format("yyyy-MM-dd");
-				}
+				"targets" : [5],
+				"render" : function(data, type, row) {
+							var sort = row['status'].sort;
+							console.log(sort);
+							var html = '<ul class="nav nav-pills nav-justified step step-arrow">';
+							for(var i=0; i<10; i++){
+								if(i<sort)
+									html += '<li class="active"><a></a></li>';
+								else
+									html += '<li><a></a></li>';
+							}
+							html+='</ul>';
+							return html;
+						}
 			},
 			{
-				"targets" : 9,
+				"targets" : 6,
 				"data" : 'id',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
@@ -598,4 +674,22 @@ function btnDownloadClicked(btn) {
   	}, 2000);
 }
 
+
+function bsStep(i) {
+	$('.step').each(function() {
+		var a, $this = $(this);
+		if(i > $this.find('li').length) {
+			console.log('您输入数值已超过步骤最大数量' + $this.find('li').length + '！！！');
+			a=$this.find('li').length;
+		} else if(i == undefined && $this.data('step') == undefined) {
+			a = 1
+		} else if(i == undefined && $this.data('step') != undefined) {
+			a = $(this).data('step');
+		} else {
+			a = i
+		}
+		$(this).find('li').removeClass('active');
+		$(this).find('li:lt(' + a + ')').addClass('active');
+	})
+}
 </script>
