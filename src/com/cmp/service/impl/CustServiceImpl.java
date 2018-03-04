@@ -45,12 +45,12 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public List<Customer> findCust4MA(String roleName, Integer start,Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-		return customerDAO.findCustByUserId(roleName, start, length);
+		return customerDAO.findCust4MA(roleName, start, length);
 	}
 	
 	@Override
 	public long countCust4MA(String roleName){
-		return customerDAO.countCustByUserId(roleName);
+		return customerDAO.countCust4MA(roleName);
 	}
 	
 	@Override
