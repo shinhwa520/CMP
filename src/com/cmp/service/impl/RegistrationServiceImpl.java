@@ -85,7 +85,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	public void sendSimpleMail(String mailAddress, String mailContent) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
-		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "utf-8");
+		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		mailMsg.setFrom("cmp.message@aliyun.com");
 		mailMsg.setTo(mailAddress);
 		mailMsg.setSubject(MimeUtility.encodeText("Test mail", "UTF-8", "B"));

@@ -148,7 +148,7 @@ public class RegistrationController extends BaseController {
 	 * user 輸入上游 user.account
 	 * return 合同頁
 	 */
-	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)//POST
+	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)
     public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form) {
     	try {
     		if(StringUtils.isBlank(form.getChannelAccount())){

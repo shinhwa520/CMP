@@ -114,16 +114,17 @@ public class AppConfig implements WebMvcConfigurer {
 	public JavaMailSenderImpl javaMailSenderImpl(){
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.aliyun.com");
-		mailSender.setPort(25);
+		mailSender.setPort(465);
 		//Set gmail email id
 		mailSender.setUsername("cmp.message@aliyun.com");
 		//Set gmail email password
 		mailSender.setPassword("y7u8i9g0@CMPmail");
 		Properties prop = mailSender.getJavaMailProperties();
-		prop.setProperty("mail.transport.protocol", "smtp");
-		prop.setProperty("mail.smtp.auth", "true");
-		prop.setProperty("mail.smtp.starttls.enable", "true");
-		prop.setProperty("mail.debug", "false");
+		prop.setProperty("mail.transport.protocol", "smtps");
+		prop.setProperty("mail.smtps.auth", "true");
+		prop.setProperty("mail.smtps.ssl.enable", "true");
+		//prop.setProperty("mail.smtp.starttls.enable", "true");
+		prop.setProperty("mail.debug", "true");
 		return mailSender;
 	}
 	
