@@ -26,7 +26,7 @@
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
-	<script>
+	<script>    
 		function successMessage(message) {
 		  	var msg = $('#message');
 		  	msg.addClass('alert-info');
@@ -136,7 +136,6 @@
 	<nav class="navbar navbar-HF navbar-fixed-top">
 		<div class="navbar-header">
 			<span class="navbar-brand"><spring:message code="cmp"/></span><br />
-			<span class="appVersion">Version: ${versionCode}</span>
 		</div>
 	</nav>
 	</header>

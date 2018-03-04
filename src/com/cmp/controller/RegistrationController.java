@@ -287,5 +287,4 @@ public class RegistrationController extends BaseController {
     	return bytesArray;
 
     }
-
 }
