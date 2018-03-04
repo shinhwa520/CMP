@@ -299,7 +299,7 @@
 						</ul>
 					</li>
 				</sec:authorize>
-				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_ASST')">
+				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_MA','ROLE_ASST')">
 					<li class="<c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
 						<a href="#">
 							<i class="fa fa-server"></i> <span><spring:message code="backstageMenagement"/></span> <i class="fa fa-angle-left pull-right"></i>

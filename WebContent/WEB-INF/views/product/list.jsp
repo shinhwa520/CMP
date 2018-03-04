@@ -6,7 +6,7 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">產品清單</h3>
+		<h3 class="box-title"><spring:message code="productInfo" /></h3>
 	</div>
 	
 	<form:form method="POST" modelAttribute="ProductForm" action="">
@@ -41,9 +41,9 @@
 								</p>
 							</div>
 							<ul>
-								<li><a href="#" onclick="btnKpiClicked(1);">KPI業績目標</a></li>
-								<li><a href="#" onclick="btnIntroClicked(1);">產品形象網頁</a></li>
-								<li><a href="#" onclick="btnDownloadClicked(1);">下載行銷資料包</a></li>
+								<li><a href="#" onclick="btnKpiClicked(1);"><spring:message code="KPI" /></a></li>
+								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
+								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
 							</ul>
 						</div>
 					</div>

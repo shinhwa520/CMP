@@ -57,7 +57,7 @@ public class LoginContoller extends BaseController {
     }
 	
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String loginPage(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "langType", defaultValue = "zh") String langType, Locale locale, Principal principal, Model model) {
+    public String loginPage(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "langType", defaultValue = "en_US") String langType, Locale locale, Principal principal, Model model) {
 		changeLang(request, response, model, langType);
     	return "login";
     }
@@ -77,7 +77,7 @@ public class LoginContoller extends BaseController {
 	public String changeLanguage(HttpServletRequest request,
                                  HttpServletResponse response,
                                  Model model,
-                                 @RequestParam(value = "langType", defaultValue = "zh_CN") String langType,
+                                 @RequestParam(value = "langType", defaultValue = "en_US") String langType,
                                  @RequestParam(value = "refresh", defaultValue = "index") String refreshPage) {
 		
 		changeLang(request, response, model, langType);
