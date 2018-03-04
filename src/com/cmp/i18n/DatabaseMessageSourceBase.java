@@ -9,17 +9,16 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.support.AbstractMessageSource;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
 
 import com.cmp.dao.I18nDAO;
 import com.cmp.model.I18n;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.ResourceLoader;
 
 
 @Named("databaseMessageSourceBase")

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +56,19 @@ public class ChannelUserController extends BaseController {
 			Principal principal, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		List<User> datalist = userService.findUserByChannelId(userId, sdfYearMonth.format(new Date()), start, length);
-		long total = userService.countUserByChannelId(userId);
+		User user = SecurityUtil.getSecurityUser().getUser();
+		List<User> datalist;
+		long total;
+		String roleName = "MA";
+		String yearMonth = sdfYearMonth.format(new Date());
+		if(StringUtils.equals(roleName, user.getRole().getName())){
+			datalist = userService.findUser4MA(roleName, yearMonth, start, length);
+			total = userService.countUser4MA(roleName);
+		}else{
+			String userId = user.getId();
+			datalist = userService.findUserByChannelId(userId, yearMonth, start, length);
+			total = userService.countUserByChannelId(userId);
+		}
 		return new DatatableResponse(total, datalist, total);
 	}
 	

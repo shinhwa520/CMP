@@ -13,7 +13,7 @@
         <spring:message code='phoneNo' var="phoneNo"/>
         <spring:message code='wechatID' var="wechatID"/>
 
-		<form:input class="form-control" path="name" id="name" placeholder="${name}"/>
+		<form:input class="form-control" path="name" id="name" placeholder="${name}" maxlength="8"/>
 		<form:input class="form-control" path="account" id="account" placeholder="${account}"/>
 		<form:input class="form-control" path="password" id="password" placeholder="${password}"/>
 		<form:input class="form-control" path="phone" id="phone" placeholder="${phoneNo}"/>

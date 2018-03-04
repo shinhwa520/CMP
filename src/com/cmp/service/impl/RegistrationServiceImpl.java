@@ -1,7 +1,6 @@
 package com.cmp.service.impl;
 
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,28 +66,29 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public void initUser(String mailAddress, String mailContent) throws Exception {
 		User user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleByName("USER"), statusDAO.findStatus("USER", 1)));//登錄帳號
 		Date current = new Date();
-		SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
-		String mailbody = "亲爱的 "+mailAddress+"您好：<br>";
-		mailbody += "您於 "+sdfDateTime.format(current)+" 用本 e-mail 建立 CMP平台 会员帐户，<br>";
-		mailbody += "※若您未使用本 e-mail 申请 CMP平台 会员帐户，请您与客服联系，我们将尽速为您处理。<br><br>";
-		mailbody += "请您依照以下连结，24小时内完成会员帐号认证：<br>";
-		mailbody += "启用连结："+mailContent+"?tokenId="+token.getId();
+		String mailbody = "是您吗？ 恭喜您测试成功！<br>";
+		mailbody += "Is it you? Congratulations you have completed the test questions!<br><br>";
+		mailbody += "请点以下的链接进入系统注册。<br>";
+		mailbody += "Please click on the link below to finish registeration.<br>";
+		mailbody += mailContent+"?tokenId="+token.getId();
 		mailbody += "<br><br><br>";
-		mailbody += "如有其他相关问题，请与 CMP平台 客服人员联系。<br>";
-		mailbody += "感谢您的使用与支持。<br>";
-		mailbody += "※本邮件为系统自动发送，请勿直接回覆此邮件※<br><br>";
-		mailbody += "All Property Solutions HK";
+		mailbody += "温馨提示，请确认您和其他人输入的信息无误，以避免后台管理处理客户登记或签证票务信息失误影响您的权益。<br>";
+		mailbody += "Reminder: To ensure our management service provides the correct details to secure your customers and airflight details,  Please ensure the information filled in accurate.<br>";
+		mailbody += "祝您有好的一天！<br>";
+		mailbody += "Have a nice day!<br><br>";
+		mailbody += "CMP 信息服务网联<br>";
 		
-		sendSimpleMail(mailAddress, mailbody);
+		String subject = "CMP信息服务网联 帐号申请验证通知";
+		sendSimpleMail(mailAddress, subject, mailbody);
 	}
 	
-	public void sendSimpleMail(String mailAddress, String mailContent) throws MessagingException, UnsupportedEncodingException {
+	public void sendSimpleMail(String mailAddress, String subject, String mailContent) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
-		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "utf-8");
+		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		mailMsg.setFrom("cmp.message@aliyun.com");
 		mailMsg.setTo(mailAddress);
-		mailMsg.setSubject(MimeUtility.encodeText("Test mail", "UTF-8", "B"));
+		mailMsg.setSubject(MimeUtility.encodeText(subject, "UTF-8", "B"));
 		mailMsg.setText(mailContent, true);
 		mailSender.send(mimeMessage);
 	}

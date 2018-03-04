@@ -433,7 +433,7 @@ $(function() {
 							var sort = row['status'].sort;
 							console.log(sort);
 							var html = '<ul class="nav nav-pills nav-justified step step-arrow">';
-							for(var i=0; i<10; i++){
+							for(var i=0; i<12; i++){
 								if(i<sort)
 									html += '<li class="active"><a></a></li>';
 								else

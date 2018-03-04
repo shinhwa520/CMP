@@ -5,7 +5,6 @@ import java.util.Properties;
 
 import javax.servlet.Filter;
 
-import com.cmp.Constants;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,7 +14,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -145,15 +142,16 @@ public class AppConfig implements WebMvcConfigurer {
 	public JavaMailSenderImpl javaMailSenderImpl(){
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.aliyun.com");
-		mailSender.setPort(25);
+		mailSender.setPort(465);
 		//Set gmail email id
 		mailSender.setUsername("cmp.message@aliyun.com");
 		//Set gmail email password
 		mailSender.setPassword("y7u8i9g0@CMPmail");
 		Properties prop = mailSender.getJavaMailProperties();
-		prop.setProperty("mail.transport.protocol", "smtp");
-		prop.setProperty("mail.smtp.auth", "true");
-		prop.setProperty("mail.smtp.starttls.enable", "true");
+		prop.setProperty("mail.transport.protocol", "smtps");
+		prop.setProperty("mail.smtps.auth", "true");
+		prop.setProperty("mail.smtps.ssl.enable", "true");
+		//prop.setProperty("mail.smtp.starttls.enable", "true");
 		prop.setProperty("mail.debug", "false");
 		return mailSender;
 	}
