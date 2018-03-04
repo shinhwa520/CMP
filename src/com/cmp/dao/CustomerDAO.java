@@ -11,6 +11,8 @@ public interface CustomerDAO {
 	long countCustByUserId(String userId);
 	List<Customer> findCust4Search(String keyword, Integer start,Integer length);
 	long countCust4Search(String keyword);
+	List<Customer> findCust4MA(String roleName, Integer start,Integer length);
+	long countCust4MA(String roleName);
 	
 	public List<Customer> findCustByUserThroughApiModelId(String apiModelId);
 	

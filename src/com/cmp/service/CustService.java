@@ -11,6 +11,9 @@ public interface CustService {
 	long countCustByUserId(String userId);
 	List<Customer> findCust4Search(String keyword, Integer start,Integer length);
 	long countCust4Search(String keyword);
+	List<Customer> findCust4MA(String roleName, Integer start,Integer length);
+	long countCust4MA(String roleName);
+	
 	
 	void createCust(String name, String gender, String birthday, String phone, String email, String weChat, String city, String address);
 	void updateCust(int id, String name, String gender, Date birthday, String phone, String email, String weChat

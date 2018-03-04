@@ -45,6 +45,17 @@ public class CustServiceImpl implements CustService {
 	}
 	
 	@Override
+	public List<Customer> findCust4MA(String roleName, Integer start,Integer length){
+//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
+		return customerDAO.findCustByUserId(roleName, start, length);
+	}
+	
+	@Override
+	public long countCust4MA(String roleName){
+		return customerDAO.countCustByUserId(roleName);
+	}
+	
+	@Override
 	public List<Customer> findCust4Search(String keyword, Integer start,Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		return customerDAO.findCust4Search(keyword, start, length);
@@ -68,7 +79,7 @@ public class CustServiceImpl implements CustService {
 		cust.setCity(city);
 		cust.setAddress(address);
 		cust.setUser(user);
-		cust.setStatus(statusDAO.findStatusById(1));
+		cust.setStatus(statusDAO.findStatus("CUST", 1));
 		cust.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		cust.setCreateBy(user.getName());
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
