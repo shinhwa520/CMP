@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.cmp.Response;
 import com.cmp.form.registration.EmailConfirmForm;
@@ -29,7 +31,6 @@ import com.cmp.model.User;
 import com.cmp.pdf.AgreementPdfTemplate;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
-import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/registration")
@@ -44,7 +45,8 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
     public String email(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-    	model.addAttribute("message", "");
+		System.out.println("/email Locale"+LocaleContextHolder.getLocale());
+		model.addAttribute("message", "");
         return "registration/email";
     }
 	
@@ -54,7 +56,7 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
     public String emailConfirm(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-    	try {
+		try {
     		String mailAddress = form.getMailAddress();
 			RequestContext req = new RequestContext(request);
 
@@ -82,7 +84,7 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/user" }, params = "tokenId", method = RequestMethod.GET)
     public String user(Model model, @RequestParam("tokenId") String tokenId, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-    	try {
+		try {
     		User user = registrationService.verifyToken(tokenId);
 			RequestContext req = new RequestContext(request);
 
@@ -105,7 +107,6 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
 		RequestContext req = new RequestContext(request);
-
     	try {
     		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
     			model.addAttribute("message", req.getMessage("error.accountExist"));
@@ -223,7 +224,7 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
     public @ResponseBody String agreeAgreement(@ModelAttribute("UserInfoForm") UserInfoForm form) {
     	try {
-//    		registrationService.agreement(form.getUserId());
+    		registrationService.agreement(form.getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

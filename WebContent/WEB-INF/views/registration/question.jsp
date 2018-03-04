@@ -3,7 +3,7 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content" style="padding-bottom: 50px;">
-	<div class="topic">please answer the following questions :</div>
+	<div class="topic"><spring:message code='ansewerQuestions'/></div>
 	<form:form method="POST" modelAttribute="UserInfoForm">
 		<form:hidden path="userId" id="userId" />
 		<form:hidden path="ans" id="ans" />
