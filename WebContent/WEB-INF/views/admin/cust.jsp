@@ -300,65 +300,38 @@ $(function() {
 			},
 			"columns" : [
 				{ "data" : "name" },
-				{ "data" : "gender" },
-				{ "data" : "birthday" },
 				{ "data" : "email" },
 				{ "data" : "census" },
 				{ "data" : "identity1_id" },
 				{ "data" : "identity1_code" },
 				{ "data" : "identity1_name" },
-				{ "data" : "identity2_id" },
-				{ "data" : "identity2_code" },
-				{ "data" : "identity2_name" },
 				{ "data" : "user.name" }
 			],
 			"columnDefs" : [ 
 				{
-					"targets" : 5,
+					"targets" : 3,
 					"render" : function(data, type, row) {
 						var i18n;
 
 						switch(data) {
-						    case 1:
-						    	i18n = '<spring:message code="ID card" />'
-						        break;
-						    case 2:
-						    	i18n = '<spring:message code="passport" />'
-						        break;
-						    case 3:
-						    	i18n = '<spring:message code="ROCID" />'
-						        break;
-						    default:
-						    	i18n = 'N/A'
+							case 1:
+								i18n = '<spring:message code="ID card" />'
+								break;
+							case 2:
+								i18n = '<spring:message code="passport" />'
+								break;
+							case 3:
+								i18n = '<spring:message code="ROCID" />'
+								break;
+							default:
+								i18n = 'N/A'
 						} 
 						
 						return i18n;
 					}
 				},
 				{
-					"targets" : 8,
-					"render" : function(data, type, row) {
-						var i18n;
-
-						switch(data) {
-						    case 1:
-						    	i18n = '<spring:message code="ID card" />'
-						        break;
-						    case 2:
-						    	i18n = '<spring:message code="passport" />'
-						        break;
-						    case 3:
-						    	i18n = '<spring:message code="ROCID" />'
-						        break;
-						    default:
-						    	i18n = 'N/A'
-						} 
-						
-						return i18n;
-					}
-				},
-				{
-					"targets" : 12,
+					"targets" : 7,
 					"data" : 'id',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
@@ -383,7 +356,7 @@ function doQuery() {
 	if (tblMain) {
 		$('#tblMain').DataTable().destroy();
 	}
-		tblMain = $('#tblMain').DataTable(
+	tblMain = $('#tblMain').DataTable(
 			{
 				"bFilter" : false,
 				"ordering" : false,
@@ -400,21 +373,38 @@ function doQuery() {
 				},
 				"columns" : [
 					{ "data" : "name" },
-					{ "data" : "gender" },
-					{ "data" : "birthday" },
 					{ "data" : "email" },
 					{ "data" : "census" },
-					{ "data" : "identity1Str" },
+					{ "data" : "identity1_id" },
 					{ "data" : "identity1_code" },
 					{ "data" : "identity1_name" },
-					{ "data" : "identity2Str" },
-					{ "data" : "identity2_code" },
-					{ "data" : "identity2_name" },
 					{ "data" : "user.name" }
 				],
 				"columnDefs" : [ 
 					{
-						"targets" : 12,
+						"targets" : 3,
+						"render" : function(data, type, row) {
+							var i18n;
+
+							switch(data) {
+								case 1:
+									i18n = '<spring:message code="ID card" />'
+									break;
+								case 2:
+									i18n = '<spring:message code="passport" />'
+									break;
+								case 3:
+									i18n = '<spring:message code="ROCID" />'
+									break;
+								default:
+									i18n = 'N/A'
+							} 
+							
+							return i18n;
+						}
+					},
+					{
+						"targets" : 7,
 						"data" : 'id',
 						"render" : function(data, type, row) {
 							return '<a href="#">'
