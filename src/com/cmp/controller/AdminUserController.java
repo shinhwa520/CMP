@@ -84,7 +84,6 @@ public class AdminUserController extends BaseController {
 			@RequestParam(name="userId", required=true, defaultValue="0") String userId,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-		System.out.println("getCustByUserId [userId]:" + userId);
 		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
 		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, datalist, total);
@@ -114,13 +113,16 @@ public class AdminUserController extends BaseController {
 	public AppResponse update(
 			@RequestParam(name="user_id", required=true) String userId,
 			@RequestParam(name="user_name", required=true) String userName,
+			@RequestParam(name="password", required=true) String password,
 			@RequestParam(name="phone", required=true) String phone,
 			@RequestParam(name="email", required=true) String email,
+			@RequestParam(name="weChat", required=true) String weChat,
 			@RequestParam(name="status", required=true) String status,
+			@RequestParam(name="remark", required=false) String remark,
 			HttpServletRequest request) {
 		try {
             RequestContext req = new RequestContext(request);
-			userService.update(userId, userName, phone, email, status);
+			userService.update(userId, userName, password, phone, email, weChat, status, remark);
 			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//"更新成功"
 		} catch (Exception e) {
 			e.printStackTrace();

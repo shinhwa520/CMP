@@ -15,13 +15,13 @@ import com.cmp.MenuItem;
 import com.cmp.form.ProductForm;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/productInfo")
 public class ProductController extends BaseController {
 	private static Log log = LogFactory.getLog(ProductController.class);
 
-	@RequestMapping(value = { "/channel/productInfo/info" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "info" }, method = RequestMethod.GET)
     public String fileMain(Model model, @ModelAttribute("ProductForm") ProductForm form, HttpServletRequest request, HttpServletResponse response) {
 		setActiveMenu(model, MenuItem.PRODUCT_INFO);
-		return "channel/product_info";
+		return "manage/product";
     }
 }

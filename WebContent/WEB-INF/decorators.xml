@@ -9,4 +9,7 @@
 		<pattern>/accessdenied*</pattern>
 		<pattern>/registration*</pattern>
 	</decorator>
+	<decorator name="outsite" page="blank.jsp">
+		<pattern>/outsite*</pattern>
+	</decorator>
 </decorators>

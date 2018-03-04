@@ -15,6 +15,8 @@ public class UserInfoForm implements Serializable {
 	private String account;
 	private String password;
 	private String phone;
+	private String email;
+	private String weChat;
 	private String channelUrl;
 	private String channelAccount;
 	private String statusName;
@@ -133,6 +135,18 @@ public class UserInfoForm implements Serializable {
 	}
 	public void setAns(String ans) {
 		this.ans = ans;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getWeChat() {
+		return weChat;
+	}
+	public void setWeChat(String weChat) {
+		this.weChat = weChat;
 	}
 
 }

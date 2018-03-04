@@ -194,8 +194,6 @@ public class ApiServiceImpl implements ApiService {
 	
 	@RemoteMethod
 	public ApiServiceVO doRetrieve(ApiServiceVO apiServiceVO) throws Exception {
-		System.out.println("doRetrieve");
-		
 		String userId = null;
 		Map<String, Map<String, String>> custInfoFromJsonMap;
 		Map<String, Boolean> custInfoFromDBMap;
@@ -229,7 +227,6 @@ public class ApiServiceImpl implements ApiService {
 			
 			//Step 2.發送登入API,取得cookie
 			String cookie = doRetrieve(methodType, apiUrl, useJson, jsonData, null);
-			System.out.println("cookie: "+cookie);
 			
 			if (cookie == null) {
 				throw new Exception("[連線異常]取得cookie異常");
@@ -246,7 +243,6 @@ public class ApiServiceImpl implements ApiService {
 				if (custInfoFromJsonMap == null || (custInfoFromJsonMap != null && custInfoFromJsonMap.isEmpty())) {
 					continue;
 				}
-				System.out.println("apiUrl: "+formApiUrl+", records: "+custInfoFromJsonMap.size());
 				
 				//Step 5.取得此MAKA H5模板ID歸屬的渠道商(USER)現有客戶(CUSTOMER)資料
 				List<Customer> custList = customerDAO.findCustByUserThroughApiModelId(apiServiceVO.getApiModelIds()[index]);

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmp.AppResponse;
@@ -52,6 +53,37 @@ public class ChannelPersonalInfoController extends BaseController {
 		return "channel/personal_info";
 	}
 	
+	@RequestMapping(value="/getDMUrl", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public AppResponse getUserProductDMpage(
+			@RequestParam(name="productId", required=true) Integer productId,
+			Model model) {
+		try {
+			String userId = SecurityUtil.getSecurityUser().getUser().getId();
+			
+			WebApiDetail apiDetail = webApiDetailDAO.findWebApiDetailByUserId(userId);
+			String channelUrl = null;
+			String errorMsg = null;
+			
+			if(null == apiDetail) {
+				errorMsg = "系統生成中...請稍候";
+				
+			} else {
+				channelUrl = "http://u5669258.viewer.maka.im/k/" + apiDetail.getParameterValues();
+			}
+			
+			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得資料成功");
+			appResponse.putData("channelUrl",  channelUrl);
+			appResponse.putData("errorMsg", errorMsg);
+			
+			return appResponse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
+	
 	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse updateUserPersonalInfo(@ModelAttribute("UserInfoForm")UserInfoForm form, Model model, HttpServletRequest request) {
@@ -80,7 +112,8 @@ public class ChannelPersonalInfoController extends BaseController {
 		form.set_agent_user(user.get_agent_user());
 		form.set_agent_cust(user.get_agent_cust());		
 		form.set_volume(user.get_volume());
-		
+		form.setEmail(user.getEmail());
+		form.setWeChat(user.getWeChat());
 		
 		WebApiDetail apiDetail = webApiDetailDAO.findWebApiDetailByUserId(user.getId());
 		if(null == apiDetail)

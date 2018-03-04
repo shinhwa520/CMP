@@ -160,7 +160,22 @@ public class FileServiceImpl implements FileService {
 		Integer addedSeqNo = null;
 		
 		try {
-			retVO = getFileByFileTypeAndSeqNoOrFileName(fileServiceVO.getFileType(), null, fileServiceVO.getOriginFileName());
+			String id = "";
+			if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PUBLIC)) {
+				id = "ALL";
+			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
+				id = fileServiceVO.getCustId() != null ? fileServiceVO.getCustId().toString() : "ALL";
+				
+			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
+				id = fileServiceVO.getProductId() != null ? fileServiceVO.getProductId().toString() : "ALL";
+				
+			} else {
+				
+			}
+			fileServiceVO.setUpperFileName(
+					(fileServiceVO.getFileType()+"_"+id+"_"+fileServiceVO.getOriginFileName()).toUpperCase());
+			
+			retVO = getFileByFileTypeAndSeqNoOrFileName(fileServiceVO.getFileType(), null, fileServiceVO.getUpperFileName());
 			
 			if (retVO != null && retVO.getSeqNo() != null) {
 				errMsg = "相同檔案名稱資料已存在，請調整名稱或先刪除既有資料後再新增";
@@ -173,7 +188,8 @@ public class FileServiceImpl implements FileService {
 						oriName.lastIndexOf(".") != -1 ? oriName.substring(0, oriName.lastIndexOf(".")) : oriName);
 				fileServiceVO.setFileExtension(
 						oriName.lastIndexOf(".") != -1 ? oriName.substring(oriName.lastIndexOf(".")+1, oriName.length()) : null);
-				fileServiceVO.setUpperFileName(fileServiceVO.getOriginFileName().toUpperCase());
+				
+				retVO.setUpperFileName(fileServiceVO.getUpperFileName());
 				
 				// Model >> FilesPublic / FilesCustomer
 				Object entity = null;
@@ -262,7 +278,7 @@ public class FileServiceImpl implements FileService {
 					}
 					
 					if (reList != null && !reList.isEmpty()) {
-						bucketKeys.add((String)reList.get(0).getClass().getMethod("getOriginFileName").invoke(reList.get(0)));
+						bucketKeys.add((String)reList.get(0).getClass().getMethod("getUpperFileName").invoke(reList.get(0)));
 						
 						FilesSetting fs = (FilesSetting)reList.get(0).getClass().getMethod("getFilesSetting").invoke(reList.get(0));
 						modelList.addAll(fs.getFilesPermissions());
@@ -349,7 +365,7 @@ public class FileServiceImpl implements FileService {
 	}
 	
 	@Override
-	public String modifyDownloadCount(String fileType, Integer seqNo) {
+	public FileServiceVO modifyDownloadCount(String fileType, Integer seqNo) {
 		FileDAOVO fileDAOVO;
 		String entity = null;
 		List<Object> modelList = null;
@@ -366,6 +382,10 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				entity = "FilesCustomer";
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
+				
+			} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+				entity = "FilesProduct";
+				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 			}
 			
 			if (modelList != null && !modelList.isEmpty()) {
@@ -378,7 +398,7 @@ public class FileServiceImpl implements FileService {
 			e.printStackTrace();
 		}
 		
-		return retVO != null ? retVO.getFullFileName() : null;
+		return retVO;
 	}
 
 	@Override

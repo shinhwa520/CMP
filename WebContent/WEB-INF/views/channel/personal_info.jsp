@@ -18,8 +18,8 @@
         <div class="box-body">
         	<div class="form-group">
 				<label for="account"><span class="pull-right" style="color: red;">＊ </span><spring:message code="account"/></label>
-				<form:input class="form-control" path="account" id="account" />
-            </div>                              
+				<form:input class="form-control" path="account" id="account" readonly="true" />
+            </div>
         </div>
         <div class="box-body">
         	<div class="form-group">
@@ -35,16 +35,31 @@
         </div>
         <div class="box-body">
         	<div class="form-group">
+				<label for="email"><span class="pull-right" style="color: red;">＊ </span><spring:message code="email"/></label>
+				<form:input class="form-control" path="email" id="email" />
+            </div>
+        </div>
+        <div class="box-body">
+        	<div class="form-group">
+				<label for="weChat"><span class="pull-right" style="color: red;">＊ </span><spring:message code="wechatID"/></label>
+				<form:input class="form-control" path="weChat" id="weChat" />
+            </div>
+        </div>
+        <%--  註解
+        <div class="box-body">
+        	<div class="form-group">
 				<label for="status"><spring:message code="status"/></label>
 				<form:input readonly="true" class="form-control" path="statusName" id="statusName" />
             </div>                              
         </div>
+        <!--
         <div class="box-body">
         	<div class="form-group">
 				<label for="channelUrl"><spring:message code="tools"/></label>
 				<form:input readonly="true" class="form-control" path="channelUrl" id="channelUrl" />
             </div>                              
         </div>
+         -->
         <div class="box-body">
         	<table style="width: 100%">
         		<tr>
@@ -67,7 +82,7 @@
         		</tr>
         	</table>                             
         </div>
-
+		--%>
 		<div class="modal-footer">
        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 		</div>
@@ -83,6 +98,9 @@ function btnSaveClicked() {
 	var account = $('#account').val();
 	var password = $('#password').val();
 	var phone = $('#phone').val();
+	var email = $('#email').val();
+	var weChat = $('#weChat').val();
+
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
@@ -107,6 +125,17 @@ function btnSaveClicked() {
 		$('#phone').parents('.form-group').addClass('has-error');
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustPhoneNo"/><br/>';
 	}
+	if (''==email.trim()) {
+		isError = true;
+		$('#email').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message javaScriptEscape="true" code="error.mustEmail"/><br/>';
+	}
+	if (''==weChat.trim()) {
+		isError = true;
+		$('#weChat').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message javaScriptEscape="true" code="error.mustWechat"/><br/>';
+	}
+
 	//頁面輸入檢核Error
 	if(isError){
 		errorMessage(errMsg);

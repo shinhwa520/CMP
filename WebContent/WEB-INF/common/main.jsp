@@ -16,6 +16,7 @@
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/step_arrow.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
@@ -23,16 +24,26 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/buttons.dataTables.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/editor.dataTables.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/select.dataTables.css">
-	
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/jquery.jscrollpane.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/style.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.css">
+
+
 	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.1.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
+	<!-- <script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.mousewheel.js"></script>  -->
+	<!-- <script src="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.alpha.js"></script>  -->
+
 	<style type="text/css">
 		.box-shadow-menu{
 			padding-top: 11px;
@@ -59,6 +70,10 @@
 
 		.box.box-primary{
 			margin-bottom: 0px;
+		}
+
+		.step-arrow li a{
+			height: 33px;
 		}
 	</style>
 	<script>
@@ -99,6 +114,7 @@
 		
 		function successMessage(message) {
 			var msg = $('#message');
+			$(document).scrollTop(0);
 			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
 			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
 			msg.html(message);
@@ -110,7 +126,7 @@
 		
 		function errorMessage(message) {
 			var msg = $('#message');
-			$(window).scrollTop(msg.offset().top);
+			$(document).scrollTop(0);
 			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
 			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
 			msg.html(message);
@@ -124,6 +140,7 @@
 		//[successMsgModal.]
 		function successMsgModal(message) {
 			var msg = $('.modal_msg');
+			$('#modal_Edit').animate({ scrollTop: 0 }, 'slow');
 			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
 			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
 			msg.html(message);
@@ -136,6 +153,7 @@
 		//[errorMsgModal.]
 		function errorMsgModal(message) {
 			var msg = $('.modal_msg');
+			$('#modal_Edit').animate({ scrollTop: 0 }, 'slow');
 			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
 			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
 			msg.html(message);
@@ -158,9 +176,9 @@
 	<!-- Logo -->
     <a href="${pageContext.request.contextPath}" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><i><b>CMP</b></i></span>
+		<span class="logo-mini"><b>CMP</b></span>
 		<!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><i><b><spring:message code="cmp"/></b></i></span>
+		<span class="logo-lg"><b><spring:message code="cmp"/></b></span>
     </a>
 	
 	<!-- Header Navbar -->
@@ -243,10 +261,16 @@
 			<ul class="sidebar-menu">
 			
 				<li class="<c:if test="${active eq 'INDEX'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/"> <span><spring:message code="home" /></span></a>
+					<a href="${pageContext.request.contextPath}/"> <span><span><spring:message code="home" /></span></a>
+				</li>
+				<li class="<c:if test="${active eq 'SHARE_FILE'}">active</c:if> sidebar-item">
+					<a href="${pageContext.request.contextPath}/share/file"> <span><spring:message code="shareResource" /></span></a>
 				</li>
 				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span><spring:message code="personalInfo" /></span></a>
+				</li>
+				<li class="<c:if test="${active eq 'PRODUCT_INFO'}">active</c:if> sidebar-item">
+					<a href="${pageContext.request.contextPath}/channel/productInfo/list"> <span><spring:message code="productInfo" /></span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/user/list"> <span><spring:message code="myChannels" /></span></a>

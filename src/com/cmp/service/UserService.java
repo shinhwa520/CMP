@@ -11,6 +11,8 @@ public interface UserService {
 	User saveUserInfo(User user);
 	List<User> findUserByChannelId(String channelId, String yearMonth, Integer start, Integer length);
 	long countUserByChannelId(String channelId);
-	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current);
-	public void update(String userId, String userName, String phone, String email, String status);
+	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current, String remark, int reward);
+	public void update(String userId, String userName, String password, String phone, String email, String weChat, String status, String remark);
+	
+	public User findUserByApiId(String apiId);
 }

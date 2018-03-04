@@ -23,14 +23,14 @@ import com.cmp.service.BillboardService;
 import com.cmp.service.vo.BillboardServiceVO;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/manage/billboard")
 public class BillboardController extends BaseController {
 	private static Log log = LogFactory.getLog(BillboardController.class);
 	
 	@Autowired
 	BillboardService billboardService;
 	
-	@RequestMapping(value = { "/manage/billboard" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "" }, method = RequestMethod.GET)
     public String billboardMain(Model model, @ModelAttribute("BillboardForm") BillboardForm form, HttpServletRequest request, HttpServletResponse response) {
 		List<BillboardServiceVO> billboardList;
 		try {
@@ -48,7 +48,7 @@ public class BillboardController extends BaseController {
 		return "manage/billboard";
     }
 	
-	@RequestMapping(value = { "/manage/billboard/delete" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "delete" }, method = RequestMethod.POST)
     public String deleteRecords(Model model, @ModelAttribute("BillboardForm") BillboardForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			billboardService.deleteBillboardRecords(form.getDelChkbox());
@@ -63,7 +63,7 @@ public class BillboardController extends BaseController {
 		return billboardMain(model, form, request, response);
     }
 	
-	@RequestMapping(value="/manage/billboard/getBillboard", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="getBillboard", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody AppResponse getBillboardBySeqNo(
 			@RequestParam(name="seqNo", required=true) Integer seqNo) {
 		try {
@@ -78,7 +78,7 @@ public class BillboardController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value="/manage/billboard/modify", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="modify", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse modifyBillboard(
 			@RequestParam(name="seqNo", required=false) Integer seqNo,
@@ -111,6 +111,5 @@ public class BillboardController extends BaseController {
 			log.error(e);
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
-		
 	}
 }

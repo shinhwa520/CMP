@@ -9,6 +9,7 @@ public interface FileService {
 	
 	public static final String FILE_TYPE_PUBLIC = "PUBLIC";
 	public static final String FILE_TYPE_CUSTOMER = "CUSTOMER";
+	public static final String FILE_TYPE_PRODUCT = "PRODUCT";
 	
 	public List<FileServiceVO> findAllPublicFiles(boolean isAdmin, Integer startRow, Integer pageLength);
 	
@@ -28,7 +29,7 @@ public interface FileService {
 	
 	public void modifyFile(FileServiceVO fileServiceVO);
 	
-	public String modifyDownloadCount(String fileType, Integer seqNo);
+	public FileServiceVO modifyDownloadCount(String fileType, Integer seqNo);
 	
 	public FilesBaseConfig findFilesConfig(String configName);
 }

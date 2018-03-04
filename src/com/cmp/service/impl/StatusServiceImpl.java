@@ -18,9 +18,7 @@ public class StatusServiceImpl implements StatusService {
 	@Override
 	public List<Status> listStatus(Integer start, Integer length){
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-//		System.out.println(securityUser.getUser().getId());
 		Status s = statusDAO.findStatus("USER", 6);
-		System.out.println(s.getName());
 		return statusDAO.listStatus(start, length);
 	}
 	

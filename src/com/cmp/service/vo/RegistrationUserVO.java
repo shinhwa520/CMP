@@ -17,19 +17,19 @@ public class RegistrationUserVO {
 	private String channelUrl;
 	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
 	private String ans;
-	
+	private String weChat;
 	
 	public RegistrationUserVO() {
 	}
 	
-	public RegistrationUserVO(String userId, String name, String account, String password, String phone, String channelUrl) {
+	public RegistrationUserVO(String userId, String name, String account, String password, String phone, String weChat) {
 		super();
 		this.userId = userId;
 		this.name = name;
 		this.account = account;
 		this.password = password;
 		this.phone = phone;
-		this.channelUrl = channelUrl;
+		this.weChat = weChat;
 	}
 
 	public String getUserId() {
@@ -83,6 +83,14 @@ public class RegistrationUserVO {
 
 	public void setAns(String ans) {
 		this.ans = ans;
+	}
+
+	public String getWeChat() {
+		return weChat;
+	}
+
+	public void setWeChat(String weChat) {
+		this.weChat = weChat;
 	}
 
 

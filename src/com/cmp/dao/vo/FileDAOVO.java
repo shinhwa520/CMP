@@ -7,6 +7,7 @@ public class FileDAOVO {
 	private String upperFileName;
 
 	private Integer custId;
+	private Integer productId;
 	
 	public Integer getSeqNo() {
 		return seqNo;
@@ -38,5 +39,13 @@ public class FileDAOVO {
 
 	public void setCustId(Integer custId) {
 		this.custId = custId;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 }

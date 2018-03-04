@@ -51,7 +51,6 @@ public class CustController extends BaseController {
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-//		System.out.println(securityUser.getUser().getId());
 		List<Customer> custList = custService.findCustByUserId(null, start, length);
 		long total = custService.countCustByUserId(null);
 		return new DatatableResponse(total, trans2CustFormList(custList), total);
@@ -72,7 +71,6 @@ public class CustController extends BaseController {
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		System.out.println("getCustByUserId [userId]:" + userId);
 		List<Customer> custList = custService.findCustByUserId(userId, start, length);
 		
 		long total = custService.countCustByUserId(userId);

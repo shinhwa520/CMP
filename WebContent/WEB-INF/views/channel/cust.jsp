@@ -12,16 +12,21 @@
 		<table class="table table-striped" id="tblMain">
 			<thead>
 				<tr>
-					<th><spring:message code="name"/></th>
-					<th><spring:message code="gender"/></th>
-					<th><spring:message code="birthday"/></th>
-					<th><spring:message code="phoneNo"/></th>
-					<th><spring:message code="email"/></th>
-					<th><spring:message code="wechatID"/></th>
-					<th><spring:message code="city"/></th>
-					<th><spring:message code="address"/></th>
-					<th><spring:message code="status"/></th>
-					<th style="width: 100px;"><spring:message code="option"/></th>
+                    <th><spring:message code="name"/></th>
+					<%--  註解
+					<th>Gender</th>
+					<th>Birthday</th>
+					--%>
+                    <th><spring:message code="phoneNo"/></th>
+                    <th><spring:message code="email"/></th>
+                    <th><spring:message code="wechatID"/></th>
+					<%--  註解
+					<th>City</th>
+					<th>Address</th>
+					--%>
+                    <th><spring:message code="status"/></th>
+					<th></th>
+                    <th style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
 			</thead>
 		</table>
@@ -30,7 +35,7 @@
 </div>
 </section>
 
-<!--.燈箱 Edit -->         
+<!--.燈箱 Edit -->
 <div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -39,76 +44,120 @@
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
-      	<div class="modal-body">                    
+      	<div class="modal-body">
             <form role="form" id="formEdit" name="formEdit">
             	<input type="hidden" name="cust_id" id="cust_id" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
 	                  <label for="cust_name"><spring:message code='name'/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="<spring:message code='name'/>">
-	                </div>                              
-	            </div>                         
+	                </div>
+	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 						<label><spring:message code='gender'/></label>
 						<span style="position: relative; ">					 <input type="radio" name="gender" id="male" value="M"  /><spring:message code='male'/></span>
 						<span style="position: relative; margin-left: 10px;"><input type="radio" name="gender" id="female" value="F"/><spring:message code='female'/></span>
-	                </div>                              
+	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="birthday"><spring:message code='birthday'/></label>
 	                  <input type="text" class="form-control" id="birthday" name="birthday" placeholder="<spring:message code='birthday'/>">
-	                </div>                              
+	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="phone"><spring:message code='phoneNo'/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="<spring:message code='phoneNo'/>">
-	                </div>                              
-	            </div>  
+	                </div>
+	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="email"><spring:message code='email'/></label>
 	                  <input type="text" class="form-control" id="email" name="email" placeholder="<spring:message code='email'/>">
-	                </div>                              
-	            </div>  
+	                </div>
+	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="weChat"><spring:message code='wechatID'/></label>
 	                  <input type="text" class="form-control" id="weChat" name="weChat" placeholder="<spring:message code='wechatID'/>">
-	                </div>                              
+	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="city"><spring:message code='city'/></label>
-	                  <input type="text" class="form-control" id="city" name="city" placeholder="<spring:message code='city'/>">
-	                </div>                              
+	                  <label for="identity1_id">身分證件1</label>
+	                  <select id="identity1_id" name="identity1_id">
+	                  	<option value="0">=== 請選擇 ===</option>
+						<option value="1">身分證</option>
+						<option value="2">護照</option>
+						<option value="3">台胞證</option>
+	                  </select>
+	                  <label for="identity1_code" style="text-align: right;" >證件號碼</label>
+	                  <input type="text" id="identity1_code" name="identity1_code" >
+	                  <label for="identity1_name" style="text-align: right;" >證件姓名</label>
+	                  <input type="text" id="identity1_name" name="identity1_name" >
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity2_id">身分證件2</label>
+	                  <select id="identity2_id" name="identity2_id">
+	                  	<option value="0">=== 請選擇 ===</option>
+						<option value="1">身分證</option>
+						<option value="2">護照</option>
+						<option value="3">台胞證</option>
+	                  </select>
+	                  <label for="identity2_code" style="text-align: right;" >證件號碼</label>
+	                  <input type="text" id="identity2_code" name="identity2_code" >
+	                  <label for="identity2_name" style="text-align: right;" >證件姓名</label>
+	                  <input type="text" id="identity2_name" name="identity2_name" >
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+                        <label for="city"><spring:message code='city'/></label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="<spring:message code='city'/>">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="census">Census</label>
+	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
+	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="address"><spring:message code='address'/></label>
 	                  <input type="text" class="form-control" id="address" name="address" placeholder="<spring:message code='address'/>">
-	                </div>                              
+	                  <label for="address">Address</label>
+	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="remark"><spring:message code='remark'/></label>
+	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remark">
+	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="status"><spring:message code='status'/></label>
 	                  <input type="text" class="form-control" id="status" name="status" readonly="true" >
-	                </div>                              
+	                </div>
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
 	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code='save'/></button>
 				</div>
 			</form>
-		</div>	
+		</div>
 	</div><!-- /.modal-content -->
   </div>
 </div>
 <!--/.燈箱 Edit -->
 
-<!--.燈箱 File -->         
+<!--.燈箱 File -->
 <div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -117,13 +166,13 @@
 			<h4 class="modal-title"><spring:message code='file'/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
-      	<div class="modal-body">                    
+      	<div class="modal-body">
             <form role="form" id="formFile" name="formFile">
 				<input type="hidden" name="fileType" id="queryFileType" value="" />
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<b><font style="font-size: 1.5em;"><spring:message code='custFile'/></font></b>
-						<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='add'/></span></a>
+						<b><font style="font-size: 1.5em;"><spring:message code='custFile'/>&nbsp;&nbsp;>&nbsp;&nbsp;<span id="custNameLabel"></span></font></b>
+						<a href="#" onclick="btnAddFileClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='add'/></span></a>
 						<span class="pull-right">&nbsp;</span>
 						<a href="#" onclick="btnDeleteClicked();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='delete'/></span></a>
 					</div>
@@ -145,13 +194,13 @@
 					</div>
 				</div>
 			</form>
-		</div>	
+		</div>
 	</div><!-- /.modal-content -->
   </div>
 </div>
 <!--/.燈箱 File -->
 
-<!--.燈箱 Upload -->         
+<!--.燈箱 Upload -->
 <div class="modal fade bs-example-modal-lg" id="modal_Upload" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -160,28 +209,28 @@
 			<h4 class="modal-title"><spring:message code="upload"/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
-      	<div class="modal-body">                    
+      	<div class="modal-body">
             <form role="form" id="formUpload" name="formUpload" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
             	<input type="hidden" name="fileType" id="editFileType" value="CUSTOMER" />
             	<input type="hidden" name="isAdd" id="isAdd" value="Y" />
             	<input type="hidden" name="onTopChkbox" id="onTopChkbox" value="N" />
             	<input type="hidden" name="custId" id="custId" value="" />
-            	
+
 		        <div class="box-body">
 		        	<div class="form-upload-group">
 						<label for="fullFileName"><spring:message code="fileName"/><span class="pull-right" style="color: red;">＊ </span> </label>
             			<input type="text" class="form-control" name="fullFileName" id="editFullFileName" readonly="true" />
             			<input type="file" name="uploadFile" id="uploadFile" />
-		            </div>                              
+		            </div>
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-upload-group">
 						<label for="phone"><spring:message code="fileDescription"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="fileDescription" id="editFileDescription" />
-		            </div>                              
+		            </div>
 		        </div>
-	            
+
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();"><spring:message code="upload"/></button>
@@ -194,10 +243,10 @@
 		      <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar"
 		        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
 		    </div>
-		
+
 		    <!-- Alert -->
 		    <div id="alertMsg" style="color: red;font-size: 18px;"></div>
-		</div>	
+		</div>
 	</div><!-- /.modal-content -->
   </div>
 </div>
@@ -220,10 +269,20 @@ function btnAddClicked() {
 	$('#phone').val('');
 	$('#email').val('');
 	$('#weChat').val('');
+
+	$('#identity1_id').val('0');
+	$('#identity1_code').val('');
+	$('#identity1_name').val('');
+	$('#identity2_id').val('0');
+	$('#identity2_code').val('');
+	$('#identity2_name').val('');
+
 	$('#city').val('');
+	$('#census').val('');
 	$('#address').val('');
+	$('#remark').val('');
 	$('#status').val('');
-	
+
 	$('#modal_Edit').modal();
 }
 
@@ -239,7 +298,7 @@ function btnEditClicked(btn) {
 			async: false,
 
 			success : function(resp) {
-				console.log(resp);				
+				console.log(resp);
 				if (resp.code == '200') {
 					formAction = 'update';
 					$('#cust_id').val(btn.attr('custId'));
@@ -249,11 +308,22 @@ function btnEditClicked(btn) {
 					$('#phone').val(resp.data.cust.phone);
 					$('#email').val(resp.data.cust.email);
 					$('#weChat').val(resp.data.cust.weChat);
+
+					$('#identity1_id').val(resp.data.cust.identity1_id);
+					$('#identity1_code').val(resp.data.cust.identity1_code);
+					$('#identity1_name').val(resp.data.cust.identity1_name);
+					$('#identity2_id').val(resp.data.cust.identity2_id);
+					$('#identity2_code').val(resp.data.cust.identity2_code);
+					$('#identity2_name').val(resp.data.cust.identity2_name);
+
+
 					$('#city').val(resp.data.cust.city);
+					$('#census').val(resp.data.cust.census);
 					$('#address').val(resp.data.cust.address);
-					$('#status').val(resp.data.cust.status);
+					$('#remark').val(resp.data.cust.remark);
+					$('#status').val(resp.data.cust.status.name);
 					$('#modal_Edit').modal();
-					//successMsgModal(resp.message);
+					successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -289,7 +359,7 @@ function btnSaveClicked() {
 		errorMsgModal(errMsg);
 		return false;
 	}
-	
+
 	$.ajax({
 		url : '${pageContext.request.contextPath}/channel/cust/' + formAction,
 		data : $('#formEdit').serialize(),
@@ -298,14 +368,14 @@ function btnSaveClicked() {
 		async: false,
 		success : function(resp) {
 			console.log(resp);
-			
+
 			if (resp.code == '200') {
 				successMsgModal(resp.message);
 				setTimeout(function(){
 					$('#modal_Edit').modal('hide');
 				}, 2000);
-				
-				
+
+
 				if (tblMain) {
 					tblMain.ajax.reload();
 				}
@@ -325,14 +395,17 @@ function btnSaveClicked() {
 function btnFileClicked(btn) {
 	$('#clickedCustId').val(btn.attr('custId'));
 	$('#custId').val(btn.attr('custId'));
-	
+	$('#custNameLabel').text(btn.attr('custName'));
+	$('#delChkAll').prop('checked', false);
+
 	custFileMain.ajax.reload();	//重查資料
 	$('#modal_File').modal();
-	
+
 }
 
 //[Init.]
 $(function() {
+	//bsStep(3);
 	tblMain = $('#tblMain').DataTable(
 	{
 		"bFilter" : false,
@@ -347,24 +420,31 @@ $(function() {
 		},
 		"columns" : [
 			{ "data" : "name" },
-			{ "data" : "gender" },
-			{ "data" : "birthday" },
 			{ "data" : "phone" },
 			{ "data" : "email" },
 			{ "data" : "weChat" },
-			{ "data" : "city" },
-			{ "data" : "address" },
-			{ "data" : "status.name" }
+			{ "data" : "status.name" },
+			{ "data" : "status.sort" }
 		],
-		"columnDefs" : [ 
+		"columnDefs" : [
 			{
-			"targets" : 2,
-			"render" : function(data, type, row) {
-				return (new Date(data)).Format("yyyy-MM-dd");
-				}
+				"targets" : [5],
+				"render" : function(data, type, row) {
+							var sort = row['status'].sort;
+							console.log(sort);
+							var html = '<ul class="nav nav-pills nav-justified step step-arrow">';
+							for(var i=0; i<10; i++){
+								if(i<sort)
+									html += '<li class="active"><a></a></li>';
+								else
+									html += '<li><a></a></li>';
+							}
+							html+='</ul>';
+							return html;
+						}
 			},
 			{
-				"targets" : 9,
+				"targets" : 6,
 				"data" : 'id',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
@@ -372,7 +452,7 @@ $(function() {
 							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>'
 							+'&nbsp;'
 							+'<a href="#">'
-							+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnFileClicked($(this));">'
+							+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));">'
 							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="file"/></span></a>';
 				}
 			}
@@ -385,7 +465,7 @@ $(function() {
 		yearRange: "-100:+0",
 		changeYear: true
 	});
-	
+
 	custFileMain = $('#custFileMain').DataTable(
 	{
 		"bFilter" : false,
@@ -424,16 +504,16 @@ $(function() {
 				"targets" : 7,
 				data:   "seqNo",
                 render: function ( data, type, row ) {
-                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';
+                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'">';
                 },
                 className: "dt-body-center"
 			}
 		],
 		select: true
 	});
-	
+
 	 $('#delChkAll').click(function () {
-		    $(':checkbox.delChkbox').prop('checked', this.checked);    
+		    $(':checkbox.delChkbox').prop('checked', this.checked);
 		});
 });
 
@@ -443,7 +523,7 @@ Number.prototype.format = function(n, x) {
 };
 
 //[Add] 進入modal_Edit編輯
-function btnAddClicked() {
+function btnAddFileClicked() {
 	formAction = 'upload';
 	$('#editSeqNo').val('');
 	$('#editFullFileName').val('');
@@ -458,7 +538,7 @@ function btnAddClicked() {
 //[Upload] modal_Upload >>按下Upload
 function btnUploadClicked() {
 	formAction = 'upload';
-	
+
 	var fileDesc = $('#editFileDescription').val();
 	var uploadFile = $('#uploadFile').val();
 	//頁面輸入檢核
@@ -480,11 +560,11 @@ function btnUploadClicked() {
 		errorMsgModal(errMsg);
 		return false;
 	}
-	
+
 	// Get form
     var form = $('#formUpload')[0];
     var data = new FormData(form);
- 
+
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
@@ -496,8 +576,8 @@ function btnUploadClicked() {
         xhr: function(){
 	        //Get XmlHttpRequest object
 	         var xhr = $.ajaxSettings.xhr() ;
-	        
-	        //Set onprogress event handler 
+
+	        //Set onprogress event handler
 	         xhr.upload.onprogress = function(event){
 	          	var perc = Math.round((event.loaded / event.total) * 100);
 	          	$('#progressBar').text(perc + '%');
@@ -511,16 +591,16 @@ function btnUploadClicked() {
     		$('#progressBar').text('');
     		$('#progressBar').css('width','0%');
 	    },
-	    
+
 	    success : function(resp) {
 			console.log(resp);
-			
+
 			if (resp.code == '200') {
 				successMsgModal(resp.message);
 				setTimeout(function(){
 					$('#modal_Upload').modal('hide');
 				}, 1000);
-				
+
 				if (custFileMain) {
 					custFileMain.ajax.reload();
 				}
@@ -538,7 +618,7 @@ function btnUploadClicked() {
 
 function btnDeleteClicked() {
 	formAction = "deleteAj";
-	
+
 	var seqNos = "";
 	var haveOneChecked = false;
 	$(':checkbox.delChkbox').each(function() {
@@ -548,27 +628,27 @@ function btnDeleteClicked() {
 	    	seqNos += ",";
 	    }
 	});
-	
-	alert(seqNos);
+
 	if (!haveOneChecked) {
 		alert("<spring:message code='error.noSelectFile'/>");
-		
+
 	} else {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
 			data : {
-				fileType: "CUSTOMER",
-				seqNo: seqNos
-			},
+					fileType: "CUSTOMER",
+					seqNos: seqNos
+				   },
 			type : "POST",
 			dataType : 'json',
 			async: false,
 			success : function(resp) {
 				console.log(resp);
-				
+
 				if (resp.code == '200') {
 					successMsgModal(resp.message);
-					
+
+					$('#delChkAll').prop('checked', false);
 					if (custFileMain) {
 						custFileMain.ajax.reload();
 					}
@@ -587,12 +667,32 @@ function btnDeleteClicked() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=channel/cust";
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=channel/cust/list";
   	window.location.href = downloadUrl;
-  	
-  	if (custFileMain) {
-		custFileMain.ajax.reload();
-	}
+
+  	setTimeout(function(){
+  		if (custFileMain) {
+  			custFileMain.ajax.reload();
+  		}
+  	}, 2000);
 }
 
+
+function bsStep(i) {
+	$('.step').each(function() {
+		var a, $this = $(this);
+		if(i > $this.find('li').length) {
+			console.log('您输入数值已超过步骤最大数量' + $this.find('li').length + '！！！');
+			a=$this.find('li').length;
+		} else if(i == undefined && $this.data('step') == undefined) {
+			a = 1
+		} else if(i == undefined && $this.data('step') != undefined) {
+			a = $(this).data('step');
+		} else {
+			a = i
+		}
+		$(this).find('li').removeClass('active');
+		$(this).find('li:lt(' + a + ')').addClass('active');
+	})
+}
 </script>

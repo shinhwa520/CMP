@@ -52,7 +52,6 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 //		SecurityUser securityUser = SecurityUtil.getSecurityUser();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		System.out.println("getCustByUserId [userId]:" + userId);
 		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
 		long total = custService.countCustByUserId(userId);
 		return new DatatableResponse(total, datalist, total);
@@ -139,13 +138,25 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="phone", required=false) String phone,
 			@RequestParam(name="email", required=false) String email,
 			@RequestParam(name="weChat", required=false) String weChat,
+
+			@RequestParam(name="identity1_id", required=true) Integer identity1_id,
+			@RequestParam(name="identity1_code", required=false) String identity1_code,
+			@RequestParam(name="identity1_name", required=false) String identity1_name,
+			@RequestParam(name="identity2_id", required=true) Integer identity2_id,
+			@RequestParam(name="identity2_code", required=false) String identity2_code,
+			@RequestParam(name="identity2_name", required=false) String identity2_name,
+
 			@RequestParam(name="city", required=false) String city,
+			@RequestParam(name="census", required=false) String census,
 			@RequestParam(name="address", required=false) String address,
-			HttpServletRequest request) {
+			@RequestParam(name="remark", required=false) String remark,
+            HttpServletRequest request) {
 		try {
 			RequestContext req = new RequestContext(request);
-			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address, null);
-			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
+			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat
+					, identity1_id, identity1_code, identity1_name, identity2_id, identity2_code, identity2_name
+					, city, census, address, remark, null);
+            return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

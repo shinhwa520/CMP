@@ -15,22 +15,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="user")
 public class User implements java.io.Serializable {
-	
-	public User() {
-	}
-	
-	public User(String email, Role role, Status status) {
-		super();
-		Date current = new Date();
-		this.id = String.valueOf(current.getTime());
-		this.email = email;
-		this.role = role;
-		this.status = status;
-		this.createBy = "REG";
-		this.createDateTime = current;
-		this.updateBy = "REG";
-		this.updateDateTime = current;
-	}
+	private static final long serialVersionUID = 1L;
 
 	@Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,9 +45,18 @@ public class User implements java.io.Serializable {
 	@Column(name = "email", nullable = true)
 	private String email;
     
+    @Column(name = "weChat", nullable = true)
+	private String weChat;
+	
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channel_id", nullable = true)
     private User channel;
+    
+    @Column(name = "reward", nullable = true)
+	private Integer reward;
+    
+    @Column(name = "remark", nullable = true)
+	private String remark;
     
     @Column(name = "create_by", nullable = true)
 	private String createBy;
@@ -94,10 +88,28 @@ public class User implements java.io.Serializable {
 	@Transient
 	private int _volume=0;		//實際成交量
 	
+	
+	public User() {
+	}
+	
+	public User(String email, Role role, Status status) {
+		super();
+		Date current = new Date();
+		this.id = String.valueOf(current.getTime());
+		this.email = email;
+		this.role = role;
+		this.status = status;
+		this.createBy = "REG";
+		this.createDateTime = current;
+		this.updateBy = "REG";
+		this.updateDateTime = current;
+	}
+
 
 
 	public User(String id, String name, String account, String password, Role role, Status status, String phone,
-			String email, User channel, String createBy, Date createDateTime, String updateBy, Date updateDateTime) {
+			String email, String weChat, User channel, Integer reward, String remark, String createBy,
+			Date createDateTime, String updateBy, Date updateDateTime) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -107,17 +119,14 @@ public class User implements java.io.Serializable {
 		this.status = status;
 		this.phone = phone;
 		this.email = email;
+		this.weChat = weChat;
 		this.channel = channel;
+		this.reward = reward;
+		this.remark = remark;
 		this.createBy = createBy;
 		this.createDateTime = createDateTime;
 		this.updateBy = updateBy;
 		this.updateDateTime = updateDateTime;
-	}
-
-	public User(String name, String password, String... roles) {
-		this.name = name;
-		this.password = password;
-		this.roles = roles;
 	}
 
 	public String getId() {
@@ -278,6 +287,30 @@ public class User implements java.io.Serializable {
 
 	public void set_volume(int _volume) {
 		this._volume = _volume;
+	}
+
+	public String getWeChat() {
+		return weChat;
+	}
+
+	public void setWeChat(String weChat) {
+		this.weChat = weChat;
+	}
+
+	public Integer getReward() {
+		return reward;
+	}
+
+	public void setReward(Integer reward) {
+		this.reward = reward;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 

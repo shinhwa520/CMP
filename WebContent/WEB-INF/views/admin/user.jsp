@@ -12,12 +12,9 @@
 			<thead>
 				<tr>
 					<th rowspan="2">Name</th>
-					<th rowspan="2">Account</th>
-					<th rowspan="2">Password</th>
-					<th rowspan="2">Phone</th>
-					<th rowspan="2">Email</th>
-					<th rowspan="2">Channel</th>
 					<th rowspan="2">Status</th>
+					<th rowspan="2">Channel</th>
+					<th rowspan="2">酬庸%</th>
 					<th colspan="2">仲介渠道商</th>
 					<th colspan="2">仲介客戶</th>
 					<th colspan="2">成交量</th>
@@ -57,6 +54,18 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
+						<label for="account">Account<span class="pull-right" style="color: red;">＊ </span></label>
+						<input type="text" class="form-control" name="account" id="account" readonly="true" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
+						<label for="password">Password<span class="pull-right" style="color: red;">＊ </span></label>
+						<input type="text" class="form-control" name="password" id="password" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
 						<label for="phone">Phone<span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="phone" id="phone" />
 		            </div>                              
@@ -69,15 +78,34 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
+						<label for="weChat">WeChat<span class="pull-right" style="color: red;">＊ </span></label>
+						<input type="text"  class="form-control" name="weChat" id="weChat" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
 						<label for="status">Status</label>
 						<select name="status" id="status" >
 							<option value="1">登錄帳號</option>
 							<option value="2">確認email</option>
 							<option value="3">維護個資</option>
 							<option value="4">提交提問</option>
-							<option value="5">同意條款</option>
-							<option value="6">取得URL</option>
+							<option value="5">輸入上游</option>
+							<option value="6">同意條款</option>
+							<option value="6">註冊完成</option>
 						</select>
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
+						<label for="user_name">Remark</label>
+						<input type="text" class="form-control" name="remark" id="remark" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
+						<label for="user_name">Reward</label>
+						<input type="text" class="form-control" name="reward" id="reward" readonly="true" />%
 		            </div>                              
 		        </div>
 		        <div class="box-body">
@@ -137,12 +165,9 @@ $(function() {
 			},
 			"columns" : [
 				{ "data" : "name" },
-				{ "data" : "account" },
-				{ "data" : "password" },
-				{ "data" : "phone" },
-				{ "data" : "email" },
-				{ "data" : "channel" },
 				{ "data" : "status.name" },
+				{ "data" : "channel" },
+				{ "data" : "reward" },
 				{ "data" : "agent_user" },
 				{ "data" : "_agent_user" },
 				{ "data" : "agent_cust" },
@@ -152,7 +177,7 @@ $(function() {
 			],
 			"columnDefs": [
 				{
-					"targets": [5],
+					"targets": [2],
 					"render": function (data, type, row) {
 						var html = '';
 						if (row["channel"] != null) {
@@ -163,13 +188,10 @@ $(function() {
 					}
 				},
 				{
-					"targets" : 13,
+					"targets" : 10,
 					"data" : 'id',
 					"render" : function(data, type, row) {
-						return '<a href="${pageContext.request.contextPath}/admin/user/cust?userId='+row['id']+'">' 
-								+ '<span class="label label-info" style="margin-right:10px" userId="' + row['id'] + '" ">' 
-								+ '<i class="fa fa-pencil" style="margin-right:5px"></i>view cust.</span></a>'
-								+'<a href="#">'
+						return '<a href="#">'
 								+'<span class="label label-warning" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
 								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
 					}
@@ -195,9 +217,14 @@ function btnEditClicked(btn) {
 				if (resp.code == '200') {
 					$('#user_id').val(btn.attr('userId'));
 					$('#user_name').val(resp.data.user.name);
+					$('#account').val(resp.data.user.account);
+					$('#password').val(resp.data.user.password);
 					$('#phone').val(resp.data.user.phone);
 					$('#email').val(resp.data.user.email);
+					$('#weChat').val(resp.data.user.weChat);
 					$('#status').val(resp.data.user.status.sort);
+					$('#remark').val(resp.data.user.remark);
+					$('#reward').val(resp.data.user.reward);
 					$('#agent_user').val(resp.data.user.agent_user);
 					$('#_agent_user').val(resp.data.user._agent_user);
 					$('#agent_cust').val(resp.data.user.agent_cust);
@@ -222,8 +249,10 @@ function btnEditClicked(btn) {
 //[Save] modal_Edit >>按下Save 儲存
 function btnSaveClicked() {
 	var user_name = $('#user_name').val();
+	var password = $('#password').val();
 	var phone = $('#phone').val();
 	var email = $('#email').val();
+	var weChat = $('#weChat').val();
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
@@ -232,6 +261,11 @@ function btnSaveClicked() {
 		isError = true;
 		$('#user_name').parents('.form-group').addClass('has-error');
 		errMsg += '！Name為必填<br/>';
+	}
+	if (''==password.trim()) {
+		isError = true;
+		$('#password').parents('.form-group').addClass('has-error');
+		errMsg += '！Password為必填<br/>';
 	}
 	if (''==phone.trim()) {
 		isError = true;
@@ -242,6 +276,11 @@ function btnSaveClicked() {
 		isError = true;
 		$('#email').parents('.form-group').addClass('has-error');
 		errMsg += '！Email為必填<br/>';
+	}
+	if (''==weChat.trim()) {
+		isError = true;
+		$('#weChat').parents('.form-group').addClass('has-error');
+		errMsg += '！WeChat為必填<br/>';
 	}
 
 	if(isError){

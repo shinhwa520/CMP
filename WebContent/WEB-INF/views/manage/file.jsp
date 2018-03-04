@@ -442,5 +442,11 @@ function btnSaveClicked() {
 function btnDownloadClicked(btn) {
 	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/file";
     window.location.href = downloadUrl;
+    
+    setTimeout(function(){
+  		if (tblMain) {
+  			tblMain.ajax.reload();
+  		}
+  	}, 2000);
 }
 </script>

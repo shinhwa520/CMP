@@ -49,7 +49,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
     public String email(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/email");
     	model.addAttribute("message", "");
         return "registration/email";
     }
@@ -60,11 +59,10 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
     public String emailConfirm(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/emailConfirm");
     	try {
     		String mailAddress = form.getMailAddress();
 			RequestContext req = new RequestContext(request);
-			model.addAttribute("message", req.getMessage("error.emailExist"));
+
     		//驗證email是否重複
     		if(!registrationService.checkEmailAvailable(mailAddress)){
     			model.addAttribute("message", req.getMessage("error.emailExist"));
@@ -74,7 +72,6 @@ public class RegistrationController extends BaseController {
     		StringBuffer sb = request.getRequestURL();
     		String appName = request.getContextPath();
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
-    		System.out.println("Confirm URL:"+url);
     		registrationService.initUser(mailAddress, url);
     		
     		model.addAttribute("message", req.getMessage("confirmEmail"));
@@ -90,7 +87,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/user" }, params = "tokenId", method = RequestMethod.GET)
     public String user(Model model, @RequestParam("tokenId") String tokenId, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/user");
     	try {
     		User user = registrationService.verifyToken(tokenId);
 			RequestContext req = new RequestContext(request);
@@ -111,9 +107,8 @@ public class RegistrationController extends BaseController {
 	 * user 輸入userInfo
 	 * return 問題頁面
 	 */
-	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.GET)//POST
+	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("registration/userInfo");
 		RequestContext req = new RequestContext(request);
 
     	try {
@@ -131,14 +126,13 @@ public class RegistrationController extends BaseController {
 //    			//user 輸入url
 //    			channelUrl = channelUrl.substring(index+1);
 //    		}
-//    		System.out.println("[channelUrl]:"+channelUrl);
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
 			    			,form.getName()
 			    			,form.getAccount()
 			    			,form.getPassword()
 			    			,form.getPhone()
-			    			,null)
+			    			,form.getWeChat())
 					);
 			RegistrationUserVO vo = registrationService.initQuestList();
 			form.setQuesMap(vo.getQuesMap());
@@ -158,7 +152,6 @@ public class RegistrationController extends BaseController {
     public String upstream(
     		@RequestParam(name="userId", required=true) String userId, 
     		@ModelAttribute("UserInfoForm") UserInfoForm form) {
-    	System.out.println("registration/upstream");
     	form.setUserId(userId);
         return "registration/upstream";
     }
@@ -169,7 +162,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)
     public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
-    	System.out.println("registration/upstream");
 		RequestContext req = new RequestContext(request);
 
     	try {
@@ -202,7 +194,6 @@ public class RegistrationController extends BaseController {
 			FileInputStream fis = new FileInputStream(templatePath);
 			XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
 			XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
-//			System.out.println(extractor.getText());
 			result = extractor.getText();
 			
 //			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
@@ -211,7 +202,6 @@ public class RegistrationController extends BaseController {
 //			while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行 
 //				result = result + "\n" + s;
 //			}
-//			System.out.println(result);
 //			br.close();
 			
 		} catch (Exception e) {
@@ -229,7 +219,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
     public @ResponseBody String agreeAgreement(@ModelAttribute("UserInfoForm") UserInfoForm form) {
-    	System.out.println("registration/agreeAgreement");
     	try {
 //    		registrationService.agreement(form.getUserId());
 		} catch (Exception e) {
@@ -248,21 +237,21 @@ public class RegistrationController extends BaseController {
     
     
     public void doWriteTextFile(String pathname, String content) {
-//    	File file = new File(pathname);
-//    	try (FileOutputStream fos = new FileOutputStream(file)) {
-//    		// if file doesn't exists, then create it
-//    		if (!file.exists()) {
-//    			file.createNewFile();
-//    		}
-//    		// get the content in bytes
-//    		byte[] contentInBytes = content.getBytes();
-//    		fos.write(contentInBytes);
-//    		fos.flush();
-//    		fos.close();
-//    	} catch (IOException e) {
-//    		e.printStackTrace();
-//    	} finally {
-//
-//		}
+    	File file = new File(pathname);
+    	try (FileOutputStream fos = new FileOutputStream(file)) {
+    		// if file doesn't exists, then create it
+    		if (!file.exists()) {
+    			file.createNewFile();
+    		}
+    		// get the content in bytes
+    		byte[] contentInBytes = content.getBytes();
+    		fos.write(contentInBytes);
+    		fos.flush();
+    		fos.close();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	} finally {
+    		
+		}
     }
 }
