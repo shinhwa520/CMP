@@ -53,7 +53,7 @@ public class User implements java.io.Serializable {
     private User channel;
     
     @Column(name = "reward", nullable = true)
-	private Integer reward;
+	private Integer reward=0;
     
     @Column(name = "remark", nullable = true)
 	private String remark;
