@@ -69,9 +69,15 @@
 	    } );
 	} );
 	
+	var tblLog;
+	
 	//$(document).ready(function() {
 	function doQuery() {
-	    $('#tblLog').DataTable( {
+		if (tblLog) {
+			$('#tblLog').DataTable().destroy();
+		}
+		
+		tblLog = $('#tblLog').DataTable( {
 	        columnDefs: [ {
 	            orderable: false,
 	            className: 'select-checkbox',
