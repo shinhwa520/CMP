@@ -166,6 +166,9 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
 				id = fileServiceVO.getCustId() != null ? fileServiceVO.getCustId().toString() : "ALL";
 				
+			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
+				id = fileServiceVO.getProductId() != null ? fileServiceVO.getProductId().toString() : "ALL";
+				
 			} else {
 				
 			}
@@ -378,6 +381,10 @@ public class FileServiceImpl implements FileService {
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				entity = "FilesCustomer";
+				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
+				
+			} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+				entity = "FilesProduct";
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 			}
 			

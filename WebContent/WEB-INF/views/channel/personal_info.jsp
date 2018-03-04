@@ -39,34 +39,14 @@
 				<form:input readonly="true" class="form-control" path="statusName" id="statusName" />
             </div>                              
         </div>
+        <!-- 
         <div class="box-body">
         	<div class="form-group">
 				<label for="channelUrl">Product</label>
 				<form:input readonly="true" class="form-control" path="channelUrl" id="channelUrl" />
             </div>                              
         </div>
-        <div class="box-body">
-        	<table style="width: 100%">
-        		<tr>
-        			<td style="width: 12%"><label>預計仲介渠道商</label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
-        			<td style="width: 12%"><label>實際仲介渠道商</label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
-        		</tr>
-        		<tr>
-        			<td style="width: 12%"><label>預計仲介客戶</label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
-        			<td style="width: 12%"><label>實際仲介客戶</label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
-        		</tr>
-        		<tr>
-        			<td style="width: 12%"><label>預計成交量</label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="volume" id="volume" style="width: 80%; text-align:right;"/></td>
-        			<td style="width: 12%"><label>實際成交量</label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
-        		</tr>
-        	</table>                             
-        </div>
+         -->
 
 		<div class="modal-footer">
        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>

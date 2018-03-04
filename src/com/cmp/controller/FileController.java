@@ -3,6 +3,8 @@ package com.cmp.controller;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,8 +32,14 @@ import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.form.FileForm;
 import com.cmp.model.FilesBaseConfig;
+import com.cmp.model.FilesProduct;
+import com.cmp.model.User;
+import com.cmp.security.SecurityUtil;
 import com.cmp.service.FileService;
+import com.cmp.service.ProductService;
+import com.cmp.service.UserService;
 import com.cmp.service.vo.FileServiceVO;
+import com.cmp.service.vo.ProductServiceVO;
 import com.cmp.utils.GetObject2Aliyun;
 import com.cmp.utils.PostObject2Aliyun;
 
@@ -39,11 +47,15 @@ import com.cmp.utils.PostObject2Aliyun;
 @RequestMapping("/manage/file")
 public class FileController extends BaseController {
 	private static Log log = LogFactory.getLog(FileController.class);
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ProductService productService;
 	
 	@Autowired
 	FileService fileService;
 	
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "" }, method = RequestMethod.GET)
     public String fileMain(Model model, @ModelAttribute("FileForm") FileForm form, HttpServletRequest request, HttpServletResponse response) {
 		setActiveMenu(model, MenuItem.MANAGE_FILE);
 		return "manage/file";
@@ -114,8 +126,7 @@ public class FileController extends BaseController {
 		try {
 			if (uploadFile != null && !uploadFile.isEmpty()) {
 				//获取保存的路径，
-				String realPath = request.getSession().getServletContext()
-						.getRealPath("/upload/temp");
+				String realPath = request.getSession().getServletContext().getRealPath("/upload/temp");
 				// 文件原名称
 				String originFileName = new String(uploadFile.getOriginalFilename().getBytes("iso-8859-1"), "utf-8");
 				// 文件大小
@@ -266,7 +277,7 @@ public class FileController extends BaseController {
 			}
 			
 			FileServiceVO retVO = fileService.modifyDownloadCount(fileType, seqNo);
-			
+			Map<String, String> downloadKeyMap = new HashMap<String, String>();
 			try {
 				if (retVO != null) {
 					String downloadFileName = "";
@@ -279,13 +290,99 @@ public class FileController extends BaseController {
 						downloadFileName = new String(retVO.getOriginFileName().getBytes("UTF-8"),"ISO-8859-1");
 						//Firefox / google Chrome正常，IE6檔名整個亂碼 (連副檔名都看不見)
 					}
+					downloadKeyMap.put(retVO.getUpperFileName(), downloadFileName);
 					
-					isOutputed = new GetObject2Aliyun().getObject(config, retVO.getUpperFileName(), downloadFileName, response);
+					isOutputed = new GetObject2Aliyun().getObject(
+							config, downloadKeyMap, response);
 				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("message", "檔案下載失敗");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		
+		return isOutputed ? null : "redirect:/"+fromPage;
+	}
+	
+	@RequestMapping(value="downloadProducts", method = RequestMethod.GET)
+	public String downloadProductFile(
+			@RequestParam(name="productId", required=true) Integer productId,
+			@RequestParam(name="fileType", required=true) String fileType,
+			@RequestParam(name="fromPage", required=true) String fromPage,
+			Model model, @ModelAttribute("FileForm") FileForm form, 
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		boolean isOutputed = false;
+		try {
+			FilesBaseConfig config = fileService.findFilesConfig(fileType);
+			
+			if (config == null) {
+				throw new Exception("[ERROR]未設定FilesBaseConfig >> configName: " + fileType);
+			}
+			
+			//查找產品檔案
+			ProductServiceVO psVO = new ProductServiceVO();
+			psVO.setProductId(productId);
+			ProductServiceVO retProduct = productService.findProductInfoByDAOVO(psVO);
+			
+			Map<String, String> fileMap = null;	//檔案清單
+			List<String> waterMarks = null;	//浮水印資料
+			if (retProduct != null 
+					&& (retProduct.getFilesProduct() != null && !retProduct.getFilesProduct().isEmpty())) {
+				
+				fileMap = new HashMap<String, String>();
+				
+				for (FilesProduct fp : retProduct.getFilesProduct()) {
+					FileServiceVO retVO = fileService.modifyDownloadCount(fileType, fp.getSeqNo());
+					
+					String downloadFileName = "";
+					//處理中文檔名問題
+					String userAgent = request.getHeader("User-Agent");
+					if((userAgent.contains("MSIE")) || (userAgent.contains("Trident")) || (userAgent.contains("Edge"))) {
+						downloadFileName = java.net.URLEncoder.encode(fp.getOriginFileName(),"UTF-8");
+						//IE6.11正常、FF的中文部分會出現%XX%XX的代碼
+					}else{
+						downloadFileName = new String(fp.getOriginFileName().getBytes("UTF-8"),"ISO-8859-1");
+						//Firefox / google Chrome正常，IE6檔名整個亂碼 (連副檔名都看不見)
+					}
+					fileMap.put(fp.getUpperFileName(), downloadFileName);
+				}
+				
+				if (fileMap != null && !fileMap.isEmpty()) {
+					//查找渠道商個人資料
+					String userId = SecurityUtil.getSecurityUser().getUser().getId();
+					User user = userService.findUserById(userId);
+					
+					if (user != null) {
+						waterMarks = new ArrayList<String>();
+						
+						if (StringUtils.isNotBlank(user.getName())) {	//Name
+							waterMarks.add(user.getName());
+						}
+						if (StringUtils.isNotBlank(user.getPhone())) {	//Phone
+							waterMarks.add(user.getPhone());
+						}
+						/* 
+						if (StringUtils.isNotBlank(user.getPhone())) {	//WeChat
+							waterMarks.add(user.getPhone());
+						}
+						*/
+						if (StringUtils.isNotBlank(user.getEmail())) {	//E-mail
+							waterMarks.add(user.getEmail());
+						}
+					}
+					
+					//获取保存的路径
+					String downloadTmpPath = request.getSession().getServletContext().getRealPath("/download/temp/"+userId+"/"+System.currentTimeMillis());
+					
+					isOutputed = new GetObject2Aliyun().getObjectWithWaterMark(
+							config, fileMap, waterMarks, downloadTmpPath, response);
+				}
 			}
 			
 		} catch (Exception e) {
