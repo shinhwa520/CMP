@@ -160,6 +160,7 @@ public class RegistrationController extends BaseController {
     	try {
             RequestContext req = new RequestContext(request);
     		if(StringUtils.isBlank(form.getChannelAccount())){
+    			registrationService.upstream(form.getUserId(), form.getChannelAccount());
     			model.addAttribute("message", req.getMessage("error.noFillParentChannel"));
     		}else{
         		if(registrationService.upstream(form.getUserId(), form.getChannelAccount()))
