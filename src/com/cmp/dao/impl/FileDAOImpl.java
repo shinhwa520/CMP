@@ -13,6 +13,7 @@ import com.cmp.dao.vo.FileDAOVO;
 import com.cmp.model.FilesBaseConfig;
 import com.cmp.model.FilesCustomer;
 import com.cmp.model.FilesPermission;
+import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
 import com.cmp.model.FilesSetting;
 
@@ -114,6 +115,42 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    
 		return (List<Object>) q.list();
 	}
+	
+	@Override
+	public List<FilesProduct> findProductFileByDAOVO(FileDAOVO fileDAOVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select fp from FilesProduct fp ")
+		  .append(" where 1=1 ");
+	
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fp.seqNo = :seqNo ");
+		}
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
+			sb.append(" and fp.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getCustId() != null) {
+			sb.append(" and fp.productId = :productId ");
+		}
+		
+		sb.append(" and (fp.filesSetting.activationBegin is null or fp.filesSetting.activationBegin <= sysdate()) ")
+		  .append(" and (fp.filesSetting.activationEnd is null or fp.filesSetting.activationEnd >= sysdate()) ")
+		  .append(" order by fp.seqNo desc ");
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getCustId() != null) {
+	    	q.setParameter("productId", fileDAOVO.getProductId());
+		}
+	    
+		return (List<FilesProduct>) q.list();
+	}
 
 	@Override
 	public Integer addFile(Object entity, FilesSetting fSetting, List<FilesPermission> fPermissions) {
@@ -198,5 +235,4 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		Integer ret = q.executeUpdate();
 		return ret;
 	}
-
 }

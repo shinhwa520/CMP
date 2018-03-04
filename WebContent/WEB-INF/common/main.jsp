@@ -22,6 +22,9 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/buttons.dataTables.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/editor.dataTables.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/select.dataTables.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/jquery.jscrollpane.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/style.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.css">
 	
 	
 	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -30,9 +33,15 @@
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.1.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
+	<!-- <script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.mousewheel.js"></script>  -->
+	<!-- <script src="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.alpha.js"></script>  -->
+	
 	<style type="text/css">
 		.box-shadow-menu{
 			padding-top: 11px;
@@ -244,7 +253,7 @@
 					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span>個人資訊</span></a>
 				</li>
 				<li class="<c:if test="${active eq 'PRODUCT_INFO'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/productInfo/info"> <span>產品資訊</span></a>
+					<a href="${pageContext.request.contextPath}/channel/productInfo/list"> <span>產品資訊</span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/user/list"> <span>我的渠道商</span></a>

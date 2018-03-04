@@ -52,12 +52,14 @@
 				<form:input readonly="true" class="form-control" path="statusName" id="statusName" />
             </div>                              
         </div>
+        <!-- 
         <div class="box-body">
         	<div class="form-group">
 				<label for="channelUrl">Product</label>
 				<form:input readonly="true" class="form-control" path="channelUrl" id="channelUrl" />
             </div>                              
         </div>
+         -->
         <div class="box-body">
         	<table style="width: 100%">
         		<tr>

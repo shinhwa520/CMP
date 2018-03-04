@@ -14,10 +14,10 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-	name = "files_customer",
+	name = "files_product",
 	uniqueConstraints = {@UniqueConstraint(columnNames = {"seq_no"})}
 )
-public class FilesCustomer {
+public class FilesProduct {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,16 +61,16 @@ public class FilesCustomer {
     @JoinColumn(name = "setting_id")
 	private FilesSetting filesSetting;
     
-    @Column(name = "cust_id", nullable = false)
-    private Integer custId;
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
 
-	public FilesCustomer() {
+	public FilesProduct() {
 		super();
 	}
 
-	public FilesCustomer(Integer seqNo, String upperFileName, String originFileName, String fileName,
+	public FilesProduct(Integer seqNo, String upperFileName, String originFileName, String fileName,
 			String fileExtension, String fileDescription, Integer fileSize, Integer downloadTimes, Timestamp createTime,
-			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting, Integer custId) {
+			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting, Integer productId) {
 		super();
 		this.seqNo = seqNo;
 		this.upperFileName = upperFileName;
@@ -85,7 +85,7 @@ public class FilesCustomer {
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
 		this.filesSetting = filesSetting;
-		this.custId = custId;
+		this.productId = productId;
 	}
 
 	public Integer getSeqNo() {
@@ -192,11 +192,11 @@ public class FilesCustomer {
 		this.filesSetting = filesSetting;
 	}
 
-	public Integer getCustId() {
-		return custId;
+	public Integer getProductId() {
+		return productId;
 	}
 
-	public void setCustId(Integer custId) {
-		this.custId = custId;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 }
