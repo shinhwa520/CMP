@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.model.Customer;
+import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.FileService;
@@ -48,10 +50,19 @@ public class ChannelCustController extends BaseController {
 	public @ResponseBody DatatableResponse getCustByUserId(
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-//		SecurityUser securityUser = SecurityUtil.getSecurityUser();
-		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		List<Customer> datalist = custService.findCustByUserId(userId, start, length);
-		long total = custService.countCustByUserId(userId);
+		User user = SecurityUtil.getSecurityUser().getUser();
+		List<Customer> datalist;
+		long total;
+		String roleName = "MA";
+		if(StringUtils.equals(roleName, user.getRole().getName())){
+			datalist = custService.findCust4MA(roleName, start, length);
+			total = custService.countCust4MA(roleName);
+		}else{
+			String userId = SecurityUtil.getSecurityUser().getUser().getId();
+			datalist = custService.findCustByUserId(userId, start, length);
+			total = custService.countCustByUserId(userId);
+		}
+
 		return new DatatableResponse(total, datalist, total);
 	}
 	
