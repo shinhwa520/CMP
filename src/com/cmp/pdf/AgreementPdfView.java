@@ -1,5 +1,7 @@
 package com.cmp.pdf;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Map;
@@ -30,7 +32,7 @@ public class AgreementPdfView extends AbstractView {
     	AgreementPdfTemplate template = (AgreementPdfTemplate) model.get("agreementPdf");
     	response.setContentType("application/pdf");
 //    	response.setHeader("Content-Disposition", "attachment; filename=myReport.pdf");
-    	response.setHeader("Content-Disposition", "inline; filename=myReport.pdf");
+    	response.setHeader("Content-Disposition", "inline; filename=APS_Partners_Agreement.pdf");
     	
 //        HttpHeaders headers = new HttpHeaders();
 //    	headers.setContentType(MediaType.parseMediaType("application/pdf"));
@@ -40,14 +42,15 @@ public class AgreementPdfView extends AbstractView {
 //
 //        headers.setContentDispositionFormData(filename, filename);
 //        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-    	
-    	
+		String rootPath = request.getSession().getServletContext().getRealPath("");
+		String templatePath = rootPath + "/template/APS_Partners_Agreement.pdf";
+    	File file = new File(templatePath);
     	
     	
         
 
         //IText API
-        PdfWriter pdfWriter = new PdfWriter(response.getOutputStream());
+        PdfWriter pdfWriter = new PdfWriter(new File(templatePath));
         PdfDocument pdf = new PdfDocument(pdfWriter);
         Document pdfDocument = new Document(pdf);
 

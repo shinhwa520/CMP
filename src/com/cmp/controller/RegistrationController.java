@@ -5,21 +5,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -152,7 +148,7 @@ public class RegistrationController extends BaseController {
 	 * user 輸入上游 user.account
 	 * return 合同頁
 	 */
-	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)//POST
     public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form) {
     	try {
     		if(StringUtils.isBlank(form.getChannelAccount())){
@@ -172,37 +168,45 @@ public class RegistrationController extends BaseController {
 	/**
 	 * return agreementPdfView
 	 */
-	@GetMapping("/agreementPdf")
-    public String agreementPdf(Model model, HttpServletRequest request, HttpServletResponse response) {
-		String rootPath = request.getSession().getServletContext().getRealPath("");
-		String templatePath = rootPath + "/template/APS_Partners_Agreement.docx";
-		String tmpPathName  = rootPath + "/template/tmp/" + sdfDateTime.format(new Date()) + "_Agreement.txt";
-//		File file = new File(templatePath);
-		
-		String result = "";
-		try {
-			FileInputStream fis = new FileInputStream(templatePath);
-			XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
-			XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
-			result = extractor.getText();
-			
-//			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
-//			//BufferedReader br = new BufferedReader(new FileReader(file));// 构造一个BufferedReader类来读取文件 
-//			String s = null;
-//			while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行 
-//				result = result + "\n" + s;
-//			}
-//			br.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		doWriteTextFile(tmpPathName, result);
-		model.addAttribute("agreementPdf", getAgreementPdf(result));
-		return "agreementPdfView";
-//		return null;
+//	@RequestMapping(value="/agreementPdf", method=RequestMethod.GET)
+//    public ResponseEntity <byte[]> agreementPdf(Model model, HttpServletRequest request, HttpServletResponse response) {
+//		String rootPath = request.getSession().getServletContext().getRealPath("");
+//		String templatePath = rootPath + "/template/APS_Partners_Agreement.pdf";
+//    	
+//    	
+//    	
+//    	HttpHeaders headers = new HttpHeaders();
+//
+//    	headers.setContentType(MediaType.parseMediaType("application/pdf"));
+//    	String filename = "APS_Partners_Agreement.pdf";
+//
+//    	headers.add("content-disposition", "inline;filename=" + filename);
+//
+////    	headers.setContentDispositionFormData(filename, filename);
+//    	headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+//    	ResponseEntity<byte[]> res = new ResponseEntity<byte[]>(convertPDFToByteArray(templatePath), headers, HttpStatus.OK);
+//    	return res;
+//    }
+    @RequestMapping(value = "/agreementPdf", method = RequestMethod.GET)
+    protected String agreementPdf(      
+        HttpServletRequest request,
+            HttpSession httpSession,
+        HttpServletResponse response) {
+        try {
+        	
+    		String rootPath = request.getSession().getServletContext().getRealPath("");
+    		String templatePath = rootPath + "/template/APS_Partners_Agreement.pdf";
+            byte[] documentInBytes = convertPDFToByteArray(templatePath);         
+            response.setHeader("Content-Disposition", "inline; filename=\"report.pdf\"");
+            response.setDateHeader("Expires", -1);
+            response.setContentType("application/pdf");
+            response.setContentLength(documentInBytes.length);
+            response.getOutputStream().write(documentInBytes);
+        } catch (Exception ioe) {
+        } finally {
+        }
+        return null;
     }
-	
 	/**
 	 * user 簽署合同
 	 * return jsonResponse
@@ -244,4 +248,36 @@ public class RegistrationController extends BaseController {
     		
 		}
     }
+    
+    private static byte[] convertPDFToByteArray(String filePath) {
+
+    	FileInputStream fileInputStream = null;
+    	byte[] bytesArray = null;
+
+    	try {
+
+    		File file = new File(filePath);
+    		bytesArray = new byte[(int) file.length()];
+
+    		//read file into bytes[]
+    		fileInputStream = new FileInputStream(file);
+    		fileInputStream.read(bytesArray);
+
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	} finally {
+    		if (fileInputStream != null) {
+    			try {
+    				fileInputStream.close();
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    		}
+
+    	}
+
+    	return bytesArray;
+
+    }
+
 }
