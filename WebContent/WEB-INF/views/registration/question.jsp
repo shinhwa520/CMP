@@ -27,7 +27,7 @@
 			</c:forEach>
 		</c:if>
 		</table>
-		<div><input class="btn btn-lg btn-success btn-block" type="button" name="submitBtn" value="提交答案  完成註冊" onclick="doSubmit()"/></div>
+		<div><input class="btn btn-lg btn-success btn-block" type="button" name="submitBtn" value="<spring:message code='finished'/>" onclick="doSubmit()"/></div>
 		
 	</form:form>
 </section>
@@ -56,11 +56,11 @@
 		console.log("results :" + results);
 		console.log("resultCount :" + resultCount);
 		if(results != $('#ans').val()){
-			errorMessage("有答錯的題目，請再次確認後提交!");
+			errorMessage("<spring:message code='notAllCorrect'/>");
 			return false;
 		}
 		if(''==results || resultCount<itemCount){
-			errorMessage("下列問題皆為必選，請再次確認後提交!");
+			errorMessage("<spring:message code='error.mustAllCheck'/>");
 			return false;
 		}
 		

@@ -29,6 +29,7 @@ import com.cmp.model.User;
 import com.cmp.pdf.AgreementPdfTemplate;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/registration")
@@ -55,9 +56,11 @@ public class RegistrationController extends BaseController {
     public String emailConfirm(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
     	try {
     		String mailAddress = form.getMailAddress();
+			RequestContext req = new RequestContext(request);
+
     		//驗證email是否重複
     		if(!registrationService.checkEmailAvailable(mailAddress)){
-    			model.addAttribute("message", "Email已被使用，請重新輸入");
+    			model.addAttribute("message", req.getMessage("error.emailExist"));
     			return "registration/email";
     		}
     		
@@ -66,7 +69,7 @@ public class RegistrationController extends BaseController {
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
     		registrationService.initUser(mailAddress, url);
     		
-    		model.addAttribute("message", "please confirm email!");
+    		model.addAttribute("message", req.getMessage("confirmEmail"));
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
@@ -81,8 +84,10 @@ public class RegistrationController extends BaseController {
     public String user(Model model, @RequestParam("tokenId") String tokenId, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	try {
     		User user = registrationService.verifyToken(tokenId);
+			RequestContext req = new RequestContext(request);
+
     		if(null==user){
-    			model.addAttribute("message", "verifyToken error");
+    			model.addAttribute("message", req.getMessage("error.verifyFail"));
     			return "registration/error";
     		}
     		model.addAttribute("message", "");
@@ -99,9 +104,11 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+		RequestContext req = new RequestContext(request);
+
     	try {
     		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
-    			model.addAttribute("message", "Account已被使用，請重新輸入");
+    			model.addAttribute("message", req.getMessage("error.accountExist"));
     			return "registration/user";
     		}
     		
@@ -149,15 +156,16 @@ public class RegistrationController extends BaseController {
 	 * return 合同頁
 	 */
 	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)//POST
-    public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form) {
+    public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
     	try {
+            RequestContext req = new RequestContext(request);
     		if(StringUtils.isBlank(form.getChannelAccount())){
-    			model.addAttribute("message", "您未輸入上游帳號，系統預設主渠道商為您的上游");
+    			model.addAttribute("message", req.getMessage("error.noFillParentChannel"));
     		}else{
         		if(registrationService.upstream(form.getUserId(), form.getChannelAccount()))
         			model.addAttribute("message", "");
         		else
-        			model.addAttribute("message", "您輸入的帳號查無資料，系統預設主渠道商為您的上游");
+        			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,9 +180,9 @@ public class RegistrationController extends BaseController {
 //    public ResponseEntity <byte[]> agreementPdf(Model model, HttpServletRequest request, HttpServletResponse response) {
 //		String rootPath = request.getSession().getServletContext().getRealPath("");
 //		String templatePath = rootPath + "/template/APS_Partners_Agreement.pdf";
-//    	
-//    	
-//    	
+//
+//
+//
 //    	HttpHeaders headers = new HttpHeaders();
 //
 //    	headers.setContentType(MediaType.parseMediaType("application/pdf"));
@@ -188,15 +196,15 @@ public class RegistrationController extends BaseController {
 //    	return res;
 //    }
     @RequestMapping(value = "/agreementPdf", method = RequestMethod.GET)
-    protected String agreementPdf(      
+    protected String agreementPdf(
         HttpServletRequest request,
             HttpSession httpSession,
         HttpServletResponse response) {
         try {
-        	
+
     		String rootPath = request.getSession().getServletContext().getRealPath("");
     		String templatePath = rootPath + "/template/APS_Partners_Agreement.pdf";
-            byte[] documentInBytes = convertPDFToByteArray(templatePath);         
+            byte[] documentInBytes = convertPDFToByteArray(templatePath);
             response.setHeader("Content-Disposition", "inline; filename=\"report.pdf\"");
             response.setDateHeader("Expires", -1);
             response.setContentType("application/pdf");
@@ -248,7 +256,7 @@ public class RegistrationController extends BaseController {
     		
 		}
     }
-    
+
     private static byte[] convertPDFToByteArray(String filePath) {
 
     	FileInputStream fileInputStream = null;

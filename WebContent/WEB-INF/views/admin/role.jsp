@@ -1,18 +1,19 @@
+<%@ include file="../../common/taglib.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <section class="content">
 <div class="box-body"></div>
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Role info.</h3>
+		<h3 class="box-title"><spring:message code="roleInfo"/></h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog">
 			<thead>
 				<tr>
 					<th>＃</th>
-					<th>name</th>
-					<th>desc.</th>
+					<th><spring:message code="roleName"/></th>
+					<th><spring:message code="roleDescription"/></th>
 				</tr>
 			</thead>
 		</table>

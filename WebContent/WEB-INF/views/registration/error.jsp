@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>error page</title>
+<title><spring:message code="errorPage"/></title>
 
 
 </head>

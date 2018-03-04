@@ -1,20 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="../../common/taglib.jsp" %>
 <section class="content">
 <div class="box-body"></div>
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title"><a href="${pageContext.request.contextPath}/admin/user/list">User</a>/客戶</h3>
+		<h3 class="box-title"><a href="${pageContext.request.contextPath}/admin/user/list"><spring:message code="user"/></a>/<spring:message code="customer"/></h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog">
 			<thead>
 				<tr>
 					<th style="width: 10%">＃</th>
-					<th style="width: 22%">name</th>
-					<th style="width: 22%">city</th>
-					<th style="width: 22%">phone</th>
-					<th style="width: 22%">user</th>
+					<th style="width: 22%"><spring:message code="name"/></th>
+					<th style="width: 22%"><spring:message code="city"/></th>
+					<th style="width: 22%"><spring:message code="phoneNo"/></th>
+					<th style="width: 22%"><spring:message code="user"/></th>
 				</tr>
 			</thead>
 		</table>

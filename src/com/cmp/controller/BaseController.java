@@ -2,15 +2,13 @@ package com.cmp.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,8 +19,15 @@ import com.cmp.MenuItem;
 import com.cmp.Response;
 import com.cmp.security.SecurityUser;
 import com.cmp.security.SecurityUtil;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -197,4 +202,18 @@ public class BaseController {
     public static int getLineNumber() {
         return Thread.currentThread().getStackTrace()[2].getLineNumber();
     }
+
+	//基于Cookie的国际化处理
+	protected void changeLang(HttpServletRequest request, HttpServletResponse response, Model model, String langType) {
+		if (!model.containsAttribute("contentModel")) {
+			if (langType.contains("zh")) {
+				Locale locale = new Locale("zh", "CN");
+				(new CookieLocaleResolver()).setLocale(request, response, locale);
+			} else if (langType.equals("en_US")) {
+				Locale locale = new Locale("en", "US");
+				(new CookieLocaleResolver()).setLocale(request, response, locale);
+			} else
+				(new CookieLocaleResolver()).setLocale(request, response, LocaleContextHolder.getLocale());
+		}
+	}
 }

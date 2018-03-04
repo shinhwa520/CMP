@@ -6,12 +6,19 @@
 	<div class="topic">please fill in your personal info. and press confirm :</div>
 	<form:form method="POST" modelAttribute="UserInfoForm" onsubmit="return validateInput();" action="${pageContext.request.contextPath}/registration/userInfo">
 		<form:hidden path="userId" id="userId" />
-		<form:input class="form-control" path="name" id="name" placeholder="name"/>
-		<form:input class="form-control" path="account" id="account" placeholder="Account"/>
-		<form:input class="form-control" path="password" id="password" placeholder="Password"/>
-		<form:input class="form-control" path="phone" id="phone" placeholder="Phone"/>
-		<form:input class="form-control" path="weChat" id="weChat" placeholder="WeChat"/>
-		<input class="btn btn-lg btn-success btn-block" value="Confirm" type="submit">
+
+        <spring:message code='name' var="name"/>
+        <spring:message code='account' var="account"/>
+        <spring:message code='password' var="password"/>
+        <spring:message code='phoneNo' var="phoneNo"/>
+        <spring:message code='wechatID' var="wechatID"/>
+
+		<form:input class="form-control" path="name" id="name" placeholder="${name}"/>
+		<form:input class="form-control" path="account" id="account" placeholder="${account}"/>
+		<form:input class="form-control" path="password" id="password" placeholder="${password}"/>
+		<form:input class="form-control" path="phone" id="phone" placeholder="${phoneNo}"/>
+		<form:input class="form-control" path="weChat" id="weChat" placeholder="${wechatID}"/>
+		<input class="btn btn-lg btn-success btn-block" value="<spring:message code='confirm'/>" type="submit">
 	</form:form>
 </section>
 <script>
@@ -24,23 +31,23 @@
 	function validateInput() {
 	  	var validateString = $('#name').val();
 	  	if(validateString.trim()==''){
-	  		errorMessage('請輸入name');
+	  		errorMessage('<spring:message code="error.noFillName"/>');
 	  		//alert('請輸入name');
 		  	return false;
 		}
 	  	validateString = $('#account').val();
 	  	if(validateString.trim()==''){
-	  		errorMessage('請輸入account');
+	  		errorMessage('<spring:message code="error.noFillAccount"/>');
 		  	return false;
 		}
 	  	validateString = $('#password').val();
 	  	if(validateString.trim()==''){
-	  		errorMessage('請輸入password');
+	  		errorMessage('<spring:message code="error.noFillPassword"/>');
 		  	return false;
 		}
 	  	validateString = $('#weChat').val();
 	  	if(validateString.trim()==''){
-	  		errorMessage('請輸入weChat');
+	  		errorMessage('<spring:message code="error.noFillWechat"/>');
 		  	return false;
 		}
 	}

@@ -2,6 +2,7 @@ package com.cmp.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -22,6 +23,7 @@ import com.cmp.model.Customer;
 import com.cmp.security.SecurityUser;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/admin/cust")
@@ -54,8 +56,8 @@ public class AdminCustController extends BaseController {
 	}
 
 	/**
-	 * Search Cust資料 
-	 * 
+	 * Search Cust資料
+	 *
 	 * @param start
 	 * @param length
 	 * @return DatatableResponse
@@ -70,7 +72,7 @@ public class AdminCustController extends BaseController {
 		long total = custService.countCust4Search(keyword);
 		return new DatatableResponse(total, datalist, total);
 	}
-	
+
 	/**
 	 * 取得Customer資料 by custId
 	 * @return AppResponse
@@ -99,24 +101,26 @@ public class AdminCustController extends BaseController {
 			@RequestParam(name="phone", required=false) String phone,
 			@RequestParam(name="email", required=false) String email,
 			@RequestParam(name="weChat", required=false) String weChat,
-			
+
 			@RequestParam(name="identity1_id", required=false) Integer identity1_id,
 			@RequestParam(name="identity1_code", required=false) String identity1_code,
 			@RequestParam(name="identity1_name", required=false) String identity1_name,
 			@RequestParam(name="identity2_id", required=false) Integer identity2_id,
 			@RequestParam(name="identity2_code", required=false) String identity2_code,
 			@RequestParam(name="identity2_name", required=false) String identity2_name,
-			
+
 			@RequestParam(name="city", required=false) String city,
 			@RequestParam(name="census", required=false) String census,
 			@RequestParam(name="address", required=false) String address,
 			@RequestParam(name="remark", required=false) String remark,
 			@RequestParam(name="status", required=true) String status) {
+			HttpServletRequest request) {
 		try {
 			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat
 					, identity1_id, identity1_code, identity1_name, identity2_id, identity2_code, identity2_name
 					, city, census, address, remark, status);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+			RequestContext req = new RequestContext(request);
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

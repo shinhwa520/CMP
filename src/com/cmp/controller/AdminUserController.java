@@ -3,6 +3,7 @@ package com.cmp.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -23,6 +24,7 @@ import com.cmp.model.Customer;
 import com.cmp.model.User;
 import com.cmp.service.CustService;
 import com.cmp.service.UserService;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/admin/user")
@@ -92,10 +94,11 @@ public class AdminUserController extends BaseController {
 	 * @return AppResponse
 	 */
 	@RequestMapping(value="getUserById/{userId}", method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody AppResponse getUserById(@PathVariable String userId) {
+	public @ResponseBody AppResponse getUserById(@PathVariable String userId, HttpServletRequest request) {
 		try {
+			RequestContext req = new RequestContext(request);
 			User user = userService.findUserAndKpiById(userId, sdfYearMonth.format(new Date()));
-			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得渠道商資料成功");
+			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.gotChannelData"));//"取得渠道商資料成功"
 			appResponse.putData("user",  user);
 			return appResponse;
 		} catch (Exception e) {
@@ -115,11 +118,12 @@ public class AdminUserController extends BaseController {
 			@RequestParam(name="email", required=true) String email,
 			@RequestParam(name="weChat", required=true) String weChat,
 			@RequestParam(name="status", required=true) String status,
-			@RequestParam(name="remark", required=false) String remark
-			) {
+			@RequestParam(name="remark", required=false) String remark,
+			HttpServletRequest request) {
 		try {
+            RequestContext req = new RequestContext(request);
 			userService.update(userId, userName, password, phone, email, weChat, status, remark);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//"更新成功"
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

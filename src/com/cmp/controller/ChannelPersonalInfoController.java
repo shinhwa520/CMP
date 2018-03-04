@@ -2,6 +2,7 @@ package com.cmp.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -25,6 +26,7 @@ import com.cmp.model.User;
 import com.cmp.model.WebApiDetail;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.UserService;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/personalInfo")
@@ -84,13 +86,14 @@ public class ChannelPersonalInfoController extends BaseController {
 	
 	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
-	public AppResponse updateUserPersonalInfo(@ModelAttribute("UserInfoForm")UserInfoForm form, Model model) {
+	public AppResponse updateUserPersonalInfo(@ModelAttribute("UserInfoForm")UserInfoForm form, Model model, HttpServletRequest request) {
 		try {
+			RequestContext req = new RequestContext(request);
 			String userId = SecurityUtil.getSecurityUser().getUser().getId();
 			User user = userService.findUserById(userId);
 			BeanUtils.copyProperties(form, user, "id", "status");
 			userService.saveUserInfo(user);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);
