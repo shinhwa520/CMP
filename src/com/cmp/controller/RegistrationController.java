@@ -45,7 +45,6 @@ public class RegistrationController extends BaseController {
 	 */
 	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
     public String email(Model model, @ModelAttribute("EmailConfirmForm") EmailConfirmForm form, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("/email Locale"+LocaleContextHolder.getLocale());
 		model.addAttribute("message", "");
         return "registration/email";
     }
