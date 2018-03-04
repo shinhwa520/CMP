@@ -3,6 +3,7 @@ package com.cmp.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -24,6 +25,7 @@ import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/cust")
@@ -138,10 +140,12 @@ public class ChannelCustController extends BaseController {
 			@RequestParam(name="email", required=false) String email,
 			@RequestParam(name="weChat", required=false) String weChat,
 			@RequestParam(name="city", required=false) String city,
-			@RequestParam(name="address", required=false) String address) {
+			@RequestParam(name="address", required=false) String address,
+			HttpServletRequest request) {
 		try {
+			RequestContext req = new RequestContext(request);
 			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address, null);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

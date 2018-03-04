@@ -1,21 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ include file="../../common/taglib.jsp" %>
 <section class="content">
 <div class="box-body"></div>
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Cust info.2</h3>
+		<h3 class="box-title"><spring:message code="custInfo2"/></h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblLog" style="width: 100%">
 			<thead>
 				<tr>
 					<th>＃</th>
-					<th>name</th>
-					<th>city</th>
-					<th>phone</th>
-					<th>user</th>
+					<th><spring:message code="name"/></th>
+					<th><spring:message code="city"/></th>
+					<th><spring:message code="phoneNo"/></th>
+					<th><spring:message code="user"/></th>
 				</tr>
 			</thead>
 		</table>

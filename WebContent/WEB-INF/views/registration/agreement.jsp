@@ -3,14 +3,13 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-	<div class="topic">同意合作夥伴委任協議 :</div>
+	<div class="topic"><spring:message code="agreementTitle"/></div>
 	<form:form method="POST" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/agreeAgreement">
 		<form:hidden path="userId" id="userId" />
-		<input class="btn btn-lg btn-info btn-block" type=button value="合作夥伴委任協議" onclick="agreementPdf();" >
-		是否同意
-		同意合作夥伴委任協議?
-		<input class="btn btn-lg btn-success btn-block" type="button" value="同意" onclick="agreeAgreement();" >
-		<input class="btn btn-lg btn-danger btn-block" type="button" value="不同意" >
+		<input class="btn btn-lg btn-info btn-block" type=button value="<spring:message code='partnerContract'/>" onclick="agreementPdf();" >
+		<spring:message code="agreeContract"/>
+		<input class="btn btn-lg btn-success btn-block" type="button" value="<spring:message code='agree'/>" onclick="agreeAgreement();" >
+		<input class="btn btn-lg btn-danger btn-block" type="button" value="<spring:message code='disagree'/>" >
 	</form:form>
 </section>
 <script>

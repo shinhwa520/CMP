@@ -15,7 +15,7 @@
 		});
 		
 		if (!haveOneChecked) {
-			alert("請至少選擇一項要刪除的檔案!");
+			alert('<spring:message code="error.noSelectFile"/>');
 			
 		} else {
 			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
@@ -33,24 +33,24 @@
 	<input type="hidden" name="fileType" id="queryFileType" value="" />
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<b><font style="font-size: 1.5em;">共享資源</font></b>
-			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+			<b><font style="font-size: 1.5em;"><spring:message code="shareResource"/></font></b>
+			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
 			<span class="pull-right">&nbsp;</span>
-			<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
+			<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="delete"/></span></a>
 		</div>
 		<div class="box-body no-padding">
 			<table class="table table-striped" id="tblMain">
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>檔案名稱</th>
-						<th>檔案大小</th>
-						<th>下載次數</th>
-						<th>檔案描述</th>
-						<th>更新時間</th>
-						<th style="width: 100px;">Option</th>
-						<th style="width: 100px;">編輯</th>
-						<th style="width: 100px;"><input type="checkbox" id="delChkAll" /> 全選</th>
+						<th><spring:message code="fileName"/></th>
+						<th><spring:message code="fileSize"/></th>
+						<th><spring:message code="downloadTimes"/></th>
+						<th><spring:message code="fileDescription"/></th>
+						<th><spring:message code="updatedTime"/></th>
+						<th style="width: 100px;"><spring:message code="option"/></th>
+						<th style="width: 100px;"><spring:message code="edit"/></th>
+						<th style="width: 100px;"><input type="checkbox" id="delChkAll" /><spring:message code="selectAll"/></th>
 					</tr>
 				</thead>
 			</table>
@@ -86,7 +86,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">Edit</h4>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
@@ -97,45 +97,45 @@
             	
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="fullFileName">檔案名稱<span class="pull-right" style="color: red;">＊ </span> </label>
+						<label for="fullFileName"><spring:message code="fileName"/><span class="pull-right" style="color: red;">＊ </span> </label>
             			<input type="text" class="form-control" name="fullFileName" id="editFullFileName" readonly="true" />
             			<input type="file" name="uploadFile" id="uploadFile" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="phone">檔案描述<span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="phone"><spring:message code="fileDescription"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="fileDescription" id="editFileDescription" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 	                <div class="form-group">
-						<label>是否置頂</label>
+						<label><spring:message code="isPin"/></label>
 						<span style="position: relative; ">					 <input type="radio" name="onTopChkbox" id="onTop_Yes" value="Y"  /> Y</span>
 						<span style="position: relative; margin-left: 10px;"><input type="radio" name="onTopChkbox" id="onTop_No" value="N" /> N</span>
 	                </div>                              
 	            </div>
 		        <div class="box-body">
 	                <div class="form-group">
-	                  <label for="beginTime">發佈時間</label>
-	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" placeholder="年-月-日" />
-		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" placeholder="時:分:秒" />
-		  				<span style="color: red;">(留白表示永久有效；日期有選、時間未選則預設為當日00:00:00)</span>
+	                  <label for="beginTime"><spring:message code="postTime"/></label>
+	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" placeholder="<spring:message code='y-m-d'/>" />
+		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" placeholder="<spring:message code='h-m-s'/>" />
+		  				<span style="color: red;"><spring:message code="aliveTimeDesc"/></span>
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="beginTime">結束時間</label>
-	                  	<input id="date-input2" type="text" style="width: 90px;" name="endDateStr" placeholder="年-月-日" />
-		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" placeholder="時:分:秒" />
-		  				<span style="color: red;">(留白表示永久有效；日期有選、時間未選則預設為當日00:00:00)</span>
+	                  <label for="beginTime"><spring:message code="endTime"/></label>
+	                  	<input id="date-input2" type="text" style="width: 90px;" name="endDateStr" placeholder="<spring:message code='y-m-d'/>" />
+		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" placeholder="<spring:message code='h-m-s'/>" />
+		  				<span style="color: red;"><spring:message code="aliveTimeDesc"/></span>
 	                </div>                              
 	            </div>
 	            
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnSave" onclick="btnSaveClicked();" style="display: none">Save</button>
-	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();" style="display: none">Upload</button>
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-primary" id="btnSave" onclick="btnSaveClicked();" style="display: none"><spring:message code="save"/></button>
+	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();" style="display: none"><spring:message code="upload"/></button>
 				</div>
 			</form>
 			<br />
@@ -204,7 +204,7 @@ $(function() {
 					"render" : function(data, type, row) {
 						return '<a href="#">'
 								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i>Download</span></a>';
+								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="download"/></span></a>';
 					}
 				},
 				{
@@ -214,7 +214,7 @@ $(function() {
 					"render" : function(data, type, row) {
 						return '<a href="#">'
 								+'<span class="label label-warning" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnEditClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>';
 					}
 				},
 				{
@@ -321,12 +321,12 @@ function btnUploadClicked() {
 	if (''==fileDesc.trim()) {
 		isError = true;
 		$('#editFileDescription').parents('.form-group').addClass('has-error');
-		errMsg += '！Name為必填<br/>';
+		errMsg += '<spring:message javaScriptEscape="true" code="mustName"/><br/>';
 	}
 	if (''==uploadFile.trim()) {
 		isError = true;
 		$('#uploadFile').parents('.form-group').addClass('has-error');
-		errMsg += '！請選擇檔案<br/>';
+		errMsg += '<spring:message javaScriptEscape="true" code="mustSelectFile"/><br/>';
 	}
 
 	if(isError){
@@ -400,7 +400,7 @@ function btnSaveClicked() {
 	if (''==fileDesc.trim()) {
 		isError = true;
 		$('#editFileDescription').parents('.form-group').addClass('has-error');
-		errMsg += '！Name為必填<br/>';
+		errMsg += '<spring:message javaScriptEscape="true" code="mustName"/><br/>';
 	}
 
 	if(isError){
@@ -440,7 +440,7 @@ function btnSaveClicked() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/file;
+	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/file";
     window.location.href = downloadUrl;
 }
 </script>

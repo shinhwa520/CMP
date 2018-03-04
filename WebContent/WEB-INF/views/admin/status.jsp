@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="../../common/taglib.jsp" %>
 <section class="content">
 <div class="box-body"></div>
 
@@ -11,9 +12,9 @@
 			<thead>
 				<tr>
 					<th>＃</th>
-					<th>name</th>
-					<th>type</th>
-					<th>sort</th>
+					<th><spring:message code="name"/></th>
+					<th><spring:message code="type"/></th>
+					<th><spring:message code="sort"/></th>
 				</tr>
 			</thead>
 		</table>

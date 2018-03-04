@@ -27,6 +27,7 @@ import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.UserService;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/user")
@@ -108,11 +109,13 @@ public class ChannelUserController extends BaseController {
 			@RequestParam(name="user_id", required=true) String userId,
 			@RequestParam(name="agent_user", required=true) int agent_user,
 			@RequestParam(name="agent_cust", required=true) int agent_cust,
-			@RequestParam(name="volume", required=true) int volume) {
+			@RequestParam(name="volume", required=true) int volume,
+			HttpServletRequest request) {
 		try {
+			RequestContext req = new RequestContext(request);
 			Date current = new Date();
 			userService.updateKpi(userId, sdfYearMonth.format(new Date()), agent_user, agent_cust, volume, current);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

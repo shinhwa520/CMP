@@ -2,6 +2,7 @@ package com.cmp.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -22,6 +23,7 @@ import com.cmp.model.Customer;
 import com.cmp.security.SecurityUser;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/admin/cust")
@@ -85,10 +87,12 @@ public class AdminCustController extends BaseController {
 			@RequestParam(name="weChat", required=false) String weChat,
 			@RequestParam(name="city", required=false) String city,
 			@RequestParam(name="address", required=false) String address,
-			@RequestParam(name="status", required=true) String status) {
+			@RequestParam(name="status", required=true) String status,
+			HttpServletRequest request) {
 		try {
+			RequestContext req = new RequestContext(request);
 			custService.updateCust(id, name, gender, validateDate(birthday), phone, email, weChat, city, address, status);
-			return new AppResponse(HttpServletResponse.SC_OK, "更新成功");
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

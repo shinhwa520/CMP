@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ import com.cmp.model.User;
 import com.cmp.pdf.AgreementPdfTemplate;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
+import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/registration")
@@ -61,9 +63,11 @@ public class RegistrationController extends BaseController {
     	System.out.println("registration/emailConfirm");
     	try {
     		String mailAddress = form.getMailAddress();
+			RequestContext req = new RequestContext(request);
+			model.addAttribute("message", req.getMessage("error.emailExist"));
     		//驗證email是否重複
     		if(!registrationService.checkEmailAvailable(mailAddress)){
-    			model.addAttribute("message", "Email已被使用，請重新輸入");
+    			model.addAttribute("message", req.getMessage("error.emailExist"));
     			return "registration/email";
     		}
     		
@@ -73,7 +77,7 @@ public class RegistrationController extends BaseController {
     		System.out.println("Confirm URL:"+url);
     		registrationService.initUser(mailAddress, url);
     		
-    		model.addAttribute("message", "please confirm email!");
+    		model.addAttribute("message", req.getMessage("confirmEmail"));
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
@@ -89,8 +93,10 @@ public class RegistrationController extends BaseController {
     	System.out.println("registration/user");
     	try {
     		User user = registrationService.verifyToken(tokenId);
+			RequestContext req = new RequestContext(request);
+
     		if(null==user){
-    			model.addAttribute("message", "verifyToken error");
+    			model.addAttribute("message", req.getMessage("error.verifyFail"));
     			return "registration/error";
     		}
     		model.addAttribute("message", "");
@@ -108,9 +114,11 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.GET)//POST
     public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("registration/userInfo");
+		RequestContext req = new RequestContext(request);
+
     	try {
     		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
-    			model.addAttribute("message", "Account已被使用，請重新輸入");
+    			model.addAttribute("message", req.getMessage("error.accountExist"));
     			return "registration/user";
     		}
     		
@@ -160,16 +168,18 @@ public class RegistrationController extends BaseController {
 	 * return 合同頁
 	 */
 	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)
-    public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form) {
+    public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
     	System.out.println("registration/upstream");
+		RequestContext req = new RequestContext(request);
+
     	try {
     		if(StringUtils.isBlank(form.getChannelAccount())){
-    			model.addAttribute("message", "您未輸入上游帳號，系統預設主渠道商為您的上游");
+    			model.addAttribute("message", req.getMessage("error.noFillParentChannel"));
     		}else{
         		if(registrationService.upstream(form.getUserId(), form.getChannelAccount()))
         			model.addAttribute("message", "");
         		else
-        			model.addAttribute("message", "您輸入的帳號查無資料，系統預設主渠道商為您的上游");
+        			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -238,21 +248,21 @@ public class RegistrationController extends BaseController {
     
     
     public void doWriteTextFile(String pathname, String content) {
-    	File file = new File(pathname);
-    	try (FileOutputStream fos = new FileOutputStream(file)) {
-    		// if file doesn't exists, then create it
-    		if (!file.exists()) {
-    			file.createNewFile();
-    		}
-    		// get the content in bytes
-    		byte[] contentInBytes = content.getBytes();
-    		fos.write(contentInBytes);
-    		fos.flush();
-    		fos.close();
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	} finally {
-    		
-		}
+//    	File file = new File(pathname);
+//    	try (FileOutputStream fos = new FileOutputStream(file)) {
+//    		// if file doesn't exists, then create it
+//    		if (!file.exists()) {
+//    			file.createNewFile();
+//    		}
+//    		// get the content in bytes
+//    		byte[] contentInBytes = content.getBytes();
+//    		fos.write(contentInBytes);
+//    		fos.flush();
+//    		fos.close();
+//    	} catch (IOException e) {
+//    		e.printStackTrace();
+//    	} finally {
+//
+//		}
     }
 }

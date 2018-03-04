@@ -1,7 +1,9 @@
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ include file="taglib.jsp" %>
 <!DOCTYPE html>
 
 <html>
@@ -142,6 +144,11 @@
 				$(msg).fadeOut();
 			}, 2000);
 		}
+
+        function doChangeLang(lang) {
+            var url = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;
+            window.location.href = url;
+        }
 	</script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -153,7 +160,7 @@
 		<!-- mini logo for sidebar mini 50x50 pixels -->
 		<span class="logo-mini"><i><b>CMP</b></i></span>
 		<!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><i><b>CMP-渠道商管理平台</b></i></span>
+		<span class="logo-lg"><i><b><spring:message code="cmp"/></b></i></span>
     </a>
 	
 	<!-- Header Navbar -->
@@ -165,7 +172,17 @@
 		<!-- Navbar Right Menu -->
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
-			
+				<li>
+					<a href="javascript:void(0)" onclick="doChangeLang('en_US')">
+						English
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)" onclick="doChangeLang('zh_CN')">
+						中文
+					</a>
+				</li>
+
 				<!-- User Account Menu -->
 				<li class="dropdown user user-menu">
 					<!-- Menu Toggle Button -->
@@ -193,7 +210,7 @@
 							</div>
 							-->
 							<div class="pull-right">
-								<a href="<c:url value="/logout" />" class="btn btn-default btn-flat">Sign out</a>
+								<a href="<c:url value="/logout" />" class="btn btn-default btn-flat"><spring:message code="signOut"/></a>
 							</div>
 						</li>
 					</ul>
@@ -219,59 +236,59 @@
 				<div class="pull-left info">
 					<p>${username}</p>
 					<!-- Status -->
-					<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+					<a href="#"><i class="fa fa-circle text-success"></i><spring:message code="online" /></a>
 				</div>
 			</div>
 			<!-- Sidebar Menu -->
 			<ul class="sidebar-menu">
 			
 				<li class="<c:if test="${active eq 'INDEX'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/"> <span>回首頁</span></a>
+					<a href="${pageContext.request.contextPath}/"> <span><spring:message code="home" /></span></a>
 				</li>
 				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span>個人資訊</span></a>
+					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span><spring:message code="personalInfo" /></span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/user/list"> <span>我的渠道商</span></a>
+					<a href="${pageContext.request.contextPath}/channel/user/list"> <span><spring:message code="myChannels" /></span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/cust/list"> <span>我的客戶</span></a>
+					<a href="${pageContext.request.contextPath}/channel/cust/list"> <span><spring:message code="myClients" /></span></a>
 				</li>
 				<sec:authorize access="hasAnyRole('ROLE_SU')">
 					<li class="sidebar-item adminView" >
-						<a href="${pageContext.request.contextPath}/admin/role/list"> <span>ROLE</span></a>
+						<a href="${pageContext.request.contextPath}/admin/role/list"> <span><spring:message code="role" /></span></a>
 					</li>
 					<li class="sidebar-item adminView" >
-						<a href="${pageContext.request.contextPath}/admin/status/list"> <span>STATUS</span></a>
+						<a href="${pageContext.request.contextPath}/admin/status/list"> <span><spring:message code="status" /></span></a>
 					</li>
 					<li class="sidebar-item adminView" >
-						<a href="${pageContext.request.contextPath}/admin/registration/list"> <span>REGISTRATION</span></a>
+						<a href="${pageContext.request.contextPath}/admin/registration/list"> <span><spring:message code="registration" /></span></a>
 					</li>
 					<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview adminView">
 						<a href="#">
-							<i class="fa fa-server"></i> <span>API</span> <i class="fa fa-angle-left pull-right"></i>
+							<i class="fa fa-server"></i> <span><spring:message code="api" /></span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu <c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">menu-open</c:if>">
-							<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api"> 表單資料接收</a></li>
-							<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api/list"> 表單資料查詢</a></li>
-							<li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/job/manage"> 資料接收排程管理</a></li>
+							<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api"><spring:message code="receiveData" /></a></li>
+							<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api/list"><spring:message code="queryData" /></a></li>
+							<li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/job/manage"><spring:message code="reciveDataSchedule" /></a></li>
 						</ul>
 					</li>
 				</sec:authorize>
 				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_ASST')">
 					<li class="<c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
 						<a href="#">
-							<i class="fa fa-server"></i> <span>後台管理</span> <i class="fa fa-angle-left pull-right"></i>
+							<i class="fa fa-server"></i> <span><spring:message code="backstageMenagement"/></span> <i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu <c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">menu-open</c:if>">
 
 							<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN')">
-							<li <c:if test="${active eq 'ADMIN_USER'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/user/list"> 所有渠道商</a></li>
+							<li <c:if test="${active eq 'ADMIN_USER'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/user/list"><spring:message code="allChannels" /></a></li>
 							</sec:authorize>
 							
-							<li <c:if test="${active eq 'ADMIN_CUST'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/cust/list"> 所有客戶</a></li>
-							<li <c:if test="${active eq 'MANAGE_BILLBOARD'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/billboard"> 公告維護</a></li>
-							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"> 檔案維護</a></li>
+							<li <c:if test="${active eq 'ADMIN_CUST'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
+							<li <c:if test="${active eq 'MANAGE_BILLBOARD'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
+							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
 						</ul>
 					</li>
 				</sec:authorize>
@@ -303,7 +320,7 @@
 			Ver.${versionCode}
 		</div>
 		<!-- Default to the left -->
-		<strong>Copyright &copy; 2018 <a href="#">Fede tech Co.</a></strong> All rights reserved.
+		<strong>Copyright &copy; 2018 <a href="#"><spring:message code="corpName"/></a></strong> <spring:message code="allRightsReserved"/>
 	</footer> 
 </body>
 </html>

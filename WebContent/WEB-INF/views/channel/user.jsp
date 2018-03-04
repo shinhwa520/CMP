@@ -5,28 +5,28 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">我的渠道商</h3>
+		<h3 class="box-title"><spring:message code="myChannels"/></h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblMain">
 			<thead>
 				<tr>
-					<th rowspan="2">Name</th>
-					<th rowspan="2">Phone</th>
-					<th rowspan="2">Email</th>
-					<th rowspan="2">Status</th>
-					<th colspan="2">仲介渠道商</th>
-					<th colspan="2">仲介客戶</th>
-					<th colspan="2">成交量</th>
-					<th rowspan="2" style="width: 100px;">Option</th>
+					<th rowspan="2"><spring:message code="name"/></th>
+					<th rowspan="2"><spring:message code="phoneNo"/></th>
+					<th rowspan="2"><spring:message code="email"/></th>
+					<th rowspan="2"><spring:message code="status"/></th>
+					<th colspan="2"><spring:message code="channelsNo"/></th>
+					<th colspan="2"><spring:message code="tourNo"/></th>
+					<th colspan="2"><spring:message code="salesNo"/></th>
+					<th rowspan="2" style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
 				<tr>
-					<th>預計</th>
-					<th>實際</th>
-					<th>預計</th>
-					<th>實際</th>
-					<th>預計</th>
-					<th>實際</th>
+					<th><spring:message code="target"/></th>
+					<th><spring:message code="accomplished"/></th>
+					<th><spring:message code="target"/></th>
+					<th><spring:message code="accomplished"/></th>
+					<th><spring:message code="target"/></th>
+					<th><spring:message code="accomplished"/></th>
 				</tr>
 			</thead>
 		</table>
@@ -40,7 +40,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">Edit</h4>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
@@ -48,54 +48,54 @@
             	<input type="hidden" name="user_id" id="user_id" value="" />
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name">Name</label>
+						<label for="user_name"><spring:message code="name"/></label>
 						<input type="text" readonly="true" class="form-control" name="user_name" id="user_name" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="phone">Phone</label>
+						<label for="phone"><spring:message code="phoneNo"/></label>
 						<input type="text" readonly="true" class="form-control" name="phone" id="phone" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="email">Email</label>
+						<label for="email"><spring:message code="email"/></label>
 						<input type="text" readonly="true" class="form-control" name="email" id="email" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="status">Status</label>
+						<label for="status"><spring:message code="status"/></label>
 						<input type="text" readonly="true" class="form-control" name="statusName" id="statusName" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<table style="width: 100%">
 		        		<tr>
-		        			<td style="width: 12%"><label>預計仲介渠道商</label></td>
+		        			<td style="width: 12%"><label><spring:message code="targetChannelsNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
-		        			<td style="width: 12%"><label>實際仲介渠道商</label></td>
+		        			<td style="width: 12%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        		<tr>
-		        			<td style="width: 12%"><label>預計仲介客戶</label></td>
+		        			<td style="width: 12%"><label><spring:message code="targetTourNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
-		        			<td style="width: 12%"><label>實際仲介客戶</label></td>
+		        			<td style="width: 12%"><label><spring:message code="accomplishedTourNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        		<tr>
-		        			<td style="width: 12%"><label>預計成交量</label></td>
+		        			<td style="width: 12%"><label><spring:message code="targetSalesNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="volume" id="volume" style="width: 80%; text-align:right;"/></td>
-		        			<td style="width: 12%"><label>實際成交量</label></td>
+		        			<td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        	</table>                             
 		        </div>
 	            
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -206,17 +206,17 @@ function btnSaveClicked() {
 	if (!validateInt(agent_user)) {
 		isError = true;
 		$('#agent_user').parents('.form-group').addClass('has-error');
-		errMsg += '！預計仲介渠道商必須為數字<br/>';
+		errMsg += '<spring:message javaScriptEscape="true" code="error.channelMustNo"/><br/>';
 	}
 	if (!validateInt(agent_cust)) {
 		isError = true;
 		$('#agent_cust').parents('.form-group').addClass('has-error');
-		errMsg += '！預計仲介客戶必須為數字<br/>';
+		errMsg += '<spring:message javaScriptEscape="true" code="error.tourMustNo"/><br/>';
 	}
 	if (!validateInt(volume)) {
 		isError = true;
 		$('#volume').parents('.form-group').addClass('has-error');
-		errMsg += '！預計成交量必須為數字<br/>';
+		errMsg += '<spring:message javaScriptEscape="true" code="error.salesMustNo"/><br/>';
 	}
 	
 
