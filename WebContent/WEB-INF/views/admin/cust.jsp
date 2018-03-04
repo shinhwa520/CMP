@@ -5,30 +5,30 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Cust info.</h3>
+		<h3 class="box-title"><spring:message code="allCust"/></h3>
 		<form id="formSearch" name="formSearch">
 			<input type="text" id="keyword" name="keyword" placeholder="Search Keyword">
-			<input type="button" name="query" value="查詢" onclick="doQuery()" />
-			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Add</span></a>
+			<a href="#" onclick="doQuery();"><span class="label label-info" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="search"/></span></a>
+			<span><spring:message code="allCust.search.info"/></span>
 		</form>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblMain">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Gender</th>
-					<th>Birthday</th>
-					<th>Email</th>
-					<th>Census</th>
-					<th>身分證件1</th>
-					<th>證件號碼</th>
-					<th>證件姓名</th>
-					<th>身分證件2</th>
-					<th>證件號碼</th>
-					<th>證件姓名</th>
-					<th>User</th>
-					<th style="width: 100px;">Option</th>
+					<th><spring:message code="name"/></th>
+					<th><spring:message code="gender"/></th>
+					<th><spring:message code="birthday"/></th>
+					<th><spring:message code="email"/></th>
+					<th><spring:message code="census"/></th>
+					<th><spring:message code="IDType"/></th>
+					<th><spring:message code="IDNumber"/></th>
+					<th><spring:message code="IDName"/></th>
+					<th><spring:message code="secondIDType"/></th>
+					<th><spring:message code="secondIDNo"/></th>
+					<th><spring:message code="secondIDName"/></th>
+					<th><spring:message code="user"/></th>
+					<th style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
 			</thead>
 		</table>
@@ -42,7 +42,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">Edit</h4>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
@@ -50,118 +50,118 @@
             	<input type="hidden" name="cust_id" id="cust_id" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="cust_name">Name<span class="pull-right" style="color: red;">＊ </span></label>
+	                  <label for="cust_name"><spring:message code="name"/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="Enter Name">
 	                </div>                              
 	            </div>                         
 	            <div class="box-body">
 	                <div class="form-group">
-						<label>Gender</label>
-						<span style="position: relative; ">					 <input type="radio" name="gender" id="male" value="M"  />男</span>
-						<span style="position: relative; margin-left: 10px;"><input type="radio" name="gender" id="female" value="F"/>女</span>
+						<label><spring:message code="gender"/></label>
+						<span style="position: relative; ">					 <input type="radio" name="gender" id="male" value="M"  /><spring:message code="male"/></span>
+						<span style="position: relative; margin-left: 10px;"><input type="radio" name="gender" id="female" value="F"/><spring:message code="female"/></span>
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="birthday">Birthday</label>
+	                  <label for="birthday"><spring:message code="birthday"/></label>
 	                  <input type="text" class="form-control" id="birthday" name="birthday" placeholder="Enter Birthday">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="phone">Phone<span class="pull-right" style="color: red;">＊ </span></label>
+	                  <label for="phone"><spring:message code="phoneNo"/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone">
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="email">Email</label>
+	                  <label for="email"><spring:message code="email"/></label>
 	                  <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email">
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="weChat">WeChat</label>
+	                  <label for="weChat"><spring:message code="wechatID"/></label>
 	                  <input type="text" class="form-control" id="weChat" name="weChat" placeholder="Enter WeChat">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="identity1_id">身分證件1</label>
+	                  <label for="identity1_id"><spring:message code="IDType"/></label>
 	                  <select id="identity1_id" name="identity1_id">
-	                  	<option value="0">=== 請選擇 ===</option>
-						<option value="1">身分證</option>
-						<option value="2">護照</option>
-						<option value="3">台胞證</option>
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity1_code" style="text-align: right;" >證件號碼</label>
+	                  <label for="identity1_code" style="text-align: right;" ><spring:message code="IDNumber"/></label>
 	                  <input type="text" id="identity1_code" name="identity1_code" >
-	                  <label for="identity1_name" style="text-align: right;" >證件姓名</label>
+	                  <label for="identity1_name" style="text-align: right;" ><spring:message code="IDName"/></label>
 	                  <input type="text" id="identity1_name" name="identity1_name" >
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="identity2_id">身分證件2</label>
+	                  <label for="identity2_id"><spring:message code="secondIDType"/></label>
 	                  <select id="identity2_id" name="identity2_id">
-	                  	<option value="0">=== 請選擇 ===</option>
-						<option value="1">身分證</option>
-						<option value="2">護照</option>
-						<option value="3">台胞證</option>
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity2_code" style="text-align: right;" >證件號碼</label>
+	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="secondIDNo"/></label>
 	                  <input type="text" id="identity2_code" name="identity2_code" >
-	                  <label for="identity2_name" style="text-align: right;" >證件姓名</label>
+	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="secondIDName"/></label>
 	                  <input type="text" id="identity2_name" name="identity2_name" >
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="city">City</label>
+	                  <label for="city"><spring:message code="city"/></label>
 	                  <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="census">Census</label>
+	                  <label for="census"><spring:message code="census"/></label>
 	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="address">Address</label>
+	                  <label for="address"><spring:message code="address"/></label>
 	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="remark">Remark</label>
+	                  <label for="remark"><spring:message code="remarks"/></label>
 	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remark">
 	                </div>                              
 	            </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="status">Status</label>
+						<label for="status"><spring:message code="status"/></label>
 						<select name="status" id="status" >
-							<option value="0">=== 請選擇 ===</option>
-							<option value="1">已登记</option>
-							<option value="2">已收团费</option>
-							<option value="3">已订机票</option>
-							<option value="4">已办签证</option>
-							<option value="5">已订酒店</option>
-							<option value="6">已参观</option>
-							<option value="7">签约</option>
-							<option value="8">已付订金</option>
-							<option value="9">支付首付</option>
-							<option value="10">贷款申请</option>
-							<option value="11">完成付款</option>
-							<option value="12">已结算佣</option>
+							<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+							<option value="1"><spring:message code="registered"/></option>
+							<option value="2"><spring:message code="bookingFeePaid"/></option>
+							<option value="3"><spring:message code="bookedAirTicket"/></option>
+							<option value="4"><spring:message code="visaIssued"/></option>
+							<option value="5"><spring:message code="bookedHotel"/></option>
+							<option value="6"><spring:message code="visited"/></option>
+							<option value="7"><spring:message code="contractsSigned"/></option>
+							<option value="8"><spring:message code="depositPaid"/></option>
+							<option value="9"><spring:message code="downPayment"/></option>
+							<option value="10"><spring:message code="loanApplication"/></option>
+							<option value="11"><spring:message code="progressPayments"/></option>
+							<option value="12"><spring:message code="settlement"/></option>
 						</select>
 		            </div>                              
 		        </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();">Save</button>
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -173,6 +173,7 @@
 <script>
 var tblMain;
 var formAction = 'update';
+
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
 	console.log(btn.attr('custId'));
@@ -234,20 +235,18 @@ function btnSaveClicked() {
 	if (''==cust_name.trim()) {
 		isError = true;
 		$('#cust_name').parents('.form-group').addClass('has-error');
-		errMsg += '！Name為必填<br/>';
+		errMsg += '<spring:message code="error.mustName"/><br/>';	//！Name为必填
 	}
 	if (''==phone.trim()) {
 		isError = true;
 		$('#phone').parents('.form-group').addClass('has-error');
-		errMsg += '！Phone為必填<br/>';
+		errMsg += '<spring:message code="error.mustPhoneNo"/><br/>';	//！Phone為必填
 	}
 
 	if(isError){
 		errorMsgModal(errMsg);
 		return false;
 	}
-	
-	
 	
 	$.ajax({
 		url : '${pageContext.request.contextPath}/admin/cust/' + formAction,
@@ -301,22 +300,66 @@ $(function() {
 				{ "data" : "birthday" },
 				{ "data" : "email" },
 				{ "data" : "census" },
-				{ "data" : "identity1Str" },
+				{ "data" : "identity1_id" },
 				{ "data" : "identity1_code" },
 				{ "data" : "identity1_name" },
-				{ "data" : "identity2Str" },
+				{ "data" : "identity2_id" },
 				{ "data" : "identity2_code" },
 				{ "data" : "identity2_name" },
 				{ "data" : "user.name" }
 			],
 			"columnDefs" : [ 
 				{
+					"targets" : 5,
+					"render" : function(data, type, row) {
+						var i18n;
+
+						switch(data) {
+						    case 1:
+						    	i18n = '<spring:message code="ID card" />'
+						        break;
+						    case 2:
+						    	i18n = '<spring:message code="passport" />'
+						        break;
+						    case 3:
+						    	i18n = '<spring:message code="ROCID" />'
+						        break;
+						    default:
+						    	i18n = 'N/A'
+						} 
+						
+						return i18n;
+					}
+				},
+				{
+					"targets" : 8,
+					"render" : function(data, type, row) {
+						var i18n;
+
+						switch(data) {
+						    case 1:
+						    	i18n = '<spring:message code="ID card" />'
+						        break;
+						    case 2:
+						    	i18n = '<spring:message code="passport" />'
+						        break;
+						    case 3:
+						    	i18n = '<spring:message code="ROCID" />'
+						        break;
+						    default:
+						    	i18n = 'N/A'
+						} 
+						
+						return i18n;
+					}
+				},
+				{
 					"targets" : 12,
 					"data" : 'id',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
 								+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>';
 					}
 				}
 			],
@@ -372,7 +415,7 @@ function doQuery() {
 						"render" : function(data, type, row) {
 							return '<a href="#">'
 									+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-									+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+									+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>';
 						}
 					}
 				],
