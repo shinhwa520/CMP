@@ -55,13 +55,13 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name">Remark</label>
+						<label for="remark">Remark</label>
 						<input type="text" class="form-control" name="remark" id="remark" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name">Reward</label>
+						<label for="reward">Reward</label>
 						<input type="text" class="form-control" name="reward" id="reward" />%
 		            </div>                              
 		        </div>

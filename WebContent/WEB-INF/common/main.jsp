@@ -103,6 +103,7 @@
 		
 		function successMessage(message) {
 			var msg = $('#message');
+			$(document).scrollTop(0);
 			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
 			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
 			msg.html(message);
@@ -114,7 +115,7 @@
 		
 		function errorMessage(message) {
 			var msg = $('#message');
-			$(window).scrollTop(msg.offset().top);
+			$(document).scrollTop(0);
 			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
 			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
 			msg.html(message);
@@ -128,6 +129,7 @@
 		//[successMsgModal.]
 		function successMsgModal(message) {
 			var msg = $('.modal_msg');
+			$('#modal_Edit').animate({ scrollTop: 0 }, 'slow');
 			if(msg.hasClass('alert-danger')) msg.removeClass('alert-danger');
 			if(!msg.hasClass('alert-info')) msg.addClass('alert-info');
 			msg.html(message);
@@ -140,6 +142,7 @@
 		//[errorMsgModal.]
 		function errorMsgModal(message) {
 			var msg = $('.modal_msg');
+			$('#modal_Edit').animate({ scrollTop: 0 }, 'slow');
 			if(msg.hasClass('alert-info')) msg.removeClass('alert-info');
 			if(!msg.hasClass('alert-danger')) msg.addClass('alert-danger');
 			msg.html(message);

@@ -108,13 +108,16 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void update(String userId, String userName, String phone, String email, String status){
+	public void update(String userId, String userName, String password, String phone, String email, String weChat, String status, String remark){
 		String editorId = SecurityUtil.getSecurityUser().getUser().getId();
 		User user = findUserById(userId);
 		user.setName(userName);
+		user.setPassword(password);
 		user.setPhone(phone);
 		user.setEmail(email);
+		user.setWeChat(weChat);
 		user.setStatus(statusDAO.findStatus("USER", Integer.valueOf(status)));
+		user.setRemark(remark);
 		user.setUpdateBy(editorId);
 		user.setUpdateDateTime(new Date());
 		userDAO.saveUser(user);

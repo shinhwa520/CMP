@@ -35,13 +35,13 @@
         </div>
         <div class="box-body">
         	<div class="form-group">
-				<label for="phone"><span class="pull-right" style="color: red;">＊ </span>Email</label>
+				<label for="email"><span class="pull-right" style="color: red;">＊ </span>Email</label>
 				<form:input class="form-control" path="email" id="email" />
             </div>                              
         </div>
         <div class="box-body">
         	<div class="form-group">
-				<label for="phone"><span class="pull-right" style="color: red;">＊ </span>WeChat</label>
+				<label for="weChat"><span class="pull-right" style="color: red;">＊ </span>WeChat</label>
 				<form:input class="form-control" path="weChat" id="weChat" />
             </div>                              
         </div>

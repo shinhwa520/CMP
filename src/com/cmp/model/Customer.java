@@ -1,6 +1,7 @@
 package com.cmp.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -47,17 +48,23 @@ public class Customer implements java.io.Serializable {
     @Column(name = "identity1_code", nullable = true)
 	private String identity1_code;
     
+    @Column(name = "identity1_name", nullable = true)
+	private String identity1_name;
+    
     @Column(name = "identity2_id", nullable = true)
 	private Integer identity2_id;
     
     @Column(name = "identity2_code", nullable = true)
 	private String identity2_code;
     
-    @Column(name = "census", nullable = true)
-	private String census;
+    @Column(name = "identity2_name", nullable = true)
+	private String identity2_name;
     
     @Column(name = "city", nullable = true)
 	private String city;
+    
+    @Column(name = "census", nullable = true)
+	private String census;
     
     @Column(name = "address", nullable = true)
 	private String address;
@@ -88,13 +95,11 @@ public class Customer implements java.io.Serializable {
     
 	public Customer() {
 	}
-	
 
-	
 	public Customer(int id, String name, String gender, Date birthday, String phone, String email, String weChat,
-			Integer identity1_id, String identity1_code, Integer identity2_id, String identity2_code, String census,
-			String city, String address, Status status, User user, String remark, Timestamp createTime, String createBy,
-			Timestamp updateTime, String updateBy) {
+			Integer identity1_id, String identity1_code, String identity1_name, Integer identity2_id,
+			String identity2_code, String identity2_name, String city, String census, String address, Status status,
+			User user, String remark, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -105,10 +110,12 @@ public class Customer implements java.io.Serializable {
 		this.weChat = weChat;
 		this.identity1_id = identity1_id;
 		this.identity1_code = identity1_code;
+		this.identity1_name = identity1_name;
 		this.identity2_id = identity2_id;
 		this.identity2_code = identity2_code;
-		this.census = census;
+		this.identity2_name = identity2_name;
 		this.city = city;
+		this.census = census;
 		this.address = address;
 		this.status = status;
 		this.user = user;
@@ -118,8 +125,6 @@ public class Customer implements java.io.Serializable {
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -287,5 +292,68 @@ public class Customer implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+
+
+	public String getIdentity1_name() {
+		return identity1_name;
+	}
+
+
+
+	public void setIdentity1_name(String identity1_name) {
+		this.identity1_name = identity1_name;
+	}
+
+
+
+	public String getIdentity2_name() {
+		return identity2_name;
+	}
+
+
+
+	public void setIdentity2_name(String identity2_name) {
+		this.identity2_name = identity2_name;
+	}
+	
+	public String getBirthdayStr() {
+		if(null==getBirthday()){
+			return null;
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // HH是24小時制，hh是12小時制
+			return sdf.format(getBirthday());
+		}
+	}
+	
+	public String getIdentity1Str() {
+		if(null==identity1_id)
+			return "未輸入";
+		switch (identity1_id){
+			case 1:
+				return "身分證";
+			case 2:
+				return "護照";
+			case 3:
+				return "台胞證";
+			default:
+				return "未輸入";
+		}
+	}
+	
+	public String getIdentity2Str() {
+		if(null==identity2_id)
+			return "未輸入";
+		switch (identity2_id){
+			case 1:
+				return "身分證";
+			case 2:
+				return "護照";
+			case 3:
+				return "台胞證";
+			default:
+				return "未輸入";
+		}
 	}
 }

@@ -13,13 +13,15 @@
 					<th>Name</th>
 					<th>Gender</th>
 					<th>Birthday</th>
-					<th>Phone</th>
 					<th>Email</th>
-					<th>WeChat</th>
-					<th>City</th>
-					<th>Address</th>
+					<th>Census</th>
+					<th>身分證件1</th>
+					<th>證件號碼</th>
+					<th>證件姓名</th>
+					<th>身分證件2</th>
+					<th>證件號碼</th>
+					<th>證件姓名</th>
 					<th>User</th>
-					<th>Status</th>
 					<th style="width: 100px;">Option</th>
 				</tr>
 			</thead>
@@ -79,8 +81,44 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
+	                  <label for="identity1_id">身分證件1</label>
+	                  <select id="identity1_id" name="identity1_id">
+	                  	<option value="0">=== 請選擇 ===</option>
+						<option value="1">身分證</option>
+						<option value="2">護照</option>
+						<option value="3">台胞證</option>
+	                  </select>
+	                  <label for="identity1_code" style="text-align: right;" >證件號碼</label>
+	                  <input type="text" id="identity1_code" name="identity1_code" >
+	                  <label for="identity1_name" style="text-align: right;" >證件姓名</label>
+	                  <input type="text" id="identity1_name" name="identity1_name" >
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity2_id">身分證件2</label>
+	                  <select id="identity2_id" name="identity2_id">
+	                  	<option value="0">=== 請選擇 ===</option>
+						<option value="1">身分證</option>
+						<option value="2">護照</option>
+						<option value="3">台胞證</option>
+	                  </select>
+	                  <label for="identity2_code" style="text-align: right;" >證件號碼</label>
+	                  <input type="text" id="identity2_code" name="identity2_code" >
+	                  <label for="identity2_name" style="text-align: right;" >證件姓名</label>
+	                  <input type="text" id="identity2_name" name="identity2_name" >
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
 	                  <label for="city">City</label>
 	                  <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+	                </div>                              
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="census">Census</label>
+	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
@@ -89,13 +127,29 @@
 	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
 	                </div>                              
 	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="remark">Remark</label>
+	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remark">
+	                </div>                              
+	            </div>
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="status">Status</label>
 						<select name="status" id="status" >
-							<option value="1">登錄帳號</option>
-							<option value="2">成交</option>
-							<option value="3">酬庸</option>
+							<option value="0">=== 請選擇 ===</option>
+							<option value="1">已登记</option>
+							<option value="2">已收团费</option>
+							<option value="3">已订机票</option>
+							<option value="4">已办签证</option>
+							<option value="5">已订酒店</option>
+							<option value="6">已参观</option>
+							<option value="7">签约</option>
+							<option value="8">已付订金</option>
+							<option value="9">支付首付</option>
+							<option value="10">贷款申请</option>
+							<option value="11">完成付款</option>
+							<option value="12">已结算佣</option>
 						</select>
 		            </div>                              
 		        </div>
@@ -135,8 +189,19 @@ function btnEditClicked(btn) {
 					$('#phone').val(resp.data.cust.phone);
 					$('#email').val(resp.data.cust.email);
 					$('#weChat').val(resp.data.cust.weChat);
+					
+					$('#identity1_id').val(resp.data.cust.identity1_id);
+					$('#identity1_code').val(resp.data.cust.identity1_code);
+					$('#identity1_name').val(resp.data.cust.identity1_name);
+					$('#identity2_id').val(resp.data.cust.identity2_id);
+					$('#identity2_code').val(resp.data.cust.identity2_code);
+					$('#identity2_name').val(resp.data.cust.identity2_name);
+
+				
 					$('#city').val(resp.data.cust.city);
+					$('#census').val(resp.data.cust.census);
 					$('#address').val(resp.data.cust.address);
+					$('#remark').val(resp.data.cust.remark);
 					$('#status').val(resp.data.cust.status.sort);
 					$('#modal_Edit').modal();
 					successMsgModal(resp.message);
@@ -228,23 +293,19 @@ $(function() {
 				{ "data" : "name" },
 				{ "data" : "gender" },
 				{ "data" : "birthday" },
-				{ "data" : "phone" },
 				{ "data" : "email" },
-				{ "data" : "weChat" },
-				{ "data" : "city" },
-				{ "data" : "address" },
-				{ "data" : "user.name" },
-				{ "data" : "status.name" }
+				{ "data" : "census" },
+				{ "data" : "identity1Str" },
+				{ "data" : "identity1_code" },
+				{ "data" : "identity1_name" },
+				{ "data" : "identity2Str" },
+				{ "data" : "identity2_code" },
+				{ "data" : "identity2_name" },
+				{ "data" : "user.name" }
 			],
 			"columnDefs" : [ 
 				{
-				"targets" : 2,
-				"render" : function(data, type, row) {
-					return (new Date(data)).Format("yyyy-MM-dd");
-					}
-				},
-				{
-					"targets" : 10,
+					"targets" : 12,
 					"data" : 'id',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
