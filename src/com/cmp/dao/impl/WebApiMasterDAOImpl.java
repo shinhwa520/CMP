@@ -32,7 +32,8 @@ public class WebApiMasterDAOImpl extends BaseDaoHibernate implements WebApiMaste
 		if (StringUtils.isNotBlank(webApiDAOVO.getMasterSeqNo())) {
 			sb.append(" and wam.seqNo = :seqNo ");
 		}
-		  
+		
+		sb.append(" and (wad.user.id is not null and wad.user.id <> 'SYSTEM') ");
 		sb.append(" order by wam.seqNo, wad.seqNo ");
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();

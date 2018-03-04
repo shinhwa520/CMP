@@ -28,8 +28,10 @@ public class OutsiteController extends BaseController {
 			String referrer = request.getHeader("referer");
 			
 			if (StringUtils.isNotBlank(referrer)) {
-				String makaId = referrer.lastIndexOf("/") != -1 ? referrer.substring(referrer.lastIndexOf("/")+1, referrer.length()) : null;
-				
+				String makaId = (referrer.lastIndexOf("/") != -1) 
+									? referrer.substring(referrer.lastIndexOf("/")+1, (referrer.lastIndexOf("?") != -1 ? referrer.lastIndexOf("?") : referrer.length())) 
+									: null;
+									
 				if (StringUtils.isNotBlank(makaId)) {
 					User user = userService.findUserByApiId(makaId);
 					

@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -123,7 +122,7 @@ public class RegistrationController extends BaseController {
 //    		}
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							form.getUserId()
-			    			,form.getName()
+			    			,new String(form.getName().getBytes("iso-8859-1"), "utf-8")
 			    			,form.getAccount()
 			    			,form.getPassword()
 			    			,form.getPhone()

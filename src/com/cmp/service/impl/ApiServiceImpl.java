@@ -241,6 +241,7 @@ public class ApiServiceImpl implements ApiService {
 				custInfoFromJsonMap = retrieveJsonAndTrans2CustInfoFromJsonMap(null, formApiUrl, apiServiceVO.getApiMethodType(), cookie);
 				
 				if (custInfoFromJsonMap == null || (custInfoFromJsonMap != null && custInfoFromJsonMap.isEmpty())) {
+					index += 1;
 					continue;
 				}
 				
@@ -257,13 +258,16 @@ public class ApiServiceImpl implements ApiService {
 						userId = userList.get(0).getId();
 						
 					} else {
-						throw new Exception("[ApiServiceImpl] Can't find USER data! >> apiModelId: " + apiServiceVO.getApiModelIds()[index]);
+						index += 1;
+						continue;
+						//throw new Exception("[ApiServiceImpl] Can't find USER data! >> apiModelId: " + apiServiceVO.getApiModelIds()[index]);
 					}
 				}
 				
 				//Step 6.比對JSON回傳與DB既存客戶,寫入新增客戶資料
 				for (Entry<String, Map<String, String>> custInfoEntry : custInfoFromJsonMap.entrySet()) {
 					if (!custInfoFromDBMap.isEmpty() && custInfoFromDBMap.containsKey(custInfoEntry.getKey())) {
+						index += 1;
 						continue;
 						
 					} else {
@@ -385,7 +389,8 @@ public class ApiServiceImpl implements ApiService {
 					answer = c.replace("answer:", "");
 					
 					if (!fieldMap.containsKey(moduleId)) {
-						throw new Exception("[Web_Api_Setting] >> 查無指定Module_Id設定: " + moduleId);
+						continue;
+						//throw new Exception("[Web_Api_Setting] >> 查無指定Module_Id設定: " + moduleId);
 						
 					} else {
 						String seqNo = fieldMap.get(moduleId).split(SEPERATOR)[0];
