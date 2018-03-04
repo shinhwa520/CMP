@@ -7,6 +7,8 @@ import com.cmp.model.User;
 public interface UserDAO {
 	List<Object[]> findUserByChannelId(String channelId, String yearMonth, Integer start, Integer length);
 	long countUserByChannelId(String channelId);
+	List<Object[]> findUser4MA(String roleName, String yearMonth, Integer start,Integer length);
+	long countUser4MA(String roleName);
 	User saveUser(User user);
 	List<User> listUsers();
 	public List<User> findUserByAccount(String account);

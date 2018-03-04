@@ -25,7 +25,7 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
 		.append(" from User u ")
 		.append(" where 1=1 ")
-		.append(" and u.role.id = 4 ");
+		.append(" and u.role.id <> 1 ");
 		if(StringUtils.isNotBlank(channelId)){
 			sb.append(" and u.channel.id = :channelId ");
 		}
@@ -51,8 +51,49 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 			  sb.append(" and u.channel.id = ? ");
 			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {channelId}));
 		}
+		sb.append(" and u.role.id <> 1 ");
 		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
 	}
+	
+	@Override
+	public List<Object[]> findUser4MA(String roleName, String yearMonth, Integer start, Integer length) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select u ")
+		.append(" ,(select count(u1.id) from User u1 where 1=1 and u1.channel.id = u.id and DATE_FORMAT(u1.createDateTime,'%Y%m') = :yearMonth) ")
+		.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
+		.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
+		.append(" from User u ")
+		.append(" where 1=1 ")
+		.append(" and u.role.id <> 1 ");
+		if(StringUtils.isNotBlank(roleName)){
+			sb.append(" and u.channel.role.name = :roleName ");
+		}
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    if(StringUtils.isNotBlank(roleName)){
+	    	q.setParameter("roleName", roleName);
+	    }
+	    if(StringUtils.isNotBlank(yearMonth)){
+	    	q.setParameter("yearMonth", yearMonth);
+	    }
+	    	q.setFirstResult(start).setMaxResults(length);
+	    return (List<Object[]>) q.list();
+//		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
+//		return returnList;
+	}
+	
+	@Override
+	public long countUser4MA(String roleName){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(*) from User u where 1=1 ");
+		sb.append(" and u.role.id <> 1 ");
+		if(StringUtils.isNotBlank(roleName)){
+			  sb.append(" and u.channel.role.name = ? ");
+			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {roleName}));
+		}
+		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
+	}
+	
 	@Override
 	public User saveUser(User user) {
 		return (User) getHibernateTemplate().merge(user);
