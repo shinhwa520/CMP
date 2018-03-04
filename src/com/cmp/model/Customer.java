@@ -43,7 +43,7 @@ public class Customer implements java.io.Serializable {
 	private String weChat;
 
     @Column(name = "identity1_id", nullable = true)
-	private Integer identity1_id;
+	private Integer identity1_id=0;
     
     @Column(name = "identity1_code", nullable = true)
 	private String identity1_code;
@@ -52,7 +52,7 @@ public class Customer implements java.io.Serializable {
 	private String identity1_name;
     
     @Column(name = "identity2_id", nullable = true)
-	private Integer identity2_id;
+	private Integer identity2_id=0;
     
     @Column(name = "identity2_code", nullable = true)
 	private String identity2_code;
