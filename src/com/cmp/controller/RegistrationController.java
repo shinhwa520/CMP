@@ -69,7 +69,7 @@ public class RegistrationController extends BaseController {
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
     		registrationService.initUser(mailAddress, url);
     		
-    		model.addAttribute("message", req.getMessage("confirmEmail"));
+    		model.addAttribute("message", req.getMessage("pleaseConfirmEmail"));
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
