@@ -3,7 +3,7 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-	<div class="topic">please fill in your upstream account :</div>
+	<div class="topic"><spring:message code="fillParentChannel"/></div>
 	<form:form method="POST" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/agreement">
 		<form:hidden path="userId" id="userId" />
 		<form:input class="form-control" path="channelAccount" id="channelAccount" placeholder="Account"/>

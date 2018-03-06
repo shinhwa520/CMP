@@ -46,6 +46,6 @@ $(function() {
 	}
 
 	function agreementPdf() {
-		window.open("${pageContext.request.contextPath}/registration/agreementPdf");
+		window.open("${pageContext.request.contextPath}/registration/agreementPdf?userId=" + $('#userId').val());
 	}
 </script>

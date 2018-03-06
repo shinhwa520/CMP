@@ -3,13 +3,10 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-	<div class="topic"><spring:message code='enterEmail'/></div>
-	<form:form method="POST" onsubmit="return validateInput();" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/emailConfirm">
-		<spring:message code='email' var="email"/>
-		<form:input class="form-control" path="email" id="email" placeholder="${email}"/>
-		<form:errors class="form-control" path="email" cssClass="error" />
-		<input class="btn btn-lg btn-success btn-block" value="<spring:message code='confirm'/>" type="submit">
-	</form:form>
+	<div class="topic" style="max-width: 650px">合作伙伴委任協議</div>
+	<form style="max-width: 650px">
+		${agreement}
+	</form>
 </section>
 <script>
 	var msg = '${message}';
@@ -19,7 +16,7 @@
 		}
 	});
 	function validateInput() {
-	  	var mailAddress = $('#email').val();
+	  	var mailAddress = $('#mailAddress').val();
 	  	if(mailAddress.trim()==''){
 	  		errorMessage('<spring:message code="error.enterEmail"/>');
 		  	return false;

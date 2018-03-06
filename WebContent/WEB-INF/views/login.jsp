@@ -34,4 +34,8 @@
         var url = '${pageContext.request.contextPath}/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;
         window.location.href = url;
     }
+
+	function getPdf() {
+		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/getPdf';
+	}
 </script>
