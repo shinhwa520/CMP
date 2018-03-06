@@ -6,11 +6,12 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title"><spring:message code="allCust"/></h3>
-		<form id="formSearch" name="formSearch">
-			<input type="text" id="keyword" name="keyword" placeholder="Search Keyword">
+
+			<input type="text" id="keyword" name="keyword" placeholder="Search Keyword"/>
 			<a href="#" onclick="doQuery();"><span class="label label-info" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="search"/></span></a>
+
 			<span><spring:message code="allCust.search.info"/></span>
-		</form>
+
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblMain">
@@ -177,6 +178,14 @@
 <script>
 var tblMain;
 var formAction = 'update';
+
+//绑定回车键执行查询
+$('#keyword').bind('keyup', function(event) {
+    if (event.keyCode == "13") {
+        //回车执行查询
+        doQuery();
+    }
+});
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
@@ -416,4 +425,5 @@ function doQuery() {
 				select: true
 			});
 }
+
 </script>
