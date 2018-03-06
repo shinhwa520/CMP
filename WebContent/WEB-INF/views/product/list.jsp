@@ -42,9 +42,12 @@
 							</div>
 							<ul>
 								<li><a href="#" onclick="btnKpiClicked(1);"><spring:message code="KPI" /></a></li>
+							</ul>
+							<ul>
 								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
 								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
 							</ul>
+							<br />
 						</div>
 					</div>
 				</div>

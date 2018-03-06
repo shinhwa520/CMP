@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.model.Customer;
-import com.cmp.security.SecurityUser;
-import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
-import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/admin/cust")

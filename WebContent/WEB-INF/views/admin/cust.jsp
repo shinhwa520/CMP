@@ -5,11 +5,11 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code='custInfo'/></h3>
+		<h3 class="box-title"><spring:message code="allCust"/></h3>
 		<form id="formSearch" name="formSearch">
-			<input type="text" id="keyword" name="keyword" placeholder="<spring:message code='searchKeyword'/>">
-			<input type="button" name="query" value="<spring:message code='query'/>" onclick="doQuery()" />
-			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='add'/></span></a>
+			<input type="text" id="keyword" name="keyword" placeholder="Search Keyword">
+			<a href="#" onclick="doQuery();"><span class="label label-info" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="search"/></span></a>
+			<span><spring:message code="allCust.search.info"/></span>
 		</form>
 	</div>
 	<div class="box-body no-padding">
@@ -17,16 +17,20 @@
 			<thead>
 				<tr>
 					<th><spring:message code="name"/></th>
+					<!-- 
 					<th><spring:message code="gender"/></th>
 					<th><spring:message code="birthday"/></th>
+					 -->
 					<th><spring:message code="email"/></th>
-					<th><spring:message code="census"/></th>
-					<th><spring:message code="IDCard"/>1</th>
+					<th><spring:message code="residentialAddress"/></th>
+					<th><spring:message code="IDType"/></th>
 					<th><spring:message code="IDNumber"/></th>
 					<th><spring:message code="IDName"/></th>
-					<th><spring:message code="IDCard"/>2</th>
-					<th><spring:message code="IDNumber"/></th>
-					<th><spring:message code="IDName"/></th>
+					<!--
+					<th><spring:message code="secondIDType"/></th>
+					<th><spring:message code="secondIDNo"/></th>
+					<th><spring:message code="secondIDName"/></th>
+					 -->
 					<th><spring:message code="user"/></th>
 					<th style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
@@ -51,7 +55,7 @@
 	            <div class="box-body">
 	            	<div class="form-group">
 	                  <label for="cust_name"><spring:message code="name"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="Enter Name">
+	                  <input type="text" class="form-control" id="cust_name" name="cust_name" placeholder="<spring:message code="name"/>">
 	                </div>                              
 	            </div>                         
 	            <div class="box-body">
@@ -64,35 +68,35 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="birthday"><spring:message code="birthday"/></label>
-	                  <input type="text" class="form-control" id="birthday" name="birthday" placeholder="<spring:message code='birthday'/>">
+	                  <input type="text" class="form-control" id="birthday" name="birthday" placeholder="<spring:message code="birthday"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="phone"><spring:message code="phoneNo"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="<spring:message code='phoneNo'/>">
+	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="<spring:message code="phoneNo"/>">
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="email"><spring:message code='email'/></label>
-	                  <input type="text" class="form-control" id="email" name="email" placeholder="<spring:message code='email'/>">
+	                  <label for="email"><spring:message code="email"/></label>
+	                  <input type="text" class="form-control" id="email" name="email" placeholder="<spring:message code="email"/>">
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="weChat"><spring:message code='wechatID'/></label>
-	                  <input type="text" class="form-control" id="weChat" name="weChat" placeholder="<spring:message code='wechatID'/>">
+	                  <label for="weChat"><spring:message code="wechatID"/></label>
+	                  <input type="text" class="form-control" id="weChat" name="weChat" placeholder="<spring:message code="wechatID"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="identity1_id"><spring:message code="IDCard"/>1</label>
+	                  <label for="identity1_id"><spring:message code="IDType"/></label>
 	                  <select id="identity1_id" name="identity1_id">
-	                  	<option value="0"><spring:message code="defaultSelectOption"/></option>
-						<option value="1"><spring:message code="IDCard"/></option>
-						<option value="2"><spring:message code='passport'/></option>
-						<option value="3"><spring:message code='ROCID'/></option>
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
 	                  <label for="identity1_code" style="text-align: right;" ><spring:message code="IDNumber"/></label>
 	                  <input type="text" id="identity1_code" name="identity1_code" >
@@ -102,48 +106,48 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="identity2_id"><spring:message code="IDCard"/>2</label>
+	                  <label for="identity2_id"><spring:message code="secondIDType"/></label>
 	                  <select id="identity2_id" name="identity2_id">
-	                  	<option value="0"><spring:message code="defaultSelectOption"/></option>
-						<option value="1"><spring:message code="IDCard"/></option>
-						<option value="2"><spring:message code='passport'/></option>
-						<option value="3"><spring:message code='ROCID'/></option>
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="IDNumber"/></label>
+	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="secondIDNo"/></label>
 	                  <input type="text" id="identity2_code" name="identity2_code" >
-	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="IDName"/></label>
+	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="secondIDName"/></label>
 	                  <input type="text" id="identity2_name" name="identity2_name" >
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="city"><spring:message code='city'/></label>
-	                  <input type="text" class="form-control" id="city" name="city" placeholder="<spring:message code='city'/>">
+	                  <label for="city"><spring:message code="city"/></label>
+	                  <input type="text" class="form-control" id="city" name="city" placeholder="<spring:message code="city"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="census"><spring:message code="census"/></label>
-	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
+	                  <label for="census"><spring:message code="residentialAddress"/></label>
+	                  <input type="text" class="form-control" id="census" name="census" placeholder="<spring:message code="residentialAddress"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="address"><spring:message code='address'/></label>
-	                  <input type="text" class="form-control" id="address" name="address" placeholder="<spring:message code='address'/>">
+	                  <label for="address"><spring:message code="address"/></label>
+	                  <input type="text" class="form-control" id="address" name="address" placeholder="<spring:message code="address"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="remark"><spring:message code='remark'/></label>
-	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="<spring:message code='remark'/>">
+	                  <label for="remark"><spring:message code="remarks"/></label>
+	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="<spring:message code="remarks"/>">
 	                </div>                              
 	            </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="status">Status</label>
+						<label for="status"><spring:message code="status"/></label>
 						<select name="status" id="status" >
-							<option value="0"><spring:message code="defaultSelectOption"/></option>
+							<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
 							<option value="1"><spring:message code="registered"/></option>
 							<option value="2"><spring:message code="bookingFeePaid"/></option>
 							<option value="3"><spring:message code="bookedAirTicket"/></option>
@@ -160,8 +164,8 @@
 		            </div>                              
 		        </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code='save'/></button>
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -173,6 +177,7 @@
 <script>
 var tblMain;
 var formAction = 'update';
+
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
 	console.log(btn.attr('custId'));
@@ -234,20 +239,18 @@ function btnSaveClicked() {
 	if (''==cust_name.trim()) {
 		isError = true;
 		$('#cust_name').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.mustName"/><br/>';
+		errMsg += '<spring:message code="error.mustName"/><br/>';	//！Name为必填
 	}
 	if (''==phone.trim()) {
 		isError = true;
 		$('#phone').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.mustPhoneNo"/><br/>';
+		errMsg += '<spring:message code="error.mustPhoneNo"/><br/>';	//！Phone為必填
 	}
 
 	if(isError){
 		errorMsgModal(errMsg);
 		return false;
 	}
-	
-	
 	
 	$.ajax({
 		url : '${pageContext.request.contextPath}/admin/cust/' + formAction,
@@ -297,26 +300,43 @@ $(function() {
 			},
 			"columns" : [
 				{ "data" : "name" },
-				{ "data" : "gender" },
-				{ "data" : "birthday" },
 				{ "data" : "email" },
 				{ "data" : "census" },
-				{ "data" : "identity1Str" },
+				{ "data" : "identity1_id" },
 				{ "data" : "identity1_code" },
 				{ "data" : "identity1_name" },
-				{ "data" : "identity2Str" },
-				{ "data" : "identity2_code" },
-				{ "data" : "identity2_name" },
 				{ "data" : "user.name" }
 			],
 			"columnDefs" : [ 
 				{
-					"targets" : 12,
+					"targets" : 3,
+					"render" : function(data, type, row) {
+						var i18n;
+
+						switch(data) {
+							case 1:
+								i18n = '<spring:message code="ID card" />'
+								break;
+							case 2:
+								i18n = '<spring:message code="passport" />'
+								break;
+							case 3:
+								i18n = '<spring:message code="ROCID" />'
+								break;
+							default:
+								i18n = 'N/A'
+						} 
+						
+						return i18n;
+					}
+				},
+				{
+					"targets" : 7,
 					"data" : 'id',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
 								+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>';
+								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>';
 					}
 				}
 			],
@@ -336,7 +356,7 @@ function doQuery() {
 	if (tblMain) {
 		$('#tblMain').DataTable().destroy();
 	}
-		tblMain = $('#tblMain').DataTable(
+	tblMain = $('#tblMain').DataTable(
 			{
 				"bFilter" : false,
 				"ordering" : false,
@@ -353,26 +373,43 @@ function doQuery() {
 				},
 				"columns" : [
 					{ "data" : "name" },
-					{ "data" : "gender" },
-					{ "data" : "birthday" },
 					{ "data" : "email" },
 					{ "data" : "census" },
-					{ "data" : "identity1Str" },
+					{ "data" : "identity1_id" },
 					{ "data" : "identity1_code" },
 					{ "data" : "identity1_name" },
-					{ "data" : "identity2Str" },
-					{ "data" : "identity2_code" },
-					{ "data" : "identity2_name" },
 					{ "data" : "user.name" }
 				],
 				"columnDefs" : [ 
 					{
-						"targets" : 12,
+						"targets" : 3,
+						"render" : function(data, type, row) {
+							var i18n;
+
+							switch(data) {
+								case 1:
+									i18n = '<spring:message code="ID card" />'
+									break;
+								case 2:
+									i18n = '<spring:message code="passport" />'
+									break;
+								case 3:
+									i18n = '<spring:message code="ROCID" />'
+									break;
+								default:
+									i18n = 'N/A'
+							} 
+							
+							return i18n;
+						}
+					},
+					{
+						"targets" : 7,
 						"data" : 'id',
 						"render" : function(data, type, row) {
 							return '<a href="#">'
 									+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-									+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>';
+									+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>';
 						}
 					}
 				],

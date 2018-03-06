@@ -3,7 +3,7 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-	<div class="topic">please fill in your personal info. and press confirm :</div>
+	<div class="topic"><spring:message code='fillBasicInfo'/></div>
 	<form:form method="POST" modelAttribute="UserInfoForm" onsubmit="return validateInput();" action="${pageContext.request.contextPath}/registration/userInfo">
 		<form:hidden path="userId" id="userId" />
 

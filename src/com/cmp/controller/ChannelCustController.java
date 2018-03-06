@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
@@ -27,7 +28,6 @@ import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
-import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/cust")
@@ -121,15 +121,25 @@ public class ChannelCustController extends BaseController {
 	@ResponseBody
 	public AppResponse createCust(
 			@RequestParam(name="cust_name", required=true) String name,
-			@RequestParam(name="gender", required=true) String gender,
+			@RequestParam(name="gender", required=false) String gender,
 			@RequestParam(name="birthday", required=false) String birthday,
 			@RequestParam(name="phone", required=false) String phone,
 			@RequestParam(name="email", required=false) String email,
 			@RequestParam(name="weChat", required=false) String weChat,
+			@RequestParam(name="identity1_id", required=true) Integer identity1_id,
+			@RequestParam(name="identity1_code", required=false) String identity1_code,
+			@RequestParam(name="identity1_name", required=false) String identity1_name,
+			@RequestParam(name="identity2_id", required=true) Integer identity2_id,
+			@RequestParam(name="identity2_code", required=false) String identity2_code,
+			@RequestParam(name="identity2_name", required=false) String identity2_name,
 			@RequestParam(name="city", required=false) String city,
-			@RequestParam(name="address", required=false) String address) {
+			@RequestParam(name="census", required=false) String census,
+			@RequestParam(name="address", required=false) String address,
+			@RequestParam(name="remark", required=false) String remark) {
 		try {
-			custService.createCust(name, gender, birthday, phone, email, weChat, city, address);
+			custService.createCust(name, gender, validateDate(birthday), phone, email, weChat
+					, identity1_id, identity1_code, identity1_name, identity2_id, identity2_code, identity2_name
+					, city, census, address, remark);
 			return new AppResponse(HttpServletResponse.SC_OK, "新增成功");
 		} catch (Exception e) {
 			e.printStackTrace();

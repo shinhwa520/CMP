@@ -85,7 +85,7 @@ public class DatabaseMessageSourceBase extends AbstractMessageSource implements 
 	 * @param locale 本地化语言
 	 * @return
 	 */
-	private String getText(String code, Locale locale) {
+	public String getText(String code, Locale locale) {
 		String localeCode = locale.getLanguage() + DB_SPLIT_CODE + locale.getCountry();
 //        String localeCode = locale.toString();
 		String key = code + MAP_SPLIT_CODE + localeCode;

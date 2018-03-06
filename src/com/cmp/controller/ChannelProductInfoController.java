@@ -86,6 +86,7 @@ public class ChannelProductInfoController extends BaseController {
 				model.addAttribute("actualAgentCust", user.get_agent_cust());
 				model.addAttribute("expectedAgentVolume", user.getVolume());
 				model.addAttribute("actualAgentVolume", user.get_volume());
+				model.addAttribute("reward", user.getReward());
 			}
 			
 		} catch (Exception e) {

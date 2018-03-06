@@ -28,15 +28,17 @@ public class OutsiteController extends BaseController {
 			String referrer = request.getHeader("referer");
 			
 			if (StringUtils.isNotBlank(referrer)) {
-				String makaId = referrer.lastIndexOf("/") != -1 ? referrer.substring(referrer.lastIndexOf("/")+1, referrer.length()) : null;
-				
+				String makaId = (referrer.lastIndexOf("/") != -1) 
+									? referrer.substring(referrer.lastIndexOf("/")+1, (referrer.lastIndexOf("?") != -1 ? referrer.lastIndexOf("?") : referrer.length())) 
+									: null;
+									
 				if (StringUtils.isNotBlank(makaId)) {
 					User user = userService.findUserByApiId(makaId);
 					
 					if (user != null) {
 						model.addAttribute("userName", user.getName());
 						model.addAttribute("userEmail", user.getEmail());
-						model.addAttribute("userWeChat", "");
+						model.addAttribute("userWeChat", user.getWeChat());
 						model.addAttribute("userPhone", user.getPhone());
 					}
 				}

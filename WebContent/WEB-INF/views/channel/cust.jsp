@@ -68,13 +68,13 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="phone"><spring:message code='phoneNo'/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <label for="phone"><spring:message code='phoneNo'/></label>
 	                  <input type="text" class="form-control" id="phone" name="phone" placeholder="<spring:message code='phoneNo'/>">
 	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="email"><spring:message code='email'/></label>
+	                  <label for="email"><spring:message code='email'/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" class="form-control" id="email" name="email" placeholder="<spring:message code='email'/>">
 	                </div>
 	            </div>
@@ -86,31 +86,31 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="identity1_id">身分證件1</label>
+	                  <label for="identity1_id"><spring:message code="IDType"/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <select id="identity1_id" name="identity1_id">
-	                  	<option value="0">=== 請選擇 ===</option>
-						<option value="1">身分證</option>
-						<option value="2">護照</option>
-						<option value="3">台胞證</option>
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity1_code" style="text-align: right;" >證件號碼</label>
+	                  <label for="identity1_code" style="text-align: right;" ><spring:message code="IDNumber"/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" id="identity1_code" name="identity1_code" >
-	                  <label for="identity1_name" style="text-align: right;" >證件姓名</label>
+	                  <label for="identity1_name" style="text-align: right;" ><spring:message code="IDName"/><span class="pull-right" style="color: red;">＊ </span></label>
 	                  <input type="text" id="identity1_name" name="identity1_name" >
 	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="identity2_id">身分證件2</label>
+	                  <label for="identity2_id"><spring:message code="secondIDType"/></label>
 	                  <select id="identity2_id" name="identity2_id">
-	                  	<option value="0">=== 請選擇 ===</option>
-						<option value="1">身分證</option>
-						<option value="2">護照</option>
-						<option value="3">台胞證</option>
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity2_code" style="text-align: right;" >證件號碼</label>
+	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="secondIDNo"/></label>
 	                  <input type="text" id="identity2_code" name="identity2_code" >
-	                  <label for="identity2_name" style="text-align: right;" >證件姓名</label>
+	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="secondIDName"/></label>
 	                  <input type="text" id="identity2_name" name="identity2_name" >
 	                </div>
 	            </div>
@@ -122,22 +122,20 @@
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="census">Census</label>
-	                  <input type="text" class="form-control" id="census" name="census" placeholder="Enter Census">
+	                  <label for="census"><spring:message code="residentialAddress"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="census" name="census" placeholder="<spring:message code="residentialAddress"/>">
 	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="address"><spring:message code='address'/></label>
 	                  <input type="text" class="form-control" id="address" name="address" placeholder="<spring:message code='address'/>">
-	                  <label for="address">Address</label>
-	                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
 	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="remark"><spring:message code='remark'/></label>
-	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter Remark">
+	                  <label for="remark"><spring:message code='remarks'/></label>
+	                  <input type="text" class="form-control" id="remark" name="remark" placeholder="<spring:message code='remarks'/>">
 	                </div>
 	            </div>
 	            <div class="box-body">
@@ -339,7 +337,12 @@ function btnEditClicked(btn) {
 //[Save] modal_Edit >>按下Save 儲存
 function btnSaveClicked() {
 	var cust_name = $('#cust_name').val();
-	var phone = $('#phone').val();
+	var email = $('#email').val();
+	var identity1_id = $('#identity1_id').val();
+	var identity1_code = $('#identity1_code').val();
+	var identity1_name = $('#identity1_name').val();
+	var census = $('#census').val();
+	
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
@@ -349,10 +352,30 @@ function btnSaveClicked() {
 		$('#cust_name').parents('.form-group').addClass('has-error');
 		errMsg += '<spring:message code="error.mustName"/><br/>';
 	}
-	if (''==phone.trim()) {
+	if (''==email.trim()) {
 		isError = true;
-		$('#phone').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message code="error.mustPhoneNo"/><br/>';
+		$('#email').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message code="error.mustEmail"/><br/>';
+	}
+	if (''==identity1_id.trim()) {
+		isError = true;
+		$('#identity1_id').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message code="error.mustIdentity1"/><br/>';
+	}
+	if (''==identity1_code.trim()) {
+		isError = true;
+		$('#identity1_code').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message code="error.mustIdentity1_code"/><br/>';
+	}
+	if (''==identity1_name.trim()) {
+		isError = true;
+		$('#identity1_name').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message code="error.mustIdentity1_name"/><br/>';
+	}
+	if (''==census.trim()) {
+		isError = true;
+		$('#census').parents('.form-group').addClass('has-error');
+		errMsg += '<spring:message code="error.mustCensus"/><br/>';
 	}
 
 	if(isError){
@@ -423,10 +446,59 @@ $(function() {
 			{ "data" : "phone" },
 			{ "data" : "email" },
 			{ "data" : "weChat" },
-			{ "data" : "status.name" },
+			{ "data" : "status.sort" },
 			{ "data" : "status.sort" }
 		],
 		"columnDefs" : [
+			{
+				"targets" : [4],
+				"render" : function(data, type, row) {
+							var i18n;
+
+							switch(data) {
+							    case 1:
+							    	i18n = '<spring:message code="registered" />'
+							        break;
+							    case 2:
+							    	i18n = '<spring:message code="bookingFeePaid" />'
+							        break;
+							    case 3:
+							    	i18n = '<spring:message code="bookedAirTicket" />'
+							        break;
+							    case 4:
+							    	i18n = '<spring:message code="visaIssued" />'
+							        break;
+							    case 5:
+							    	i18n = '<spring:message code="bookedHotel" />'
+							        break;
+							    case 6:
+							    	i18n = '<spring:message code="visited" />'
+							        break;
+							    case 7:
+							    	i18n = '<spring:message code="contractsSigned" />'
+							        break;
+							    case 8:
+							    	i18n = '<spring:message code="depositPaid" />'
+							        break;
+							    case 9:
+							    	i18n = '<spring:message code="downPayment" />'
+							        break;
+							    case 10:
+							    	i18n = '<spring:message code="loanApplication" />'
+							        break;
+							    case 11:
+							    	i18n = '<spring:message code="progressPayments" />'
+							        break;
+							    case 12:
+							    	i18n = '<spring:message code="settlement" />'
+							        break;
+							    default:
+							    	i18n = 'N/A'
+							} 
+							
+							return i18n;
+						}
+			},
 			{
 				"targets" : [5],
 				"render" : function(data, type, row) {

@@ -5,28 +5,28 @@
 
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="userInfo"/></h3>
+		<h3 class="box-title"><spring:message code="allChannels" /></h3>
 	</div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblMain">
 			<thead>
 				<tr>
-					<th rowspan="2"><spring:message code='name'/></th>
-					<th rowspan="2"><spring:message code='status'/></th>
-					<th rowspan="2"><spring:message code='channels'/></th>
-					<th rowspan="2"><spring:message code='reward'/>%</th>
-					<th colspan="2"><spring:message code='channelsNo'/></th>
-					<th colspan="2"><spring:message code='tourNo'/></th>
-					<th colspan="2"><spring:message code='salesNo'/></th>
-					<th rowspan="2" style="width: 100px;"><spring:message code='option'/></th>
+					<th rowspan="2"><spring:message code="name"/></th>
+					<th rowspan="2"><spring:message code="status"/></th>
+					<th rowspan="2"><spring:message code="upstream"/></th>
+					<th rowspan="2"><spring:message code="reward"/>%</th>
+					<th colspan="2"><spring:message code="channelsNo"/></th>
+					<th colspan="2"><spring:message code="tourNo"/></th>
+					<th colspan="2"><spring:message code="salesNo"/></th>
+					<th rowspan="2" style="width: 100px;"><spring:message code="option"/></th>
 				</tr>
 				<tr>
-					<th><spring:message code='target'/></th>
-					<th><spring:message code='accomplished'/></th>
-					<th><spring:message code='target'/></th>
-					<th><spring:message code='accomplished'/></th>
-					<th><spring:message code='target'/></th>
-					<th><spring:message code='accomplished'/></th>
+					<th><spring:message code="target"/></th>
+					<th><spring:message code="accomplished"/></th>
+					<th><spring:message code="target"/></th>
+					<th><spring:message code="accomplished"/></th>
+					<th><spring:message code="target"/></th>
+					<th><spring:message code="accomplished"/></th>
 				</tr>
 			</thead>
 		</table>
@@ -40,7 +40,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title"><spring:message code='edit'/></h4>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
@@ -48,63 +48,63 @@
             	<input type="hidden" name="user_id" id="user_id" value="" />
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name"><spring:message code='name'/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="user_name"><spring:message code="name"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="user_name" id="user_name" maxlength="8"/>
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="account"><spring:message code='account'/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="account"><spring:message code="account"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="account" id="account" readonly="true" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="password"><spring:message code='password'/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="password"><spring:message code="password"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="password" id="password" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="phone"><spring:message code='phoneNo'/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="phone"><spring:message code="phone"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="phone" id="phone" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="email"><spring:message code='email'/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="email"><spring:message code="email"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="email" id="email" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="weChat"><spring:message code='wechatID'/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="weChat"><spring:message code="weChat"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text"  class="form-control" name="weChat" id="weChat" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="status"><spring:message code='status'/></label>
+						<label for="status"><spring:message code="status"/></label>
 						<select name="status" id="status" >
-							<option value="1"><spring:message code='loginAccount'/></option>
-							<option value="2"><spring:message code='confirmEmail'/></option>
-							<option value="3"><spring:message code='maintainPersonalInfo'/></option>
-							<option value="4"><spring:message code='submitTest'/></option>
-							<option value="5"><spring:message code='enterUpstream'/></option>
-							<option value="6"><spring:message code='agreeContract'/></option>
-							<option value="6"><spring:message code='finishSignUp'/></option>
+							<option value="1">登錄帳號</option>
+							<option value="2">確認email</option>
+							<option value="3">維護個資</option>
+							<option value="4">提交提問</option>
+							<option value="5">輸入上游</option>
+							<option value="6">同意條款</option>
+							<option value="6">註冊完成</option>
 						</select>
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name"><spring:message code='remark'/></label>
+						<label for="user_name"><spring:message code="remark"/></label>
 						<input type="text" class="form-control" name="remark" id="remark" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name"><spring:message code='reward'/></label>
+						<label for="user_name"><spring:message code="reward"/></label>
 						<input type="text" class="form-control" name="reward" id="reward" readonly="true" />%
 		            </div>                              
 		        </div>
@@ -128,7 +128,7 @@
 		        			<td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
 		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
-		        	</table>                             
+		        	</table>
 		        </div>
 	            
 				<div class="modal-footer">
@@ -193,7 +193,7 @@ $(function() {
 					"render" : function(data, type, row) {
 						return '<a href="#">'
 								+'<span class="label label-warning" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>';
+								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
 					}
 				}
 			],
@@ -260,27 +260,27 @@ function btnSaveClicked() {
 	if (''==user_name.trim()) {
 		isError = true;
 		$('#user_name').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.mustName"/><br/>';
+		errMsg += '！Name為必填<br/>';
 	}
 	if (''==password.trim()) {
 		isError = true;
 		$('#password').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.mustPassword"/><br/>';
+		errMsg += '！Password為必填<br/>';
 	}
 	if (''==phone.trim()) {
 		isError = true;
 		$('#phone').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.mustPhontNo"/><br/>';
+		errMsg += '！Phone為必填<br/>';
 	}
 	if (''==email.trim()) {
 		isError = true;
 		$('#email').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.mustEmail"/><br/>';
+		errMsg += '！Email為必填<br/>';
 	}
 	if (''==weChat.trim()) {
 		isError = true;
 		$('#weChat').parents('.form-group').addClass('has-error');
-		errMsg += '<spring:message javaScriptEscape="true" code="error.MustWechat"/><br/>';
+		errMsg += '！WeChat為必填<br/>';
 	}
 
 	if(isError){
