@@ -21,6 +21,8 @@ public interface FileService {
 	
 	public List<FileServiceVO> findAllCustomerFiles(boolean isAdmin, Integer startRow, Integer pageLength);
 	
+	public List<FileServiceVO> findProductFilesByProductId(Integer productId, Integer startRow, Integer pageLength);
+	
 	public List<FileServiceVO> findCustomerFilesByCustId(Integer custId, Integer startRow, Integer pageLength);
 	
 	public FileServiceVO getFileByFileTypeAndSeqNoOrFileName(String fileType, Integer seqNo, String oriFileName);
@@ -39,7 +41,7 @@ public interface FileService {
 	
 	public FilesBaseConfig findFilesConfig(String configName);
 	
-	public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo);
+	//public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo);
 	
 	public VisitServiceVO findVisitInfoByDAOVO(VisitServiceVO vo);
 }

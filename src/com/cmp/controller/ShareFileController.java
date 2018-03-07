@@ -28,7 +28,7 @@ public class ShareFileController extends BaseController {
 	private static Log log = LogFactory.getLog(ShareFileController.class);
 	
 	@Autowired
-	FileService fileService;
+	private FileService fileService;
 	
 	@RequestMapping(value = { "" }, method = RequestMethod.GET)
     public String fileMain(Model model, @ModelAttribute("FileForm") FileForm form, HttpServletRequest request, HttpServletResponse response) {

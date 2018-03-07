@@ -119,7 +119,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<FilesProduct> findProductFileByDAOVO(FileDAOVO fileDAOVO) {
+	public List<Object> findProductFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select fp from FilesProduct fp ")
 		  .append(" where 1=1 ");
@@ -130,7 +130,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
 			sb.append(" and fp.upperFileName = :upperFileName ");
 		}
-		if (fileDAOVO.getCustId() != null) {
+		if (fileDAOVO.getProductId() != null) {
 			sb.append(" and fp.productId = :productId ");
 		}
 		
@@ -147,11 +147,11 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
 	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
 		}
-	    if (fileDAOVO.getCustId() != null) {
+	    if (fileDAOVO.getProductId() != null) {
 	    	q.setParameter("productId", fileDAOVO.getProductId());
 		}
 	    
-		return (List<FilesProduct>) q.list();
+		return (List<Object>) q.list();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -198,23 +198,35 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		if (entity instanceof FilesPublic) {
 			((FilesPublic)entity).setFilesSetting(fSetting);
 			
-		} else {
+		} else if (entity instanceof FilesCustomer) {
 			((FilesCustomer)entity).setFilesSetting(fSetting);
+			
+		} else if (entity instanceof FilesProduct) {
+			((FilesProduct)entity).setFilesSetting(fSetting);
+			
+		} else if (entity instanceof FilesVisit) {
+			((FilesVisit)entity).setFilesSetting(fSetting);
 		}
 		
 		getHibernateTemplate().save(entity);
 		
+		Integer seqNo = -1;
 		for (FilesPermission fm : fPermissions) {
 			fm.setFilesSetting(fSetting);
 			fm.setSeqNo(
 					entity instanceof FilesPublic
 						? ((FilesPublic)entity).getSeqNo()
-						: ((FilesCustomer)entity).getSeqNo());
+						: (entity instanceof FilesCustomer) 
+								? ((FilesCustomer)entity).getSeqNo()
+								: (entity instanceof FilesProduct)
+									? ((FilesProduct)entity).getSeqNo()
+									: ((FilesVisit)entity).getSeqNo());
 			
+			seqNo = fm.getSeqNo();
 			getHibernateTemplate().save(fm);
 		}
 		
-		return entity instanceof FilesPublic ? ((FilesPublic)entity).getSeqNo() : ((FilesCustomer)entity).getSeqNo();
+		return seqNo;
 	}
 
 	/**

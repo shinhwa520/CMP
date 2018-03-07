@@ -1,6 +1,7 @@
 package com.cmp.controller;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,15 +11,16 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
-import com.cmp.form.ProductForm;
-import com.cmp.model.User;
-import com.cmp.security.SecurityUtil;
+import com.cmp.service.FileService;
 import com.cmp.service.UserService;
+import com.cmp.service.vo.FileServiceVO;
 
 @Controller
 @RequestMapping("/product")
@@ -26,6 +28,8 @@ public class ProductController extends BaseController {
 	private static Log log = LogFactory.getLog(ProductController.class);
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private FileService fileService;
 
 	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
     public String fileMain(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -73,6 +77,26 @@ public class ProductController extends BaseController {
 	}
 	*/
 	
+	@RequestMapping(value="getProductFiles.json", method = RequestMethod.POST, produces="application/json")
+	public @ResponseBody DatatableResponse getPublicFiles(
+			@RequestParam(name="productId", required=false) Integer productId,
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+		
+		List<FileServiceVO> datalist = fileService.findProductFilesByProductId(productId, start, length);
+		
+		long total = 0;
+		if (datalist != null && !datalist.isEmpty()) {
+			 total = datalist.size();
+			 
+		} else {
+			datalist = new ArrayList<FileServiceVO>();
+			total = 0;
+		}
+		
+		return new DatatableResponse(total, datalist, total);
+	}
+	/*
 	@RequestMapping(value="viewKPI/{userId}", method = RequestMethod.GET)
 	public String viewKPI(Model model, @ModelAttribute("ProductForm") ProductForm form, HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -96,4 +120,5 @@ public class ProductController extends BaseController {
 		
 		return "product/personal_kpi";
 	}
+	*/
 }

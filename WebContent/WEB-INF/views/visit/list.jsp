@@ -109,13 +109,13 @@
 	var formAction;
 	
 	//[btn_KPI]
-	function btnKpiClicked(productId) {
+	function btnKpiClicked(visitId) {
 		var url = "${pageContext.request.contextPath}/channel/productInfo/viewKPI/" + visitId;
 		window.location.href = url;
 	}
 	
 	//[btn_Intro]
-	function btnIntroClicked(productId) {
+	function btnIntroClicked(visitId) {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/channel/personalInfo/getDMUrl',
 			data : {
