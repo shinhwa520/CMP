@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	private User findUserByAccount(String account) {
 
-		List<User> list = loginService.findUserByAccount(account);
+		List<User> list = loginService.findUserByAccountAndStatus(account, 6);
 		if(!list.isEmpty()){
 			return list.get(0);
 		}

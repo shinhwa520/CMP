@@ -6,4 +6,5 @@ import com.cmp.model.User;
 
 public interface LoginService {
 	List<User> findUserByAccount(String account);
+	List<User> findUserByAccountAndStatus(String account, int statusSort);
 }

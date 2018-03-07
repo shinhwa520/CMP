@@ -28,6 +28,10 @@ public class UserInfoForm implements Serializable {
 	private int _agent_user=0;	//實際仲介user數
 	private int _agent_cust=0;	//實際仲介cust數
 	private int _volume=0;		//實際成交量
+	private String verificationCode;
+	
+	private String agreement;
+	
 	private String ans;
 	
 	public String getUserId() {
@@ -147,6 +151,18 @@ public class UserInfoForm implements Serializable {
 	}
 	public void setWeChat(String weChat) {
 		this.weChat = weChat;
+	}
+	public String getAgreement() {
+		return agreement;
+	}
+	public void setAgreement(String agreement) {
+		this.agreement = agreement;
+	}
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
 	}
 
 }

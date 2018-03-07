@@ -12,7 +12,8 @@
         <spring:message code='password' var="password"/>
         <spring:message code='phoneNo' var="phoneNo"/>
         <spring:message code='wechatID' var="wechatID"/>
-
+        
+		<span id="prompt" class="alert-danger hidePrompt" ><spring:message code='realName'/></span>
 		<form:input class="form-control" path="name" id="name" placeholder="${name}" maxlength="8"/>
 		<form:input class="form-control" path="account" id="account" placeholder="${account}"/>
 		<form:input class="form-control" path="password" id="password" placeholder="${password}"/>
@@ -28,6 +29,17 @@
 			errorMessage(msg);
 		}
 	});
+
+    $( "#name" ).focusin(function(){
+		$('#prompt').removeClass('hidePrompt');
+		$('#prompt').addClass('showPrompt');
+    });
+
+    $( "#name" ).focusout(function(){
+		$('#prompt').removeClass('showPrompt');
+		$('#prompt').addClass('hidePrompt');
+    });
+    
 	function validateInput() {
 	  	var validateString = $('#name').val();
 	  	if(validateString.trim()==''){
@@ -52,3 +64,7 @@
 		}
 	}
 </script>
+<style>
+.hidePrompt { display: none; }
+.showPrompt { display: inline; }
+</style>

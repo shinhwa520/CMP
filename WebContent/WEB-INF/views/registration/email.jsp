@@ -4,10 +4,10 @@
 
 <section class="content">
 	<div class="topic"><spring:message code='enterEmail'/></div>
-	<form:form method="POST" onsubmit="return validateInput();" modelAttribute="EmailConfirmForm" action="${pageContext.request.contextPath}/registration/emailConfirm">
+	<form:form method="POST" onsubmit="return validateInput();" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/emailConfirm">
 		<spring:message code='email' var="email"/>
-		<form:input class="form-control" path="mailAddress" id="mailAddress" placeholder="${email}"/>
-		<form:errors class="form-control" path="mailAddress" cssClass="error" />
+		<form:input class="form-control" path="email" id="email" placeholder="${email}"/>
+		<form:errors class="form-control" path="email" cssClass="error" />
 		<input class="btn btn-lg btn-success btn-block" value="<spring:message code='confirm'/>" type="submit">
 	</form:form>
 </section>
@@ -19,7 +19,7 @@
 		}
 	});
 	function validateInput() {
-	  	var mailAddress = $('#mailAddress').val();
+	  	var mailAddress = $('#email').val();
 	  	if(mailAddress.trim()==''){
 	  		errorMessage('<spring:message code="error.enterEmail"/>');
 		  	return false;

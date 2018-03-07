@@ -116,6 +116,17 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 	}
 	
 	@Override
+	public List<User> findUserByAccountAndStatus(String account, int statusSort) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from User u ")
+		  .append(" where 1=1 ")
+		  .append(" and u.account = :account ")
+		  .append(" and u.status.sort >= :statusSort ");
+		List<User> returnList = (List<User>)getHibernateTemplate().findByNamedParam(sb.toString(), new String[] {"account", "statusSort"},new Object[] {account, statusSort});
+		return returnList;
+	}
+	
+	@Override
 	public List<User> findUserByRoleName(String roleName) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from User u ")

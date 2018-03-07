@@ -63,15 +63,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 	}
 	
 	
-	public void initUser(String mailAddress, String mailContent) throws Exception {
+	public User initUser(String mailAddress, String mailContent) throws Exception {
 		User user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleByName("USER"), statusDAO.findStatus("USER", 1)));//登錄帳號
 		Date current = new Date();
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
-		String mailbody = "是您吗？ 恭喜您测试成功！<br>";
-		mailbody += "Is it you? Congratulations you have completed the test questions!<br><br>";
-		mailbody += "请点以下的链接进入系统注册。<br>";
-		mailbody += "Please click on the link below to finish registeration.<br>";
-		mailbody += mailContent+"?tokenId="+token.getId();
+		String mailbody = "请於页面输入下列验证码。<br>";
+		mailbody += "Please enter the following verification code on the page.<br>";
+		mailbody += "验证码:"+token.getId().substring(0, 4);
 		mailbody += "<br><br><br>";
 		mailbody += "温馨提示，请确认您和其他人输入的信息无误，以避免后台管理处理客户登记或签证票务信息失误影响您的权益。<br>";
 		mailbody += "Reminder: To ensure our management service provides the correct details to secure your customers and airflight details,  Please ensure the information filled in accurate.<br>";
@@ -81,6 +79,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		String subject = "CMP信息服务网联 帐号申请验证通知";
 		sendSimpleMail(mailAddress, subject, mailbody);
+		return user;
 	}
 	
 	public void sendSimpleMail(String mailAddress, String subject, String mailContent) throws MessagingException, UnsupportedEncodingException {
@@ -93,9 +92,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		mailSender.send(mimeMessage);
 	}
 	
-	public User verifyToken(String tokenId) throws Exception {
+	public User verifyToken(String userId, String tokenId) throws Exception {
 		try {
-			Token token = tokenDAO.findTokenById(tokenId);
+			Token token = tokenDAO.findTokenByUserAndId(userId, tokenId);
+			if(null==token)
+				return null;
 			if(token.getCreateDateTime().getTime() + duration < new Date().getTime())
 				return null;
 			User user = token.getUser();
@@ -155,6 +156,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 	   return userDao.findUserByAccount(account);
 	}
 	
+	public User findUserByUserId(String userId) {
+		   return userDao.findUserById(userId);
+		}
+	
 	public void saveUserQues(String userId, String results) throws Exception {
 		Date date = new Date();
 		User user = userDao.findUserById(userId);
@@ -199,5 +204,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 			webApiDetailDAO.saveWebApiDetail(webApiDetail);
 		}
 		userDao.saveUser(user);
+		//
+		String mailbody = "恭喜您成功注册！<br>";
+		mailbody += "Congratulations you have registered success!<br><br>";
+		mailbody += "祝您有好的一天！<br>";
+		mailbody += "Have a nice day!<br><br>";
+		mailbody += "CMP 信息服务网联<br>";
+		
+		String subject = "CMP信息服务网联 平台帐号注册成功通知";
+		sendSimpleMail(user.getEmail(), subject, mailbody);
 	}
 }

@@ -29,7 +29,7 @@ $(function() {
 			contentType:"application/json;charset=utf-8", 
 			success : function(data) {
                 if (data.status === 200) {
-                	successMessage(data.message);
+                	successMessage("<spring:message code='gotMail'/>");
         			setTimeout(function(){
         				window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/login';
         			}, 2000);
@@ -46,6 +46,6 @@ $(function() {
 	}
 
 	function agreementPdf() {
-		window.open("${pageContext.request.contextPath}/registration/agreementPdf");
+		window.open("${pageContext.request.contextPath}/registration/agreementPdf?userId=" + $('#userId').val());
 	}
 </script>

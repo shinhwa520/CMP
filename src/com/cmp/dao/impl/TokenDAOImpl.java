@@ -27,4 +27,15 @@ public class TokenDAOImpl extends BaseDaoHibernate implements TokenDAO {
 		List<Token> returnList = (List<Token>)getHibernateTemplate().find(sb.toString(), new String[] {id});
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
+	
+	@Override
+	public Token findTokenByUserAndId(String userId, String id) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Token t ")
+		  .append(" where 1=1 ")
+		  .append(" and t.user.id = ? ")
+		  .append(" and SUBSTRING(t.id,1,4) = ? ");
+		List<Token> returnList = (List<Token>)getHibernateTemplate().find(sb.toString(), new String[] {userId, id});
+		return returnList.isEmpty() ? null : returnList.get(0);
+	}
 }

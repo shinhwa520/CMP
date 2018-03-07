@@ -12,7 +12,7 @@
         <div class="box-body">
         	<div class="form-group">
 				<label for="user_name"><span class="pull-right" style="color: red;">＊ </span><spring:message code="name"/></label>
-				<form:input class="form-control" path="name" id="user_name" />
+				<form:input class="form-control" path="name" id="user_name" readonly="true"/>
             </div>                              
         </div>
         <div class="box-body">
@@ -30,22 +30,21 @@
         <div class="box-body">
         	<div class="form-group">
 				<label for="phone"><span class="pull-right" style="color: red;">＊ </span><spring:message code="phoneNo"/></label>
-				<form:input class="form-control" path="phone" id="phone" />
+				<form:input class="form-control" path="phone" id="phone" readonly="true"/>
             </div>                              
         </div>
         <div class="box-body">
         	<div class="form-group">
 				<label for="email"><span class="pull-right" style="color: red;">＊ </span><spring:message code="email"/></label>
-				<form:input class="form-control" path="email" id="email" />
+				<form:input class="form-control" path="email" id="email" readonly="true"/>
             </div>
         </div>
         <div class="box-body">
         	<div class="form-group">
 				<label for="weChat"><span class="pull-right" style="color: red;">＊ </span><spring:message code="wechatID"/></label>
-				<form:input class="form-control" path="weChat" id="weChat" />
+				<form:input class="form-control" path="weChat" id="weChat" readonly="true"/>
             </div>
         </div>
-        <%--  註解
         <div class="box-body">
         	<div class="form-group">
 				<label for="status"><spring:message code="status"/></label>
@@ -60,44 +59,40 @@
             </div>                              
         </div>
          -->
-         --%>
-        <div class="box-body">
-        	<table style="width: 100%">
-        		<tr>
-        			<td style="width: 12%"><label><spring:message code="targetChannelsNo"/></label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
-        			<td style="width: 12%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
-        		</tr>
-        		<tr>
-        			<td style="width: 12%"><label><spring:message code="targetTourNo"/></label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
-        			<td style="width: 12%"><label><spring:message code="accomplishedTourNo"/></label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
-        		</tr>
-        		<tr>
-        			<td style="width: 12%"><label><spring:message code="targetSalesNo"/></label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="volume" id="volume" style="width: 80%; text-align:right;"/></td>
-        			<td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
-        			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
-        		</tr>
-        		<tr>
-        			<td colspan="4"><hr></td>
-        		</tr>
-        		<tr>
-        			<td style="width: 12%"><label><spring:message code="reward" /></label></td>
-        			<td style="width: 38%">${reward} %</td>
-        			<td style="width: 12%">&nbsp;</td>
-        			<td style="width: 38%">&nbsp;</td>
-        		</tr>
-        	</table>                             
-        </div>
 		<div class="modal-footer">
        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 		</div>
-	</form:form>
 	</div>
 </div>
+<div class="box-body"></div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"><spring:message code="personalKPI"/></h3>
+    </div>
+    <div class="box-body">
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 12%"><label><spring:message code="targetChannelsNo"/></label></td>
+                <td style="width: 38%"><form:input readonly="true" class="form-control" path="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
+                <td style="width: 12%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
+                <td style="width: 38%"><form:input readonly="true" class="form-control" path="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
+            </tr>
+            <tr>
+                <td style="width: 12%"><label><spring:message code="targetTourNo"/></label></td>
+                <td style="width: 38%"><form:input readonly="true" class="form-control" path="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
+                <td style="width: 12%"><label><spring:message code="accomplishedTourNo"/></label></td>
+                <td style="width: 38%"><form:input readonly="true" class="form-control" path="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
+            </tr>
+            <tr>
+                <td style="width: 12%"><label><spring:message code="targetSalesNo"/></label></td>
+                <td style="width: 38%"><form:input readonly="true" class="form-control" path="volume" id="volume" style="width: 80%; text-align:right;"/></td>
+                <td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
+                <td style="width: 38%"><form:input readonly="true" class="form-control" path="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</form:form>
 </section>
 <script>
 //按下Save 儲存
