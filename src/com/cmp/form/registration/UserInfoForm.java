@@ -32,6 +32,7 @@ public class UserInfoForm implements Serializable {
 	private int _agent_cust=0;	//實際仲介cust數
 	private int _volume=0;		//實際成交量
 	private String verificationCode;
+	private Integer reward=0;
 	
 	private String agreement;
 	
@@ -166,6 +167,12 @@ public class UserInfoForm implements Serializable {
 	}
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
+	}
+	public Integer getReward() {
+		return reward;
+	}
+	public void setReward(Integer reward) {
+		this.reward = reward;
 	}
 
 }

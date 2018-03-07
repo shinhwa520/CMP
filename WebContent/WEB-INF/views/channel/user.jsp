@@ -15,7 +15,6 @@
                     <th rowspan="2"><spring:message code="phoneNo"/></th>
                     <th rowspan="2"><spring:message code="email"/></th>
 					<th rowspan="2"><spring:message code="wechatID"/></th>
-					<th rowspan="2"><spring:message code="reward"/>%</th>
                     <th colspan="2"><spring:message code="channelsNo"/></th>
                     <th colspan="2"><spring:message code="tourNo"/></th>
                     <th colspan="2"><spring:message code="salesNo"/></th>
@@ -59,13 +58,13 @@
 						<input type="text" class="form-control" name="remark" id="remark" />
 		            </div>
 		        </div>
+		        <%--  註解
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="reward"><spring:message code="reward"/></label>
 						<input type="text" class="form-control" name="reward" id="reward" />%
 		            </div>
 		        </div>
-		        <%--  註解
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="phone">Phone</label>
@@ -146,7 +145,6 @@ $(function() {
 				{ "data" : "phone" },
 				{ "data" : "email" },
 				{ "data" : "weChat" },
-				{ "data" : "reward" },
 				{ "data" : "agent_user" },
 				{ "data" : "_agent_user" },
 				{ "data" : "agent_cust" },
@@ -156,13 +154,7 @@ $(function() {
 			],
 			"columnDefs" : [
 				{
-					"targets": [4],
-					"render": function (data, type, row) {
-						return row['reward'] + '%';
-					}
-				},
-				{
-				"targets" : 11,
+				"targets" : 10,
 				"data" : 'id',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
@@ -192,8 +184,8 @@ function btnEditClicked(btn) {
 					$('#user_id').val(btn.attr('userId'));
 					$('#user_name').val(resp.data.user.name);
 					$('#remark').val(resp.data.user.remark);
-					$('#reward').val(resp.data.user.reward);
 					/*
+					$('#reward').val(resp.data.user.reward);
 					$('#phone').val(resp.data.user.phone);
 					$('#email').val(resp.data.user.email);
 					$('#statusName').val(resp.data.user.status.name);
@@ -221,7 +213,7 @@ function btnEditClicked(btn) {
 
 //[Save] modal_Edit >>按下Save 儲存
 function btnSaveClicked() {
-	var reward = $('#reward').val();
+	//var reward = $('#reward').val();
 	var agent_user = $('#agent_user').val();
 	var agent_cust = $('#agent_cust').val();
 	var volume = $('#volume').val();
@@ -229,11 +221,13 @@ function btnSaveClicked() {
 	$('.form-group').removeClass('has-error');
 	var isError = false;
 	var errMsg = '';
+	/*
 	if (!validateInt(reward)) {
 		isError = true;
 		$('#reward').parents('.form-group').addClass('has-error');
 		errMsg += '！Reward必須為數字<br/>';
 	}
+	*/
 	if (!validateInt(agent_user)) {
 		isError = true;
 		$('#agent_user').parents('.form-group').addClass('has-error');

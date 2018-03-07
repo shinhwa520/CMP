@@ -109,11 +109,10 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current, String remark, int reward){
+	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current, String remark){
 		String editorId = SecurityUtil.getSecurityUser().getUser().getId();
 		User user = findUserById(userId);
 		user.setRemark(remark);
-		user.setReward(reward);
 		user.setUpdateBy(editorId);
 		user.setUpdateDateTime(new Date());
 		userDAO.saveUser(user);
