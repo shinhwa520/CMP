@@ -113,7 +113,6 @@ public class ChannelUserController extends BaseController {
 	@ResponseBody
 	public AppResponse updateKpi(
 			@RequestParam(name="remark", required=false) String remark,
-			@RequestParam(name="reward", required=true) int reward,
 			@RequestParam(name="user_id", required=true) String userId,
 			@RequestParam(name="agent_user", required=true) int agent_user,
 			@RequestParam(name="agent_cust", required=true) int agent_cust,
@@ -122,7 +121,7 @@ public class ChannelUserController extends BaseController {
 		try {
 			RequestContext req = new RequestContext(request);
 			Date current = new Date();
-			userService.updateKpi(userId, sdfYearMonth.format(new Date()), agent_user, agent_cust, volume, current, remark, reward);
+			userService.updateKpi(userId, sdfYearMonth.format(new Date()), agent_user, agent_cust, volume, current, remark);
 			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -8,148 +8,196 @@
 	<div class="box-header with-border">
 		<h3 class="box-title"><spring:message code="productInfo" /></h3>
 	</div>
-	
-	<form:form method="POST" modelAttribute="ProductForm" action="">
-		<input type="hidden" name="productId" id="productId" value="" />
-		
-		<div id="ca-container" class="ca-container">
-			<div class="ca-wrapper">
-			
-				<!-- 圖片區塊 -->
-				<div class="ca-item">
-					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0001.jpg" alt="魅力大馬">
-						<h3> 魅力大馬 </h3>
-						<p> <span> 异域海岛 / 一带一路 / 第二家园 </span> </p>
-						<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
-					</div>
-					<div class="ca-content-wrapper">
-						<div class="ca-content">
-							<h6> 吉隆坡 / 新山 / 马六甲 &nbsp;&nbsp;五天四晚考察团 </h6>
-							<a href="#" class="ca-close">close</a>
-							<div class="ca-content-text">
-								<p>
-									<b>机场接送</b><br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;旅游巴士，专业导游接送机
-								</p>
-								<p>
-									<b>星级食宿</b><br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;全程5星酒店住宿，当地特色餐招待
-								</p>
-								<p>
-									<b>特别行程</b><br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;为您筛选最具投资价值的项目深入考察
-								</p>
-							</div>
-							<ul>
-								<!--
-								<li><a href="#" onclick="btnKpiClicked(1);"><spring:message code="KPI" /></a></li>
-								-->
-							</ul>
-							<ul>
-								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
-								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
-								<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
-							</ul>
-							<br />
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</form:form>	 
-	 
-	<div id="multiple_slides_visible">
-	
+	<br />
+	<div class="main">
+		<header>
+			<h1>吉隆坡  Kuala Lumpur</h1>
+		</header>
+		<!-- Elastislide Carousel -->
+		<ul id="area_1" class="elastislide-list">
+			<li><div align="center">康莱</div><div><a href="#" onClick="btnFileClicked(1)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_01.PNG" alt="image01" width="150px" height="150px" /></a></div></li>
+			<li><div align="center">Arte满家乐</div><a href="#" onClick="btnFileClicked(2)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_02.PNG" alt="image02" width="150px" height="150px" /></a></li>
+			<li><div align="center">白沙罗城豪华公寓</div><a href="#" onClick="btnFileClicked(3)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_03.PNG" alt="image03" width="150px" height="150px" /></a></li>
+			<li><div align="center">奥普斯</div><a href="#" onClick="btnFileClicked(4)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_04.PNG" alt="image04" width="150px" height="150px" /></a></li>
+			<li><div align="center">丽思卡尔顿</div><a href="#" onClick="btnFileClicked(5)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_05.PNG" alt="image05" width="150px" height="150px" /></a></li>
+			<li><div align="center">大马金豪</div><a href="#" onClick="btnFileClicked(6)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_06.PNG" alt="image06" width="150px" height="150px" /></a></li>
+		</ul>
 	</div>
+	<br />
+	<div class="main">
+		<header>
+			<h1>新山 Johor</h1>
+		</header>
+		<ul id="area_2" class="elastislide-list">
+			<li><div align="center">Avira花园联排别墅</div><a href="#" onClick="btnFileClicked(7)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_07.PNG" alt="image07" width="150px" height="150px" /></a></li>
+		</ul>
+	</div>
+	<br />
+	<div class="main">
+		<header>
+			<h1>马六甲 Malacca</h1>
+		</header>
+		<ul id="area_3" class="elastislide-list">
+			<li><div align="center">聚富湾</div><a href="#" onClick="btnFileClicked(8)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_08.PNG" alt="image08" width="150px" height="150px" /></a></li>
+			<li><div align="center">皇庭海湾1号</div><a href="#" onClick="btnFileClicked(9)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_09.PNG" alt="image09" width="150px" height="150px" /></a></li>
+		</ul>
+	</div>
+	<br />
+	<div class="main">
+		<header>
+			<h1>槟城 Penang</h1>
+		</header>
+		<ul id="area_4" class="elastislide-list">
+			<li><div align="center">安达曼海景公寓</div><a href="#" onClick="btnFileClicked(10)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_10.PNG" alt="image10" width="150px" height="150px" /></a></li>
+		</ul>
+		<!-- End Elastislide Carousel -->
+	</div>
+	<br />
 </div>
 </section>
 
+<!--.燈箱 File -->
+<div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title"><spring:message code='file'/></h4>
+      	</div>
+		<div class="modal_msg" style="display: none"></div>
+      	<div class="modal-body">
+            <form role="form" id="formFile" name="formFile">
+				<input type="hidden" name="fileType" id="queryFileType" value="PRODUCT" />
+				<input type="hidden" name="productId" id="productId" value="" />
+				<div class="box box-primary">
+					<div class="box-body no-padding">
+						<table class="table table-striped" id="productFileMain" width="100%">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th><spring:message code="fileName"/></th>
+									<th><spring:message code="fileSize"/></th>
+									<th><spring:message code="downloadTimes"/></th>
+									<th><spring:message code="fileDescription"/></th>
+									<th><spring:message code="updatedTime"/></th>
+									<th style="width: 100px;"><spring:message code="option"/></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div><!-- /.modal-content -->
+  </div>
+</div>
+<!--/.燈箱 File -->
+
 <script type="text/javascript">
 
-	$('#ca-container').contentcarousel({
+	var productFileMain;
 
-		// speed for the sliding animation
-		sliderSpeed : 500,
+	Number.prototype.format = function(n, x) {
+	    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+	    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+	};
 
-		// easing for the sliding animation
-		sliderEasing: 'easeInOutQuart',	//easeOutExpo
+	$.Elastislide.defaults = {
+		// orientation 'horizontal' || 'vertical'
+		orientation : 'horizontal',
 
-		// speed for the item animation (open / close)
-		itemSpeed   : 500,
+		// sliding speed
+		speed : 500,
 
-		// easing for the item animation (open / close)
-		itemEasing  : 'easeInOutCubic',
+		// sliding easing
+		easing : 'ease-in-out',
 
-		// number of items to scroll at a time
-		scroll  : 3
+		// the minimum number of items to show.
+		// when we resize the window, this will make sure minItems are always shown
+		// (unless of course minItems is higher than the total number of elements)
+		minItems : 3,
 
+		// index of the current item (left most item of the carousel)
+		start : 0,
+
+		// click item callback
+		onClick : function( el, position, evt ) { return false; },
+		onReady : function() { return false; },
+		onBeforeSlide : function() { return false; },
+		onAfterSlide : function() { return false; }
+	};
+	
+	$( '#area_1' ).elastislide();
+	$( '#area_2' ).elastislide();
+	$( '#area_3' ).elastislide();
+	$( '#area_4' ).elastislide();
+	
+	$(function() {
+		productFileMain = $('#productFileMain').DataTable(
+				{
+					"bFilter" : false,
+					"ordering" : false,
+					"info" : false,
+					"serverSide" : true,
+					"bLengthChange" : false,
+					"ajax" : {
+						"url" : '${pageContext.request.contextPath}/product/getProductFiles.json',
+						"type" : 'POST',
+						"data" : function(d) {
+									d.productId = $('#productId').val()
+								}
+					},
+					"columns" : [
+						{ "data" : "dataSeq" },
+						{ "data" : "fullFileName" },
+						{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
+														      return data.format() + ' KB';
+													    } },
+						{ "data" : "downloadTimes" },
+						{ "data" : "fileDescription" },
+						{ "data" : "updateTime" }
+					],
+					"columnDefs" : [
+						{
+							"targets" : 6,
+							"data" : 'seqNo',
+							"render" : function(data, type, row) {
+								return '<a href="#">'
+										+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
+										+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="download"/></span></a>'
+                                        +'<a href="#">'
+                                        +'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadPdfClicked($(this));">'
+                                        +'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="downloadPdf"/></span></a>';
+							}
+						}
+					],
+					select: true
+				});
 	});
-	
-	/*
-	$.getJSON("${pageContext.request.contextPath}/channel/productInfo/getProductsData.json", function(data) {
-        $(document).ready(function(){
-            $("#multiple_slides_visible").agile_carousel({
-                carousel_data: data,
-                carousel_outer_height: 450, //最外圍框高度
-                carousel_height: 444, //最外圍高度
-                slide_height: 440,	//一張圖的高度
-                carousel_outer_width: 400,
-                slide_width: 420,	//一張圖的寬度
-                number_slides_visible: 3,
-                transition_time: 330,
-                control_set_1: "previous_button,next_button",
-                control_set_2: "group_numbered_buttons",
-                persistent_content: "<p class='persistent_content'>產品清單</p>"       
-            });
-        });
-    });
-	*/
-	
-	var formAction;
-	
-	//[btn_KPI]
-	function btnKpiClicked(productId) {
-		var url = "${pageContext.request.contextPath}/channel/productInfo/viewKPI/" + productId;
-		window.location.href = url;
+
+	//[File] 進入modal_File
+	function btnFileClicked(productId) {
+		$('#productId').val(productId);
+
+		//if (productFileMain) {
+		//	$('#productFileMain').DataTable().destroy();
+		//}
+
+		productFileMain.ajax.reload();	//重查資料
+
+		$('#modal_File').modal();
 	}
 	
-	//[btn_Intro]
-	function btnIntroClicked(productId) {
-		$.ajax({
-			url : '${pageContext.request.contextPath}/channel/personalInfo/getDMUrl',
-			data : {
-				"productId" : productId
-			},
-			type : "POST",
-			dataType : 'json',
-			async: false,
+	//[Download] 按下Download按鈕
+	function btnDownloadClicked(btn) {
+		var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=product/list";
+	  	window.location.href = downloadUrl;
 
-			success : function(resp) {
-				if (resp.code == '200') {
-					if (resp.data.errorMsg != null) {
-						alert(resp.data.errorMsg);
-						
-					} else {
-						window.open(resp.data.channelUrl, '_blank');
-					}
-					//successMsgModal(resp.message);
-				} else {
-					alert(resp.message);
-				}
-			},
-
-			error : function(xhr, ajaxOptions, thrownError) {
-				alert(xhr.status);
-				alert(thrownError);
-			}
-		});
-	}
-	
-	//[btn_Download]
-	function btnDownloadClicked(productId) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadProducts?productId="+productId+"&fileType=PRODUCT&fromPage=product/list";
-	    window.location.href = downloadUrl;
+	  	setTimeout(function(){
+	  		if (productFileMain) {
+	  			productFileMain.ajax.reload();
+	  		}
+	  	}, 2000);
 	}
 
     function btnDownloadPdfClicked(productId) {

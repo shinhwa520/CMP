@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.cmp.AppResponse;
 import com.cmp.MenuItem;
@@ -26,7 +27,6 @@ import com.cmp.model.User;
 import com.cmp.model.WebApiDetail;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.UserService;
-import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/personalInfo")
@@ -56,7 +56,7 @@ public class ChannelPersonalInfoController extends BaseController {
 	@RequestMapping(value="/getDMUrl", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse getUserProductDMpage(
-			@RequestParam(name="productId", required=true) Integer productId,
+			@RequestParam(name="visitId", required=true) Integer visitId,
 			Model model) {
 		try {
 			String userId = SecurityUtil.getSecurityUser().getUser().getId();
@@ -114,6 +114,7 @@ public class ChannelPersonalInfoController extends BaseController {
 		form.set_volume(user.get_volume());
 		form.setEmail(user.getEmail());
 		form.setWeChat(user.getWeChat());
+		form.setReward(user.getReward());
 		
 		WebApiDetail apiDetail = webApiDetailDAO.findWebApiDetailByUserId(user.getId());
 		if(null == apiDetail)

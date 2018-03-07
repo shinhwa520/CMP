@@ -19,10 +19,14 @@ import com.cmp.dao.vo.FileDAOVO;
 import com.cmp.model.FilesBaseConfig;
 import com.cmp.model.FilesCustomer;
 import com.cmp.model.FilesPermission;
+import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
 import com.cmp.model.FilesSetting;
+import com.cmp.model.FilesVisit;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
+import com.cmp.service.vo.ProductServiceVO;
+import com.cmp.service.vo.VisitServiceVO;
 import com.cmp.utils.DeleteObjects2Aliyun;
 
 @Service("fileService")
@@ -65,6 +69,8 @@ public class FileServiceImpl implements FileService {
 		List<FileServiceVO> reList = new ArrayList<FileServiceVO>();
 		FilesPublic filesPublic;
 		FilesCustomer filesCustomer;
+		FilesProduct filesProduct;
+		FilesVisit filesVisit;
 		
 		FileServiceVO fsVO;
 		int dataSeq = 1;
@@ -72,36 +78,66 @@ public class FileServiceImpl implements FileService {
 			if (model instanceof FilesPublic) {
 				filesPublic = (FilesPublic)model;
 				filesCustomer = null;
+				filesProduct = null;
+				filesVisit = null;
 				
-			} else {
+			} else if (model instanceof FilesCustomer) {
 				filesPublic = null;
 				filesCustomer = (FilesCustomer)model;
+				filesProduct = null;
+				filesVisit = null;
+				
+			} else if (model instanceof FilesProduct) {
+				filesPublic = null;
+				filesCustomer = null;
+				filesProduct = (FilesProduct)model;
+				filesVisit = null;
+				
+			} else  {
+				filesPublic = null;
+				filesCustomer = null;
+				filesProduct = null;
+				filesVisit = (FilesVisit)model;
 			}
 			
 			fsVO = new FileServiceVO();
 			fsVO.setDataSeq(dataSeq);
 			BeanUtils.copyProperties(model, fsVO, new String[] {"updateTime"});
 			fsVO.setFullFileName(filesPublic != null ? filesPublic.getFileName().concat(".").concat(filesPublic.getFileExtension())
-													 : filesCustomer.getFileName().concat(".").concat(filesCustomer.getFileExtension())
+													 : filesCustomer != null ? filesCustomer.getFileName().concat(".").concat(filesCustomer.getFileExtension())
+															 : filesProduct != null ? filesProduct.getFileName().concat(".").concat(filesProduct.getFileExtension())
+																	 : filesVisit.getFileName().concat(".").concat(filesVisit.getFileExtension())
 								);
-			fsVO.setOnTopChkbox(filesPublic != null ? filesPublic.getFilesSetting().getOnTop() : filesCustomer.getFilesSetting().getOnTop());
+			
 			fsVO.setUpdateTime(
-					DATE_TIME_FORMAT.format(filesPublic != null ? filesPublic.getUpdateTime() : filesCustomer.getUpdateTime()));
+					DATE_TIME_FORMAT.format(
+							filesPublic != null ? filesPublic.getUpdateTime() 
+												: filesCustomer != null ? filesCustomer.getUpdateTime()
+																		: filesProduct != null ? filesProduct.getUpdateTime()
+																							   : filesVisit.getUpdateTime()));
 			
-			if (filesPublic != null ? filesPublic.getFilesSetting().getActivationBegin() != null
-									: filesCustomer.getFilesSetting().getActivationBegin() != null) {
-				fsVO.setBeginDateStr(DATE_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationBegin() : filesCustomer.getFilesSetting().getActivationBegin()));
-				fsVO.setBeginTimeStr(TIME_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationBegin() : filesCustomer.getFilesSetting().getActivationBegin()));
-			}
-			
-			if (filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() != null
-									: filesCustomer.getFilesSetting().getActivationEnd() != null) {
-				fsVO.setEndDateStr(DATE_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() : filesCustomer.getFilesSetting().getActivationEnd()));
-				fsVO.setEndTimeStr(TIME_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() : filesCustomer.getFilesSetting().getActivationEnd()));
+			if (filesProduct == null && filesVisit == null) {
+				fsVO.setOnTopChkbox(filesPublic != null ? filesPublic.getFilesSetting().getOnTop() : filesCustomer.getFilesSetting().getOnTop());
+				
+				if (filesPublic != null ? filesPublic.getFilesSetting().getActivationBegin() != null
+						: filesCustomer.getFilesSetting().getActivationBegin() != null) {
+					fsVO.setBeginDateStr(DATE_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationBegin() : filesCustomer.getFilesSetting().getActivationBegin()));
+					fsVO.setBeginTimeStr(TIME_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationBegin() : filesCustomer.getFilesSetting().getActivationBegin()));
+				}
+				
+				if (filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() != null
+										: filesCustomer.getFilesSetting().getActivationEnd() != null) {
+					fsVO.setEndDateStr(DATE_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() : filesCustomer.getFilesSetting().getActivationEnd()));
+					fsVO.setEndTimeStr(TIME_FORMAT.format(filesPublic != null ? filesPublic.getFilesSetting().getActivationEnd() : filesCustomer.getFilesSetting().getActivationEnd()));
+				}
 			}
 			
 //			BeanUtils.copyProperties(filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() : filesCustomer.getFilesSetting().getFilesBaseConfig(), fsVO, new String[] {"updateTime"});
-			FilesBaseConfig config = filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() : filesCustomer.getFilesSetting().getFilesBaseConfig();
+			FilesBaseConfig config = 
+					filesPublic != null ? filesPublic.getFilesSetting().getFilesBaseConfig() 
+										: filesCustomer != null ? filesCustomer.getFilesSetting().getFilesBaseConfig()
+																: filesProduct != null ? filesProduct.getFilesSetting().getFilesBaseConfig()
+																					   : filesVisit.getFilesSetting().getFilesBaseConfig();
 			fsVO.setFileType(config.getConfigName());
 			reList.add(fsVO);
 			
@@ -195,9 +231,14 @@ public class FileServiceImpl implements FileService {
 				Object entity = null;
 				if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PUBLIC)) {
 					entity = new FilesPublic();
+					
 				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
 					entity = new FilesCustomer();
 					((FilesCustomer)entity).setCustId(fileServiceVO.getCustId());
+					
+				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
+					entity = new FilesProduct();
+					((FilesProduct)entity).setProductId(fileServiceVO.getProductId());
 				}
 				
 				if (entity != null) {
@@ -385,7 +426,7 @@ public class FileServiceImpl implements FileService {
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
 				entity = "FilesProduct";
-				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
+				modelList = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
 			}
 			
 			if (modelList != null && !modelList.isEmpty()) {
@@ -434,5 +475,65 @@ public class FileServiceImpl implements FileService {
 		}
 		
 		return reList;
+	}
+	
+	@Override
+	public List<FileServiceVO> findProductFilesByProductId(Integer productId, Integer startRow, Integer pageLength) {
+		List<FileServiceVO> reList = null;
+		List<Object> fpList;
+		FileDAOVO fileDAOVO;
+		
+		try {
+			fileDAOVO = new FileDAOVO();
+			fileDAOVO.setProductId(productId);
+			fpList = fileDAO.findProductFileByDAOVO(fileDAOVO, startRow, pageLength);
+			
+			if (fpList != null && !fpList.isEmpty()) {
+				reList = transModel2ServiceVO(fpList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return reList;
+	}
+/*
+	@Override
+	public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo) {
+		try {
+			FileDAOVO fileDAOVO	 = new FileDAOVO();
+			fileDAOVO.setProductId(vo.getProductId());
+			
+			List<FilesProduct> productList = fileDAO.findProductFileByDAOVO(fileDAOVO);
+			
+			if (productList != null && !productList.isEmpty()) {
+				vo.setFilesProduct(productList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
+	}
+*/
+	@Override
+	public VisitServiceVO findVisitInfoByDAOVO(VisitServiceVO vo) {
+		try {
+			FileDAOVO fileDAOVO	 = new FileDAOVO();
+			fileDAOVO.setVisitId(vo.getVisitId());
+			
+			List<FilesVisit> visitList = fileDAO.findVisitFileByDAOVO(fileDAOVO);
+			
+			if (visitList != null && !visitList.isEmpty()) {
+				vo.setFilesVisit(visitList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
 	}
 }

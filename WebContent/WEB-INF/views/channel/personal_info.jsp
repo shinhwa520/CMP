@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
 <section class="content">
+<form:form method="GET" modelAttribute="UserInfoForm">
 <div class="box-body"></div>
 <div class="box box-primary">
 	<div class="box-header with-border">
@@ -8,7 +9,7 @@
 	</div>
 	<div class="box-body no-padding">
 	<div id="message" style="display: none"></div>
-	<form:form method="GET" modelAttribute="UserInfoForm">
+	
         <div class="box-body">
         	<div class="form-group">
 				<label for="user_name"><span class="pull-right" style="color: red;">＊ </span><spring:message code="name"/></label>
@@ -47,11 +48,17 @@
         </div>
         <div class="box-body">
         	<div class="form-group">
+				<label for="reward"><span class="pull-right" style="color: red;">＊ </span><spring:message code="defaultReward"/></label>
+				<form:input class="form-control" path="reward" id="reward" />
+            </div>                              
+        </div>
+        <!--
+        <div class="box-body">
+        	<div class="form-group">
 				<label for="status"><spring:message code="status"/></label>
 				<form:input readonly="true" class="form-control" path="statusName" id="statusName" />
             </div>                              
         </div>
-        <!--
         <div class="box-body">
         	<div class="form-group">
 				<label for="channelUrl"><spring:message code="tools"/></label>
@@ -104,7 +111,7 @@ function btnSaveClicked() {
 	var phone = $('#phone').val();
 	var email = $('#email').val();
 	var weChat = $('#weChat').val();
-
+	var reward = $('#reward').val();
 	//頁面輸入檢核
 	$('.form-group').removeClass('has-error');
 	var isError = false;
@@ -139,7 +146,12 @@ function btnSaveClicked() {
 		$('#weChat').parents('.form-group').addClass('has-error');
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustWechat"/><br/>';
 	}
-
+	if (!validateInt(reward)) {
+		isError = true;
+		$('#reward').parents('.form-group').addClass('has-error');
+		errMsg += '！Reward必須為數字<br/>';
+	}
+	
 	//頁面輸入檢核Error
 	if(isError){
 		errorMessage(errMsg);
@@ -164,4 +176,13 @@ function btnSaveClicked() {
 		}
 	});
 }
+
+function validateInt(input) {
+	var regExp = /^\d+$/;
+	return regExp.test(input);
+}
 </script>
+<style>
+.box-primary .box-body .box-body{ padding-bottom: 2px; }
+.modal-footer { padding-top: 5px; padding-bottom: 5px; }
+</style>

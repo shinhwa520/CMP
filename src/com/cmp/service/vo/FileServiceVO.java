@@ -20,6 +20,7 @@ public class FileServiceVO {
 	private String bucketName;
 	private String updateTime;
 	private Integer fileSize;
+	private String fileCategory;
 	
 	private String originFileName;	//上傳的檔案原始名稱
 	private String upperFileName;
@@ -230,5 +231,13 @@ public class FileServiceVO {
 
 	public void setProductId(Integer productId) {
 		this.productId = productId;
+	}
+
+	public String getFileCategory() {
+		return fileCategory;
+	}
+
+	public void setFileCategory(String fileCategory) {
+		this.fileCategory = fileCategory;
 	}
 }

@@ -36,14 +36,13 @@ import com.cmp.MenuItem;
 import com.cmp.form.FileForm;
 import com.cmp.i18n.DatabaseMessageSourceBase;
 import com.cmp.model.FilesBaseConfig;
-import com.cmp.model.FilesProduct;
+import com.cmp.model.FilesVisit;
 import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.FileService;
-import com.cmp.service.ProductService;
 import com.cmp.service.UserService;
 import com.cmp.service.vo.FileServiceVO;
-import com.cmp.service.vo.ProductServiceVO;
+import com.cmp.service.vo.VisitServiceVO;
 import com.cmp.utils.GetObject2Aliyun;
 import com.cmp.utils.PostObject2Aliyun;
 
@@ -54,12 +53,9 @@ public class FileController extends BaseController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private ProductService productService;
-	@Autowired
 	private DatabaseMessageSourceBase databaseMessageSourceBase;
-	
 	@Autowired
-	FileService fileService;
+	private FileService fileService;
 	
 	@RequestMapping(value = { "" }, method = RequestMethod.GET)
     public String fileMain(Model model, @ModelAttribute("FileForm") FileForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -315,10 +311,11 @@ public class FileController extends BaseController {
 		return isOutputed ? null : "redirect:/"+fromPage;
 	}
 	
-	@RequestMapping(value="downloadProducts", method = RequestMethod.GET)
+	@RequestMapping(value="downloadVisitFiles", method = RequestMethod.GET)
 	public String downloadProductFile(
-			@RequestParam(name="productId", required=true) Integer productId,
+			@RequestParam(name="visitId", required=true) Integer visitId,
 			@RequestParam(name="fileType", required=true) String fileType,
+			@RequestParam(name="fileCategory", required=true) String fileCategory,
 			@RequestParam(name="fromPage", required=true) String fromPage,
 			Model model, @ModelAttribute("FileForm") FileForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
@@ -332,18 +329,19 @@ public class FileController extends BaseController {
 			}
 			
 			//查找產品檔案
-			ProductServiceVO psVO = new ProductServiceVO();
-			psVO.setProductId(productId);
-			ProductServiceVO retProduct = productService.findProductInfoByDAOVO(psVO);
+			VisitServiceVO vsVO = new VisitServiceVO();
+			vsVO.setVisitId(visitId);
+			vsVO.setFileCategory(fileCategory);
+			VisitServiceVO retVisit = fileService.findVisitInfoByDAOVO(vsVO);
 			
 			Map<String, String> fileMap = null;	//檔案清單
 			List<String> waterMarks = null;	//浮水印資料
-			if (retProduct != null 
-					&& (retProduct.getFilesProduct() != null && !retProduct.getFilesProduct().isEmpty())) {
+			if (retVisit != null 
+					&& (retVisit.getFilesVisit() != null && !retVisit.getFilesVisit().isEmpty())) {
 				
 				fileMap = new HashMap<String, String>();
 				
-				for (FilesProduct fp : retProduct.getFilesProduct()) {
+				for (FilesVisit fp : retVisit.getFilesVisit()) {
 					FileServiceVO retVO = fileService.modifyDownloadCount(fileType, fp.getSeqNo());
 					
 					String downloadFileName = "";
@@ -385,7 +383,7 @@ public class FileController extends BaseController {
 					String downloadTmpPath = request.getSession().getServletContext().getRealPath("/download/temp/"+userId+"/"+System.currentTimeMillis());
 					
 					isOutputed = new GetObject2Aliyun().getObjectWithWaterMark(
-							config, fileMap, waterMarks, downloadTmpPath, response);
+							config, fileMap, waterMarks, downloadTmpPath, fileCategory, response);
 				}
 			}
 			

@@ -119,7 +119,7 @@ public class GetObject2Aliyun {
     }
     
     public boolean getObjectWithWaterMark(
-    		FilesBaseConfig config, Map<String, String> keyMap, List<String> waterMarks, String outputPath, HttpServletResponse response) throws IOException {
+    		FilesBaseConfig config, Map<String, String> keyMap, List<String> waterMarks, String outputPath, String fileCategory, HttpServletResponse response) throws IOException {
     	
     	initConfig(config);
     	
