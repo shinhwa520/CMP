@@ -163,7 +163,7 @@ public class RegistrationController extends BaseController {
 	 * return jsonResponse
 	 */
 	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
-    public @ResponseBody String agreeAgreement(@ModelAttribute("UserInfoForm") UserInfoForm form) {
+    public @ResponseBody String agreeAgreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
     	try {
     		registrationService.agreement(form.getUserId());
 		} catch (Exception e) {
