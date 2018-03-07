@@ -41,11 +41,14 @@
 								</p>
 							</div>
 							<ul>
+								<!--
 								<li><a href="#" onclick="btnKpiClicked(1);"><spring:message code="KPI" /></a></li>
+								-->
 							</ul>
 							<ul>
 								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
 								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
+								<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
 							</ul>
 							<br />
 						</div>
@@ -149,4 +152,8 @@
 	    window.location.href = downloadUrl;
 	}
 
+    function btnDownloadPdfClicked(productId) {
+        var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadProductPdf?productId="+productId+"&fileType=PRODUCT&fromPage=product/list";
+        window.location.href = downloadUrl;
+    }
 </script>
