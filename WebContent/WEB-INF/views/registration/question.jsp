@@ -10,20 +10,23 @@
 		<table>
 		<c:if test="${!UserInfoForm.quesMap.isEmpty() }">
 			<c:forEach var="vo" items="${ UserInfoForm.quesMap }">
+				
 				<tr>
 					<td style="vertical-align:text-top;"><span style="color: blue;">${vo.key.sort }.</span></td>
 					<td><span style="color: blue;">${vo.key.content }</span></td>
 				</tr>
 					<c:forEach var="detail" items="${ vo.value }">
 					<tr>
-						<td style="vertical-align:text-top;"><input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.sort } ></td>
-						<td>${detail.content }</td>
+						<td style="vertical-align:text-top;" >
+							<input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.sort } >
+						</td>
+						<td><label class="radio_label" for=${detail.sort } id="label_${detail.id }" >${detail.content }</label></td>
 					</tr>
 					</c:forEach>
 				<tr>
 					<td colspan="2">&nbsp;</td>
 				</tr>
-					
+				
 			</c:forEach>
 		</c:if>
 		</table>
@@ -34,35 +37,54 @@
 
 
 <script type="text/javascript">
+	var ans = $('#ans').val();
+	var ansArray = ans.split(',');
 	var itemCount = ${UserInfoForm.quesMap.keySet().size()};
 	var results;
+	var resultArray;
 	var resultCount;
 	
 	function doSubmit() {
+		
+		$('.radio_label').removeClass('alert-danger');
 		var _userId = $('#userId').val();
+		var hasError = false;
 		var getResult = function () {
 		    var result = [];
+		    var index = 0;
 		    $('input:radio').each(function () {
-		        var $this = $(this), id = $this.attr('id');
+		        var $this = $(this), id = $this.attr('id'), val = $this.val();
 		        if ($(this).prop('checked')) {
 		            result.push(id);
+		            if(id!=ansArray[index]){
+		            	hasError = true;
+		            	$('#label_'+val).addClass('alert-danger');
+			        }
+		            index++;
 		        }
 		    });
 		    return result;
 		};
 		results = getResult().join(',');
 		resultCount = results.split(',').length;
-		console.log("itemCount :" + itemCount);
-		console.log("results :" + results);
-		console.log("resultCount :" + resultCount);
-		if(results != $('#ans').val()){
+
+		//先檢核是否全都回答
+		if(''==results || resultCount<itemCount){
+			if(hasError){
+				errorMessage("<spring:message code='error.mustAllCheck'/><br><spring:message code='notAllCorrect'/>");
+				return false;
+			}else{
+				errorMessage("<spring:message code='error.mustAllCheck'/>");
+				return false;
+			}
+
+		}
+		
+		if(results != ans){
 			errorMessage("<spring:message code='notAllCorrect'/>");
 			return false;
 		}
-		if(''==results || resultCount<itemCount){
-			errorMessage("<spring:message code='error.mustAllCheck'/>");
-			return false;
-		}
+
 		
 		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/upstream?userId='+_userId;
 		/*

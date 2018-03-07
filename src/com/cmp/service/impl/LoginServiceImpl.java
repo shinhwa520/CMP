@@ -20,4 +20,9 @@ public class LoginServiceImpl implements LoginService {
 	public List<User> findUserByAccount(String account) {
 	   return userDao.findUserByAccount(account);
 	}
+	
+	@Override
+	public List<User> findUserByAccountAndStatus(String account, int statusSort) {
+	   return userDao.findUserByAccountAndStatus(account, statusSort);
+	}
 }

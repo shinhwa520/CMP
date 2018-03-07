@@ -95,6 +95,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public User verifyToken(String userId, String tokenId) throws Exception {
 		try {
 			Token token = tokenDAO.findTokenByUserAndId(userId, tokenId);
+			if(null==token)
+				return null;
 			if(token.getCreateDateTime().getTime() + duration < new Date().getTime())
 				return null;
 			User user = token.getUser();

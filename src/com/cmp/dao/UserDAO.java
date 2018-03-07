@@ -17,4 +17,5 @@ public interface UserDAO {
 	Object[] findUserAndKpiById(String id, String yearMonth);
 	User findUserByEmail(String mailAddress);
 	public List<User> findUserByApiModelId(String apiModelId);
+	public List<User> findUserByAccountAndStatus(String account, int statusSort);
 }
