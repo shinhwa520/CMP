@@ -14,7 +14,7 @@ public interface UserService {
 	List<User> findUser4MA(String roleName, String yearMonth, Integer start,Integer length);
 	long countUser4MA(String roleName);
 	
-	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current, String remark, int reward);
+	public void updateKpi(String userId, String yearMonth, int agent_user, int agent_cust, int volume, Date current, String remark);
 	public void update(String userId, String userName, String password, String phone, String email, String weChat, String status, String remark);
 	
 	public User findUserByApiId(String apiId);

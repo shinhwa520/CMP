@@ -14,7 +14,7 @@
 					<th rowspan="2"><spring:message code="name"/></th>
 					<th rowspan="2"><spring:message code="status"/></th>
 					<th rowspan="2"><spring:message code="upstream"/></th>
-					<th rowspan="2"><spring:message code="reward"/>%</th>
+					<th rowspan="2"><spring:message code="defaultReward"/></th>
 					<th colspan="2"><spring:message code="channelsNo"/></th>
 					<th colspan="2"><spring:message code="tourNo"/></th>
 					<th colspan="2"><spring:message code="salesNo"/></th>
@@ -92,7 +92,7 @@
 							<option value="4">提交提問</option>
 							<option value="5">輸入上游</option>
 							<option value="6">同意條款</option>
-							<option value="6">註冊完成</option>
+							<option value="7">註冊完成</option>
 						</select>
 		            </div>                              
 		        </div>
@@ -104,7 +104,7 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name"><spring:message code="reward"/></label>
+						<label for="user_name"><spring:message code="defaultReward"/></label>
 						<input type="text" class="form-control" name="reward" id="reward" readonly="true" />%
 		            </div>                              
 		        </div>
