@@ -94,7 +94,7 @@
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
             	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
-            	<input type="hidden" name="productId" id="productId" value="2" />
+            	<input type="hidden" name="productId" id="productId" value="5" />
             	
 		        <div class="box-body">
 		        	<div class="form-group">

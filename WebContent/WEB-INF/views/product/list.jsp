@@ -15,12 +15,12 @@
 		</header>
 		<!-- Elastislide Carousel -->
 		<ul id="area_1" class="elastislide-list">
-			<li><div align="center">康莱</div><div><a href="#" onClick="btnFileClicked(1)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/1.jpg" alt="image01" /></a></div></li>
-			<li><div align="center">Arte满家乐</div><a href="#" onClick="btnFileClicked(2)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/2.jpg" alt="image02" /></a></li>
-			<li><div align="center">白沙罗城豪华公寓</div><a href="#" onClick="btnFileClicked(3)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/3.jpg" alt="image03" /></a></li>
-			<li><div align="center">奥普斯</div><a href="#" onClick="btnFileClicked(4)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/4.jpg" alt="image04" /></a></li>
-			<li><div align="center">丽思卡尔顿</div><a href="#" onClick="btnFileClicked(5)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/5.jpg" alt="image05" /></a></li>
-			<li><div align="center">大马金豪</div><a href="#" onClick="btnFileClicked(6)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/6.jpg" alt="image06" /></a></li>
+			<li><div align="center">康莱</div><div><a href="#" onClick="btnFileClicked(1)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_01.PNG" alt="image01" width="150px" height="150px" /></a></div></li>
+			<li><div align="center">Arte满家乐</div><a href="#" onClick="btnFileClicked(2)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_02.PNG" alt="image02" width="150px" height="150px" /></a></li>
+			<li><div align="center">白沙罗城豪华公寓</div><a href="#" onClick="btnFileClicked(3)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_03.PNG" alt="image03" width="150px" height="150px" /></a></li>
+			<li><div align="center">奥普斯</div><a href="#" onClick="btnFileClicked(4)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_04.PNG" alt="image04" width="150px" height="150px" /></a></li>
+			<li><div align="center">丽思卡尔顿</div><a href="#" onClick="btnFileClicked(5)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_05.PNG" alt="image05" width="150px" height="150px" /></a></li>
+			<li><div align="center">大马金豪</div><a href="#" onClick="btnFileClicked(6)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_06.PNG" alt="image06" width="150px" height="150px" /></a></li>
 		</ul>
 	</div>
 	<br />
@@ -29,7 +29,7 @@
 			<h1>新山 Johor</h1>
 		</header>
 		<ul id="area_2" class="elastislide-list">
-			<li><div align="center">Avira花园联排别墅</div><a href="#" onClick="btnFileClicked(7)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/1.jpg" alt="image07" /></a></li>
+			<li><div align="center">Avira花园联排别墅</div><a href="#" onClick="btnFileClicked(7)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_07.PNG" alt="image07" width="150px" height="150px" /></a></li>
 		</ul>
 	</div>
 	<br />
@@ -38,8 +38,8 @@
 			<h1>马六甲 Malacca</h1>
 		</header>
 		<ul id="area_3" class="elastislide-list">
-			<li><div align="center">聚富湾</div><a href="#" onClick="btnFileClicked(8)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/1.jpg" alt="image09" /></a></li>
-			<li><div align="center">皇庭海湾1号</div><a href="#" onClick="btnFileClicked(9)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/2.jpg" alt="image10" /></a></li>
+			<li><div align="center">聚富湾</div><a href="#" onClick="btnFileClicked(8)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_08.PNG" alt="image08" width="150px" height="150px" /></a></li>
+			<li><div align="center">皇庭海湾1号</div><a href="#" onClick="btnFileClicked(9)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_09.PNG" alt="image09" width="150px" height="150px" /></a></li>
 		</ul>
 	</div>
 	<br />
@@ -48,7 +48,7 @@
 			<h1>槟城 Penang</h1>
 		</header>
 		<ul id="area_4" class="elastislide-list">
-			<li><div align="center">安达曼海景公寓</div><a href="#" onClick="btnFileClicked(10)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/small/1.jpg" alt="image11" /></a></li>
+			<li><div align="center">安达曼海景公寓</div><a href="#" onClick="btnFileClicked(10)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_10.PNG" alt="image10" width="150px" height="150px" /></a></li>
 		</ul>
 		<!-- End Elastislide Carousel -->
 	</div>
