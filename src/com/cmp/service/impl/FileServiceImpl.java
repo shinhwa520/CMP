@@ -19,10 +19,14 @@ import com.cmp.dao.vo.FileDAOVO;
 import com.cmp.model.FilesBaseConfig;
 import com.cmp.model.FilesCustomer;
 import com.cmp.model.FilesPermission;
+import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
 import com.cmp.model.FilesSetting;
+import com.cmp.model.FilesVisit;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
+import com.cmp.service.vo.ProductServiceVO;
+import com.cmp.service.vo.VisitServiceVO;
 import com.cmp.utils.DeleteObjects2Aliyun;
 
 @Service("fileService")
@@ -434,5 +438,43 @@ public class FileServiceImpl implements FileService {
 		}
 		
 		return reList;
+	}
+
+	@Override
+	public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo) {
+		try {
+			FileDAOVO fileDAOVO	 = new FileDAOVO();
+			fileDAOVO.setProductId(vo.getProductId());
+			
+			List<FilesProduct> productList = fileDAO.findProductFileByDAOVO(fileDAOVO);
+			
+			if (productList != null && !productList.isEmpty()) {
+				vo.setFilesProduct(productList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
+	}
+
+	@Override
+	public VisitServiceVO findVisitInfoByDAOVO(VisitServiceVO vo) {
+		try {
+			FileDAOVO fileDAOVO	 = new FileDAOVO();
+			fileDAOVO.setVisitId(vo.getVisitId());
+			
+			List<FilesVisit> visitList = fileDAO.findVisitFileByDAOVO(fileDAOVO);
+			
+			if (visitList != null && !visitList.isEmpty()) {
+				vo.setFilesVisit(visitList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
 	}
 }

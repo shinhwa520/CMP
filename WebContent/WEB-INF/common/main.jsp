@@ -41,8 +41,6 @@
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
-	<!-- <script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.mousewheel.js"></script>  -->
-	<!-- <script src="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.alpha.js"></script>  -->
 
 	<style type="text/css">
 		.box-shadow-menu{
@@ -269,8 +267,11 @@
 				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span><spring:message code="personalInfo" /></span></a>
 				</li>
+				<li class="<c:if test="${active eq 'VISIT_INFO'}">active</c:if> sidebar-item">
+					<a href="${pageContext.request.contextPath}/visit/list"> <span><spring:message code="visitInfo" /></span></a>
+				</li>
 				<li class="<c:if test="${active eq 'PRODUCT_INFO'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/productInfo/list"> <span><spring:message code="productInfo" /></span></a>
+					<a href="${pageContext.request.contextPath}/product/list"> <span><spring:message code="productInfo" /></span></a>
 				</li>
 				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/user/list"> <span><spring:message code="myChannels" /></span></a>

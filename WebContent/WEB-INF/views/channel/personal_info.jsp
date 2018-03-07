@@ -60,6 +60,7 @@
             </div>                              
         </div>
          -->
+         --%>
         <div class="box-body">
         	<table style="width: 100%">
         		<tr>
@@ -80,9 +81,17 @@
         			<td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
         			<td style="width: 38%"><form:input readonly="true" class="form-control" path="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
         		</tr>
+        		<tr>
+        			<td colspan="4"><hr></td>
+        		</tr>
+        		<tr>
+        			<td style="width: 12%"><label><spring:message code="reward" /></label></td>
+        			<td style="width: 38%">${reward} %</td>
+        			<td style="width: 12%">&nbsp;</td>
+        			<td style="width: 38%">&nbsp;</td>
+        		</tr>
         	</table>                             
         </div>
-		--%>
 		<div class="modal-footer">
        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 		</div>

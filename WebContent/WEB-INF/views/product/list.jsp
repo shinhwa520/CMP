@@ -18,8 +18,8 @@
 				<!-- 圖片區塊 -->
 				<div class="ca-item">
 					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0001.jpg" alt="魅力大馬">
-						<h3> 魅力大馬 </h3>
-						<p> <span> 异域海岛 / 一带一路 / 第二家园 </span> </p>
+						<h3> 建案1 </h3>
+						<p> <span> 建案1... </span> </p>
 						<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
 					</div>
 					<div class="ca-content-wrapper">
@@ -46,6 +46,80 @@
 							<ul>
 								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
 								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
+							</ul>
+							<br />
+						</div>
+					</div>
+				</div>
+				
+				<!-- 圖片區塊 -->
+				<div class="ca-item">
+					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0001.jpg" alt="魅力大馬">
+						<h3> 建案2 </h3>
+						<p> <span> 建案2... </span> </p>
+						<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
+					</div>
+					<div class="ca-content-wrapper">
+						<div class="ca-content">
+							<h6> 吉隆坡 / 新山 / 马六甲 &nbsp;&nbsp;五天四晚考察团 </h6>
+							<a href="#" class="ca-close">close</a>
+							<div class="ca-content-text">
+								<p>
+									<b>机场接送</b><br/>
+									&nbsp;&nbsp;&nbsp;&nbsp;旅游巴士，专业导游接送机
+								</p>
+								<p>
+									<b>星级食宿</b><br/>
+									&nbsp;&nbsp;&nbsp;&nbsp;全程5星酒店住宿，当地特色餐招待
+								</p>
+								<p>
+									<b>特别行程</b><br/>
+									&nbsp;&nbsp;&nbsp;&nbsp;为您筛选最具投资价值的项目深入考察
+								</p>
+							</div>
+							<ul>
+								<li><a href="#" onclick="btnKpiClicked(2);"><spring:message code="KPI" /></a></li>
+							</ul>
+							<ul>
+								<li><a href="#" onclick="btnIntroClicked(2);"><spring:message code="downloadProductImageLink" /></a></li>
+								<li><a href="#" onclick="btnDownloadClicked(2);"><spring:message code="downloadMarketingPoster" /></a></li>
+							</ul>
+							<br />
+						</div>
+					</div>
+				</div>
+				
+				<!-- 圖片區塊 -->
+				<div class="ca-item">
+					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0001.jpg" alt="魅力大馬">
+						<h3> 建案3 </h3>
+						<p> <span> 建案3... </span> </p>
+						<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
+					</div>
+					<div class="ca-content-wrapper">
+						<div class="ca-content">
+							<h6> 吉隆坡 / 新山 / 马六甲 &nbsp;&nbsp;五天四晚考察团 </h6>
+							<a href="#" class="ca-close">close</a>
+							<div class="ca-content-text">
+								<p>
+									<b>机场接送</b><br/>
+									&nbsp;&nbsp;&nbsp;&nbsp;旅游巴士，专业导游接送机
+								</p>
+								<p>
+									<b>星级食宿</b><br/>
+									&nbsp;&nbsp;&nbsp;&nbsp;全程5星酒店住宿，当地特色餐招待
+								</p>
+								<p>
+									<b>特别行程</b><br/>
+									&nbsp;&nbsp;&nbsp;&nbsp;为您筛选最具投资价值的项目深入考察
+								</p>
+							</div>
+							<ul>
+								<li><a href="#" onclick="btnKpiClicked(3);"><spring:message code="KPI" /></a></li>
+							</ul>
+							<ul>
+								<li><a href="#" onclick="btnIntroClicked(3);"><spring:message code="downloadProductImageLink" /></a></li>
+								<li><a href="#" onclick="btnDownloadClicked(3);"><spring:message code="downloadMarketingPoster" /></a></li>
 							</ul>
 							<br />
 						</div>

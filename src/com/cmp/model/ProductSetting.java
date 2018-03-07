@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -46,10 +44,6 @@ public class ProductSetting {
     @Column(name = "update_by", nullable = true)
 	private String updateBy;
 
-    @ManyToOne
-    @JoinColumn(name = "config_id")
-	private ProductBaseConfig productBaseConfig;
-    
     @OneToOne(optional = false, mappedBy = "productSetting")
     private ProductInfo productInfo;
 
@@ -58,8 +52,7 @@ public class ProductSetting {
 	}
 
 	public ProductSetting(Integer productId, Integer orderNum, Timestamp activationBegin, Timestamp activationEnd,
-			Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
-			ProductBaseConfig productBaseConfig, ProductInfo productInfo) {
+			Timestamp createTime, String createBy, Timestamp updateTime, String updateBy, ProductInfo productInfo) {
 		super();
 		this.productId = productId;
 		this.orderNum = orderNum;
@@ -69,7 +62,6 @@ public class ProductSetting {
 		this.createBy = createBy;
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
-		this.productBaseConfig = productBaseConfig;
 		this.productInfo = productInfo;
 	}
 
@@ -135,14 +127,6 @@ public class ProductSetting {
 
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
-	}
-
-	public ProductBaseConfig getProductBaseConfig() {
-		return productBaseConfig;
-	}
-
-	public void setProductBaseConfig(ProductBaseConfig productBaseConfig) {
-		this.productBaseConfig = productBaseConfig;
 	}
 
 	public ProductInfo getProductInfo() {

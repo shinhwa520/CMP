@@ -7,6 +7,7 @@ import com.cmp.model.FilesBaseConfig;
 import com.cmp.model.FilesPermission;
 import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesSetting;
+import com.cmp.model.FilesVisit;
 
 public interface FileDAO {
 
@@ -19,6 +20,8 @@ public interface FileDAO {
 	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
 	
 	public List<FilesProduct> findProductFileByDAOVO(FileDAOVO fileDAOVO);
+	
+	public List<FilesVisit> findVisitFileByDAOVO(FileDAOVO fileDAOVO);
 	
 	public Integer addFile(Object entity, FilesSetting fSetting, List<FilesPermission> fPermissions);
 	
