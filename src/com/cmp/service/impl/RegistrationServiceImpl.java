@@ -68,6 +68,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		if(null==checkUser){
 			user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleByName("USER"), statusDAO.findStatus("USER", 1)));//登錄帳號
 		}else{
+			checkUser.setAccount("");
 			checkUser.setStatus(statusDAO.findStatus("USER", 1));
 			checkUser.setUpdateDateTime(new Date());
 			user = userDao.saveUser(checkUser);
