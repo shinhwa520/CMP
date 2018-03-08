@@ -164,10 +164,7 @@
 							"render" : function(data, type, row) {
 								return '<a href="#">'
 										+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
-										+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="download"/></span></a>'
-                                        +'<a href="#">'
-                                        +'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadPdfClicked($(this));">'
-                                        +'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="downloadPdf"/></span></a>';
+										+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="download"/></span></a>';
 							}
 						}
 					],
@@ -199,9 +196,4 @@
 	  		}
 	  	}, 2000);
 	}
-
-    function btnDownloadPdfClicked(productId) {
-        var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadProductPdf?productId="+productId+"&fileType=PRODUCT&fromPage=product/list";
-        window.location.href = downloadUrl;
-    }
 </script>

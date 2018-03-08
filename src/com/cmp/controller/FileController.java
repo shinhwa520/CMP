@@ -397,8 +397,9 @@ public class FileController extends BaseController {
 
 	@RequestMapping(value="downloadProductPdf", method = RequestMethod.GET)
 	public String downloadPdfFile(
-			@RequestParam(name="productId", required=true) Integer productId,
+			@RequestParam(name="visitId", required=true) Integer visitId,
 			@RequestParam(name="fileType", required=true) String fileType,
+			@RequestParam(name="fileCategory", required=true) String fileCategory,
 			@RequestParam(name="fromPage", required=true) String fromPage,
 			Model model, @ModelAttribute("FileForm") FileForm form,
 			HttpServletRequest request, HttpServletResponse response) {

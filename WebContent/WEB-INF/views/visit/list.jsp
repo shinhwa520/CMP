@@ -48,7 +48,7 @@
 							<ul>
 								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
 								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
-								<!-- <li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdfFile" /></a></li> -->
+								<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
 							</ul>
 							<br />
 						</div>
@@ -154,7 +154,7 @@
 	
 	//[btn_Download]
 	function btnDownloadPdfClicked(visitId) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitFiles?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
+		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadProductPdf?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
 	    window.location.href = downloadUrl;
 	}
 
