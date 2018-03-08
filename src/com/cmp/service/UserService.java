@@ -3,7 +3,6 @@ package com.cmp.service;
 import java.util.Date;
 import java.util.List;
 
-import com.cmp.model.Commission;
 import com.cmp.model.User;
 
 public interface UserService {
@@ -19,6 +18,4 @@ public interface UserService {
 	public void update(String userId, String userName, String password, String phone, String email, String weChat, String status, String remark);
 	
 	public User findUserByApiId(String apiId);
-	public List<Commission> initCommissionList(String userId);
-	public void updateCommission(String ori, String results);
 }

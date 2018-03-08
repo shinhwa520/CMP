@@ -50,6 +50,32 @@ public class Commission implements java.io.Serializable {
 	
     public Commission() {
 	}
+    
+	public Commission(User user, ProductInfo productInfo, Integer commissionPercent, String createBy) {
+		super();
+		Date current = new Date();
+		this.id = String.valueOf(current.getTime());
+		this.user = user;
+		this.productInfo = productInfo;
+		this.commissionPercent = commissionPercent;
+		this.createBy = createBy;
+		this.createTime = current;
+		this.updateBy = createBy;
+		this.updateTime = current;
+	}
+
+	public Commission(String id, User user, ProductInfo productInfo, Integer commissionPercent, String createBy,
+			Date createTime, String updateBy, Date updateTime) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.productInfo = productInfo;
+		this.commissionPercent = commissionPercent;
+		this.createBy = createBy;
+		this.createTime = createTime;
+		this.updateBy = updateBy;
+		this.updateTime = updateTime;
+	}
 
 	public String getId() {
 		return id;

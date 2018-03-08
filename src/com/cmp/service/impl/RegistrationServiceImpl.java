@@ -175,7 +175,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		boolean findUpstream;
 		User user = userDao.findUserById(userId);
 		user.setStatus(statusDAO.findStatus("USER", 5));//輸入上游
-		List<User> upstreamList = findUserByAccount(upstreamAccount);
+		List<User> upstreamList = userDao.findUserByAccountAndStatus(upstreamAccount, 6);
 		if(null!=upstreamList && !upstreamList.isEmpty()){
 			user.setChannel(upstreamList.get(0));
 			findUpstream = true;

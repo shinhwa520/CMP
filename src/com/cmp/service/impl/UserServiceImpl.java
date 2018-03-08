@@ -169,28 +169,5 @@ public class UserServiceImpl implements UserService {
 		
 		return user;
 	}
-	
-	public List<Commission> initCommissionList(String userId){
-		return userDAO.findCommissionByUserId(userId);
-	}
-	
-	@Override
-	public void updateCommission(String ori, String results){
-		User user = SecurityUtil.getSecurityUser().getUser();
-		String[] oriArr = ori.split(",");
-		String[] resArr = results.split(",");
-		String[] tmp;
-		for(int i=0; i<resArr.length; i++){
-			if(!StringUtils.equals(oriArr[i], resArr[i])){
-				tmp = resArr[i].split("-");
-				Commission commission = commissionDAO.findCommissionById(tmp[0]);
-				commission.setCommissionPercent(Integer.valueOf(tmp[1]));
-				commission.setUpdateBy(user.getName());
-				commission.setUpdateTime(new Date());
-				commissionDAO.saveCommission(commission);
-			}
-		}
-		
-		
-	}
+
 }

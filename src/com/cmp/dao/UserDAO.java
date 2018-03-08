@@ -2,7 +2,6 @@ package com.cmp.dao;
 
 import java.util.List;
 
-import com.cmp.model.Commission;
 import com.cmp.model.User;
 
 public interface UserDAO {
@@ -19,5 +18,5 @@ public interface UserDAO {
 	User findUserByEmail(String mailAddress);
 	public List<User> findUserByApiModelId(String apiModelId);
 	public List<User> findUserByAccountAndStatus(String account, int statusSort);
-	public List<Commission> findCommissionByUserId(String userId);
+	
 }

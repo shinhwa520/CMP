@@ -8,7 +8,20 @@
 		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel/user/list"><spring:message code="myChannels"/></a>
 		/<spring:message code="reward"/>
 		&nbsp;＞<spring:message code="channel"/>:${ userName }</h3>
-		<a href="#" onclick="btnSaveClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="save"/></span></a>
+		
+		
+		<a href="#" onclick="btnSaveClicked();">
+			<span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%; margin-left: 10px;">
+				<spring:message code="save"/>
+			</span>
+		</a>
+		<a href="#" onclick="oneClickClicked();">
+			<span class="label label-warning pull-right" style="padding:5px 10px 5px 10px; font-size: 95%; margin-left: 1px;">
+				<spring:message code="oneClick"/>
+			</span>
+		</a>
+		<input id="defaultCommission" class="pull-right" type="text" readonly="true" value="${defaultCommission }" size="2"/>
+		<span class="pull-right" style="margin-right: 1px;"><spring:message code="defaultCommission"/></span>
 	</div>
 	<div class="box-body no-padding">
 		<form role="form" id="formEdit" name="formEdit">
@@ -96,6 +109,14 @@ function btnSaveClicked(input) {
 		}
 	});
 }
+
+function oneClickClicked() {
+	var _defaultCommission = $('#defaultCommission').val();
+    $('.commissionPercent').each(function () {
+        $(this).val(_defaultCommission);
+    });
+}
+
 
 function validateInt(input) {
 	var regExp = /^\d+$/;

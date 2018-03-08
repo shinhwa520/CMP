@@ -27,6 +27,7 @@ import com.cmp.model.Commission;
 import com.cmp.model.Customer;
 import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
+import com.cmp.service.CommissionService;
 import com.cmp.service.CustService;
 import com.cmp.service.UserService;
 
@@ -38,6 +39,8 @@ public class ChannelUserController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private CustService custService;
+	@Autowired
+	private CommissionService commissionService;
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String viewList(Model model) {
@@ -133,7 +136,9 @@ public class ChannelUserController extends BaseController {
 	
 	@RequestMapping(value="getCommissionByUserId/{userId}", method = RequestMethod.GET, produces="application/json")
 	public String getCommissionByUserId(Model model, @PathVariable String userId) {
-		List<Commission> commissionList = userService.initCommissionList(userId);
+		User user = SecurityUtil.getSecurityUser().getUser();
+		List<Commission> commissionList = commissionService.initCommissionList(userId);
+		model.addAttribute("defaultCommission", user.getReward());
 		model.addAttribute("userId", userId);
 		if(!commissionList.isEmpty())
 			model.addAttribute("userName", commissionList.get(0).getUser().getName());
@@ -146,8 +151,7 @@ public class ChannelUserController extends BaseController {
     public AppResponse updateCommission(String ori, String results, HttpServletRequest request) {
 		try {
 			RequestContext req = new RequestContext(request);
-			Date current = new Date();
-			userService.updateCommission(ori, results);
+			commissionService.updateCommission(ori, results);
 			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
 		} catch (Exception e) {
 			e.printStackTrace();

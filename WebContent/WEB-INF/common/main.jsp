@@ -48,6 +48,10 @@
 	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquerypp.custom.js"></script>
 
 	<style type="text/css">
+		.alert{
+			margin-top: 40px;
+			display:none;
+		}
 		.box-shadow-menu{
 			padding-top: 11px;
 			height: 38px; 
@@ -340,6 +344,7 @@
 		<section class="content">
 		</section>
 		 -->
+		<div id="message" class="alert" >&nbsp;</div>
 		<decorator:body />
 		<!-- /.content -->
 	</div>
