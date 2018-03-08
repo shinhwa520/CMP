@@ -27,8 +27,11 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/jquery.jscrollpane.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/style.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/demo.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/elastislide.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/custom.css">
 
-
+	<script src="${pageContext.request.contextPath}/resources/elastislide/js/modernizr.custom.17475.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
@@ -41,6 +44,8 @@
 	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquery.elastislide.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquerypp.custom.js"></script>
 
 	<style type="text/css">
 		.box-shadow-menu{
@@ -261,9 +266,11 @@
 				<li class="<c:if test="${active eq 'INDEX'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/"> <span><span><spring:message code="home" /></span></a>
 				</li>
+				<!-- 
 				<li class="<c:if test="${active eq 'SHARE_FILE'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/share/file"> <span><spring:message code="shareResource" /></span></a>
 				</li>
+				 -->
 				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
 					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span><spring:message code="personalInfo" /></span></a>
 				</li>
@@ -313,7 +320,7 @@
 							
 							<li <c:if test="${active eq 'ADMIN_CUST'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
 							<li <c:if test="${active eq 'MANAGE_BILLBOARD'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
-							<li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
+							<!-- <li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>  -->
 						</ul>
 					</li>
 				</sec:authorize>

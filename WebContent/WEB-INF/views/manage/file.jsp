@@ -19,7 +19,7 @@
 			
 		} else {
 			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
-			FileForm.queryFileType.value = "PUBLIC";
+			FileForm.queryFileType.value = "PRODUCT";
 			FileForm.submit();
 		}
 	}
@@ -92,8 +92,9 @@
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
-            	<input type="hidden" name="fileType" id="editFileType" value="" />
+            	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
+            	<input type="hidden" name="productId" id="productId" value="5" />
             	
 		        <div class="box-body">
 		        	<div class="form-group">
@@ -181,8 +182,10 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
-				"type" : 'GET',
+				//"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
+				"url" : '${pageContext.request.contextPath}/product/getProductFiles.json',
+				//"type" : 'GET',
+				"type" : 'POST',
 				"data" : function(d) {
 					//d.isAdmin = true
 				}
@@ -235,7 +238,7 @@ function btnAddClicked() {
 	formAction = 'modify';
 	$('#isAdd').val('Y');
 	$('#editSeqNo').val('');
-	$('#editFileType').val('PUBLIC');
+	$('#editFileType').val('PRODUCT');
 	$('#editFullFileName').val('');
 	$('#uploadFile').val('');
 	$('#uploadFile').show();

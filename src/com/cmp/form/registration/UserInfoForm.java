@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import org.springframework.stereotype.Component;
+
 import com.cmp.model.Question;
 import com.cmp.model.QuestionDetail;
 
+@Component("UserInfoForm")
 public class UserInfoForm implements Serializable {
 	
 	private static final long serialVersionUID = -2816290246438172322L;

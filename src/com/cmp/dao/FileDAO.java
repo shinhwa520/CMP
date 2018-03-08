@@ -19,7 +19,7 @@ public interface FileDAO {
 	
 	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
 	
-	public List<FilesProduct> findProductFileByDAOVO(FileDAOVO fileDAOVO);
+	public List<Object> findProductFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
 	
 	public List<FilesVisit> findVisitFileByDAOVO(FileDAOVO fileDAOVO);
 	

@@ -1,7 +1,6 @@
 package com.cmp.controller;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,11 +12,14 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cmp.utils.Html2PDF;
+import com.cmp.utils.PDFMerge;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.directwebremoting.datasync.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -392,4 +394,95 @@ public class FileController extends BaseController {
 		
 		return isOutputed ? null : "redirect:/"+fromPage;
 	}
+
+	@RequestMapping(value="downloadProductPdf", method = RequestMethod.GET)
+	public String downloadPdfFile(
+			@RequestParam(name="visitId", required=true) Integer visitId,
+			@RequestParam(name="fileType", required=true) String fileType,
+			@RequestParam(name="fileCategory", required=true) String fileCategory,
+			@RequestParam(name="fromPage", required=true) String fromPage,
+			Model model, @ModelAttribute("FileForm") FileForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		boolean isOutputed = true;
+		try {
+			String userId = SecurityUtil.getSecurityUser().getUser().getId();
+			User user = userService.findUserById(userId);
+
+//			FilesBaseConfig config = fileService.findFilesConfig(fileType);
+//
+//			if (config == null) {
+//				throw new Exception("[ERROR]未設定FilesBaseConfig >> configName: " + fileType);
+//			}
+//
+//			FileServiceVO retVO = fileService.modifyDownloadCount(fileType, seqNo);
+//			Map<String, String> downloadKeyMap = new HashMap<String, String>();
+			try {
+//				if (retVO != null) {
+//					String downloadFileName = "";
+//					//處理中文檔名問題
+//					String userAgent = request.getHeader("User-Agent");
+//					if((userAgent.contains("MSIE")) || (userAgent.contains("Trident")) || (userAgent.contains("Edge"))) {
+//						downloadFileName = java.net.URLEncoder.encode(retVO.getOriginFileName(),"UTF-8");
+//						//IE6.11正常、FF的中文部分會出現%XX%XX的代碼
+//					}else{
+//						downloadFileName = new String(retVO.getOriginFileName().getBytes("UTF-8"),"ISO-8859-1");
+//						//Firefox / google Chrome正常，IE6檔名整個亂碼 (連副檔名都看不見)
+//					}
+//					downloadKeyMap.put(retVO.getUpperFileName(), downloadFileName);
+//
+//					isOutputed = new GetObject2Aliyun().getObject(
+//							config, downloadKeyMap, response);
+//				}
+
+				String tempPath = request.getSession().getServletContext().getRealPath("/upload/temp/" + userId);
+				File file = new File(tempPath);
+//				if (!file.exists() && !file.isDirectory()) {
+				    file.mkdirs();
+//                }
+
+                String templatePath = request.getSession().getServletContext().getRealPath("/template");
+
+				Html2PDF.convertPdfTemplate(user, tempPath, templatePath);
+				PDFMerge.manipulatePdf(user, tempPath, templatePath);
+
+				response.setContentType("multipart/form-data");
+				response.setHeader("Content-Disposition","attachment; filename=" + "Malaysia_MM2H.pdf");
+
+                InputStream in = new FileInputStream(tempPath + "/Malaysia_MM2H.pdf");
+				OutputStream output = response.getOutputStream();
+
+				try {
+
+					byte[] b = new byte[2048];
+					int len;
+
+					while((len = in.read(b)) > 0){
+						output.write(b, 0, len);
+					}
+
+				} catch (Exception e) {
+					throw e;
+				} finally {
+					in.close();
+					output.flush();
+					output.close();   //關閉串流
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				isOutputed = false;
+				model.addAttribute("message", "檔案下載失敗");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+
+		return isOutputed ? null : "redirect:/"+fromPage;
+	}
+
+
+
 }
