@@ -94,7 +94,7 @@
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
             	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
-            	<input type="hidden" name="productId" id="productId" value="5" />
+            	<input type="hidden" name="productId" id="productId" value="4" />
             	
 		        <div class="box-body">
 		        	<div class="form-group">
@@ -134,7 +134,7 @@
 	            </div>
 	            
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-default" id="btnFileClose" data-dismiss="modal"><spring:message code="close"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnSave" onclick="btnSaveClicked();" style="display: none"><spring:message code="save"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();" style="display: none"><spring:message code="upload"/></button>
 				</div>
@@ -201,6 +201,12 @@ $(function() {
 				{ "data" : "updateTime" }
 			],
 			"columnDefs": [
+				{
+					"targets" : 0,
+				    render: function (data, type, row, meta) {
+				        return meta.row + meta.settings._iDisplayStart + 1;
+				    }
+				},
 				{
 					"targets" : 6,
 					"data" : 'seqNo',
@@ -366,6 +372,9 @@ function btnUploadClicked() {
     		$('#alertMsg').text('');
     		$('#progressBar').text('');
     		$('#progressBar').css('width','0%');
+    		$('#btnUpload').attr('disabled', true);
+    		$('#btnFileClose').attr('disabled', true);
+    		$('#uploadFile').attr('disabled', true);
 	    },
 	    
 	    success : function(resp) {
@@ -383,11 +392,19 @@ function btnUploadClicked() {
 			} else {
 				alert(resp.message);
 			}
+			
+			$('#btnUpload').attr('disabled', false);
+			$('#btnFileClose').attr('disabled', false);
+			$('#uploadFile').attr('disabled', false);
 		},
 
 		error : function(xhr, ajaxOptions, thrownError) {
 			alert(xhr.status);
 			alert(thrownError);
+			
+			$('#btnUpload').attr('disabled', false);
+			$('#btnFileClose').attr('disabled', false);
+			$('#uploadFile').attr('disabled', false);
 		}
     });
 }

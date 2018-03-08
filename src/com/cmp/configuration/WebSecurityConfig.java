@@ -66,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/manage/file/download").hasAnyRole("SU", "ADMIN", "ASST", "MA", "USER")
 			.antMatchers("/manage/file/downloadProducts").hasAnyRole("SU", "ADMIN", "ASST", "MA", "USER")
 			.antMatchers("/manage/file/downloadVisitFiles").hasAnyRole("SU", "ADMIN", "ASST", "MA", "USER")
+			.antMatchers("/manage/file/downloadProductPdf").hasAnyRole("SU", "ADMIN", "ASST", "MA", "USER")
 			.antMatchers("/manage/file/deleteAj").hasAnyRole("SU", "ADMIN", "ASST", "MA", "USER")
 			.antMatchers("/manage/**").hasAnyRole("SU", "ADMIN", "ASST", "MA")
 			.antMatchers("/api/**").hasAnyRole("SU")

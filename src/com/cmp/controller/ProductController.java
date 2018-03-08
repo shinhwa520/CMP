@@ -83,18 +83,22 @@ public class ProductController extends BaseController {
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		
-		List<FileServiceVO> datalist = fileService.findProductFilesByProductId(productId, start, length);
+		long count = 0;
+		List<FileServiceVO> datalist = new ArrayList<FileServiceVO>();
 		
-		long total = 0;
-		if (datalist != null && !datalist.isEmpty()) {
-			 total = datalist.size();
-			 
-		} else {
-			datalist = new ArrayList<FileServiceVO>();
-			total = 0;
+		try {
+			count = fileService.countProductFilesByProductId(productId);
+			
+			if (count > 0) {
+				datalist = fileService.findProductFilesByProductId(productId, start, length);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
 		}
 		
-		return new DatatableResponse(total, datalist, total);
+		return new DatatableResponse(count, datalist, count);
 	}
 	/*
 	@RequestMapping(value="viewKPI/{userId}", method = RequestMethod.GET)

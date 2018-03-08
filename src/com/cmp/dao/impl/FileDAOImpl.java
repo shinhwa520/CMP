@@ -51,7 +51,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	}
 
 	@Override
-	public List<Object> findPublicFileByDAOVO(FileDAOVO fileDAOVO) {
+	public List<Object> findPublicFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select fp from FilesPublic fp ")
 		  .append(" where 1=1 ");
@@ -66,6 +66,10 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
+	    if (startRow != null && pageLength != null) {
+	    	q.setFirstResult(startRow);
+		    q.setMaxResults(pageLength);
+	    }
 	    
 	    if (fileDAOVO.getSeqNo() != null) {
 	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
@@ -140,6 +144,10 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
+	    if (startRow != null && pageLength != null) {
+	    	q.setFirstResult(startRow);
+		    q.setMaxResults(pageLength);
+	    }
 	    
 	    if (fileDAOVO.getSeqNo() != null) {
 	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
@@ -285,5 +293,136 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    
 		Integer ret = q.executeUpdate();
 		return ret;
+	}
+
+	@Override
+	public long countPublicFileByDAOVO(FileDAOVO fileDAOVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(fp.seqNo) from FilesPublic fp ")
+		  .append(" where 1=1 ");
+		  
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fp.seqNo = :seqNo ");
+		}
+		if (fileDAOVO.getUpperFileName() != null) {
+			sb.append(" and fp.upperFileName = :upperFileName ");
+		}
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    
+		return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+	}
+
+	@Override
+	public long countCustomerFileByDAOVO(FileDAOVO fileDAOVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(fc.seqNo) from FilesCustomer fc ")
+		  .append(" where 1=1 ");
+	
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fc.seqNo = :seqNo ");
+		}
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
+			sb.append(" and fc.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getCustId() != null) {
+			sb.append(" and fc.custId = :custId ");
+		}
+		
+		sb.append(" and (fc.filesSetting.activationBegin is null or fc.filesSetting.activationBegin <= sysdate()) ")
+		  .append(" and (fc.filesSetting.activationEnd is null or fc.filesSetting.activationEnd >= sysdate()) ");
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getCustId() != null) {
+	    	q.setParameter("custId", fileDAOVO.getCustId());
+		}
+	    
+	    return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+	}
+
+	@Override
+	public long countProductFileByDAOVO(FileDAOVO fileDAOVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(fp.seqNo) from FilesProduct fp ")
+		  .append(" where 1=1 ");
+	
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fp.seqNo = :seqNo ");
+		}
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
+			sb.append(" and fp.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getProductId() != null) {
+			sb.append(" and fp.productId = :productId ");
+		}
+		
+		sb.append(" and (fp.filesSetting.activationBegin is null or fp.filesSetting.activationBegin <= sysdate()) ")
+		  .append(" and (fp.filesSetting.activationEnd is null or fp.filesSetting.activationEnd >= sysdate()) ");
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getProductId() != null) {
+	    	q.setParameter("productId", fileDAOVO.getProductId());
+		}
+	    
+	    return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+	}
+
+	@Override
+	public long countVisitFileByDAOVO(FileDAOVO fileDAOVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(fv.seqNo) from FilesVisit fv ")
+		  .append(" where 1=1 ");
+	
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fv.seqNo = :seqNo ");
+		}
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
+			sb.append(" and fv.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getVisitId() != null) {
+			sb.append(" and fv.visitId = :visitId ");
+		}
+		
+		sb.append(" and (fv.filesSetting.activationBegin is null or fv.filesSetting.activationBegin <= sysdate()) ")
+		  .append(" and (fv.filesSetting.activationEnd is null or fv.filesSetting.activationEnd >= sysdate()) ");
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getVisitId() != null) {
+	    	q.setParameter("visitId", fileDAOVO.getVisitId());
+		}
+	    
+	    return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
 	}
 }

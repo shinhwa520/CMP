@@ -25,7 +25,6 @@ import com.cmp.model.FilesSetting;
 import com.cmp.model.FilesVisit;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
-import com.cmp.service.vo.ProductServiceVO;
 import com.cmp.service.vo.VisitServiceVO;
 import com.cmp.utils.DeleteObjects2Aliyun;
 
@@ -159,7 +158,7 @@ public class FileServiceImpl implements FileService {
 			fileDAOVO.setUpperFileName(StringUtils.isNotBlank(oriFileName) ? oriFileName.toUpperCase() : oriFileName);
 			
 			if (StringUtils.equals(fileType, FILE_TYPE_PUBLIC)) {
-				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
+				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO, null, null);
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
@@ -312,7 +311,7 @@ public class FileServiceImpl implements FileService {
 					fileDAOVO.setSeqNo(seqNo);
 					
 					if (StringUtils.equals(fileType, FILE_TYPE_PUBLIC)) {
-						reList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
+						reList = fileDAO.findPublicFileByDAOVO(fileDAOVO, null, null);
 						
 					} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 						reList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
@@ -370,7 +369,7 @@ public class FileServiceImpl implements FileService {
 			fileDAOVO.setSeqNo(fileServiceVO.getSeqNo());
 			
 			if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PUBLIC)) {
-				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
+				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO, null, null);
 				
 			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
@@ -418,7 +417,7 @@ public class FileServiceImpl implements FileService {
 			
 			if (StringUtils.equals(fileType, FILE_TYPE_PUBLIC)) {
 				entity = "FilesPublic";
-				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO);
+				modelList = fileDAO.findPublicFileByDAOVO(fileDAOVO, null, null);
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				entity = "FilesCustomer";
@@ -535,5 +534,55 @@ public class FileServiceImpl implements FileService {
 		}
 		
 		return vo;
+	}
+
+	@Override
+	public long countProductFilesByProductId(Integer productId) {
+		long count = 0;
+		FileDAOVO fileDAOVO;
+		
+		try {
+			fileDAOVO = new FileDAOVO();
+			fileDAOVO.setProductId(productId);
+			count = fileDAO.countProductFileByDAOVO(fileDAOVO);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+
+	@Override
+	public long countCustomerFilesByCustId(Integer custId) {
+		long count = 0;
+		FileDAOVO fileDAOVO;
+		
+		try {
+			fileDAOVO = new FileDAOVO();
+			fileDAOVO.setCustId(custId);
+			count = fileDAO.countCustomerFileByDAOVO(fileDAOVO);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+
+	@Override
+	public long countVisitInfoByDAOVO(VisitServiceVO vo) {
+		long count = 0;
+		try {
+			FileDAOVO fileDAOVO	 = new FileDAOVO();
+			fileDAOVO.setVisitId(vo.getVisitId());
+			
+			count = fileDAO.countVisitFileByDAOVO(fileDAOVO);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
 	}
 }
