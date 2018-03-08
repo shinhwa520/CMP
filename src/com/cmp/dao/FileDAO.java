@@ -5,7 +5,6 @@ import java.util.List;
 import com.cmp.dao.vo.FileDAOVO;
 import com.cmp.model.FilesBaseConfig;
 import com.cmp.model.FilesPermission;
-import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesSetting;
 import com.cmp.model.FilesVisit;
 
@@ -15,11 +14,19 @@ public interface FileDAO {
 	
 	public List<Object> findAllCustomerFile(boolean isAdmin, Integer startRow, Integer pageLength); 
 	
-	public List<Object> findPublicFileByDAOVO(FileDAOVO fileDAOVO);
+	public long countPublicFileByDAOVO(FileDAOVO fileDAOVO);
+	
+	public List<Object> findPublicFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
+	
+	public long countCustomerFileByDAOVO(FileDAOVO fileDAOVO);
 	
 	public List<Object> findCustomerFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
 	
+	public long countProductFileByDAOVO(FileDAOVO fileDAOVO);
+	
 	public List<Object> findProductFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
+	
+	public long countVisitFileByDAOVO(FileDAOVO fileDAOVO);
 	
 	public List<FilesVisit> findVisitFileByDAOVO(FileDAOVO fileDAOVO);
 	

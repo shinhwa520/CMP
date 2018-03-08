@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.cmp.model.FilesBaseConfig;
 import com.cmp.service.vo.FileServiceVO;
-import com.cmp.service.vo.ProductServiceVO;
 import com.cmp.service.vo.VisitServiceVO;
 
 public interface FileService {
@@ -21,7 +20,11 @@ public interface FileService {
 	
 	public List<FileServiceVO> findAllCustomerFiles(boolean isAdmin, Integer startRow, Integer pageLength);
 	
+	public long countProductFilesByProductId(Integer productId);
+	
 	public List<FileServiceVO> findProductFilesByProductId(Integer productId, Integer startRow, Integer pageLength);
+	
+	public long countCustomerFilesByCustId(Integer custId);
 	
 	public List<FileServiceVO> findCustomerFilesByCustId(Integer custId, Integer startRow, Integer pageLength);
 	
@@ -42,6 +45,8 @@ public interface FileService {
 	public FilesBaseConfig findFilesConfig(String configName);
 	
 	//public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo);
+	
+	public long countVisitInfoByDAOVO(VisitServiceVO vo);
 	
 	public VisitServiceVO findVisitInfoByDAOVO(VisitServiceVO vo);
 }

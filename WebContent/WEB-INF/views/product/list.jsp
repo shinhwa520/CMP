@@ -159,6 +159,12 @@
 					],
 					"columnDefs" : [
 						{
+							"targets" : 0,
+						    render: function (data, type, row, meta) {
+						        return meta.row + meta.settings._iDisplayStart + 1;
+						    }
+						},
+						{
 							"targets" : 6,
 							"data" : 'seqNo',
 							"render" : function(data, type, row) {
