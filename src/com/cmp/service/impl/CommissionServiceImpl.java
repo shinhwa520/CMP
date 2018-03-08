@@ -1,6 +1,5 @@
 package com.cmp.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -37,16 +36,15 @@ public class CommissionServiceImpl implements CommissionService {
 		List<ProductInfo> productInfoList = productInfoDAO.findProductInfoAll();
 		List<Commission> commissionList = commissionDAO.findCommissionByUserId(userId);
 		Set<ProductInfo> productSet = new HashSet<ProductInfo>();
-		for(Commission c : commissionList){	//上游已對User 設定該Product 之Commission
+		for(Commission c : commissionList){
 			productSet.add(c.getProductInfo());
 		}
 		for(ProductInfo p : productInfoList){	
-			if(!productSet.contains(p)){	//上游尚未對User 設定該Product 之Commission
+			if(!productSet.contains(p)){	//上游尚未對User 設定該Product 之Commission ==> 新增Commission 設定
 				Commission commission = commissionDAO.saveCommission(new Commission(user, p, editor.getReward(), editor.getAccount()));
 				commissionList.add(commission);
 			}
 		}
-		
 		return commissionList;
 	}
 	

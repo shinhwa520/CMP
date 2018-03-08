@@ -7,7 +7,7 @@
 	<div class="box-header with-border">
 		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel/user/list"><spring:message code="myChannels"/></a>
 		/<spring:message code="reward"/>
-		&nbsp;＞<spring:message code="channel"/>:${ userName }</h3>
+		&nbsp;＞&nbsp;<spring:message code="channel"/>&nbsp;:&nbsp;<span>${ userName }</span></h3>
 		
 		
 		<a href="#" onclick="btnSaveClicked();">
@@ -17,7 +17,7 @@
 		</a>
 		<a href="#" onclick="oneClickClicked();">
 			<span class="label label-warning pull-right" style="padding:5px 10px 5px 10px; font-size: 95%; margin-left: 1px;">
-				<spring:message code="oneClick"/>
+				<spring:message code="replaceBydefault"/>
 			</span>
 		</a>
 		<input id="defaultCommission" class="pull-right" type="text" readonly="true" value="${defaultCommission }" size="2"/>
@@ -72,8 +72,23 @@ $(function() {
 });
 
 function btnSaveClicked(input) {
+	$('.form-group').removeClass('has-error');
 	var _userId = $('#userId').val();
 	var hasError = false;
+
+    $('.commissionPercent').each(function () {
+        if(!validateInt($(this).val())){
+        	$(this).parents('.form-group').addClass('has-error');
+        	hasError = true;
+        };
+    });
+
+	if(hasError){
+		errorMessage('<spring:message javaScriptEscape="true" code="error.commissionMustNo"/>');
+		return false;
+	}
+
+
 	
 	var getResult = function () {
 	    var result = [];
