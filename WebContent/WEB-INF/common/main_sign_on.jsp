@@ -19,13 +19,18 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/prettify/prettify.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+	
 
 	<!-- REQUIRED JS SCRIPTS -->
-	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery-3.3.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/jquery.scrollbar/jquery.scrollbar.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/prettify/prettify.js"></script>
 	<script>    
 		function successMessage(message) {
 		  	var msg = $('#message');
@@ -107,7 +112,7 @@
 		
 		 #container{     
 		 	margin-top: 60px;
-			min-height: 600px;
+			min-height: 550px;
 		 }
 		.alert{
 			margin-top: 40px;

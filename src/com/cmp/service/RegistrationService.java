@@ -6,8 +6,8 @@ import com.cmp.model.User;
 import com.cmp.service.vo.RegistrationUserVO;
 
 public interface RegistrationService {
-	boolean checkEmailAvailable(String mailAddress) throws Exception;
-	User initUser(String mailAddress, String mailContent) throws Exception;
+	User checkEmailAvailable(String mailAddress) throws Exception;
+	User initUser(String mailAddress, String mailContent, User checkUser) throws Exception;
 	User verifyToken(String userId, String tokenId) throws Exception;
 	void saveUserInfo(RegistrationUserVO vo) throws Exception;
 	RegistrationUserVO initQuestList() throws Exception;

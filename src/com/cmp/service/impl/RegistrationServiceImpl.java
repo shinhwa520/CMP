@@ -58,13 +58,21 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private long duration = 1000*60*60*24;
 	
 	
-	public boolean checkEmailAvailable(String mailAddress) throws Exception{
-		return null==userDao.findUserByEmail(mailAddress);//null =>可使用
+	public User checkEmailAvailable(String mailAddress) throws Exception{
+		return userDao.findUserByEmail(mailAddress);//null =>可使用
 	}
 	
 	
-	public User initUser(String mailAddress, String mailContent) throws Exception {
-		User user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleByName("USER"), statusDAO.findStatus("USER", 1)));//登錄帳號
+	public User initUser(String mailAddress, String mailContent, User checkUser) throws Exception {
+		User user;
+		if(null==checkUser){
+			user = userDao.saveUser(new User(mailAddress, roleDAO.findRoleByName("USER"), statusDAO.findStatus("USER", 1)));//登錄帳號
+		}else{
+			checkUser.setStatus(statusDAO.findStatus("USER", 1));
+			checkUser.setUpdateDateTime(new Date());
+			user = userDao.saveUser(checkUser);
+		}
+		
 		Date current = new Date();
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
 		String mailbody = "请於页面输入下列验证码。<br>";

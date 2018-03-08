@@ -53,8 +53,9 @@ public class RegistrationController extends BaseController {
     		String mailAddress = form.getEmail();
 			RequestContext req = new RequestContext(request);
 
-    		//驗證email是否重複
-    		if(!registrationService.checkEmailAvailable(mailAddress)){
+			User checkUser = registrationService.checkEmailAvailable(mailAddress);
+    		//驗證email是否重複	//null =>可使用
+    		if(null!=checkUser && 6<=checkUser.getStatus().getSort()){
     			model.addAttribute("message", req.getMessage("error.emailExist"));
     			return "registration/email";
     		}
@@ -62,7 +63,7 @@ public class RegistrationController extends BaseController {
     		StringBuffer sb = request.getRequestURL();
     		String appName = request.getContextPath();
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
-    		User user = registrationService.initUser(mailAddress, url);
+    		User user = registrationService.initUser(mailAddress, url, checkUser);
     		form.setUserId(user.getId());
 //    		model.addAttribute("message", req.getMessage("confirmEmail"));
     	} catch (Exception e) {
@@ -152,6 +153,10 @@ public class RegistrationController extends BaseController {
         		else
         			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
     		}
+    		
+    		String rootPath = request.getSession().getServletContext().getRealPath("");
+    		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
+    		model.addAttribute("agreement", agreementTxt(form.getUserId(), srcPath));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,4 +205,27 @@ public class RegistrationController extends BaseController {
         model.addAttribute("agreement", sb.toString());
         return "registration/partnersAgreement";
     }
+    
+    private String agreementTxt(String userId, String srcPath) throws Exception {
+    	User user = registrationService.findUserByUserId(userId);
+		String[] arr = (sdfDate.format(new Date())).split("-");
+		String agreementDate = arr[0]+"年"+arr[1]+"月"+arr[2]+"日";
+		StringBuffer sb = new StringBuffer();
+		BufferedReader br = new BufferedReader(new FileReader(srcPath));
+        String line;
+        while ((line = br.readLine()) != null) {
+        	if(line.contains("$UpStream$"))
+        		line = line.replace("$UpStream$", user.getChannel().getName());
+        	if(line.contains("$Date$"))
+        		line = line.replace("$Date$", agreementDate);
+        	if(line.contains("$UserName$"))
+        		line = line.replace("$UserName$", user.getName());
+        	if(line.contains("$Company$"))
+        		line = line.replace("$Company$", "CMP信息服务网联");
+        	
+        	sb.append(line);
+        }
+        return sb.toString();
+    }
+    
 }

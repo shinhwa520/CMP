@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cmp.dao.CommissionDAO;
 import com.cmp.dao.StatusDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.UserKpiDAO;
-import com.cmp.model.Commission;
 import com.cmp.model.User;
 import com.cmp.model.UserKpi;
 import com.cmp.security.SecurityUtil;
@@ -27,11 +24,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserKpiDAO userKpiDAO;
 	@Autowired
-	private StatusDAO statusDAO;
-	@Autowired
-	private CommissionDAO commissionDAO;
-	
-	
+	private StatusDAO statusDAO;	
 	
 	@Override
 	public User findUserAndKpiById(String id, String yearMonth){
@@ -122,7 +115,15 @@ public class UserServiceImpl implements UserService {
 		user.setUpdateBy(editorId);
 		user.setUpdateDateTime(new Date());
 		userDAO.saveUser(user);
-		UserKpi userKpi = new UserKpi(
+		UserKpi userKpi = userKpiDAO.findTokenByUserAndYearMonth(userId, yearMonth);//查詢KPI設定
+		if(null!=userKpi){
+			userKpi.setAgent_user(agent_user);
+			userKpi.setAgent_cust(agent_cust);
+			userKpi.setVolume(volume);
+			userKpi.setUpdateBy(editorId);
+			userKpi.setUpdateDateTime(current);
+		}else{
+			userKpi= new UserKpi(
 				String.valueOf(current.getTime())
 				,user
 				,yearMonth
@@ -134,6 +135,7 @@ public class UserServiceImpl implements UserService {
 				,editorId
 				,current
 				);
+		}
 		userKpiDAO.saveUserKpi(userKpi);
 	}
 	
