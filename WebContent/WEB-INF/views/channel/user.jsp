@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <section class="content">
 <div class="box-body"></div>
 
@@ -159,13 +160,24 @@ $(function() {
 				"render" : function(data, type, row) {
 					return '<a href="#">'
 							+'<span class="label label-warning" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-							+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>'
+							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>'
+							+'<a href="#">'
+							+'<span class="label label-success" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnCommissionClicked($(this));">'
+							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="reward"/></span></a>'
 							;
 				}
 			} ],
 			select: true
 		});
 	});
+
+//[Commission]
+function btnCommissionClicked(btn) {
+	console.log(btn.attr('userId'));
+	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/channel/user/getCommissionByUserId/' + btn.attr('userId');
+}
+
+
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {

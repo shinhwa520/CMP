@@ -69,13 +69,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
 		String mailbody = "请於页面输入下列验证码。<br>";
 		mailbody += "Please enter the following verification code on the page.<br>";
-		mailbody += "验证码:"+token.getId().substring(0, 4);
+		mailbody += "验证码:<h1>"+token.getId().substring(0, 4)+"</h1>";
 		mailbody += "<br><br><br>";
-		mailbody += "温馨提示，请确认您和其他人输入的信息无误，以避免后台管理处理客户登记或签证票务信息失误影响您的权益。<br>";
-		mailbody += "Reminder: To ensure our management service provides the correct details to secure your customers and airflight details,  Please ensure the information filled in accurate.<br>";
-		mailbody += "祝您有好的一天！<br>";
-		mailbody += "Have a nice day!<br><br>";
-		mailbody += "CMP 信息服务网联<br>";
+
 		
 		String subject = "CMP信息服务网联 帐号申请验证通知";
 		sendSimpleMail(mailAddress, subject, mailbody);
@@ -203,10 +199,19 @@ public class RegistrationServiceImpl implements RegistrationService {
 			webApiDetail.setUser(user);
 			webApiDetailDAO.saveWebApiDetail(webApiDetail);
 		}
-		userDao.saveUser(user);
+		user = userDao.saveUser(user);
 		//
 		String mailbody = "恭喜您成功注册！<br>";
 		mailbody += "Congratulations you have registered success!<br><br>";
+		mailbody += "以下为您登录的个人资料: "+"<br>";
+		mailbody += "名字: "+ user.getName() +"<br>";
+		mailbody += "帐号: "+ user.getAccount() +"<br>";
+		mailbody += "密码: "+ user.getPassword() +"<br>";
+		mailbody += "电话号码: "+ user.getPhone() +"<br>";
+		mailbody += "微信号: "+ user.getWeChat() +"<br><br>";
+
+		mailbody += "温馨提示，请确认您和其他人输入的信息无误，以避免后台管理处理客户登记或签证票务信息失误影响您的权益。<br>";
+		mailbody += "Reminder: To ensure our management service provides the correct details to secure your customers and airflight details,  Please ensure the information filled in accurate.<br>";
 		mailbody += "祝您有好的一天！<br>";
 		mailbody += "Have a nice day!<br><br>";
 		mailbody += "CMP 信息服务网联<br>";

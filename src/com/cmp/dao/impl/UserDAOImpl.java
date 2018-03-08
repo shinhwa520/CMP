@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.UserDAO;
+import com.cmp.model.Commission;
 import com.cmp.model.User;
 
 
@@ -180,6 +181,16 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		  .append(" and u.id = wad.user.id ")
 		  .append(" and wad.parameterValues = ? ");
 		List<User> returnList = (List<User>)getHibernateTemplate().find(sb.toString(), new String[] {apiModelId});
+		return returnList;
+	}
+	
+	public List<Commission> findCommissionByUserId(String userId){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select c ")
+		  .append(" from Commission c ")
+		  .append(" where 1 = 1 ")
+		  .append(" and c.user.id = ? ");
+		List<Commission> returnList = (List<Commission>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
 		return returnList;
 	}
 }

@@ -35,7 +35,4 @@
         window.location.href = url;
     }
 
-	function getPdf() {
-		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/getPdf';
-	}
 </script>

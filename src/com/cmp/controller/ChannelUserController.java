@@ -18,16 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
+import com.cmp.model.Commission;
 import com.cmp.model.Customer;
 import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.UserService;
-import org.springframework.web.servlet.support.RequestContext;
 
 @Controller
 @RequestMapping(value="/channel/user")
@@ -129,4 +130,29 @@ public class ChannelUserController extends BaseController {
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 	}
+	
+	@RequestMapping(value="getCommissionByUserId/{userId}", method = RequestMethod.GET, produces="application/json")
+	public String getCommissionByUserId(Model model, @PathVariable String userId) {
+		List<Commission> commissionList = userService.initCommissionList(userId);
+		model.addAttribute("userId", userId);
+		if(!commissionList.isEmpty())
+			model.addAttribute("userName", commissionList.get(0).getUser().getName());
+		model.addAttribute("commissionList", commissionList);
+		return "channel/commission";
+	}
+	
+    @RequestMapping(value = "/updateCommission", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public AppResponse updateCommission(String ori, String results, HttpServletRequest request) {
+		try {
+			RequestContext req = new RequestContext(request);
+			Date current = new Date();
+			userService.updateCommission(ori, results);
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+    }
 }
