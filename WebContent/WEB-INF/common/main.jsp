@@ -34,7 +34,7 @@
 	
 
 	<script src="${pageContext.request.contextPath}/resources/elastislide/js/modernizr.custom.17475.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery-3.3.1.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>

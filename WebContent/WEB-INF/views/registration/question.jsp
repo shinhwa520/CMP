@@ -18,9 +18,9 @@
 					<c:forEach var="detail" items="${ vo.value }">
 					<tr>
 						<td style="vertical-align:text-top;" >
-							<input type="radio" name=${vo.key.id } value=${detail.id } id=${detail.sort } src="${vo.key.sort }" >
+							<input type="radio" name=${vo.key.id } value=${detail.sort } id=${detail.id } src="${vo.key.sort }" >
 						</td>
-						<td><label class="radio_label" for=${detail.sort } id="label_${detail.id }" >${detail.content }</label></td>
+						<td><label class="radio_label" for=${detail.id } id="label_${detail.sort }" >${detail.content }</label></td>
 					</tr>
 					</c:forEach>
 				<tr>
@@ -54,10 +54,10 @@
 		    $('input:radio').each(function () {
 		        var $this = $(this), id = $this.attr('id'), val = $this.val(), index = $this.attr('src');
 		        if ($(this).prop('checked')) {
-		            result.push(id);
-		            if(id!=ansArray[index-1]){
+		            result.push(val);
+		            if(val!=ansArray[index-1]){
 		            	hasError = true;
-		            	$('#label_'+val).addClass('alert-danger');
+		            	$('#label_'+id).addClass('alert-danger');
 			        }
 		        }
 		    });
