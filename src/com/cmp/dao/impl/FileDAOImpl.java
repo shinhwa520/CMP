@@ -318,7 +318,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
 		}
 	    
-		return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+		return (q.list() != null && !q.list().isEmpty()) ? (Long)q.list().get(0) : 0;
 	}
 
 	@Override
@@ -353,7 +353,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    	q.setParameter("custId", fileDAOVO.getCustId());
 		}
 	    
-	    return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+	    return (q.list() != null && !q.list().isEmpty()) ? (Long) q.list().get(0) : 0;
 	}
 
 	@Override
@@ -388,7 +388,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    	q.setParameter("productId", fileDAOVO.getProductId());
 		}
 	    
-	    return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+	    return (q.list() != null && !q.list().isEmpty()) ? (Long)q.list().get(0) : 0;
 	}
 
 	@Override
@@ -423,6 +423,6 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    	q.setParameter("visitId", fileDAOVO.getVisitId());
 		}
 	    
-	    return (q.list() != null && !q.list().isEmpty()) ? (long)q.list().get(0) : 0;
+	    return (q.list() != null && !q.list().isEmpty()) ? (Long)q.list().get(0) : 0;
 	}
 }
