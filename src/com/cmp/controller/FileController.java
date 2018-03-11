@@ -1,6 +1,10 @@
 package com.cmp.controller;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,14 +16,11 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cmp.utils.Html2PDF;
-import com.cmp.utils.PDFMerge;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.directwebremoting.datasync.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,8 @@ import com.cmp.service.UserService;
 import com.cmp.service.vo.FileServiceVO;
 import com.cmp.service.vo.VisitServiceVO;
 import com.cmp.utils.GetObject2Aliyun;
+import com.cmp.utils.Html2PDF;
+import com.cmp.utils.PDFMerge;
 import com.cmp.utils.PostObject2Aliyun;
 
 @Controller
@@ -317,7 +320,6 @@ public class FileController extends BaseController {
 			@RequestParam(name="fileType", required=true) String fileType,
 			@RequestParam(name="fileCategory", required=true) String fileCategory,
 			@RequestParam(name="fromPage", required=true) String fromPage,
-			Model model, @ModelAttribute("FileForm") FileForm form, 
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		boolean isOutputed = false;
@@ -395,13 +397,13 @@ public class FileController extends BaseController {
 		return isOutputed ? null : "redirect:/"+fromPage;
 	}
 
-	@RequestMapping(value="downloadProductPdf", method = RequestMethod.GET)
+	@RequestMapping(value="downloadVisitPdf", method = RequestMethod.GET)
 	public String downloadPdfFile(
 			@RequestParam(name="visitId", required=true) Integer visitId,
 			@RequestParam(name="fileType", required=true) String fileType,
 			@RequestParam(name="fileCategory", required=true) String fileCategory,
 			@RequestParam(name="fromPage", required=true) String fromPage,
-			Model model, @ModelAttribute("FileForm") FileForm form,
+			Model model,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		boolean isOutputed = true;
