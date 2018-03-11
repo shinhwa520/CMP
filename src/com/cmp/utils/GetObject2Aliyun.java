@@ -70,7 +70,7 @@ public class GetObject2Aliyun {
                 in = object.getObjectContent();
                 response.setContentType("multipart/form-data");
                 
-                response.setHeader("Content-Disposition","attachment; filename="  + entry.getValue());  
+                response.setHeader("Content-Disposition","attachment; filename=\""  + entry.getValue() + "\"");	//檔名前後以雙引號包夾，解決檔名含中文字會空白的問題
                 
             	OutputStream output = response.getOutputStream();
     			
