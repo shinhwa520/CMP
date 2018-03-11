@@ -7,7 +7,7 @@
 	<div class="box-header with-border">
 		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel/user/list"><spring:message code="myChannels"/></a>
 		/<spring:message code="reward"/>
-		&nbsp;＞&nbsp;<spring:message code="channel"/>&nbsp;:&nbsp;<span>${ userName }</span></h3>
+		&nbsp;＞&nbsp;<span class="badge badge-info"><spring:message code="channel"/>&nbsp;:&nbsp; ${ userName }</span></h3>
 		
 		
 		<a href="#" onclick="btnSaveClicked();">
