@@ -97,6 +97,8 @@ public class CustServiceImpl implements CustService {
 		cust.setCreateBy(user.getName());
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		cust.setUpdateBy(user.getName());
+
+		cust.setDataStatus(statusDAO.findStatus("DATA", 1));
 		
 		customerDAO.saveCust(cust);
 	}
