@@ -139,7 +139,7 @@ public class AdminCustController extends BaseController {
 	 * @param custId
 	 * @return DatatableResponse
 	 */
-	@RequestMapping(value="deleteCust.json", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="deleteCustAjax", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody AppResponse deleteCust(
 			@RequestParam(name="custId", required=true) Integer custId,
 			HttpServletRequest request) {
