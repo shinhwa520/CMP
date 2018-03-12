@@ -760,7 +760,7 @@ function btnDownloadClicked(btn) {
 
 //[Delete Cust] 按下Delete Cust按鈕
 function btnDeleteCustClicked(btn) {
-    formAction = "deleteCust";
+    formAction = "deleteCust.json";
 
     // var seqNos = "";
     // var haveOneChecked = false;
