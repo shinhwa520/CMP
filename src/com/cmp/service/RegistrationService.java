@@ -16,4 +16,5 @@ public interface RegistrationService {
 	void saveUserQues(String userId, String results) throws Exception;
 	boolean upstream(String userId, String upstreamAccount) throws Exception;
 	void agreement(String userId) throws Exception;
+	void reGenToken(String userId) throws Exception;
 }

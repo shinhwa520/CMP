@@ -19,6 +19,11 @@ public class TokenDAOImpl extends BaseDaoHibernate implements TokenDAO {
 	}
 	
 	@Override
+	public void deleteTokens(List<Token> tokens) {
+		getHibernateTemplate().deleteAll(tokens);
+	}
+	
+	@Override
 	public Token findTokenById(String id) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Token t ")
@@ -38,4 +43,15 @@ public class TokenDAOImpl extends BaseDaoHibernate implements TokenDAO {
 		List<Token> returnList = (List<Token>)getHibernateTemplate().find(sb.toString(), new String[] {userId, id});
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
+	
+	@Override
+	public List<Token> findTokenByUserAndType(String userId, String type) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Token t ")
+		  .append(" where 1=1 ")
+		  .append(" and t.user.id = ? ")
+		  .append(" and t.type = ? ");
+		return (List<Token>)getHibernateTemplate().find(sb.toString(), new String[] {userId, type});
+	}
+	
 }

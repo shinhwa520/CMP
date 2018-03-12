@@ -57,12 +57,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	private long duration = 1000*60*60*24;
 	
-	
+	@Override
 	public User checkEmailAvailable(String mailAddress) throws Exception{
 		return userDao.findUserByEmail(mailAddress);//null =>可使用
 	}
 	
-	
+	@Override
 	public User initUser(String mailAddress, String mailContent, User checkUser) throws Exception {
 		User user;
 		if(null==checkUser){
@@ -87,6 +87,25 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return user;
 	}
 	
+	@Override
+	public void reGenToken(String userId) throws Exception {
+		
+		List<Token> tokens = tokenDAO.findTokenByUserAndType(userId, "R");
+		tokenDAO.deleteTokens(tokens);
+		
+		User user = userDao.findUserById(userId);
+		Date current = new Date();
+		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
+		String mailbody = "请於页面输入下列验证码。<br>";
+		mailbody += "Please enter the following verification code on the page.<br>";
+		mailbody += "验证码:<h1>"+token.getId().substring(0, 4)+"</h1>";
+		mailbody += "<br><br><br>";
+
+		
+		String subject = "CMP信息服务网联 帐号申请验证通知";
+		sendSimpleMail(user.getEmail(), subject, mailbody);
+	}
+	
 	public void sendSimpleMail(String mailAddress, String subject, String mailContent) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -97,6 +116,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		mailSender.send(mimeMessage);
 	}
 	
+	@Override
 	public User verifyToken(String userId, String tokenId) throws Exception {
 		try {
 			Token token = tokenDAO.findTokenByUserAndId(userId, tokenId);
@@ -113,6 +133,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		}
 	}
 	
+	@Override
 	public void saveUserInfo(RegistrationUserVO vo) throws Exception {
 		User user = userDao.findUserById(vo.getUserId());
 //		User channel;
@@ -129,6 +150,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		userDao.saveUser(user);
 	}
 	
+	@Override
 	public RegistrationUserVO initQuestList()throws MessagingException {
 		RegistrationUserVO vo = new RegistrationUserVO();
 		List<QuestionDetail> detailList = questionDetailDAO.listQuestionDetail();
@@ -157,14 +179,17 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return vo;
 	}
 	
+	@Override
 	public List<User> findUserByAccount(String account) {
 	   return userDao.findUserByAccount(account);
 	}
 	
+	@Override
 	public User findUserByUserId(String userId) {
-		   return userDao.findUserById(userId);
-		}
+	   return userDao.findUserById(userId);
+	}
 	
+	@Override
 	public void saveUserQues(String userId, String results) throws Exception {
 		Date date = new Date();
 		User user = userDao.findUserById(userId);
@@ -180,23 +205,27 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	
 	//user 輸入上游 user.account
+	@Override
 	public boolean upstream(String userId, String upstreamAccount) throws Exception {
 		boolean findUpstream;
-		User user = userDao.findUserById(userId);
-		user.setStatus(statusDAO.findStatus("USER", 5));//輸入上游
 		List<User> upstreamList = userDao.findUserByAccountAndStatus(upstreamAccount, 6);
+		
 		if(null!=upstreamList && !upstreamList.isEmpty()){
+			User user = userDao.findUserById(userId);
+			user.setStatus(statusDAO.findStatus("USER", 5));//輸入上游
 			user.setChannel(upstreamList.get(0));
+			userDao.saveUser(user);
 			findUpstream = true;
 		}else{
-			user.setChannel(userDao.findUserByRoleName("MA").get(0));
+			//查無上游
+//			user.setChannel(userDao.findUserByRoleName("MA").get(0));
 			findUpstream = false;
 		}
-		userDao.saveUser(user);
 		return findUpstream;
 	}
 	
 	//user 簽署合同
+	@Override
 	public void agreement(String userId) throws Exception {
 		User user = userDao.findUserById(userId);
 		//綁定webApiDetail

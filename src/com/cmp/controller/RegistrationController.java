@@ -45,7 +45,7 @@ public class RegistrationController extends BaseController {
 	
 	/**
 	 * user 輸入email
-	 * return confirm email訊息頁面
+	 * return 驗證碼頁面
 	 */
 	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
     public String emailConfirm(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -73,7 +73,7 @@ public class RegistrationController extends BaseController {
     }
 	
 	/**
-	 * user 認證信確認URL
+	 * user 輸入驗證碼
 	 * return user 表單提供輸入
 	 */
 	@RequestMapping(value = { "/user" }, method = RequestMethod.POST)
@@ -92,6 +92,19 @@ public class RegistrationController extends BaseController {
 			e.printStackTrace();
 		}
         return "registration/user";
+    }
+	
+	/**
+	 * 重新获取验证码
+	 */
+	@RequestMapping(value = { "/reGenToken" }, method = RequestMethod.GET)
+    public @ResponseBody String reGenToken(@RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			registrationService.reGenToken(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return jsonResponse(Response.UPDATE_SUCCESS);
     }
 	
 	/**
@@ -144,15 +157,22 @@ public class RegistrationController extends BaseController {
     public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
     	try {
             RequestContext req = new RequestContext(request);
-    		if(StringUtils.isBlank(form.getChannelAccount())){
-    			registrationService.upstream(form.getUserId(), form.getChannelAccount());
-    			model.addAttribute("message", req.getMessage("error.noFillParentChannel"));
-    		}else{
-        		if(registrationService.upstream(form.getUserId(), form.getChannelAccount()))
-        			model.addAttribute("message", "");
-        		else
-        			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
-    		}
+//    		if(StringUtils.isBlank(form.getChannelAccount())){
+//    			registrationService.upstream(form.getUserId(), form.getChannelAccount());
+//    			model.addAttribute("message", req.getMessage("error.noFillParentChannel"));
+//    		}else{
+//        		if(registrationService.upstream(form.getUserId(), form.getChannelAccount()))
+//        			model.addAttribute("message", "");
+//        		else
+//        			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
+//    		}
+            
+    		if(StringUtils.isBlank(form.getChannelAccount()) || !registrationService.upstream(form.getUserId(), form.getChannelAccount())){
+				model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
+				return "registration/upstream";
+			}else{
+    			model.addAttribute("message", "");
+			}
     		
     		String rootPath = request.getSession().getServletContext().getRealPath("");
     		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
@@ -177,34 +197,34 @@ public class RegistrationController extends BaseController {
         return jsonResponse(Response.REGISTRATION_SUCCESS);
     }
 	
-    @RequestMapping(value = "/agreementPdf", method = RequestMethod.GET)
-    protected String agreementPdf(Model model, @RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		User user = registrationService.findUserByUserId(userId);
-		String rootPath = request.getSession().getServletContext().getRealPath("");
-		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
-		
-		String[] arr = (sdfDate.format(new Date())).split("-");
-		String agreementDate = arr[0]+"年"+arr[1]+"月"+arr[2]+"日";
-		
-		
-		StringBuffer sb = new StringBuffer();
-		BufferedReader br = new BufferedReader(new FileReader(srcPath));
-        String line;
-        while ((line = br.readLine()) != null) {
-        	if(line.contains("$UpStream$"))
-        		line = line.replace("$UpStream$", user.getChannel().getName());
-        	if(line.contains("$Date$"))
-        		line = line.replace("$Date$", agreementDate);
-        	if(line.contains("$UserName$"))
-        		line = line.replace("$UserName$", user.getName());
-        	if(line.contains("$Company$"))
-        		line = line.replace("$Company$", "CMP信息服务网联");
-        	
-        	sb.append(line);
-        }
-        model.addAttribute("agreement", sb.toString());
-        return "registration/partnersAgreement";
-    }
+//    @RequestMapping(value = "/agreementPdf", method = RequestMethod.GET)
+//    protected String agreementPdf(Model model, @RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		User user = registrationService.findUserByUserId(userId);
+//		String rootPath = request.getSession().getServletContext().getRealPath("");
+//		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
+//		
+//		String[] arr = (sdfDate.format(new Date())).split("-");
+//		String agreementDate = arr[0]+"年"+arr[1]+"月"+arr[2]+"日";
+//		
+//		
+//		StringBuffer sb = new StringBuffer();
+//		BufferedReader br = new BufferedReader(new FileReader(srcPath));
+//        String line;
+//        while ((line = br.readLine()) != null) {
+//        	if(line.contains("$UpStream$"))
+//        		line = line.replace("$UpStream$", user.getChannel().getName());
+//        	if(line.contains("$Date$"))
+//        		line = line.replace("$Date$", agreementDate);
+//        	if(line.contains("$UserName$"))
+//        		line = line.replace("$UserName$", user.getName());
+//        	if(line.contains("$Company$"))
+//        		line = line.replace("$Company$", "CMP信息服务网联");
+//        	
+//        	sb.append(line);
+//        }
+//        model.addAttribute("agreement", sb.toString());
+//        return "registration/partnersAgreement";
+//    }
     
     private String agreementTxt(String userId, String srcPath) throws Exception {
     	User user = registrationService.findUserByUserId(userId);

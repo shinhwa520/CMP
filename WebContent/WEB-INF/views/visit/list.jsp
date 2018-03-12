@@ -154,7 +154,7 @@
 	
 	//[btn_Download]
 	function btnDownloadPdfClicked(visitId) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadProductPdf?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
+		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitPdf?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
 	    window.location.href = downloadUrl;
 	}
 

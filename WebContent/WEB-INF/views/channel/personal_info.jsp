@@ -46,13 +46,13 @@
 				<form:input class="form-control" path="weChat" id="weChat" readonly="true"/>
             </div>
         </div>
+        <!--
         <div class="box-body">
         	<div class="form-group">
 				<label for="reward"><span class="pull-right" style="color: red;">＊ </span><spring:message code="defaultReward"/></label>
 				<form:input class="form-control" path="reward" id="reward" />
             </div>                              
         </div>
-        <!--
         <div class="box-body">
         	<div class="form-group">
 				<label for="status"><spring:message code="status"/></label>

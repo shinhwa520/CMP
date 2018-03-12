@@ -4,7 +4,7 @@
 
 <section class="content">
 	<div class="topic"><spring:message code="fillParentChannel"/></div>
-	<form:form method="POST" modelAttribute="UserInfoForm" action="${pageContext.request.contextPath}/registration/agreement">
+	<form:form method="POST" modelAttribute="UserInfoForm" onsubmit="return validateInput();" action="${pageContext.request.contextPath}/registration/agreement">
 		<form:hidden path="userId" id="userId" />
 		<form:input class="form-control" path="channelAccount" id="channelAccount" placeholder="Account"/>
 		<form:errors class="form-control" path="channelAccount" cssClass="error" />
@@ -12,8 +12,13 @@
 	</form:form>
 </section>
 <script>
-
-//不檢核, 暫定可不輸入
+var msg = '${message}';
+$(function() {
+	if(''!=msg) {
+		errorMessage(msg);
+	}
+});
+//輸入檢核
 function validateInput() {
   	var channelAccount = $('#channelAccount').val();
   	if(''==channelAccount.trim()){
