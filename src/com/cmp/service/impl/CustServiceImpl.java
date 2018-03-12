@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import com.cmp.model.Status;
+import com.cmp.service.vo.CustServiceVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,5 +136,18 @@ public class CustServiceImpl implements CustService {
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		cust.setUpdateBy(user.getName());
 		customerDAO.saveCust(cust);
+	}
+
+	@Override
+	public void deleteCust(CustServiceVO custServiceVO) {
+		Customer customer = customerDAO.findCustById(custServiceVO.getCust_Id());
+		Status status = statusDAO.findStatus("DATA", 2);
+		customer.setDataStatus(status);
+
+		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
+		customer.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		customer.setUpdateBy(user.getName());
+
+		customerDAO.saveCust(customer);
 	}
 }

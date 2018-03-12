@@ -13,7 +13,11 @@ public class CustServiceVO {
 	private String urlKpi;
 	private String urlIntroPage;
 	private String urlDownload;
-	
+
+	private Integer cust_Id;
+
+	public Integer getCust_Id() { return cust_Id; }
+	public void setCust_Id(Integer cust_Id) { this.cust_Id = cust_Id; }
 	public Integer getProductId() {
 		return productId;
 	}

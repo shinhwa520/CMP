@@ -23,7 +23,8 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Customer c ")
 		  .append(" where 1=1 ")
-		  .append(" and c.id = ? ");
+		  .append(" and c.id = ? ")
+		  .append(" and c.dataStatus.id <> 2 ");
 		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), id);
 		return returnList.isEmpty() ? null : returnList.get(0);
 	}
@@ -58,6 +59,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 			  sb.append(" and c.user.id = ? ");
 			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {userId}));
 		}
+		sb.append(" and c.dataStatus.id <> 2 ");
 		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
 	}
 	
@@ -65,6 +67,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	public List<Customer> findCust4Search(String keyword, Integer start,Integer length) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Customer c where 1=1 ");
+		sb.append(" and c.dataStatus.id <> 2 ");
 		if(StringUtils.isNotBlank(keyword)){
 			sb.append(" and c.name like :keyword ");
 		}
@@ -83,6 +86,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	public long countCust4Search(String keyword){
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select count(*) from Customer c where 1=1 ");
+		sb.append(" and c.dataStatus.id <> 2 ");
 		if(StringUtils.isNotBlank(keyword)){
 			  sb.append(" and c.name = ? ");
 			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {"%"+keyword+"%"}));
@@ -93,6 +97,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	public List<Customer> findCust4MA(String roleName, Integer start,Integer length){
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from Customer c where 1=1 ");
+		sb.append(" and c.dataStatus.id <> 2 ");
 		if(StringUtils.isNotBlank(roleName)){
 			sb.append(" and c.user.role.name = :roleName ");
 		}
@@ -108,6 +113,7 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	public long countCust4MA(String roleName){
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select count(*) from Customer c where 1=1 ");
+		sb.append(" and c.dataStatus.id <> 2 ");
 		if(StringUtils.isNotBlank(roleName)){
 			  sb.append(" and c.user.role.name = ? ");
 			  return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString(), new String[] {roleName}));
@@ -122,7 +128,8 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 		  .append(" from Customer c, WebApiDetail wad ")
 		  .append(" where 1=1 ")
 		  .append(" and c.user.id = wad.user.id  ")
-		  .append(" and wad.parameterValues = ? ");
+		  .append(" and wad.parameterValues = ? ")
+		  .append(" and c.dataStatus.id <> 2 ");
 		
 		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {apiModelId});
 		return returnList;

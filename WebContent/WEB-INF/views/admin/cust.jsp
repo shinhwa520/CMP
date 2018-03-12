@@ -458,7 +458,11 @@ $(function() {
                                 +'&nbsp;'
                                 +'<a href="#">'
                                 +'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));">'
-                                +'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="file"/></span></a>';
+                                +'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="file"/></span></a>'
+                        		+'&nbsp;'
+                        		+'<a href="#">'
+                        		+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnDeleteCustClicked($(this));">'
+                        		+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="delete"/></span></a>';
 					}
 				}
 			],
@@ -752,5 +756,55 @@ function btnDownloadClicked(btn) {
             custFileMain.ajax.reload();
         }
     }, 2000);
+}
+
+//[Delete Cust] 按下Delete Cust按鈕
+function btnDeleteCustClicked(btn) {
+    formAction = "deleteCust";
+
+    // var seqNos = "";
+    // var haveOneChecked = false;
+    // $(':checkbox.delChkbox').each(function() {
+    //     if (this.checked) {
+    //         haveOneChecked = true;
+    //         seqNos += this.value;
+    //         seqNos += ",";
+    //     }
+    // });
+
+    <%--if (!haveOneChecked) {--%>
+        <%--alert("<spring:message code='error.noSelectFile'/>");--%>
+
+    <%--} else {--%>
+    // alert(btn.attr('custId'))
+        $.ajax({
+            url : '${pageContext.request.contextPath}/admin/cust/' + formAction,
+            data : {
+                custId: btn.attr('custId')
+            },
+            type : "POST",
+            dataType : 'json',
+            async: false,
+            success : function(resp) {
+                console.log(resp);
+
+                if (resp.code == '200' && tblMain) {
+                    successMsgModal(resp.message);
+
+                    // $('#delChkAll').prop('checked', false);
+                    // if (tblMain) {
+                        tblMain.ajax.reload();
+                    // }
+                } else {
+                    alert(resp);
+                }
+            },
+
+            error : function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    // }
 }
 </script>

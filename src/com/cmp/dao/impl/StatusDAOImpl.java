@@ -53,4 +53,14 @@ public class StatusDAOImpl extends BaseDaoHibernate implements StatusDAO {
 		sb.append(" select count(*) from Status s where 1=1 ");
 		return DataAccessUtils.longResult(getHibernateTemplate().find(sb.toString()));
 	}
+
+	@Override
+	public List<Status> findStatus(String type){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Status s ")
+				.append(" where 1=1 ")
+				.append(" and s.type = :type ");
+		List<Status> returnList = (List<Status>)getHibernateTemplate().findByNamedParam(sb.toString(), new String[] {"type"},new Object[] {type});
+		return returnList.isEmpty() ? null : returnList;
+	}
 }
