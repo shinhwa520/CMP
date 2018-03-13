@@ -111,13 +111,14 @@
 		}
 		
 		 #container{     
-		 	margin-top: 60px;
-			min-height: 550px;
+		 	margin-top: 50px;
+			min-height: 500px;
 		 }
 		.alert{
 			margin-top: 40px;
 			display:none;
 		}
+
 		.topic{
 			min-width: 300px;
 		    max-width: 450px;
@@ -130,10 +131,11 @@
 			background: linear-gradient(to bottom right,#FFFFFF, #CCCCCC);
 			font-size: 20px;
 			text-shadow: 1px 1px 0 #CCCCCC;
-			padding: 30px;
+			padding: 15px 30px 10px 30px;
 		    border-top-left-radius: 6px;
 		    border-top-right-radius: 6px;
 		}
+
 	</style>
 </head>
 <body>

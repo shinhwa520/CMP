@@ -146,11 +146,13 @@ function btnSaveClicked() {
 		$('#weChat').parents('.form-group').addClass('has-error');
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustWechat"/><br/>';
 	}
+	/*
 	if (!validateInt(reward)) {
 		isError = true;
 		$('#reward').parents('.form-group').addClass('has-error');
 		errMsg += '！Reward必須為數字<br/>';
 	}
+	*/
 	
 	//頁面輸入檢核Error
 	if(isError){
