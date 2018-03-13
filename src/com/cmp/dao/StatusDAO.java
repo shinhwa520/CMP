@@ -9,4 +9,5 @@ public interface StatusDAO {
 	Status findStatus(String type, int sort);
 	List<Status> listStatus(Integer start, Integer length);
 	long countStatus();
+	List<Status> findStatus(String type);
 }

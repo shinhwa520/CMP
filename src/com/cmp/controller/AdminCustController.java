@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cmp.model.Status;
+import com.cmp.service.StatusService;
+import com.cmp.service.vo.CustServiceVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +91,11 @@ public class AdminCustController extends BaseController {
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * 更新Customer資料 by custId
+	 * @return AppResponse
+	 */
 	@RequestMapping(value="update", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse updateCust(
@@ -119,6 +126,32 @@ public class AdminCustController extends BaseController {
 					, city, census, address, remark, status);
 			RequestContext req = new RequestContext(request);
 			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));//更新成功
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+	}
+
+	/**
+	 * 删除Cust
+	 *
+	 * @param custId
+	 * @return DatatableResponse
+	 */
+	@RequestMapping(value="deleteCustAjax", method = RequestMethod.POST, produces="application/json")
+	public @ResponseBody AppResponse deleteCust(
+			@RequestParam(name="custId", required=true) Integer custId,
+			HttpServletRequest request) {
+		try {
+			RequestContext req = new RequestContext(request);
+
+			CustServiceVO custServiceVO = new CustServiceVO();
+			custServiceVO.setCust_Id(custId);
+
+			custService.deleteCust(custServiceVO);
+
+			return new AppResponse(HttpServletResponse.SC_OK, req.getMessage("success.update"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e);

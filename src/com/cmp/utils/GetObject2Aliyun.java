@@ -119,7 +119,7 @@ public class GetObject2Aliyun {
     }
     
     public boolean getObjectWithWaterMark(
-    		FilesBaseConfig config, Map<String, String> keyMap, List<String> waterMarks, String outputPath, String fileCategory, HttpServletResponse response) throws IOException {
+    		FilesBaseConfig config, Map<String, String> keyMap, List<String> waterMarks, String outputPath, String fileCategory, boolean useZip, HttpServletResponse response) throws IOException {
     	
     	initConfig(config);
     	
@@ -147,27 +147,62 @@ public class GetObject2Aliyun {
                 in = object.getObjectContent();
                 
                 WaterMarkUtils.mark(in, waterMarks, outputPath, entry.getValue());
+                
+                if (!useZip) {
+                	/*
+                	 * 不壓縮表示為單張下載
+                	 */
+                	response.setContentType("multipart/form-data");
+                    response.setHeader("Content-Disposition","attachment; filename=\""  + entry.getValue() + "\"");	//檔名前後以雙引號包夾，解決檔名含中文字會空白的問題
+                    
+                    outputPath = outputPath.concat(File.separator).concat(entry.getValue());
+                	
+                    InputStream fileInput = new FileInputStream(new File(outputPath));
+                	
+                	OutputStream output = response.getOutputStream();
+        			
+        			try {
+        				
+        	            byte[] b = new byte[2048];
+        	            int len;
+
+        	            while((len = fileInput.read(b)) > 0){
+        	              output.write(b, 0, len);
+        	            }
+        	            
+        			} catch (Exception e) {
+        				throw e;
+        				
+        			} finally {
+        				in.close();
+        	            output.flush();
+        	            output.close();   //關閉串流
+        			}
+                }
             }
             
-            //進行壓縮打包輸出
-            File folder = new File(outputPath);
-            File[] files = null;
-            List<File> fileList = null;
-            if (folder.exists() && folder.isDirectory()) {
-            	files = folder.listFiles();
+            if (useZip) {
+            	//進行壓縮打包輸出
+                File folder = new File(outputPath);
+                File[] files = null;
+                List<File> fileList = null;
+                if (folder.exists() && folder.isDirectory()) {
+                	files = folder.listFiles();
 
-            	if (files != null) {
-            		fileList = new ArrayList<File>();
-            		fileList = Arrays.asList(files);
-            	}
-            }
+                	if (files != null) {
+                		fileList = new ArrayList<File>();
+                		fileList = Arrays.asList(files);
+                	}
+                }
 
-            String downloadFileName = "productDM_" + System.currentTimeMillis() + ".zip";
-            response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition","attachment; filename=" + downloadFileName);  
+                String downloadFileName = "productDM_" + System.currentTimeMillis() + ".zip";
+                response.setContentType("multipart/form-data");
+                response.setHeader("Content-Disposition","attachment; filename=\""  + downloadFileName + "\"");	//檔名前後以雙引號包夾，解決檔名含中文字會空白的問題
+                
+                this.zip(fileList, downloadFileName, response);
+                
+            } 
             
-            this.zip(fileList, downloadFileName, response);
-
         } catch (OSSException oe) {
             log.error("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");

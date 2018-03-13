@@ -91,6 +91,10 @@ public class Customer implements java.io.Serializable {
     
     @Column(name = "update_by", nullable = true)
 	private String updateBy;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "data_status_id", nullable = false)
+	private Status dataStatus;
     
     
 	public Customer() {
@@ -99,7 +103,7 @@ public class Customer implements java.io.Serializable {
 	public Customer(int id, String name, String gender, Date birthday, String phone, String email, String weChat,
 			Integer identity1_id, String identity1_code, String identity1_name, Integer identity2_id,
 			String identity2_code, String identity2_name, String city, String census, String address, Status status,
-			User user, String remark, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy) {
+			User user, String remark, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy, Status dataStatus) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -124,6 +128,7 @@ public class Customer implements java.io.Serializable {
 		this.createBy = createBy;
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
+		this.dataStatus = dataStatus;
 	}
 
 	public int getId() {
@@ -355,5 +360,13 @@ public class Customer implements java.io.Serializable {
 			default:
 				return "未輸入";
 		}
+	}
+
+	public Status getDataStatus() {
+		return dataStatus;
+	}
+
+	public void setDataStatus(Status dataStatus) {
+		this.dataStatus = dataStatus;
 	}
 }

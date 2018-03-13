@@ -26,4 +26,9 @@ public class StatusServiceImpl implements StatusService {
 	public long countStatus(){
 		return statusDAO.countStatus();
 	}
+
+	@Override
+	public List<Status> findStatus(String type){
+		return statusDAO.findStatus(type);
+	}
 }

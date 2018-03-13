@@ -19,7 +19,7 @@
 			
 		} else {
 			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
-			FileForm.queryFileType.value = "PRODUCT";
+			FileForm.queryFileType.value = "VISIT";
 			FileForm.submit();
 		}
 	}
@@ -27,36 +27,36 @@
 </SCRIPT>
 
 <section class="content">
-<div class="box-body"></div>
+	<div class="box-body"></div>
 
-<form:form method="POST" modelAttribute="FileForm" action="">
-	<input type="hidden" name="fileType" id="queryFileType" value="" />
-	<div class="box box-primary">
-		<div class="box-header with-border">
-			<b><font style="font-size: 1.5em;"><spring:message code="shareResource"/></font></b>
-			<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
-			<span class="pull-right">&nbsp;</span>
-			<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="delete"/></span></a>
+	<form:form method="POST" modelAttribute="FileForm" action="">
+		<input type="hidden" name="fileType" id="queryFileType" value="" />
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<b><font style="font-size: 1.5em;"><spring:message code="shareResource"/></font></b>
+				<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
+				<span class="pull-right">&nbsp;</span>
+				<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="delete"/></span></a>
+			</div>
+			<div class="box-body no-padding">
+				<table class="table table-striped" id="tblMain">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th><spring:message code="fileName"/></th>
+							<th><spring:message code="fileSize"/></th>
+							<th><spring:message code="downloadTimes"/></th>
+							<th><spring:message code="fileDescription"/></th>
+							<th><spring:message code="updatedTime"/></th>
+							<th style="width: 100px;"><spring:message code="option"/></th>
+							<th style="width: 100px;"><spring:message code="edit"/></th>
+							<th style="width: 100px;"><input type="checkbox" id="delChkAll" /><spring:message code="selectAll"/></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
-		<div class="box-body no-padding">
-			<table class="table table-striped" id="tblMain">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th><spring:message code="fileName"/></th>
-						<th><spring:message code="fileSize"/></th>
-						<th><spring:message code="downloadTimes"/></th>
-						<th><spring:message code="fileDescription"/></th>
-						<th><spring:message code="updatedTime"/></th>
-						<th style="width: 100px;"><spring:message code="option"/></th>
-						<th style="width: 100px;"><spring:message code="edit"/></th>
-						<th style="width: 100px;"><input type="checkbox" id="delChkAll" /><spring:message code="selectAll"/></th>
-					</tr>
-				</thead>
-			</table>
-		</div>
-	</div>
-</form:form>
+	</form:form>
 </section>
 
 <script>
@@ -92,9 +92,11 @@
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
-            	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
+            	<input type="hidden" name="fileType" id="editFileType" value="VISIT" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
             	<input type="hidden" name="productId" id="productId" value="4" />
+            	<input type="hidden" name="visitId" id="productId" value="1" />
+            	<input type="hidden" name="fileCategory" id="fileCategory" value="SCHEDULE" />
             	
 		        <div class="box-body">
 		        	<div class="form-group">
@@ -244,7 +246,7 @@ function btnAddClicked() {
 	formAction = 'modify';
 	$('#isAdd').val('Y');
 	$('#editSeqNo').val('');
-	$('#editFileType').val('PRODUCT');
+	$('#editFileType').val('VISIT');
 	$('#editFullFileName').val('');
 	$('#uploadFile').val('');
 	$('#uploadFile').show();

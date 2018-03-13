@@ -23,6 +23,7 @@ import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
 import com.cmp.model.FilesSetting;
 import com.cmp.model.FilesVisit;
+import com.cmp.security.SecurityUtil;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
 import com.cmp.service.vo.VisitServiceVO;
@@ -204,8 +205,8 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
 				id = fileServiceVO.getProductId() != null ? fileServiceVO.getProductId().toString() : "ALL";
 				
-			} else {
-				
+			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_VISIT)) {
+				id = fileServiceVO.getVisitId() != null ? fileServiceVO.getVisitId().toString() : "ALL";
 			}
 			fileServiceVO.setUpperFileName(
 					(fileServiceVO.getFileType()+"_"+id+"_"+fileServiceVO.getOriginFileName()).toUpperCase());
@@ -238,13 +239,17 @@ public class FileServiceImpl implements FileService {
 				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
 					entity = new FilesProduct();
 					((FilesProduct)entity).setProductId(fileServiceVO.getProductId());
+					
+				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_VISIT)) {
+					entity = new FilesVisit();
+					((FilesVisit)entity).setVisitId(fileServiceVO.getVisitId());
 				}
 				
 				if (entity != null) {
 					BeanUtils.copyProperties(fileServiceVO, entity);
-					org.apache.commons.beanutils.BeanUtils.setProperty(entity, "createBy", "admin");
+					org.apache.commons.beanutils.BeanUtils.setProperty(entity, "createBy", SecurityUtil.getSecurityUser().getUser().getAccount());
 					org.apache.commons.beanutils.BeanUtils.setProperty(entity, "createTime", new Timestamp(new Date().getTime()));
-					org.apache.commons.beanutils.BeanUtils.setProperty(entity, "updateBy", "admin");
+					org.apache.commons.beanutils.BeanUtils.setProperty(entity, "updateBy", SecurityUtil.getSecurityUser().getUser().getAccount());
 					org.apache.commons.beanutils.BeanUtils.setProperty(entity, "updateTime", new Timestamp(new Date().getTime()));
 				}
 				
@@ -382,7 +387,7 @@ public class FileServiceImpl implements FileService {
 				sourceModel = modelList.get(0);
 				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "fileDescription", fileServiceVO.getFileDescription());
 				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "updateTime", new Timestamp(new Date().getTime()));
-				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "updateBy", "admin");
+				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "updateBy", SecurityUtil.getSecurityUser().getUser().getAccount());
 				
 				
 				fsModel = (FilesSetting)sourceModel.getClass().getMethod("getFilesSetting").invoke(sourceModel);
@@ -522,6 +527,7 @@ public class FileServiceImpl implements FileService {
 		try {
 			FileDAOVO fileDAOVO	 = new FileDAOVO();
 			fileDAOVO.setVisitId(vo.getVisitId());
+			fileDAOVO.setFileCategory(vo.getFileCategory());
 			
 			List<FilesVisit> visitList = fileDAO.findVisitFileByDAOVO(fileDAOVO);
 			

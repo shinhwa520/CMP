@@ -7,4 +7,5 @@ import com.cmp.model.Status;
 public interface StatusService {
 	List<Status> listStatus(Integer start, Integer length);
 	long countStatus();
+	List<Status> findStatus(String type);
 }

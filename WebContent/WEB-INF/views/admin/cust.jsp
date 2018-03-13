@@ -13,6 +13,7 @@
 			<span><spring:message code="allCust.search.info"/></span>
 
 	</div>
+	<div class="modal_msg" style="display: none"></div>
 	<div class="box-body no-padding">
 		<table class="table table-striped" id="tblMain">
 			<thead>
@@ -271,6 +272,26 @@
 </div>
 <!--/.燈箱 Upload -->
 
+<!--.燈箱 deleteCust -->
+<div class="modal fade bs-example-modal-lg" id="modal_deleteCust" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title"><spring:message code="deleteCustomer"/></h4>
+			</div>
+			<div class="modal-body">
+				<spring:message code="isDeleteCustomer"/>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="cancel"/></button>
+				<button type="button" class="btn btn-danger" id="btnDeleteCust" data-dismiss="modal" onclick="btnDeleteCustConfirm();"><spring:message code="delete"/></button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div>
+</div>
+<!--/.燈箱 deleteCust -->
+
 <script>
 var tblMain;
 var custFileMain;
@@ -458,7 +479,11 @@ $(function() {
                                 +'&nbsp;'
                                 +'<a href="#">'
                                 +'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));">'
-                                +'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="file"/></span></a>';
+                                +'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="file"/></span></a>'
+                        		+'&nbsp;'
+                        		+'<a href="#" data-toggle="modal" data-target="#modal_deleteCust">'
+                        		+'<span class="label label-danger pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnDeleteCustClicked($(this));">'
+                        		+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="delete"/></span></a>';
 					}
 				}
 			],
@@ -752,5 +777,46 @@ function btnDownloadClicked(btn) {
             custFileMain.ajax.reload();
         }
     }, 2000);
+}
+
+//[Delete Cust] 按下Delete Cust按鈕
+function btnDeleteCustClicked(btn) {
+    formAction = "deleteCustAjax";
+    $('#clickedCustId').val(btn.attr('custId'));
+}
+
+//[Confirm delete Cust] 按下确定删除客户按鈕
+function btnDeleteCustConfirm() {
+    formAction = "deleteCustAjax";
+
+    $.ajax({
+        url : '${pageContext.request.contextPath}/admin/cust/' + formAction,
+        data : {
+            custId: $('#clickedCustId').val()
+        },
+        type : "POST",
+        dataType : 'json',
+        async: false,
+        success : function(resp) {
+            console.log(resp);
+
+            if (resp.code == '200' && tblMain) {
+                $('#clickedCustId').val = "-1";
+                successMsgModal(resp.message);
+
+                if (tblMain.rows().count() > 1 || tblMain.page() < 1) {
+                    tblMain.draw(false);
+                } else {
+                    tblMain.page('previous').draw('page');
+                }
+            } else {
+                alert(resp);
+            }
+        },
+        error : function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
 }
 </script>

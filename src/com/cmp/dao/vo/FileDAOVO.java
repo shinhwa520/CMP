@@ -8,6 +8,7 @@ public class FileDAOVO {
 	private String originFileName;
 	private String upperFileName;
 	private List<String> fileExtension;
+	private String fileCategory;
 	
 	private Integer custId;
 	private Integer productId;
@@ -67,5 +68,13 @@ public class FileDAOVO {
 
 	public void setFileExtension(List<String> fileExtension) {
 		this.fileExtension = fileExtension;
+	}
+
+	public String getFileCategory() {
+		return fileCategory;
+	}
+
+	public void setFileCategory(String fileCategory) {
+		this.fileCategory = fileCategory;
 	}
 }
