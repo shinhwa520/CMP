@@ -315,10 +315,11 @@ public class FileController extends BaseController {
 	}
 	
 	@RequestMapping(value="downloadVisitFiles", method = RequestMethod.GET)
-	public String downloadProductFile(
+	public String downloadVisitFiles(
 			@RequestParam(name="visitId", required=true) Integer visitId,
 			@RequestParam(name="fileType", required=true) String fileType,
 			@RequestParam(name="fileCategory", required=true) String fileCategory,
+			@RequestParam(name="useZip", required=true) boolean useZip,
 			@RequestParam(name="fromPage", required=true) String fromPage,
 			HttpServletRequest request, HttpServletResponse response) {
 		
@@ -385,7 +386,7 @@ public class FileController extends BaseController {
 					String downloadTmpPath = request.getSession().getServletContext().getRealPath("/download/temp/"+userId+"/"+System.currentTimeMillis());
 					
 					isOutputed = new GetObject2Aliyun().getObjectWithWaterMark(
-							config, fileMap, waterMarks, downloadTmpPath, fileCategory, response);
+							config, fileMap, waterMarks, downloadTmpPath, fileCategory, useZip, response);
 				}
 			}
 			
@@ -449,7 +450,7 @@ public class FileController extends BaseController {
 				PDFMerge.manipulatePdf(user, tempPath, templatePath);
 
 				response.setContentType("multipart/form-data");
-				response.setHeader("Content-Disposition","attachment; filename=" + "Malaysia_MM2H.pdf");
+				response.setHeader("Content-Disposition","attachment; filename=\"" + "Malaysia_MM2H.pdf" + "\"");
 
                 InputStream in = new FileInputStream(tempPath + "/Malaysia_MM2H.pdf");
 				OutputStream output = response.getOutputStream();
@@ -485,6 +486,61 @@ public class FileController extends BaseController {
 		return isOutputed ? null : "redirect:/"+fromPage;
 	}
 
-
+	@RequestMapping(value="downloadSchedule", method = RequestMethod.GET)
+	public String downloadSchedule(
+			@RequestParam(name="visitId", required=true) Integer visitId,
+			@RequestParam(name="fileType", required=true) String fileType,
+			@RequestParam(name="fileCategory", required=true) String fileCategory,
+			@RequestParam(name="fromPage", required=true) String fromPage,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		boolean isOutputed = false;
+		try {
+			FilesBaseConfig config = fileService.findFilesConfig(fileType);
+			
+			if (config == null) {
+				throw new Exception("[ERROR]未設定FilesBaseConfig >> configName: " + fileType);
+			}
+			
+			//查找產品檔案
+			VisitServiceVO vsVO = new VisitServiceVO();
+			vsVO.setVisitId(visitId);
+			vsVO.setFileCategory(fileCategory);
+			VisitServiceVO retVisit = fileService.findVisitInfoByDAOVO(vsVO);
+			
+			Map<String, String> fileMap = null;	//檔案清單
+			if (retVisit != null 
+					&& (retVisit.getFilesVisit() != null && !retVisit.getFilesVisit().isEmpty())) {
+				
+				fileMap = new HashMap<String, String>();
+				
+				for (FilesVisit fp : retVisit.getFilesVisit()) {
+					FileServiceVO retVO = fileService.modifyDownloadCount(fileType, fp.getSeqNo());
+					
+					String downloadFileName = "";
+					//處理中文檔名問題
+					String userAgent = request.getHeader("User-Agent");
+					if((userAgent.contains("MSIE")) || (userAgent.contains("Trident")) || (userAgent.contains("Edge"))) {
+						downloadFileName = java.net.URLEncoder.encode(fp.getOriginFileName(),"UTF-8");
+						//IE6.11正常、FF的中文部分會出現%XX%XX的代碼
+					}else{
+						downloadFileName = new String(fp.getOriginFileName().getBytes("UTF-8"),"ISO-8859-1");
+						//Firefox / google Chrome正常，IE6檔名整個亂碼 (連副檔名都看不見)
+					}
+					fileMap.put(fp.getUpperFileName(), downloadFileName);
+				}
+				
+				if (fileMap != null && !fileMap.isEmpty()) {
+					isOutputed = new GetObject2Aliyun().getObject(config, fileMap, response);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e);
+		}
+		
+		return isOutputed ? null : "redirect:/"+fromPage;
+	}
 
 }

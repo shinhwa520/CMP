@@ -42,6 +42,9 @@ public class FilesVisit {
 	@Column(name = "file_size", nullable = true)
 	private Integer fileSize;
 	
+	@Column(name = "file_category", nullable = true)
+	private String fileCategory;
+	
 	@Column(name = "download_times", nullable = true)
 	private Integer downloadTimes;
 	
@@ -69,8 +72,8 @@ public class FilesVisit {
 	}
 
 	public FilesVisit(Integer seqNo, String upperFileName, String originFileName, String fileName, String fileExtension,
-			String fileDescription, Integer fileSize, Integer downloadTimes, Timestamp createTime, String createBy,
-			Timestamp updateTime, String updateBy, FilesSetting filesSetting, Integer visitId) {
+			String fileDescription, Integer fileSize, String fileCategory, Integer downloadTimes, Timestamp createTime,
+			String createBy, Timestamp updateTime, String updateBy, FilesSetting filesSetting, Integer visitId) {
 		super();
 		this.seqNo = seqNo;
 		this.upperFileName = upperFileName;
@@ -79,6 +82,7 @@ public class FilesVisit {
 		this.fileExtension = fileExtension;
 		this.fileDescription = fileDescription;
 		this.fileSize = fileSize;
+		this.fileCategory = fileCategory;
 		this.downloadTimes = downloadTimes;
 		this.createTime = createTime;
 		this.createBy = createBy;
@@ -142,6 +146,14 @@ public class FilesVisit {
 
 	public void setFileSize(Integer fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public String getFileCategory() {
+		return fileCategory;
+	}
+
+	public void setFileCategory(String fileCategory) {
+		this.fileCategory = fileCategory;
 	}
 
 	public Integer getDownloadTimes() {

@@ -178,6 +178,9 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		if (fileDAOVO.getVisitId() != null) {
 			sb.append(" and fv.visitId = :visitId ");
 		}
+		if (StringUtils.isNotBlank(fileDAOVO.getFileCategory())) {
+			sb.append(" and fv.fileCategory = :fileCategory ");
+		}
 		
 		sb.append(" and (fv.filesSetting.activationBegin is null or fv.filesSetting.activationBegin <= sysdate()) ")
 		  .append(" and (fv.filesSetting.activationEnd is null or fv.filesSetting.activationEnd >= sysdate()) ")
@@ -194,6 +197,9 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		}
 	    if (fileDAOVO.getVisitId() != null) {
 	    	q.setParameter("visitId", fileDAOVO.getVisitId());
+		}
+	    if (StringUtils.isNotBlank(fileDAOVO.getFileCategory())) {
+	    	q.setParameter("fileCategory", fileDAOVO.getFileCategory());
 		}
 	    
 		return (List<FilesVisit>) q.list();

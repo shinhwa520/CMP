@@ -17,7 +17,7 @@
 			
 				<!-- 圖片區塊 -->
 				<div class="ca-item">
-					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0001.jpg" alt="魅力大馬">
+					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0002.jpg" alt="魅力大馬">
 						<h3> 魅力大馬 </h3>
 						<p> <span> 异域海岛 / 一带一路 / 第二家园 </span> </p>
 						<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
@@ -46,9 +46,14 @@
 							</ul>
 							 --%>
 							<ul>
-								<li><a href="#" onclick="btnIntroClicked(1);"><spring:message code="downloadProductImageLink" /></a></li>
-								<li><a href="#" onclick="btnDownloadClicked(1);"><spring:message code="downloadMarketingPoster" /></a></li>
+								<li><a href="#" onclick="btnIntroClicked(1,'JUMP');"><spring:message code="downloadProductImageLink" /></a></li>
+								<li><a href="#" onclick="btnDownloadClicked(1,'DM1',false);"><spring:message code="downloadMarketingPoster" />1</a></li>
+								<li><a href="#" onclick="btnDownloadClicked(1,'DM2',false);"><spring:message code="downloadMarketingPoster" />2</a></li>
 								<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
+								<li><a href="#" onclick="btnScheduleClicked(1);"><spring:message code="downloadSchedule" /></a></li>
+							</ul>
+							<ul>
+								<li><a href="#" onclick="btnIntroClicked(1,'COPY');"><spring:message code="copyProductImageLink" /></a></li>
 							</ul>
 							<br />
 						</div>
@@ -115,7 +120,7 @@
 	}
 	
 	//[btn_Intro]
-	function btnIntroClicked(visitId) {
+	function btnIntroClicked(visitId, action) {
 		$.ajax({
 			url : '${pageContext.request.contextPath}/channel/personalInfo/getDMUrl',
 			data : {
@@ -131,7 +136,12 @@
 						alert(resp.data.errorMsg);
 						
 					} else {
-						window.open(resp.data.channelUrl, '_blank');
+						if (action == 'JUMP') {
+							window.open(resp.data.channelUrl, '_blank');
+							
+						} else if (action == 'COPY') {
+							copyToClipboard(resp.data.channelUrl);
+						}
 					}
 					//successMsgModal(resp.message);
 				} else {
@@ -147,15 +157,52 @@
 	}
 	
 	//[btn_Download]
-	function btnDownloadClicked(visitId) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitFiles?visitId="+visitId+"&fileType=VISIT&fileCategory=&fromPage=visit/list";
+	function btnDownloadClicked(visitId, fileCategory, useZip) {
+		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitFiles?visitId="+visitId+"&fileType=VISIT&fileCategory="+fileCategory+"&useZip="+useZip+"&fromPage=visit/list";
 	    window.location.href = downloadUrl;
 	}
 	
-	//[btn_Download]
+	//[btn_Download_PDF]
 	function btnDownloadPdfClicked(visitId) {
 		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitPdf?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
 	    window.location.href = downloadUrl;
+	}
+	
+	//[btn_Download_Schedule]
+	function btnScheduleClicked(visitId) {
+		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadSchedule?visitId="+visitId+"&fileType=VISIT&fileCategory=SCHEDULE&fromPage=visit/list";
+	    window.location.href = downloadUrl;
+	}
+	
+	// Copies a string to the clipboard. Must be called from within an 
+	// event handler such as click. May return false if it failed, but
+	// this is not always possible. Browser support for Chrome 43+, 
+	// Firefox 42+, Safari 10+, Edge and IE 10+.
+	// IE: The clipboard feature may be disabled by an administrator. By
+	// default a prompt is shown the first time the clipboard is 
+	// used (per session).
+	function copyToClipboard(text) {
+		
+	    if (window.clipboardData && window.clipboardData.setData) {
+	        // IE specific code path to prevent textarea being shown while dialog is visible.
+	        return clipboardData.setData("Text", text); 
+
+	    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+	        var textarea = document.createElement("textarea");
+	        textarea.textContent = text;
+	        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+	        document.body.appendChild(textarea);
+	        textarea.select();
+	        try {
+	            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+	        } catch (ex) {
+	            console.warn("Copy to clipboard failed.", ex);
+	            return false;
+	        } finally {
+	        	alert('<spring:message code="copySuccessMsg" />!! (' + textarea.value + ')');
+	            document.body.removeChild(textarea);
+	        }
+	    }
 	}
 
 </script>

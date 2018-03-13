@@ -32,6 +32,7 @@ public class FileServiceVO {
 	
 	private Integer custId;
 	private Integer productId;
+	private Integer visitId;
 	
 	public Integer getSeqNo() {
 		return seqNo;
@@ -239,5 +240,13 @@ public class FileServiceVO {
 
 	public void setFileCategory(String fileCategory) {
 		this.fileCategory = fileCategory;
+	}
+
+	public Integer getVisitId() {
+		return visitId;
+	}
+
+	public void setVisitId(Integer visitId) {
+		this.visitId = visitId;
 	}
 }

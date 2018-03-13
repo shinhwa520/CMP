@@ -138,14 +138,14 @@ body {margin: 0;}
 }
 .ca-content ul li{
 	float:left;
-	margin:0px 2px;
+	margin:5px 2px;
 	list-style: none;
 }
 .ca-content ul li a{
 	color:#2980b9;
 	background:#fff;
 	padding:3px 6px;
-	font-size:18px;
+	font-size:16px;
 	font-style:italic;
 }
 .ca-content ul li a:hover{

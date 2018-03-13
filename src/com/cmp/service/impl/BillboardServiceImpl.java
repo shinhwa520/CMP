@@ -17,6 +17,7 @@ import com.cmp.dao.vo.BillboardDAOVO;
 import com.cmp.model.BillboardContent;
 import com.cmp.model.BillboardPermission;
 import com.cmp.model.BillboardSetting;
+import com.cmp.security.SecurityUtil;
 import com.cmp.service.BillboardService;
 import com.cmp.service.vo.BillboardServiceVO;
 
@@ -100,9 +101,9 @@ public class BillboardServiceImpl implements BillboardService {
 			
 			billContent.setContent(bsVO.getContent());
 			billContent.setTitle(bsVO.getTitle());
-			billContent.setCreateBy(isAdd ? "admin" : billContent.getCreateBy());
+			billContent.setCreateBy(isAdd ? SecurityUtil.getSecurityUser().getUser().getAccount() : billContent.getCreateBy());
 			billContent.setCreateTime(isAdd ? new Timestamp(new Date().getTime()) : billContent.getCreateTime());
-			billContent.setUpdateBy("admin");
+			billContent.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 			billContent.setUpdateTime(new Timestamp(new Date().getTime()));
 			
 			String beginDateStr = 
@@ -123,9 +124,9 @@ public class BillboardServiceImpl implements BillboardService {
 			billSetting.setOnTop(StringUtils.isNotBlank(bsVO.getOnTopChkbox()) ? bsVO.getOnTopChkbox() : "N");
 			billSetting.setActivationBegin(beginDate == null ? null : new Timestamp(beginDate.getTime()));
 			billSetting.setActivationEnd(endDate == null ? null : new Timestamp(endDate.getTime()));
-			billSetting.setCreateBy(isAdd ? "admin" : billContent.getCreateBy());
+			billSetting.setCreateBy(isAdd ? SecurityUtil.getSecurityUser().getUser().getAccount() : billContent.getCreateBy());
 			billContent.setCreateTime(isAdd ? new Timestamp(new Date().getTime()) : billSetting.getCreateTime());
-			billSetting.setUpdateBy("admin");
+			billSetting.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 			billContent.setUpdateTime(new Timestamp(new Date().getTime()));
 			
 			if (isAdd) {
@@ -135,9 +136,9 @@ public class BillboardServiceImpl implements BillboardService {
 				newBillPermission.setSettingType("1");
 				newBillPermission.setSettingLevel("*");
 				newBillPermission.setSettingValue("*");
-				newBillPermission.setCreateBy("admin");
+				newBillPermission.setCreateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				newBillPermission.setCreateTime(isAdd ? new Timestamp(new Date().getTime()) : newBillPermission.getCreateTime());
-				newBillPermission.setUpdateBy("admin");
+				newBillPermission.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				billContent.setUpdateTime(new Timestamp(new Date().getTime()));
 				newBillPermissions.add(newBillPermission);
 			}
