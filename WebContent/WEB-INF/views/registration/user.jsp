@@ -18,21 +18,21 @@
 	        <div class="box-body">
 	        	<div class="form-group">
 					<label for="account"><span class="pull-right" style="color: red;">＊ </span><spring:message code="account"/></label>
-					<form:input class="form-control" path="account" id="account" placeholder="${account}" />
+					<form:input class="form-control" path="account" id="account" placeholder="${account}" maxlength="12" />
 					<span class="alert" style="display: inline-block"></span>
 	            </div>
 	        </div>
 	        <div class="box-body">
 	        	<div class="form-group">
 					<label for="password"><span class="pull-right" style="color: red;">＊ </span><spring:message code="password"/></label>
-					<form:password class="form-control" path="password" id="password" placeholder="${password}" />
+					<form:password class="form-control" path="password" id="password" placeholder="${password}" maxlength="12" />
 					<span class="alert" style="display: inline-block"></span>
 	            </div>                              
 	        </div>
 	        <div class="box-body">
 	        	<div class="form-group">
 					<label for="password"><span class="pull-right" style="color: red;">＊ </span><spring:message code='confirmPassword'/></label>
-					<input type="password" class="form-control" id="password2" placeholder="${password}" />
+					<input type="password" class="form-control" id="password2" placeholder="${password}" maxlength="12" />
 					<span class="alert" style="display: inline-block"></span>
 	            </div>                              
 	        </div>
@@ -42,21 +42,21 @@
 	        <div class="box-body">
 	        	<div class="form-group">
 					<label for="user_name"><span class="pull-right" style="color: red;">＊ </span><spring:message code="name"/></label>
-					<form:input class="form-control" path="name" id="name" placeholder="${realName}" />
+					<form:input class="form-control" path="name" id="name" placeholder="${realName}" maxlength="20" />
 					<span class="alert" style="display: inline-block"></span>
 	            </div>                              
 	        </div>
 	        <div class="box-body">
 	        	<div class="form-group">
 					<label for="phone"><span class="pull-right" style="color: red;">＊ </span><spring:message code="phoneNo"/></label>
-					<form:input class="form-control" path="phone" id="phone" placeholder="${phoneNo}" />
+					<form:input class="form-control" path="phone" id="phone" placeholder="${phoneNo}" maxlength="20" />
 					<span class="alert" style="display: inline-block"></span>
 	            </div>                              
 	        </div>
 	        <div class="box-body">
 	        	<div class="form-group">
 					<label for="weChat"><span class="pull-right" style="color: red;">＊ </span><spring:message code="wechatID"/></label>
-					<form:input class="form-control" path="weChat" id="weChat" placeholder="${wechatID}" />
+					<form:input class="form-control" path="weChat" id="weChat" placeholder="${wechatID}" maxlength="20" />
 					<span class="alert" style="display: inline-block"></span>
 	            </div>
 	        </div>
