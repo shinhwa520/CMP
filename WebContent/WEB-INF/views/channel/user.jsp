@@ -248,8 +248,11 @@ $(function() {
 
 //[Commission]
 function btnCommissionClicked(btn) {
-	console.log(btn.attr('userId'));
-	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/channel/user/getCommissionByUserId/' + btn.attr('userId');
+	var _userId = btn.attr('userId');
+	if("_demoId"==_userId) {
+		return false;
+	}
+	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/channel/user/getCommissionByUserId/' + _userId;
 }
 
 
