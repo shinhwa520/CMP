@@ -119,6 +119,64 @@
 </div>
 <!--/.燈箱 Edit -->
 
+<!--.燈箱 Edit_Demo -->         
+<div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
+      	</div>
+		<div class="modal_msg" style="display: none"></div>
+      	<div class="modal-body">                    
+            <form role="form" id="formEdit_Demo" name="formEdit_Demo">
+            	<input type="hidden" name="user_id_Demo" id="user_id_Demo" value="" />
+		        <div class="box-body">
+		        	<div class="form-group">
+						<label for="user_name"><spring:message code="name"/></label>
+						<input type="text" readonly="true" class="form-control" name="user_name_Demo" id="user_name_Demo" value="Demo" />
+		            </div>                              
+		        </div>
+		        <div class="box-body">
+		        	<div class="form-group">
+						<label for="remark"><spring:message code="remarks"/></label>
+						<input type="text" class="form-control" name="remark_Demo" id="remark_Demo" value="Demo_Remark"/>
+		            </div>
+		        </div>
+		        <div class="box-body">
+		        	<table style="width: 100%">
+		        		<tr>
+		        			<td style="width: 12%"><label><spring:message code="targetChannelsNo"/></label></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="agent_user_Demo" id="agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        			<td style="width: 12%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_user_Demo" id="_agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        		</tr>
+		        		<tr>
+		        			<td style="width: 12%"><label><spring:message code="targetTourNo"/></label></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="agent_cust_Demo" id="agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        			<td style="width: 12%"><label><spring:message code="accomplishedTourNo"/></label></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_cust_Demo" id="_agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        		</tr>
+		        		<tr>
+		        			<td style="width: 12%"><label><spring:message code="targetSalesNo"/></label></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" class="form-control" name="volume_Demo" id="volume_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        			<td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
+		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_volume_Demo" id="_volume_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        		</tr>
+		        	</table>                             
+		        </div>
+	            
+				<div class="modal-footer">
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave_Demo" ><spring:message code="save"/></button>
+				</div>
+			</form>
+		</div>	
+	</div><!-- /.modal-content -->
+  </div>
+</div>
+<!--/.燈箱 Edit_Demo -->
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
 <script>
@@ -140,8 +198,25 @@ $(function() {
 					//d.customParam = 'testestert';
 				}
 			},
+			"initComplete": function(settings, json) {
+				console.log(json.recordsTotal);
+				if(json.recordsTotal<1){
+					tblMain.row.add({
+						"name":"Demo",
+						"phone":"3345678",
+						"email":"Demo@cmp.com",
+						"weChat":"Demo666",
+						"agent_user":"0",
+						"_agent_user":"0",
+						"agent_cust":"0",
+						"_agent_cust":"0",
+						"volume":"0",
+						"_volume":"0",
+						"id":"_demoId"
+				    }).draw();
+				}
+			},
 			"columns" : [
-				
 				{ "data" : "name" },
 				{ "data" : "phone" },
 				{ "data" : "email" },
@@ -181,10 +256,15 @@ function btnCommissionClicked(btn) {
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
-	console.log(btn.attr('userId'));
 	$('.form-group').removeClass('has-error');
+	var _userId = btn.attr('userId');
+	if("_demoId"==_userId) {
+		$('#modal_Edit_Demo').modal();
+		return false;
+	}
+	
 	$.ajax({
-			url : '${pageContext.request.contextPath}/channel/user/getUserById/' + btn.attr('userId'),
+			url : '${pageContext.request.contextPath}/channel/user/getUserById/' + _userId,
 			data : '',
 			type : "GET",
 			dataType : 'json',
