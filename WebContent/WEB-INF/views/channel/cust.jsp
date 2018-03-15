@@ -155,6 +155,126 @@
 </div>
 <!--/.燈箱 Edit -->
 
+<!--.燈箱 Edit_Demo -->
+<div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
+      	</div>
+		<div class="modal_msg" style="display: none"></div>
+      	<div class="modal-body">
+            <form role="form" id="formEdit_Demo" name="formEdit_Demo">
+            	<input type="hidden" name="cust_id_Demo" id="cust_id_Demo" value="" />
+	            <div class="box-body">
+	            	<div class="form-group">
+	                  <label for="cust_name"><spring:message code='name'/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="cust_name_Demo" name="cust_name_Demo" placeholder="<spring:message code='name'/>" value="Demo">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+						<label><spring:message code='gender'/></label>
+						<span style="position: relative; ">					 <input type="radio" name="gender_Demo" id="male_Demo" value="M" checked="checked" /><spring:message code='male'/></span>
+						<span style="position: relative; margin-left: 10px;"><input type="radio" name="gender_Demo" id="female_Demo" value="F"/><spring:message code='female'/></span>
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="birthday"><spring:message code='birthday'/></label>
+	                  <input type="text" class="form-control" id="birthday_Demo" name="birthday_Demo" placeholder="<spring:message code='birthday'/>" value="2000-01-01">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="phone"><spring:message code='phoneNo'/></label>
+	                  <input type="text" class="form-control" id="phone_Demo" name="phone_Demo" placeholder="<spring:message code='phoneNo'/>" value="3345678">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="email"><spring:message code='email'/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="email_Demo" name="email_Demo" placeholder="<spring:message code='email'/>" value="Demo@cmp.com">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="weChat"><spring:message code='wechatID'/></label>
+	                  <input type="text" class="form-control" id="weChat_Demo" name="weChat_Demo" placeholder="<spring:message code='wechatID'/>" value="Demo666">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity1_id"><spring:message code="IDType"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <select id="identity1_id_Demo" name="identity1_id_Demo">
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1" selected="selected"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
+	                  </select>
+	                  <label for="identity1_code" style="text-align: right;" ><spring:message code="IDNumber"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" id="identity1_code_Demo" name="identity1_code_Demo" value="Demo_IdNumber">
+	                  <label for="identity1_name" style="text-align: right;" ><spring:message code="IDName"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" id="identity1_name_Demo" name="identity1_name_Demo" value="Demo_RealName">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity2_id"><spring:message code="secondIDType"/></label>
+	                  <select id="identity2_id_Demo" name="identity2_id_Demo">
+	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
+						<option value="1"><spring:message code="ID card"/></option>
+						<option value="2"><spring:message code="passport"/></option>
+						<option value="3"><spring:message code="ROCID"/></option>
+	                  </select>
+	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="secondIDNo"/></label>
+	                  <input type="text" id="identity2_code_Demo" name="identity2_code_Demo" >
+	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="secondIDName"/></label>
+	                  <input type="text" id="identity2_name_Demo" name="identity2_name_Demo" >
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+                        <label for="city"><spring:message code='city'/></label>
+                        <input type="text" class="form-control" id="city_Demo" name="city_Demo" placeholder="<spring:message code='city'/>">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="census"><spring:message code="residentialAddress"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="census_Demo" name="census_Demo" placeholder="<spring:message code="residentialAddress"/>" value="上海">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="address"><spring:message code='address'/></label>
+	                  <input type="text" class="form-control" id="address_Demo" name="address_Demo" placeholder="<spring:message code='address'/>">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="remark"><spring:message code='remarks'/></label>
+	                  <input type="text" class="form-control" id="remark_Demo" name="remark_Demo" placeholder="<spring:message code='remarks'/>">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="status"><spring:message code='status'/></label>
+	                  <input type="text" class="form-control" id="status_Demo" name="status_Demo" readonly="true" >
+	                </div>
+	            </div>
+				<div class="modal-footer">
+	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
+	        		<button type="button" class="btn btn-primary" id="btnProfileSave_Demo" ><spring:message code='save'/></button>
+				</div>
+			</form>
+		</div>
+	</div><!-- /.modal-content -->
+  </div>
+</div>
+<!--/.燈箱 Edit_Demo -->
+
 <!--.燈箱 File -->
 <div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
@@ -197,6 +317,49 @@
   </div>
 </div>
 <!--/.燈箱 File -->
+
+<!--.燈箱 File_Demo -->
+<div class="modal fade bs-example-modal-lg" id="modal_File_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title"><spring:message code='file'/></h4>
+      	</div>
+		<div class="modal_msg" style="display: none"></div>
+      	<div class="modal-body">
+            <form role="form" id="formFile_Demo" name="formFile_Demo">
+				<input type="hidden" name="fileType_Demo" id="queryFileType_Demo" value="" />
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<b><font style="font-size: 1.5em;"><spring:message code='custFile'/>&nbsp;&nbsp;>&nbsp;&nbsp;<span id="custNameLabel_Demo">Demo</span></font></b>
+						<a href="#" ><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='add'/></span></a>
+						<span class="pull-right">&nbsp;</span>
+						<a href="#" ><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='delete'/></span></a>
+					</div>
+					<div class="box-body no-padding">
+						<table class="table table-striped" id="custFileMain_Demo" width="100%">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th><spring:message code="fileName"/></th>
+									<th><spring:message code="fileSize"/></th>
+									<th><spring:message code="downloadTimes"/></th>
+									<th><spring:message code="fileDescription"/></th>
+									<th><spring:message code="updatedTime"/></th>
+									<th style="width: 100px;"><spring:message code="option"/></th>
+									<th style="width: 100px;"><input type="checkbox" id="delChkAll_Demo" /> <spring:message code="selectAll"/></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div><!-- /.modal-content -->
+  </div>
+</div>
+<!--/.燈箱 File_Demo -->
 
 <!--.燈箱 Upload -->
 <div class="modal fade bs-example-modal-lg" id="modal_Upload" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -286,10 +449,15 @@ function btnAddClicked() {
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
-	console.log(btn.attr('custId'));
 	$('.form-group').removeClass('has-error');
+	var _custId = btn.attr('custId');
+	if("_demoId"==_custId) {
+		$('#modal_Edit_Demo').modal();
+		return false;
+	}
+	
 	$.ajax({
-			url : '${pageContext.request.contextPath}/channel/cust/getCustById/' + btn.attr('custId'),
+			url : '${pageContext.request.contextPath}/channel/cust/getCustById/' + _custId,
 			data : '',
 			type : "GET",
 			dataType : 'json',
@@ -416,7 +584,12 @@ function btnSaveClicked() {
 
 //[File] 進入modal_File
 function btnFileClicked(btn) {
-	$('#clickedCustId').val(btn.attr('custId'));
+	var _custId = btn.attr('custId');
+	if("_demoId"==_custId) {
+		$('#modal_File_Demo').modal();
+		return false;
+	}
+	$('#clickedCustId').val(_custId);
 	$('#custId').val(btn.attr('custId'));
 	$('#custNameLabel').text(btn.attr('custName'));
 	$('#delChkAll').prop('checked', false);
@@ -440,6 +613,19 @@ $(function() {
 			"url" : '${pageContext.request.contextPath}/channel/cust/getCustByUserId.json',
 			"type" : 'GET',
 			"data" : function(d) {}
+		},
+		"initComplete": function(settings, json) {
+			console.log(json.recordsTotal);
+			if(json.recordsTotal<1){
+				tblMain.row.add({
+					"name":"Demo",
+					"phone":"3345678",
+					"email":"Demo@cmp.com",
+					"weChat":"Demo666",
+					"status":{"sort":"3"},
+					"id":"_demoId"
+			    }).draw();
+			}
 		},
 		"columns" : [
 			{ "data" : "name" },
@@ -503,7 +689,6 @@ $(function() {
 				"targets" : [5],
 				"render" : function(data, type, row) {
 							var sort = row['status'].sort;
-							console.log(sort);
 							var html = '<ul class="nav nav-pills nav-justified step step-arrow">';
 							for(var i=0; i<12; i++){
 								if(i<sort)
@@ -768,3 +953,14 @@ function bsStep(i) {
 	})
 }
 </script>
+
+<style>
+.modal-body form .box-body .form-group label {
+    width: 12%;
+}
+
+.modal-body form .box-body .form-group .form-control{
+	display: inline-block;
+	width: 85%;
+}
+</style>
