@@ -25,6 +25,7 @@
         <br/>
       </font>
 </c:if>
+<c:remove var = "SPRING_SECURITY_LAST_EXCEPTION" scope = "session" />
 		<input class="form-control" type='text' name='username' placeholder="<spring:message code='account'/>"/>
 		<input class="form-control" type='password' name='password' placeholder="<spring:message code='password'/>"/>
 		<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<spring:message code='signIn'/>" />
