@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 		user.set_agent_user(((Long) objArray[1]).intValue());
 		user.set_agent_cust(((Long) objArray[2]).intValue());
 		user.set_volume(((Long) objArray[3]).intValue());
-		UserKpi kpi = userKpiDAO.findTokenByUserAndYearMonth(id, yearMonth);//查詢KPI設定
+		UserKpi kpi = userKpiDAO.findKpiByUserAndYearMonth(id, yearMonth);//查詢KPI設定
 		if( null!=kpi){
 			user.setAgent_user(kpi.getAgent_user());
 			user.setAgent_cust(kpi.getAgent_cust());
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 			user.set_agent_user(((Long) objArray[1]).intValue());
 			user.set_agent_cust(((Long) objArray[2]).intValue());
 			user.set_volume(((Long) objArray[3]).intValue());
-			UserKpi kpi = userKpiDAO.findTokenByUserAndYearMonth(user.getId(), yearMonth);//查詢KPI設定
+			UserKpi kpi = userKpiDAO.findKpiByUserAndYearMonth(user.getId(), yearMonth);//查詢KPI設定
 			if( null!=kpi){
 				user.setAgent_user(kpi.getAgent_user());
 				user.setAgent_cust(kpi.getAgent_cust());
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 			user.set_agent_user(((Long) objArray[1]).intValue());
 			user.set_agent_cust(((Long) objArray[2]).intValue());
 			user.set_volume(((Long) objArray[3]).intValue());
-			UserKpi kpi = userKpiDAO.findTokenByUserAndYearMonth(user.getId(), yearMonth);//查詢KPI設定
+			UserKpi kpi = userKpiDAO.findKpiByUserAndYearMonth(user.getId(), yearMonth);//查詢KPI設定
 			if( null!=kpi){
 				user.setAgent_user(kpi.getAgent_user());
 				user.setAgent_cust(kpi.getAgent_cust());
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
 		user.setUpdateBy(editorId);
 		user.setUpdateDateTime(new Date());
 		userDAO.saveUser(user);
-		UserKpi userKpi = userKpiDAO.findTokenByUserAndYearMonth(userId, yearMonth);//查詢KPI設定
+		UserKpi userKpi = userKpiDAO.findKpiByUserAndYearMonth(userId, yearMonth);//查詢KPI設定
 		if(null!=userKpi){
 			userKpi.setAgent_user(agent_user);
 			userKpi.setAgent_cust(agent_cust);

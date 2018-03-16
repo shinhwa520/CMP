@@ -19,7 +19,7 @@ public class UserKpiDAOImpl extends BaseDaoHibernate implements UserKpiDAO {
 	}
 	
 	@Override
-	public UserKpi findTokenByUserAndYearMonth(String userId, String yearMonth) {
+	public UserKpi findKpiByUserAndYearMonth(String userId, String yearMonth) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" from UserKpi k ")
 		  .append(" where 1=1 ")

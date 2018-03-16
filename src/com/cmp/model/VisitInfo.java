@@ -4,10 +4,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -39,6 +41,46 @@ public class VisitInfo {
 	@Column(name = "sub_content", nullable = true)
 	private String subContent;
 	
+	@Column(name = "join_begin_time", nullable = true)
+	private Timestamp joinBeginTime;
+	
+	@Column(name = "join_end_time", nullable = true)
+	private Timestamp joinEndTime;
+	
+	@Column(name = "departure_city", nullable = true)
+	private String departureCity;
+	
+	@Column(name = "departure_time", nullable = true)
+	private Timestamp departureTime;
+	
+	@Column(name = "departure_terminal", nullable = true)
+	private String departureTerminal;
+	
+	@Column(name = "arriving_time", nullable = true)
+	private Timestamp arrivingTime;
+	
+	@Column(name = "arriving_terminal", nullable = true)
+	private String arrivingTerminal;
+	
+	@Column(name = "return_departure_time", nullable = true)
+	private Timestamp returnDepartureTime;
+	
+	@Column(name = "return_departure_terminal", nullable = true)
+	private String returnDepartureTerminal;
+	
+	@Column(name = "return_arriving_time", nullable = true)
+	private Timestamp returnArrivingTime;
+	
+	@Column(name = "return_arriving_terminal", nullable = true)
+	private String returnArrivingTerminal;
+	
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", nullable = true)
+    private Status status;
+    
+    @Column(name = "remark", nullable = true)
+	private String remark;
+	
 	@Column(name = "create_time", nullable = true)
 	private Timestamp createTime;
     
@@ -60,8 +102,11 @@ public class VisitInfo {
 	}
 
 	public VisitInfo(Integer visitId, String visitName, String mainTitle, String mainContent, String subTitle,
-			String subContent, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
-			VisitSetting visitSetting) {
+			String subContent, Timestamp joinBeginTime, Timestamp joinEndTime, String departureCity,
+			Timestamp departureTime, String departureTerminal, Timestamp arrivingTime, String arrivingTerminal,
+			Timestamp returnDepartureTime, String returnDepartureTerminal, Timestamp returnArrivingTime,
+			String returnArrivingTerminal, Status status, String remark, Timestamp createTime, String createBy,
+			Timestamp updateTime, String updateBy, VisitSetting visitSetting) {
 		super();
 		this.visitId = visitId;
 		this.visitName = visitName;
@@ -69,6 +114,19 @@ public class VisitInfo {
 		this.mainContent = mainContent;
 		this.subTitle = subTitle;
 		this.subContent = subContent;
+		this.joinBeginTime = joinBeginTime;
+		this.joinEndTime = joinEndTime;
+		this.departureCity = departureCity;
+		this.departureTime = departureTime;
+		this.departureTerminal = departureTerminal;
+		this.arrivingTime = arrivingTime;
+		this.arrivingTerminal = arrivingTerminal;
+		this.returnDepartureTime = returnDepartureTime;
+		this.returnDepartureTerminal = returnDepartureTerminal;
+		this.returnArrivingTime = returnArrivingTime;
+		this.returnArrivingTerminal = returnArrivingTerminal;
+		this.status = status;
+		this.remark = remark;
 		this.createTime = createTime;
 		this.createBy = createBy;
 		this.updateTime = updateTime;
@@ -122,6 +180,110 @@ public class VisitInfo {
 
 	public void setSubContent(String subContent) {
 		this.subContent = subContent;
+	}
+
+	public Timestamp getJoinBeginTime() {
+		return joinBeginTime;
+	}
+
+	public void setJoinBeginTime(Timestamp joinBeginTime) {
+		this.joinBeginTime = joinBeginTime;
+	}
+
+	public Timestamp getJoinEndTime() {
+		return joinEndTime;
+	}
+
+	public void setJoinEndTime(Timestamp joinEndTime) {
+		this.joinEndTime = joinEndTime;
+	}
+
+	public String getDepartureCity() {
+		return departureCity;
+	}
+
+	public void setDepartureCity(String departureCity) {
+		this.departureCity = departureCity;
+	}
+
+	public Timestamp getDepartureTime() {
+		return departureTime;
+	}
+
+	public void setDepartureTime(Timestamp departureTime) {
+		this.departureTime = departureTime;
+	}
+
+	public String getDepartureTerminal() {
+		return departureTerminal;
+	}
+
+	public void setDepartureTerminal(String departureTerminal) {
+		this.departureTerminal = departureTerminal;
+	}
+
+	public Timestamp getArrivingTime() {
+		return arrivingTime;
+	}
+
+	public void setArrivingTime(Timestamp arrivingTime) {
+		this.arrivingTime = arrivingTime;
+	}
+
+	public String getArrivingTerminal() {
+		return arrivingTerminal;
+	}
+
+	public void setArrivingTerminal(String arrivingTerminal) {
+		this.arrivingTerminal = arrivingTerminal;
+	}
+
+	public Timestamp getReturnDepartureTime() {
+		return returnDepartureTime;
+	}
+
+	public void setReturnDepartureTime(Timestamp returnDepartureTime) {
+		this.returnDepartureTime = returnDepartureTime;
+	}
+
+	public String getReturnDepartureTerminal() {
+		return returnDepartureTerminal;
+	}
+
+	public void setReturnDepartureTerminal(String returnDepartureTerminal) {
+		this.returnDepartureTerminal = returnDepartureTerminal;
+	}
+
+	public Timestamp getReturnArrivingTime() {
+		return returnArrivingTime;
+	}
+
+	public void setReturnArrivingTime(Timestamp returnArrivingTime) {
+		this.returnArrivingTime = returnArrivingTime;
+	}
+
+	public String getReturnArrivingTerminal() {
+		return returnArrivingTerminal;
+	}
+
+	public void setReturnArrivingTerminal(String returnArrivingTerminal) {
+		this.returnArrivingTerminal = returnArrivingTerminal;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public Timestamp getCreateTime() {

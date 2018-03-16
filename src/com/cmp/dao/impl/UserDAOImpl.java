@@ -21,7 +21,7 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select u ")
 		.append(" ,(select count(u1.id) from User u1 where 1=1 and u1.channel.id = u.id and DATE_FORMAT(u1.createDateTime,'%Y%m') = :yearMonth) ")
-		.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
+		.append(" ,(select count(v.id) from VisitDetail v where 1=1 and v.cust.user.id = u.id and v.visitInfo.status.sort = 3 and DATE_FORMAT(v.createTime,'%Y%m') = :yearMonth) ")
 		.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
 		.append(" from User u ")
 		.append(" where 1=1 ")
@@ -60,7 +60,7 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select u ")
 		.append(" ,(select count(u1.id) from User u1 where 1=1 and u1.channel.id = u.id and DATE_FORMAT(u1.createDateTime,'%Y%m') = :yearMonth) ")
-		.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
+		.append(" ,(select count(v.id) from VisitDetail v where 1=1 and v.cust.user.id = u.id and v.visitInfo.status.sort = 3 and DATE_FORMAT(v.createTime,'%Y%m') = :yearMonth) ")
 		.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
 		.append(" from User u ")
 		.append(" where 1=1 ")
@@ -151,7 +151,7 @@ public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select u ")
 			.append(" ,(select count(u1.id) from User u1 where 1=1 and u1.channel.id = u.id and DATE_FORMAT(u1.createDateTime,'%Y%m') = :yearMonth) ")
-			.append(" ,(select count(c.id) from Customer c where 1=1 and c.user.id = u.id and DATE_FORMAT(c.createTime,'%Y%m') = :yearMonth) ")
+			.append(" ,(select count(v.id) from VisitDetail v where 1=1 and v.cust.user.id = u.id and v.visitInfo.status.sort = 3 and DATE_FORMAT(v.createTime,'%Y%m') = :yearMonth) ")
 			.append(" ,(select count(t.id) from TxLog t where 1=1 and t.cust.user.id = u.id and DATE_FORMAT(t.txDateTime,'%Y%m') = :yearMonth) ")
 			.append(" from User u ")
 			.append(" where 1=1 ")
