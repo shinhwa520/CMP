@@ -1,5 +1,6 @@
 package com.cmp.service.impl;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +11,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
+import com.cmp.utils.Html2PDF;
+import com.cmp.utils.PDFMerge;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -83,7 +86,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 		
 		String subject = "CMP信息服务网联 帐号申请验证通知";
-		sendSimpleMail(mailAddress, subject, mailbody);
+		sendSimpleMail(mailAddress, subject, mailbody, null);
 		return user;
 	}
 	
@@ -103,16 +106,25 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 		
 		String subject = "CMP信息服务网联 帐号申请验证通知";
-		sendSimpleMail(user.getEmail(), subject, mailbody);
+		sendSimpleMail(user.getEmail(), subject, mailbody, null);
 	}
 	
-	public void sendSimpleMail(String mailAddress, String subject, String mailContent) throws MessagingException, UnsupportedEncodingException {
+	public void sendSimpleMail(String mailAddress, String subject, String mailContent, ArrayList<String> filePathList) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		mailMsg.setFrom("cmp.message@aliyun.com");
 		mailMsg.setTo(mailAddress);
 		mailMsg.setSubject(MimeUtility.encodeText(subject, "UTF-8", "B"));
 		mailMsg.setText(mailContent, true);
+
+		if (filePathList != null) {
+			for (int i = 0; i < filePathList.size(); i++) {
+				File file = new File(filePathList.get(i));
+				if (file != null)
+				mailMsg.addAttachment(file.getName(), file);
+			}
+		}
+
 		mailSender.send(mimeMessage);
 	}
 	
@@ -226,7 +238,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	//user 簽署合同
 	@Override
-	public void agreement(String userId) throws Exception {
+	public void agreement(String userId, String rootPath) throws Exception {
 		User user = userDao.findUserById(userId);
 		//綁定webApiDetail
 		WebApiDetail webApiDetail = webApiDetailDAO.findWebApiDetailByUserId("");
@@ -238,7 +250,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 			webApiDetailDAO.saveWebApiDetail(webApiDetail);
 		}
 		user = userDao.saveUser(user);
-		//
+
+//		Email Body
 		String mailbody = "恭喜您成功注册！<br>";
 		mailbody += "Congratulations you have registered success!<br><br>";
 		mailbody += "以下为您登录的个人资料: "+"<br>";
@@ -248,13 +261,28 @@ public class RegistrationServiceImpl implements RegistrationService {
 		mailbody += "电话号码: "+ user.getPhone() +"<br>";
 		mailbody += "微信号: "+ user.getWeChat() +"<br><br>";
 
+		mailbody += "附件为合同协议，请仔细审阅。<br>";
+        mailbody += "The contract is enclosed in the appendix.<br><br>";
+
 		mailbody += "温馨提示，请确认您和其他人输入的信息无误，以避免后台管理处理客户登记或签证票务信息失误影响您的权益。<br>";
 		mailbody += "Reminder: To ensure our management service provides the correct details to secure your customers and airflight details,  Please ensure the information filled in accurate.<br>";
 		mailbody += "祝您有好的一天！<br>";
 		mailbody += "Have a nice day!<br><br>";
 		mailbody += "CMP 信息服务网联<br>";
-		
+
+//		Email Subject
 		String subject = "CMP信息服务网联 平台帐号注册成功通知";
-		sendSimpleMail(user.getEmail(), subject, mailbody);
+
+//		Attachment
+        String templatePath = rootPath + "template/";
+        String tempPath = rootPath + "/upload/temp/";
+
+        Html2PDF.convertPdfTemplateForContract(user, tempPath, templatePath);
+
+		ArrayList<String> pathList = new ArrayList<>();
+		pathList.add(tempPath + "APS_Partners_Agreement.pdf");
+
+//		Send
+		sendSimpleMail(user.getEmail(), subject, mailbody, pathList);
 	}
 }

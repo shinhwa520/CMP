@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import com.cmp.model.User;
@@ -96,6 +98,24 @@ public class Html2PDF {
 //                BaseFont.IDENTITY_H,BaseFont.EMBEDDED);
 //        ArrayList<BaseFont> fontList = newArrayList<BaseFont>();
 //        fontList.add(bf);
+    }
+
+    public static void convertPdfTemplateForContract(User user, String tempPath, String realPath) throws IOException, java.io.IOException {
+        File file = new File(tempPath);
+        file.mkdirs();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        PdfReader reader = new PdfReader(realPath + "APS_Partners_Agreement.pdf");
+        PdfDocument doc = new PdfDocument(reader, new PdfWriter(tempPath + "APS_Partners_Agreement.pdf"));
+        PdfAcroForm form = PdfAcroForm.getAcroForm(doc, true);
+        Map<String, PdfFormField> fields = form.getFormFields();
+        fields.get("UpStream").setValue(user.getChannel() != null ? user.getChannel().getName() : "");
+        fields.get("ContractDate").setValue(dateFormat.format(new Date()));
+        fields.get("UserName").setValue(StringUtils.isNotBlank(user.getName()) ? user.getName() : "");
+
+        form.flattenFields();
+        doc.close();
     }
 
 }

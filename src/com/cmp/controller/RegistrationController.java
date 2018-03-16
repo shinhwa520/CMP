@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cmp.AppResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -166,14 +167,14 @@ public class RegistrationController extends BaseController {
 //        		else
 //        			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
 //    		}
-            
+
     		if(StringUtils.isBlank(form.getChannelAccount()) || !registrationService.upstream(form.getUserId(), form.getChannelAccount())){
 				model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
 				return "registration/upstream";
 			}else{
     			model.addAttribute("message", "");
 			}
-    		
+
     		String rootPath = request.getSession().getServletContext().getRealPath("");
     		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
     		model.addAttribute("agreement", agreementTxt(form.getUserId(), srcPath));
@@ -190,7 +191,15 @@ public class RegistrationController extends BaseController {
 	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
     public @ResponseBody String agreeAgreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
     	try {
-    		registrationService.agreement(form.getUserId());
+			RequestContext req = new RequestContext(request);
+
+			if(StringUtils.isBlank(form.getChannelAccount()) || !registrationService.upstream(form.getUserId(), form.getChannelAccount())){
+				return jsonResponse(Response.PARAMETER_ERROR);
+			}
+
+			String rootPath = request.getSession().getServletContext().getRealPath("");
+
+    		registrationService.agreement(form.getUserId(), rootPath);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -202,11 +211,11 @@ public class RegistrationController extends BaseController {
 //		User user = registrationService.findUserByUserId(userId);
 //		String rootPath = request.getSession().getServletContext().getRealPath("");
 //		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
-//		
+//
 //		String[] arr = (sdfDate.format(new Date())).split("-");
 //		String agreementDate = arr[0]+"年"+arr[1]+"月"+arr[2]+"日";
-//		
-//		
+//
+//
 //		StringBuffer sb = new StringBuffer();
 //		BufferedReader br = new BufferedReader(new FileReader(srcPath));
 //        String line;
@@ -219,7 +228,7 @@ public class RegistrationController extends BaseController {
 //        		line = line.replace("$UserName$", user.getName());
 //        	if(line.contains("$Company$"))
 //        		line = line.replace("$Company$", "CMP信息服务网联");
-//        	
+//
 //        	sb.append(line);
 //        }
 //        model.addAttribute("agreement", sb.toString());
