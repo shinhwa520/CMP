@@ -92,6 +92,12 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 	
+	public User(String id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	
 	public User(String email, Role role, Status status) {
 		super();
 		Date current = new Date();

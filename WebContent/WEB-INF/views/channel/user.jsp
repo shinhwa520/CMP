@@ -249,9 +249,6 @@ $(function() {
 //[Commission]
 function btnCommissionClicked(btn) {
 	var _userId = btn.attr('userId');
-	if("_demoId"==_userId) {
-		return false;
-	}
 	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/channel/user/getCommissionByUserId/' + _userId;
 }
 
@@ -276,7 +273,7 @@ function btnEditClicked(btn) {
 			success : function(resp) {
 				console.log(resp);				
 				if (resp.code == '200') {
-					$('#user_id').val(btn.attr('userId'));
+					$('#user_id').val(_userId);
 					$('#user_name').val(resp.data.user.name);
 					$('#remark').val(resp.data.user.remark);
 					/*

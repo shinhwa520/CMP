@@ -25,6 +25,7 @@
 	</div>
 	<div class="box-body no-padding">
 		<form role="form" id="formEdit" name="formEdit">
+		<input type="hidden" name="user_id" id="user_id" value="${userId }" />
 		<table class="table table-striped" id="tblLog">
 			<c:if test="${!commissionList.isEmpty() }">
 				<c:forEach var="vo" items="${ commissionList }">
@@ -73,7 +74,7 @@ $(function() {
 
 function btnSaveClicked(input) {
 	$('.form-group').removeClass('has-error');
-	var _userId = $('#userId').val();
+	var _userId = $('#user_id').val();
 	var hasError = false;
 
     $('.commissionPercent').each(function () {
@@ -88,7 +89,9 @@ function btnSaveClicked(input) {
 		return false;
 	}
 
-
+	if("_demoId"==_userId) {
+		return false;
+	}
 	
 	var getResult = function () {
 	    var result = [];
@@ -141,5 +144,11 @@ function validateInt(input) {
 <style>
 td .box-body{ padding-bottom: 2px; }
 td .box-body .form-group{ margin-bottom: 2px; }
+.badge{ 
+	font-size: 16px;
+	vertical-align: text-top; 
+	border-radius: 5px;
+}
+
 
 </style>

@@ -32,16 +32,29 @@ public class CommissionServiceImpl implements CommissionService {
 	@Override
 	public List<Commission> initCommissionList(String userId){
 		User editor = SecurityUtil.getSecurityUser().getUser();
-		User user = userDAO.findUserById(userId);
-		List<ProductInfo> productInfoList = productInfoDAO.findProductInfoAll();
+		User user;
+		boolean isDemo = StringUtils.equals("_demoId", userId);
+		if(isDemo) {
+			user = new User(userId, "Demo");
+		} else {
+			user = userDAO.findUserById(userId);
+		}
 		List<Commission> commissionList = commissionDAO.findCommissionByUserId(userId);
+		List<ProductInfo> productInfoList = productInfoDAO.findProductInfoAll();
+		
 		Set<ProductInfo> productSet = new HashSet<ProductInfo>();
 		for(Commission c : commissionList){
 			productSet.add(c.getProductInfo());
 		}
 		for(ProductInfo p : productInfoList){	
 			if(!productSet.contains(p)){	//上游尚未對User 設定該Product 之Commission ==> 新增Commission 設定
-				Commission commission = commissionDAO.saveCommission(new Commission(user, p, editor.getReward(), editor.getAccount()));
+				
+				Commission commission;
+				if(isDemo) {
+					commission = new Commission(user, p, editor.getReward(), editor.getAccount());
+				} else {
+					commission = commissionDAO.saveCommission(new Commission(user, p, editor.getReward(), editor.getAccount()));
+				}
 				commissionList.add(commission);
 			}
 		}
