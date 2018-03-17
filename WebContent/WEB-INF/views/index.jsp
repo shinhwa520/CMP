@@ -2,90 +2,136 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/taglib.jsp" %>
 
-<script>
-	$(function(){
-	    //+展開 -收合
-	    $(".slideOption").click(function(){ 
-	    	var _this= $(this).attr("href"); 
-	    	if($(_this).css("display")=="none"){
-	      		$(_this).slideDown();
-	    	}else{
-	       		$(_this).slideUp();
-	    	} 
-	  	 	return false; 
-	 	}); 
-	});
-</script>
-
-<style>
-	.table {
-	    width: 100%;
-	    max-width: 100%;
-	    margin-bottom: 1rem;
-	    background-color: transparent;
-	}
-	thead {
-	    display: table-header-group;
-	    vertical-align: middle;
-	    border-color: inherit;
-	}
-	tr {
-	    display: table-row;
-	    vertical-align: inherit;
-	    border-color: inherit;
-	}
-	.table thead th {
-	    vertical-align: bottom;
-	    border-bottom: 2px solid #c2cfd6;
-	}
-	.table th, .table td {
-	    vertical-align: top;
-	    border-top: 1px solid #c2cfd6;
-	}
-	/*儲存格單列變色*/
-	.table-striped tbody tr:nth-of-type(odd) {
-	    background-color: rgba(0, 0, 0, 0.05);
-	}
-
-</style>
- 
 <section class="content">
-<br />
-<div class="box box-primary" id="billboard" style="padding:15px 15px;">
-	<b><font style="font-size: 1.5em;"><spring:message code="newNotification"/></font>	</b>
-	<div style="height:75vh; overflow-y:auto; ">
-		<c:if test="${!IndexForm.billboardList.isEmpty() }">
-			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped">
-				<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
-					<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
-					 	<th width="5%">#${loop.count }</th>
-					   	<th width="80%">
-					   		<a class="slideOption" href="#bill_${loop.count }">${vo.title }</a>
-					   		<c:if test="${vo.onTopChkbox eq 'Y' }">
-					   			<img src="${pageContext.request.contextPath}/resources/images/on_top.gif" />
-					   		</c:if>
-					   	</th>
-					    <th width="15%">${vo.updateTime }</th>
-					</tr>
-					<tr>
-					 	<td colspan="9" class="content" bgcolor="#FFFFFF">
-					 		<c:choose>
-	            				<c:when test="${vo.isOpenedChkbox eq 'Y'}">
-	            					<div id="bill_${loop.count }"  style="display:inline;">  <!--控制細項顯示與隱藏 -->
-								      	${vo.content }
-								    </div>
-	            				</c:when>
-	            				<c:otherwise>
-	            					<div id="bill_${loop.count }"  style="display:none;">  <!--控制細項顯示與隱藏 -->
-								      	${vo.content }
-								    </div>
-	            				</c:otherwise>
-	            			</c:choose>
-					   </td>
-					</tr>
-				</c:forEach>
-			</table>
-		</c:if>
+
+	<!-- Row -->
+	<div class="row">
+	    <!-- Column -->
+	    <div class="col-lg-3 col-md-6">
+	        <div class="card">
+	            <div class="card-body">
+	                <!-- Row -->
+	                <div class="row">
+	                    <div class="col-8"><span class="display-6">2376 <i class="ti-angle-down font-14 text-danger"></i></span>
+	                        <h6>Total Visits</h6></div>
+	                    <div class="col-4 align-self-center text-right  p-l-0">
+	                        <div id="sparklinedash3"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Column -->
+	    <div class="col-lg-3 col-md-6">
+	        <div class="card">
+	            <div class="card-body">
+	                <!-- Row -->
+	                <div class="row">
+	                    <div class="col-8"><span class="display-6">3670 <i class="ti-angle-up font-14 text-success"></i></span>
+	                        <h6>Page Views</h6></div>
+	                    <div class="col-4 align-self-center text-right p-l-0">
+	                        <div id="sparklinedash"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Column -->
+	    <div class="col-lg-3 col-md-6">
+	        <div class="card">
+	            <div class="card-body">
+	                <!-- Row -->
+	                <div class="row">
+	                    <div class="col-8"><span class="display-6">1562 <i class="ti-angle-up font-14 text-success"></i></span>
+	                        <h6>Unique Visits</h6></div>
+	                    <div class="col-4 align-self-center text-right p-l-0">
+	                        <div id="sparklinedash2"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Column -->
+	    <div class="col-lg-3 col-md-6">
+	        <div class="card">
+	            <div class="card-body">
+	                <!-- Row -->
+	                <div class="row">
+	                    <div class="col-8"><span class="display-6">35% <i class="ti-angle-down font-14 text-danger"></i></span>
+	                        <h6>Bounce Rate</h6></div>
+	                    <div class="col-4 align-self-center text-right p-l-0">
+	                        <div id="sparklinedash4"></div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</div>
-</div>
+	<!-- Row -->
+	<!-- Row -->
+	<div class="row">
+	    <!-- Column -->
+	    <div class="col-lg-8">
+	        <div class="card">
+	            <div class="card-body">
+	                <ul class="list-inline pull-right">
+	                    <li>
+	                        <h6 class="text-muted"><i class="fa fa-circle m-r-5" style="color:#51bdff"></i>2015</h6>
+	                    </li>
+	                    <li>
+	                        <h6 class="text-muted"><i class="fa fa-circle m-r-5" style="color:#11a0f8"></i>2016</h6>
+	                    </li>
+	                    <li>
+	                        <h6 class="text-muted"><i class="fa fa-circle m-r-5 text-info"></i>2017</h6>
+	                    </li>
+	                </ul>
+	                <h4 class="card-title">Total Revenue</h4>
+	                <div class="clear"></div>
+	                <div class="total-sales" style="height: 365px;"></div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Column -->
+	    <div class="col-lg-4">
+	        <div class="row">
+	            <div class="col-12">
+	                <div class="card">
+	                    <div class="card-body">
+	                        <h4 class="card-title">Sales Prediction</h4>
+	                        <div class="d-flex flex-row">
+	                            <div class="align-self-center">
+	                                <span class="display-6 text-primary">$3528</span>
+	                                <h6 class="text-muted">10% Increased</h6>
+	                                <h5>(150-165 Sales)</h5>
+	                            </div>
+	                            <div class="ml-auto">
+	                                <div id="gauge-chart" style=" width:150px; height:150px;"></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-12">
+	                <div class="card">
+	                    <div class="card-body">
+	                        <h4 class="card-title">Sales Difference</h4>
+	                        <div class="d-flex flex-row">
+	                            <div class="align-self-center">
+	                                <span class="display-6 text-success">$4316</span>
+	                                <h6 class="text-muted">10% Increased</h6>
+	                                <h5>(150-165 Sales)</h5>
+	                            </div>
+	                            <div class="ml-auto">
+	                                <div class="ct-chart" style="width:120px; height: 120px;"></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Column -->
+	</div>
+	<!-- Row -->
+
 </section>

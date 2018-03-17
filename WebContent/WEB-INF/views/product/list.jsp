@@ -1,60 +1,207 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
 
-<section class="content">
-<div class="box-body"></div>
+<div class="row page-titles">
+     <div class="col-md-6 col-8 align-self-center">
+         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="productInfo" /></h3>
+     </div>
+ </div>
 
-<div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="productInfo" /></h3>
+吉隆坡 Kuala Lumpur
+<div class="row el-element-overlay">
+	<!-- column -->
+	<div class="col-12 m-t-30">
+		<div class="card-deck">
+			<!-- Card -->
+		  	<div class="card">
+		  		<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_01.PNG" alt="image01" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(1);"><i class="icon-cloud-download"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">康莱</h3> <small>Managing Director</small>
+	                    <br/> </div>
+	            	</div>
+		  	</div>
+		  	<!-- Card -->
+		  	<!-- Card -->
+		  	<div class="card">
+		  		<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_02.PNG" alt="image02" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(2);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">Arte满家乐</h3> <small>Managing Director</small>
+	                    <br/> </div>
+		            </div>
+		  	</div>
+		  	<!-- Card -->
+		  	<!-- Card -->
+		  	<div class="card">
+		  		<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_03.PNG" alt="image03" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(3);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">白沙罗城豪华公寓</h3> <small>Managing Director</small>
+	                    <br/> </div>
+		            </div>
+		  	</div>
+		  	<!-- Card -->
+		  	<!-- Card -->
+		  	<div class="card">
+		  		<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_04.PNG" alt="image04" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(4);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">奥普斯</h3> <small>Managing Director</small>
+	                    <br/> </div>
+		            </div>
+		  	</div>
+		  	<!-- Card -->
+		  	<!-- Card -->
+		  	<div class="card">
+		  		<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_05.PNG" alt="image05" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(5);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">丽思卡尔顿</h3> <small>Managing Director</small>
+	                    <br/> </div>
+		            </div>
+		  	</div>
+		  	<!-- Card -->
+		  	<!-- Card -->
+		  	<div class="card">
+		  		<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_06.PNG" alt="image06" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(6);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">大马金豪</h3> <small>Managing Director</small>
+	                    <br/> </div>
+		            </div>
+		  	</div>
+		  	<!-- Card -->
+		</div>
 	</div>
-	<br />
-	<div class="main">
-		<header>
-			<h1>吉隆坡  Kuala Lumpur</h1>
-		</header>
-		<!-- Elastislide Carousel -->
-		<ul id="area_1" class="elastislide-list">
-			<li><div align="center">康莱</div><div><a href="#" onClick="btnFileClicked(1)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_01.PNG" alt="image01" width="150px" height="150px" /></a></div></li>
-			<li><div align="center">Arte满家乐</div><a href="#" onClick="btnFileClicked(2)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_02.PNG" alt="image02" width="150px" height="150px" /></a></li>
-			<li><div align="center">白沙罗城豪华公寓</div><a href="#" onClick="btnFileClicked(3)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_03.PNG" alt="image03" width="150px" height="150px" /></a></li>
-			<li><div align="center">奥普斯</div><a href="#" onClick="btnFileClicked(4)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_04.PNG" alt="image04" width="150px" height="150px" /></a></li>
-			<li><div align="center">丽思卡尔顿</div><a href="#" onClick="btnFileClicked(5)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_05.PNG" alt="image05" width="150px" height="150px" /></a></li>
-			<li><div align="center">大马金豪</div><a href="#" onClick="btnFileClicked(6)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_06.PNG" alt="image06" width="150px" height="150px" /></a></li>
-		</ul>
-	</div>
-	<br />
-	<div class="main">
-		<header>
-			<h1>新山 Johor</h1>
-		</header>
-		<ul id="area_2" class="elastislide-list">
-			<li><div align="center">Avira花园联排别墅</div><a href="#" onClick="btnFileClicked(7)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_07.PNG" alt="image07" width="150px" height="150px" /></a></li>
-		</ul>
-	</div>
-	<br />
-	<div class="main">
-		<header>
-			<h1>马六甲 Malacca</h1>
-		</header>
-		<ul id="area_3" class="elastislide-list">
-			<li><div align="center">聚富湾</div><a href="#" onClick="btnFileClicked(8)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_08.PNG" alt="image08" width="150px" height="150px" /></a></li>
-			<li><div align="center">皇庭海湾1号</div><a href="#" onClick="btnFileClicked(9)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_09.PNG" alt="image09" width="150px" height="150px" /></a></li>
-		</ul>
-	</div>
-	<br />
-	<div class="main">
-		<header>
-			<h1>槟城 Penang</h1>
-		</header>
-		<ul id="area_4" class="elastislide-list">
-			<li><div align="center">安达曼海景公寓</div><a href="#" onClick="btnFileClicked(10)"><img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_10.PNG" alt="image10" width="150px" height="150px" /></a></li>
-		</ul>
-		<!-- End Elastislide Carousel -->
-	</div>
-	<br />
 </div>
-</section>
+
+新山 Johor
+<div class="row el-element-overlay">
+	<!-- column -->
+	<div class="col-2 m-t-30">
+		<div class="card-deck">
+			<!-- Card -->
+			<div class="card">
+			  	<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_07.PNG" alt="image07" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(7);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">Avira花园联排别墅</h3> <small>Managing Director</small>
+	                    <br/> </div>
+	            </div>
+		  	</div>
+		  	<!-- Card -->
+		</div>
+	</div>
+</div>
+
+马六甲 Malacca
+<div class="row el-element-overlay">
+	<!-- column -->
+	<div class="col-3 m-t-30">
+		<div class="card-deck">
+			<!-- Card -->
+			<div class="card">
+			  	<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_08.PNG" alt="image08" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(8);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">聚富湾</h3> <small>Managing Director</small>
+	                    <br/> </div>
+	            </div>
+		  	</div>
+		  	<!-- Card -->
+		  	<!-- Card -->
+			<div class="card">
+			  	<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_09.PNG" alt="image09" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(9);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">皇庭海湾1号</h3> <small>Managing Director</small>
+	                    <br/> </div>
+	            </div>
+		  	</div>
+		  	<!-- Card -->
+		</div>
+	</div>
+</div>
+
+槟城 Penang
+<div class="row el-element-overlay">
+	<!-- column -->
+	<div class="col-2 m-t-30">
+		<div class="card-deck">
+			<!-- Card -->
+			<div class="card">
+			  	<div class="el-card-item">
+	                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_10.PNG" alt="image10" />
+	                    <div class="el-overlay">
+	                        <ul class="el-info">
+	                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(10);"><i class="icon-link"></i></a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	                <div class="el-card-content">
+	                    <h3 class="box-title">安达曼海景公寓</h3> <small>Managing Director</small>
+	                    <br/> </div>
+	            </div>
+		  	</div>
+		  	<!-- Card -->
+		</div>
+	</div>
+</div>
 
 <!--.燈箱 File -->
 <div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

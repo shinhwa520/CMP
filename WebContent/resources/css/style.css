@@ -10,7 +10,7 @@ Author: Themedesigner
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@import 'https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900';
+/*@import 'https://fonts.googleapis.com/css?family=Noto Sans TC:300,400,500,700,900';*/
 /*Theme Colors*/
 /*bootstrap Color*/
 /*Light colors*/
@@ -5378,7 +5378,7 @@ sidebar navigation
 ******************/
 .scroll-sidebar {
   padding-bottom: 60px;
-  padding-top: 30px; }
+  padding-top: 0px; }
 
 .collapse.in {
   display: block; }
