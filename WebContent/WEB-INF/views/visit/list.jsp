@@ -2,72 +2,74 @@
 <%@ include file="../../common/taglib.jsp" %>
 
 <section class="content">
-<div class="box-body"></div>
 
-<div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="visitInfo" /></h3>
-	</div>
-	
-	<form:form method="POST" modelAttribute="VisitForm" action="">
-		<input type="hidden" name="visitId" id="visitId" value="" />
-		
-		<div id="ca-container" class="ca-container">
-			<div class="ca-wrapper">
+	<div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="visitInfo" /></h3>
+	     </div>
+	 </div>
+	 
+	<div class="row">
+		<form:form method="POST" modelAttribute="VisitForm" action="">
+			<input type="hidden" name="visitId" id="visitId" value="" />
 			
-				<!-- 圖片區塊 -->
-				<div class="ca-item">
-					<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0002.jpg" alt="魅力大馬">
-						<h3> 魅力大馬 </h3>
-						<p> <span> 异域海岛 / 一带一路 / 第二家园 </span> </p>
-						<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
-					</div>
-					<div class="ca-content-wrapper">
-						<div class="ca-content">
-							<h6> 吉隆坡 / 新山 / 马六甲 &nbsp;&nbsp;五天四晚考察团 </h6>
-							<a href="#" class="ca-close">close</a>
-							<div class="ca-content-text">
-								<p>
-									<b>机场接送</b><br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;旅游巴士，专业导游接送机
-								</p>
-								<p>
-									<b>星级食宿</b><br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;全程5星酒店住宿，当地特色餐招待
-								</p>
-								<p>
-									<b>特别行程</b><br/>
-									&nbsp;&nbsp;&nbsp;&nbsp;为您筛选最具投资价值的项目深入考察
-								</p>
+			<div id="ca-container" class="ca-container">
+				<div class="ca-wrapper">
+				
+					<!-- 圖片區塊 -->
+					<div class="ca-item">
+						<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0002.jpg" alt="魅力大馬">
+							<h3> 魅力大馬 </h3>
+							<p> <span> 异域海岛 / 一带一路 / 第二家园 </span> </p>
+							<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
+						</div>
+						<div class="ca-content-wrapper">
+							<div class="ca-content">
+								<h6> 吉隆坡 / 新山 / 马六甲 &nbsp;&nbsp;五天四晚考察团 </h6>
+								<a href="#" class="ca-close">close</a>
+								<div class="ca-content-text">
+									<p>
+										<b>机场接送</b><br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;旅游巴士，专业导游接送机
+									</p>
+									<p>
+										<b>星级食宿</b><br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;全程5星酒店住宿，当地特色餐招待
+									</p>
+									<p>
+										<b>特别行程</b><br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;为您筛选最具投资价值的项目深入考察
+									</p>
+								</div>
+								<%--
+								<ul>
+									<li><a href="#" onclick="btnKpiClicked(1);"><spring:message code="KPI" /></a></li>
+								</ul>
+								 --%>
+								<ul>
+									<li><a href="#" onclick="btnIntroClicked(1,'JUMP');"><spring:message code="downloadProductImageLink" /></a></li>
+									<li><a href="#" onclick="btnDownloadClicked(1,'DM1',false);"><spring:message code="downloadMarketingPoster" />1</a></li>
+									<li><a href="#" onclick="btnDownloadClicked(1,'DM2',false);"><spring:message code="downloadMarketingPoster" />2</a></li>
+									<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
+									<li><a href="#" onclick="btnScheduleClicked(1);"><spring:message code="downloadSchedule" /></a></li>
+								</ul>
+								<ul>
+									<li><a href="#" onclick="btnIntroClicked(1,'COPY');"><spring:message code="copyProductImageLink" /></a></li>
+								</ul>
+								<br />
 							</div>
-							<%--
-							<ul>
-								<li><a href="#" onclick="btnKpiClicked(1);"><spring:message code="KPI" /></a></li>
-							</ul>
-							 --%>
-							<ul>
-								<li><a href="#" onclick="btnIntroClicked(1,'JUMP');"><spring:message code="downloadProductImageLink" /></a></li>
-								<li><a href="#" onclick="btnDownloadClicked(1,'DM1',false);"><spring:message code="downloadMarketingPoster" />1</a></li>
-								<li><a href="#" onclick="btnDownloadClicked(1,'DM2',false);"><spring:message code="downloadMarketingPoster" />2</a></li>
-								<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
-								<li><a href="#" onclick="btnScheduleClicked(1);"><spring:message code="downloadSchedule" /></a></li>
-							</ul>
-							<ul>
-								<li><a href="#" onclick="btnIntroClicked(1,'COPY');"><spring:message code="copyProductImageLink" /></a></li>
-							</ul>
-							<br />
 						</div>
 					</div>
+					
 				</div>
-				
 			</div>
+		</form:form>	 
+		 
+		<div id="multiple_slides_visible">
+		
 		</div>
-	</form:form>	 
-	 
-	<div id="multiple_slides_visible">
-	
 	</div>
-</div>
+	
 </section>
 
 <script type="text/javascript">

@@ -1,47 +1,56 @@
 <%@ include file="../../common/taglib.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <section class="content">
-<div class="box-body"></div>
 
-<div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="myClients"/></h3>
-		<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
+	<div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="myClients" /></h3>
+	     </div>
+	</div>  
+	
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<div>
+						<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"><spring:message code="add"/></span></a>
+					</div>
+					<table id="tblMain" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+			                    <th><b><spring:message code="name"/></b></th>
+								<%--  註解
+								<th>Gender</th>
+								<th>Birthday</th>
+								--%>
+			                    <th><b><spring:message code="phoneNo"/></b></th>
+			                    <th><b><spring:message code="email"/></b></th>
+			                    <th><b><spring:message code="wechatID"/></b></th>
+								<%--  註解
+								<th>City</th>
+								<th>Address</th>
+								--%>
+			                    <th><b><spring:message code="status"/></b></th>
+								<th style="width: 255px;"></th>
+			                    <th style="width: 50px;"><b><spring:message code="option"/></b></th>
+							</tr>
+						</thead>
+					</table>
+					<input type="hidden" name="clickedCustId" id="clickedCustId" value="-1" />
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="box-body no-padding">
-		<table class="table table-striped" id="tblMain">
-			<thead>
-				<tr>
-                    <th><spring:message code="name"/></th>
-					<%--  註解
-					<th>Gender</th>
-					<th>Birthday</th>
-					--%>
-                    <th><spring:message code="phoneNo"/></th>
-                    <th><spring:message code="email"/></th>
-                    <th><spring:message code="wechatID"/></th>
-					<%--  註解
-					<th>City</th>
-					<th>Address</th>
-					--%>
-                    <th><spring:message code="status"/></th>
-					<th></th>
-                    <th style="width: 100px;"><spring:message code="option"/></th>
-				</tr>
-			</thead>
-		</table>
-		<input type="hidden" name="clickedCustId" id="clickedCustId" value="-1" />
-	</div>
-</div>
+	
 </section>
 
 <!--.燈箱 Edit -->
-<div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -87,31 +96,47 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="identity1_id"><spring:message code="IDType"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <select id="identity1_id" name="identity1_id">
+	                  <select id="identity1_id" name="identity1_id" class="form-control selectpicker m-b-5" data-style="btn-default">
 	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
 						<option value="1"><spring:message code="ID card"/></option>
 						<option value="2"><spring:message code="passport"/></option>
 						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity1_code" style="text-align: right;" ><spring:message code="IDNumber"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" id="identity1_code" name="identity1_code" >
-	                  <label for="identity1_name" style="text-align: right;" ><spring:message code="IDName"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" id="identity1_name" name="identity1_name" >
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                	<label for="identity1_code" ><spring:message code="IDNumber"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  	<input type="text" class="form-control" id="identity1_code" name="identity1_code" placeholder="<spring:message code='IDNumber'/>">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                	<label for="identity1_name" ><spring:message code="IDName"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                 	<input type="text" class="form-control" id="identity1_name" name="identity1_name" placeholder="<spring:message code='IDName'/>">
 	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="identity2_id"><spring:message code="secondIDType"/></label>
-	                  <select id="identity2_id" name="identity2_id">
+	                  <select id="identity2_id" name="identity2_id" class="form-control selectpicker m-b-5" data-style="btn-default">
 	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
 						<option value="1"><spring:message code="ID card"/></option>
 						<option value="2"><spring:message code="passport"/></option>
 						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="secondIDNo"/></label>
-	                  <input type="text" id="identity2_code" name="identity2_code" >
-	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="secondIDName"/></label>
-	                  <input type="text" id="identity2_name" name="identity2_name" >
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                	<label for="identity2_code" ><spring:message code="secondIDNo"/></label>
+	                  <input type="text" class="form-control" id="identity2_code" name="identity2_code" placeholder="<spring:message code='secondIDNo'/>">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                	<label for="identity2_name" ><spring:message code="secondIDName"/></label>
+	                  <input type="text" class="form-control" id="identity2_name" name="identity2_name" placeholder="<spring:message code='secondIDName'/>">
 	                </div>
 	            </div>
 	            <div class="box-body">
@@ -156,12 +181,12 @@
 <!--/.燈箱 Edit -->
 
 <!--.燈箱 Edit_Demo -->
-<div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -207,31 +232,47 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="identity1_id"><spring:message code="IDType"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <select id="identity1_id_Demo" name="identity1_id_Demo">
+	                  <select id="identity1_id_Demo" name="identity1_id_Demo" class="form-control selectpicker m-b-5" data-style="btn-default">
 	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
 						<option value="1" selected="selected"><spring:message code="ID card"/></option>
 						<option value="2"><spring:message code="passport"/></option>
 						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity1_code" style="text-align: right;" ><spring:message code="IDNumber"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" id="identity1_code_Demo" name="identity1_code_Demo" value="Demo_IdNumber">
-	                  <label for="identity1_name" style="text-align: right;" ><spring:message code="IDName"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" id="identity1_name_Demo" name="identity1_name_Demo" value="Demo_RealName">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity1_code" ><spring:message code="IDNumber"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="identity1_code_Demo" name="identity1_code_Demo" placeholder="<spring:message code='IDNumber'/>" value="Demo_IdNumber">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity1_name" ><spring:message code="IDName"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="identity1_name_Demo" name="identity1_name_Demo" placeholder="<spring:message code='IDName'/>" value="Demo_RealName">
 	                </div>
 	            </div>
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="identity2_id"><spring:message code="secondIDType"/></label>
-	                  <select id="identity2_id_Demo" name="identity2_id_Demo">
+	                  <select id="identity2_id_Demo" name="identity2_id_Demo" class="form-control selectpicker m-b-5" data-style="btn-default">
 	                  	<option value="0">=== <spring:message code="pleaseChoose"/> ===</option>
 						<option value="1"><spring:message code="ID card"/></option>
 						<option value="2"><spring:message code="passport"/></option>
 						<option value="3"><spring:message code="ROCID"/></option>
 	                  </select>
-	                  <label for="identity2_code" style="text-align: right;" ><spring:message code="secondIDNo"/></label>
-	                  <input type="text" id="identity2_code_Demo" name="identity2_code_Demo" >
-	                  <label for="identity2_name" style="text-align: right;" ><spring:message code="secondIDName"/></label>
-	                  <input type="text" id="identity2_name_Demo" name="identity2_name_Demo" >
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity2_code" ><spring:message code="secondIDNo"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="identity2_code_Demo" name="identity2_code_Demo" placeholder="<spring:message code='secondIDNo'/>" value="Demo_IdNumber">
+	                </div>
+	            </div>
+	            <div class="box-body">
+	                <div class="form-group">
+	                  <label for="identity2_name" ><spring:message code="secondIDName"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="identity2_name_Demo" name="identity2_name_Demo" placeholder="<spring:message code='secondIDName'/>" value="Demo_RealName">
 	                </div>
 	            </div>
 	            <div class="box-body">
@@ -276,12 +317,12 @@
 <!--/.燈箱 Edit_Demo -->
 
 <!--.燈箱 File -->
-<div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_File" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title"><spring:message code='file'/></h4>
+			<h4 class="modal-title"><spring:message code="file"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -290,9 +331,9 @@
 				<div class="box box-primary">
 					<div class="box-header with-border">
 						<b><font style="font-size: 1.5em;"><spring:message code='custFile'/>&nbsp;&nbsp;>&nbsp;&nbsp;<span id="custNameLabel"></span></font></b>
-						<a href="#" onclick="btnAddFileClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='add'/></span></a>
+						<a href="#" onclick="btnAddFileClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"><spring:message code='add'/></span></a>
 						<span class="pull-right">&nbsp;</span>
-						<a href="#" onclick="btnDeleteClicked();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='delete'/></span></a>
+						<a href="#" onclick="btnDeleteClicked();"><span class="label label-danger pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"><spring:message code='delete'/></span></a>
 					</div>
 					<div class="box-body no-padding">
 						<table class="table table-striped" id="custFileMain" width="100%">
@@ -304,8 +345,8 @@
 									<th><spring:message code="downloadTimes"/></th>
 									<th><spring:message code="fileDescription"/></th>
 									<th><spring:message code="updatedTime"/></th>
-									<th style="width: 100px;"><spring:message code="option"/></th>
-									<th style="width: 100px;"><input type="checkbox" id="delChkAll" /> <spring:message code="selectAll"/></th>
+									<th style="width: 30px;"><spring:message code="option"/></th>
+									<th style="width: 60px;"><input type="checkbox" id="delChkAll" /> <spring:message code="selectAll"/></th>
 								</tr>
 							</thead>
 						</table>
@@ -319,12 +360,12 @@
 <!--/.燈箱 File -->
 
 <!--.燈箱 File_Demo -->
-<div class="modal fade bs-example-modal-lg" id="modal_File_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_File_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title"><spring:message code='file'/></h4>
+			<h4 class="modal-title"><spring:message code="file"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -347,8 +388,8 @@
 									<th><spring:message code="downloadTimes"/></th>
 									<th><spring:message code="fileDescription"/></th>
 									<th><spring:message code="updatedTime"/></th>
-									<th style="width: 100px;"><spring:message code="option"/></th>
-									<th style="width: 100px;"><input type="checkbox" id="delChkAll_Demo" /> <spring:message code="selectAll"/></th>
+									<th style="width: 30px;"><spring:message code="option"/></th>
+									<th style="width: 60px;"><input type="checkbox" id="delChkAll_Demo" /> <spring:message code="selectAll"/></th>
 								</tr>
 							</thead>
 						</table>
@@ -362,7 +403,7 @@
 <!--/.燈箱 File_Demo -->
 
 <!--.燈箱 Upload -->
-<div class="modal fade bs-example-modal-lg" id="modal_Upload" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_Upload" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
@@ -489,7 +530,7 @@ function btnEditClicked(btn) {
 					$('#remark').val(resp.data.cust.remark);
 					$('#status').val(resp.data.cust.status.name);
 					$('#modal_Edit').modal();
-					successMsgModal(resp.message);
+					//successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -689,14 +730,20 @@ $(function() {
 				"targets" : [5],
 				"render" : function(data, type, row) {
 							var sort = row['status'].sort;
-							var html = '<ul class="nav nav-pills nav-justified step step-arrow">';
+							var html = '<div class="progress" style="width: 250px;">';
+							html += '<div class="progress-bar bg-info active progress-bar-striped" role="progressbar" style="width: '+Math.round((sort/12)*100)+'%;height:15px;"></div>';
+							html+='</div>';
+							
+							/*
+							var html = '<div class="progress">';
 							for(var i=0; i<12; i++){
 								if(i<sort)
 									html += '<li class="active"><a></a></li>';
 								else
 									html += '<li><a></a></li>';
 							}
-							html+='</ul>';
+							html+='</div>';
+							*/
 							return html;
 						}
 			},
@@ -705,12 +752,10 @@ $(function() {
 				"data" : 'id',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
-							+'<span class="label label-warning" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>'
+							+'<span class="ti-pencil" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>'
 							+'&nbsp;'
 							+'<a href="#">'
-							+'<span class="label label-info pull-center" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));">'
-							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="file"/></span></a>';
+							+'<span class="icon-folder-alt" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));" title="<spring:message javaScriptEscape="true" code="file"/>"></span></a>';
 				}
 			}
 		],
@@ -753,8 +798,7 @@ $(function() {
 				"data" : 'seqNo',
 				"render" : function(data, type, row) {
 					return '<a href="#">'
-							+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
-							+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message code="download"/></span></a>';
+							+'<span class="icon-cloud-download" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>';
 				}
 			},
 			{

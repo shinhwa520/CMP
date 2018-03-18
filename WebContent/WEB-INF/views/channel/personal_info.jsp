@@ -4,8 +4,10 @@
 <form:form method="GET" modelAttribute="UserInfoForm">
 <div class="box-body"></div>
 <div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="personalInfo"/></h3>
+	<div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="personalInfo" /></h3>
+	     </div>
 	</div>
 	<div class="box-body no-padding">
 	<div id="message" style="display: none"></div>

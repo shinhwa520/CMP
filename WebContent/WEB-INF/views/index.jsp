@@ -2,8 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../common/taglib.jsp" %>
 
+<style>
+	/*html,body{ height:100%; margin:0; padding:0}*/
+	.mask{height:100%; width:100%; position:fixed; _position:absolute; top:0; z-index:1000; margin:-30px;}
+	.opacity{ opacity:0.75; filter: alpha(opacity=30); background-color:#000; }
+	#content { font-size:100px; text-align:center; height:100%; line-height:800px; }
+</style>
+
 <section class="content">
 
+	<div id="content" class="mask opacity" >Comming soon..</div>
+	
 	<!-- Row -->
 	<div class="row">
 	    <!-- Column -->

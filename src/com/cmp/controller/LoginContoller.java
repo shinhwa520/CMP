@@ -54,7 +54,7 @@ public class LoginContoller extends BaseController {
 		List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
 		form.setBillboardList(billboardList);
 		setActiveMenu(model, MenuItem.INDEX);
-		return "index";
+		return "billboard/list";
     }
 	
     @RequestMapping(value = "login", method = RequestMethod.GET)

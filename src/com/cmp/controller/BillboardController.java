@@ -1,5 +1,6 @@
 package com.cmp.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cmp.AppResponse;
 import com.cmp.MenuItem;
 import com.cmp.form.BillboardForm;
+import com.cmp.form.IndexForm;
 import com.cmp.service.BillboardService;
 import com.cmp.service.vo.BillboardServiceVO;
 
@@ -47,6 +49,19 @@ public class BillboardController extends BaseController {
 		
 		return "manage/billboard";
     }
+	
+	@RequestMapping(value = "list", method = RequestMethod.GET)
+	public String index(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
+			form.setBillboardList(billboardList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "billboard/list";
+	}
 	
 	@RequestMapping(value = { "delete" }, method = RequestMethod.POST)
     public String deleteRecords(Model model, @ModelAttribute("BillboardForm") BillboardForm form, HttpServletRequest request, HttpServletResponse response) {

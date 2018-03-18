@@ -1,46 +1,56 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
 <section class="content">
-<div class="box-body"></div>
 
-<div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="allCust"/></h3>
+	<div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="allCust" /></h3>
+	     </div>
+	</div>  
 
-			<input type="text" id="keyword" name="keyword" placeholder="Search Keyword"/>
-			<a href="#" onclick="doQuery();"><span class="label label-info" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="search"/></span></a>
-
-			<span><spring:message code="allCust.search.info"/></span>
-
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+	
+					<input type="text" id="keyword" name="keyword" placeholder="Search Keyword"/>
+					<a href="#" onclick="doQuery();"><span class="label label-info" style="padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="search"/></span></a>
+		
+					<span><spring:message code="allCust.search.info"/></span>
+				</div>
+			</div>
+			<div class="modal_msg" style="display: none"></div>
+			<div class="card">
+				<div class="card-body">
+					<table class="table table-striped" id="tblMain">
+						<thead>
+							<tr>
+								<th><spring:message code="name"/></th>
+								<!-- 
+								<th><spring:message code="gender"/></th>
+								<th><spring:message code="birthday"/></th>
+								 -->
+								<th><spring:message code="email"/></th>
+								<th><spring:message code="residentialAddress"/></th>
+								<th><spring:message code="IDType"/></th>
+								<th><spring:message code="IDNumber"/></th>
+								<th><spring:message code="IDName"/></th>
+								<!--
+								<th><spring:message code="secondIDType"/></th>
+								<th><spring:message code="secondIDNo"/></th>
+								<th><spring:message code="secondIDName"/></th>
+								 -->
+								<th><spring:message code="user"/></th>
+								<th style="width: 100px;"><spring:message code="option"/></th>
+							</tr>
+						</thead>
+					</table>
+			        <input type="hidden" name="clickedCustId" id="clickedCustId" value="-1" />
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="modal_msg" style="display: none"></div>
-	<div class="box-body no-padding">
-		<table class="table table-striped" id="tblMain">
-			<thead>
-				<tr>
-					<th><spring:message code="name"/></th>
-					<!-- 
-					<th><spring:message code="gender"/></th>
-					<th><spring:message code="birthday"/></th>
-					 -->
-					<th><spring:message code="email"/></th>
-					<th><spring:message code="residentialAddress"/></th>
-					<th><spring:message code="IDType"/></th>
-					<th><spring:message code="IDNumber"/></th>
-					<th><spring:message code="IDName"/></th>
-					<!--
-					<th><spring:message code="secondIDType"/></th>
-					<th><spring:message code="secondIDNo"/></th>
-					<th><spring:message code="secondIDName"/></th>
-					 -->
-					<th><spring:message code="user"/></th>
-					<th style="width: 100px;"><spring:message code="option"/></th>
-				</tr>
-			</thead>
-		</table>
-        <input type="hidden" name="clickedCustId" id="clickedCustId" value="-1" />
-	</div>
-</div>
+	
 </section>
 
 <!--.燈箱 Edit -->         

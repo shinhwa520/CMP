@@ -33,41 +33,49 @@
 	    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
     
+    <!-- 
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/step_arrow.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/buttons.dataTables.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/editor.dataTables.min.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/select.dataTables.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/datatables/1.10.10/css/select.dataTables.css"> -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/jquery.jscrollpane.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/style.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.css">
-	<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/demo.css"> -->
+	<!-- 
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/demo.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/elastislide.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/custom.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/custom.css"> 
+	-->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-select/bootstrap-select.min.css" />
 	
-	
-
-	<script src="${pageContext.request.contextPath}/resources/elastislide/js/modernizr.custom.17475.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.1.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
+	<!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <!-- <script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="${pageContext.request.contextPath}/resources/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquery.elastislide.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquerypp.custom.js"></script>
-	
+    
 	<!-- 
 	<style type="text/css">
 		.alert{
@@ -221,7 +229,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/manage/billboard/list">
                         <!-- Logo icon -->
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -232,7 +240,7 @@
                             <!-- Light Logo icon 
                             <img src="${pageContext.request.contextPath}/resources/images/favicon.ico" alt="homepage" class="light-logo" />
                              -->
-                        </b>
+                        
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span>
@@ -243,7 +251,9 @@
                          <!-- Light Logo text    
                          <img src="${pageContext.request.contextPath}/resources/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
                          -->
-                        </span> </a>
+                        </span> 
+                        </b>
+                    </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -336,22 +346,22 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${pageContext.request.contextPath}/resources/assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="${pageContext.request.contextPath}/resources/assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-img"><img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p></div>
+                                                <h4>${username}</h4>
+                                                <p class="text-muted">${email}</p></div>
                                         	</div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/channel/personalInfo/info"><i class="ti-user"></i> My Profile</a></li>
                                     <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="<c:url value="/logout" />"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -382,7 +392,7 @@
                             <a href="${pageContext.request.contextPath}/"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/billboard/list"> <i class="mdi mdi-email"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
+                            <a href="${pageContext.request.contextPath}/manage/billboard/list"> <i class="mdi mdi-email"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/visit/list"> <i class="mdi mdi-table"></i><span class="hide-menu"><spring:message code="visitInfo" /></span></a>
@@ -472,23 +482,7 @@
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.js"></script>
-    <!--Wave Effects -->
-    <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="${pageContext.request.contextPath}/resources/js/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="${pageContext.request.contextPath}/resources/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+    
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
@@ -501,17 +495,29 @@
     <!-- Chart JS -->
     <script src="${pageContext.request.contextPath}/resources/js/dashboard1.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/toastr.js"></script>
-    <script>
-    $.toast({
-        heading: 'Welcome to Monster admin',
-        text: 'Use the predefined ones, or specify a custom position object.',
-        position: 'top-right',
-        loaderBg: '#ff6849',
-        icon: 'info',
-        hideAfter: 3000,
-        stack: 6
-    });
-    </script>
+    
+    <!-- This is data table -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    
+    <!-- 
+	<script src="${pageContext.request.contextPath}/resources/elastislide/js/modernizr.custom.17475.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/jquery.dataTables.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datatables/1.10.10/js/dataTables.select.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
+	 -->
+	<script src="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.1.js"></script>
+	
+	<!-- 
+	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquery.elastislide.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquerypp.custom.js"></script>
+	 -->
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+	
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
