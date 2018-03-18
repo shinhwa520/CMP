@@ -13,22 +13,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
 	<title><spring:message code="signIn"/></title>
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cmp1.0/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cmp1.0/css/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cmp1.0/css/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/AdminLTE.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/skins/skin-blue.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/iCheck/all.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/prettify/prettify.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/cmp1.0/css/style.css">
 	
 
 	<!-- REQUIRED JS SCRIPTS -->
 	<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery-3.3.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/cmp1.0/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/dist/js/app.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.pagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/cmp1.0/js/jquery.pagination.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/jquery.scrollbar/jquery.scrollbar.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/plugins/prettify/prettify.js"></script>
 	<script>    
@@ -55,6 +55,13 @@
 		}
 	</script>
 	<style type="text/css">
+		#container{
+		    background-image:url(${pageContext.request.contextPath}/resources/assets/images/background/GtqDqDn.jpg);
+		    background-repeat:no-repeat;
+		    background-size: 100%;
+		    margin-top: 50px;
+			min-height: 700px;
+		}
 		body {
 			background: -webkit-linear-gradient(#555555, #FFFFFF);
 			background: -o-linear-gradient(#555555, #FFFFFF);
@@ -67,7 +74,7 @@
 		}
 		nav.navbar-HF .navbar-header{
 		    width: 100%;
-		    margin-top: 10px;
+		    margin-top: 0px;
 		    margin-left: 50px;
 		}
 		nav.navbar-HF .navbar-header .navbar-brand{
@@ -110,10 +117,6 @@
 		    border-radius: 4px;
 		}
 		
-		 #container{     
-		 	margin-top: 50px;
-			min-height: 500px;
-		 }
 		.alert{
 			margin-top: 40px;
 			display:none;

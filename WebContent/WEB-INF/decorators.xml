@@ -4,12 +4,14 @@
 	<decorator name="main" page="main.jsp">
 		<pattern>/*</pattern>
 	</decorator>
-	<decorator name="main_sign_on" page="main_sign_on.jsp">
+	<decorator name="monster-admin_login" page="monster-admin_login2.jsp">
 		<pattern>/login*</pattern>
 		<pattern>/accessdenied*</pattern>
-		<pattern>/registration*</pattern>
 	</decorator>
 	<decorator name="outsite" page="blank.jsp">
 		<pattern>/outsite*</pattern>
+	</decorator>
+	<decorator name="main_sign_on" page="main_sign_on.jsp">
+		<pattern>/registration*</pattern>
 	</decorator>
 </decorators>

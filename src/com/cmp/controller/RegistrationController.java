@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cmp.AppResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -257,4 +256,14 @@ public class RegistrationController extends BaseController {
         return sb.toString();
     }
     
+    
+	/**
+	 * login頁面按下[註冊]
+	 * return process
+	 */
+	@RequestMapping(value = { "/process" }, method = RequestMethod.GET)
+    public String process(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+		model.addAttribute("message", "");
+        return "registration/process";
+    }
 }
