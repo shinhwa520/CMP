@@ -13,7 +13,26 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>CMP</title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
+	<meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/images/favicon.ico">
+    
+    <!-- Bootstrap Core CSS -->
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/prism/prism.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="${pageContext.request.contextPath}/resources/css/colors/blue-dark.css" id="theme" rel="stylesheet"> 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/step_arrow.css">
@@ -27,7 +46,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/jquery.jscrollpane.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/carouselSlider/css/style.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/agileCarousel/agile_carousel.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/demo.css">
+	<!-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/demo.css"> -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/elastislide.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/elastislide/css/custom.css">
 	
@@ -49,6 +68,7 @@
 	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquery.elastislide.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/elastislide/js/jquerypp.custom.js"></script>
 	
+	<!-- 
 	<style type="text/css">
 		.alert{
 			margin-top: 40px;
@@ -85,6 +105,7 @@
 			height: 33px;
 		}
 	</style>
+	 -->
 	<script>
 		Date.prototype.Format = function(fmt) { //author: meizz
 	
@@ -178,188 +199,323 @@
         }
 	</script>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-	<!-- Main Header -->
-	<header class="main-header">
-	
-	<!-- Logo -->
-    <a href="${pageContext.request.contextPath}" class="logo">
-		<!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><b>CMP</b></span>
-		<!-- logo for regular state and mobile devices -->
-		<span class="logo-lg"><b><spring:message code="cmp"/></b></span>
-    </a>
-	
-	<!-- Header Navbar -->
-	<nav class="navbar navbar-static-top" role="navigation">
-		<!-- Sidebar toggle button-->
-		<a href="#" data-toggle="offcanvas" role="button">
-		<img src="${pageContext.request.contextPath}/resources/images/588a64e0d06f6719692a2d10.png" class="box-shadow-menu" alt="">
-		</a>
-		<!-- Navbar Right Menu -->
-		<div class="navbar-custom-menu">
-			<ul class="nav navbar-nav">
-				<li>
-					<a href="javascript:void(0)" onclick="doChangeLang('en_US')">
-						English
-					</a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" onclick="doChangeLang('zh_CN')">
-						中文
-					</a>
-				</li>
 
-				<!-- User Account Menu -->
-				<li class="dropdown user user-menu">
-					<!-- Menu Toggle Button -->
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<!-- The user image in the navbar-->
-						<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" class="user-image" alt="User Image">
-						<!-- hidden-xs hides the username on small devices so only the image appears. -->
-						<span class="hidden-xs">${username}</span>
-					</a>
-					<ul class="dropdown-menu">
-						<!-- The user image in the menu -->
-						<li class="user-header">
-							<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" class="img-circle" alt="User Image">
-							<p>
-								<small>${username}</small>
-							</p>
-						</li>
-						<!-- Menu Body -->
-						
-						<!-- Menu Footer-->
-						<li class="user-footer">
-							<!-- 
-							<div class="pull-left">
-								<a href="#" class="btn btn-default btn-flat">Register</a>
-							</div>
-							-->
-							<div class="pull-right">
-								<a href="<c:url value="/logout" />" class="btn btn-default btn-flat"><spring:message code="signOut"/></a>
-							</div>
-						</li>
-					</ul>
-				</li>
-				<!-- Control Sidebar Toggle Button -->
-			
-			</ul>
-		</div>
-	</nav>
-	</header>
-  
-  
-	<!-- Left side column. contains the logo and sidebar -->
-	<aside id="main-sidebar" class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-		<section class="sidebar">
-			
-			<!-- Sidebar user panel (optional) -->
-			<div class="user-panel">
-				<div class="pull-left image">
-					<img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" class="img-circle" alt="User Image">
-				</div>
-				<div class="pull-left info">
-					<p>${username}</p>
-					<!-- Status -->
-					<a href="#"><i class="fa fa-circle text-success"></i><spring:message code="online" /></a>
-				</div>
-			</div>
-			<!-- Sidebar Menu -->
-			<ul class="sidebar-menu">
-			
-				<li class="<c:if test="${active eq 'INDEX'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/"> <span><span><spring:message code="home" /></span></a>
-				</li>
-				<!-- 
-				<li class="<c:if test="${active eq 'SHARE_FILE'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/share/file"> <span><spring:message code="shareResource" /></span></a>
-				</li>
-				 -->
-				<li class="<c:if test="${active eq 'PERSONAL_INFO'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/personalInfo/info"> <span><spring:message code="personalInfo" /></span></a>
-				</li>
-				<li class="<c:if test="${active eq 'VISIT_INFO'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/visit/list"> <span><spring:message code="visitInfo" /></span></a>
-				</li>
-				<li class="<c:if test="${active eq 'PRODUCT_INFO'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/product/list"> <span><spring:message code="productInfo" /></span></a>
-				</li>
-				<li class="<c:if test="${active eq 'MY_USER'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/user/list"> <span><spring:message code="myChannels" /></span></a>
-				</li>
-				<li class="<c:if test="${active eq 'MY_CUST'}">active</c:if> sidebar-item">
-					<a href="${pageContext.request.contextPath}/channel/cust/list"> <span><spring:message code="myClients" /></span></a>
-				</li>
-				<sec:authorize access="hasAnyRole('ROLE_SU')">
-					<li class="sidebar-item adminView" >
-						<a href="${pageContext.request.contextPath}/admin/role/list"> <span><spring:message code="role" /></span></a>
-					</li>
-					<li class="sidebar-item adminView" >
-						<a href="${pageContext.request.contextPath}/admin/status/list"> <span><spring:message code="status" /></span></a>
-					</li>
-					<li class="sidebar-item adminView" >
-						<a href="${pageContext.request.contextPath}/admin/registration/list"> <span><spring:message code="registration" /></span></a>
-					</li>
-					<li class="<c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">active</c:if> treeview adminView">
-						<a href="#">
-							<i class="fa fa-server"></i> <span><spring:message code="api" /></span> <i class="fa fa-angle-left pull-right"></i>
-						</a>
-						<ul class="treeview-menu <c:if test="${active eq 'API_MAIN' || active eq 'API_MANAGE' }">menu-open</c:if>">
-							<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api"><spring:message code="receiveData" /></a></li>
-							<li <c:if test="${active eq 'API_MAIN'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/api/list"><spring:message code="queryData" /></a></li>
-							<li <c:if test="${active eq 'API_MANAGE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/job/manage"><spring:message code="reciveDataSchedule" /></a></li>
-						</ul>
-					</li>
-				</sec:authorize>
-				<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_MA','ROLE_ASST')">
-					<li class="<c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">active</c:if> treeview adminView">
-						<a href="#">
-							<i class="fa fa-server"></i> <span><spring:message code="backstageMenagement"/></span> <i class="fa fa-angle-left pull-right"></i>
-						</a>
-						<ul class="treeview-menu <c:if test="${active eq 'ADMIN_USER' || active eq 'ADMIN_CUST' || active eq 'MANAGE_BILLBOARD' || active eq 'MANAGE_FILE' }">menu-open</c:if>">
+<body class="fix-header fix-sidebar card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon -->
+                        <b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <span style="color: white">CMP</span>
+                            <!-- 
+                            <!-- Dark Logo icon 
+                            <img src="${pageContext.request.contextPath}/resources/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon 
+                            <img src="${pageContext.request.contextPath}/resources/images/favicon.ico" alt="homepage" class="light-logo" />
+                             -->
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span>
+                         <span style="color: white">-信息服务联网</span>
+                         <!-- 
+                         <!-- dark Logo text 
+                         <img src="${pageContext.request.contextPath}/resources/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                         <!-- Light Logo text    
+                         <img src="${pageContext.request.contextPath}/resources/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                         -->
+                        </span> </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0 ">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox animated bounceInDown">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            Coming soon...
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">You have 0 new messages</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <!-- Message -->
+                                            Coming soon...
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+                            <div class="dropdown-menu animated bounceInDown">
+                                <ul class="mega-dropdown-menu row">
+                                    <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">CONTACT US</h4>
+                                        <!-- Contact -->
+                                        <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Enter email"> </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${pageContext.request.contextPath}/resources/assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <ul class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box">
+                                            <div class="u-img"><img src="${pageContext.request.contextPath}/resources/assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-text">
+                                                <h4>Steave Jobs</h4>
+                                                <p class="text-muted">varun@gmail.com</p></div>
+                                        	</div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-globe"></i></a>
+                            <div class="dropdown-menu  dropdown-menu-right animated bounceInDown"> 
+                            	<a class="dropdown-item" href="#" onclick="doChangeLang('zh_CN')"><i class="flag-icon flag-icon-cn"></i> China</a> 
+                            	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> USA</a> 
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                    	<li>
+                            <a href="${pageContext.request.contextPath}/"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/billboard/list"> <i class="mdi mdi-email"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/visit/list"> <i class="mdi mdi-table"></i><span class="hide-menu"><spring:message code="visitInfo" /></span></a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/product/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="productInfo" /></span></a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/channel/user/list"> <i class="mdi mdi-book-open-variant"></i><span class="hide-menu"><spring:message code="myChannels" /></span></a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/channel/cust/list"> <i class="mdi mdi-face"></i><span class="hide-menu"><spring:message code="myClients" /></span></a>
+                        </li>
+                        <sec:authorize access="hasAnyRole('ROLE_SU')">
+                        	<li>
+	                            <a href="${pageContext.request.contextPath}/admin/role/list"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="role" /></span></a>
+	                        </li>
+	                        <li>
+	                            <a href="${pageContext.request.contextPath}/admin/status/list"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="status" /></span></a>
+	                        </li>
+	                        <li>
+	                            <a href="${pageContext.request.contextPath}/admin/registration/list"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="registration" /></span></a>
+	                        </li>
+	                        <li>
+                            <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu"><spring:message code="api" /></span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="${pageContext.request.contextPath}/api"><spring:message code="receiveData" /></a></li>
+                                <li><a href="${pageContext.request.contextPath}/api/list"><spring:message code="queryData" /></a></li>
+                                <li><a href="${pageContext.request.contextPath}/job/manage"><spring:message code="reciveDataSchedule" /></a></li>
+                            </ul>
+                        </li>
+                        </sec:authorize>
+                        <sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN','ROLE_MA','ROLE_ASST')">
+                        	<li>
+	                            <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-widgets"></i><span class="hide-menu"><spring:message code="backstageMenagement"/></span></a>
+	                            <ul aria-expanded="false" class="collapse">
+	                            	<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN')">
+	                            		<li><a href="${pageContext.request.contextPath}/admin/user/list"><spring:message code="allChannels" /></a></li>
+	                            	</sec:authorize>
+	                                <li><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
+	                                <li><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
+	                                <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
+	                            </ul>
+	                        </li>
+                        </sec:authorize>
 
-							<sec:authorize access="hasAnyRole('ROLE_SU','ROLE_ADMIN')">
-							<li <c:if test="${active eq 'ADMIN_USER'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/user/list"><spring:message code="allChannels" /></a></li>
-							</sec:authorize>
-							
-							<li <c:if test="${active eq 'ADMIN_CUST'}"> class="active"</c:if>><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
-							<li <c:if test="${active eq 'MANAGE_BILLBOARD'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
-							<!-- <li <c:if test="${active eq 'MANAGE_FILE'}">class="active"</c:if>><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>  -->
-						</ul>
-					</li>
-				</sec:authorize>
-			</ul>
-			<!-- /.sidebar-menu -->
-		</section>
-    <!-- /.sidebar -->
-	</aside>
-  
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
-		<!-- Content Header (Page header)
-		<section class="content-header">
-		</section>
-		 -->
-		<!-- Main content
-		<section class="content">
-		</section>
-		 -->
-		<div id="message" class="alert" >&nbsp;</div>
-		<decorator:body />
-		<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
-	<div class="hidden_div" style="display: none">principal.authorities : <sec:authentication property="principal.authorities" /></div>
-	<!-- Main Footer -->
-	<footer class="main-footer">
-		<!-- To the right -->
-		<div class="pull-right hidden-xs">
-			Ver.${versionCode}
-		</div>
-		<!-- Default to the left -->
-		<strong>Copyright &copy; 2018 <a href="#"><spring:message code="corpName"/></a></strong> <spring:message code="allRightsReserved"/>
-	</footer> 
+                        <li class="nav-devider"></li>
+
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                
+                <decorator:body />
+                
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                Copyright © 2018 Fede tech Co. 版权所有
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="${pageContext.request.contextPath}/resources/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="${pageContext.request.contextPath}/resources/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- chartist chart -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <!-- Chart JS -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/echarts/echarts-all.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/toast-master/js/jquery.toast.js"></script>
+    <!-- Chart JS -->
+    <script src="${pageContext.request.contextPath}/resources/js/dashboard1.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/toastr.js"></script>
+    <script>
+    $.toast({
+        heading: 'Welcome to Monster admin',
+        text: 'Use the predefined ones, or specify a custom position object.',
+        position: 'top-right',
+        loaderBg: '#ff6849',
+        icon: 'info',
+        hideAfter: 3000,
+        stack: 6
+    });
+    </script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 </body>
+
 </html>
