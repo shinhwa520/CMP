@@ -60,34 +60,36 @@
 	<div class="box box-primary" id="billboard" style="padding:15px 15px;">
 		<div style="height:75vh; overflow-y:auto; ">
 			<c:if test="${!IndexForm.billboardList.isEmpty() }">
-				<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table table-striped">
+				<table class="table color-bordered-table info-bordered-table">
 					<c:forEach var="vo" items="${ IndexForm.billboardList }" varStatus="loop">
-						<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
-						 	<th width="5%">#${loop.count }</th>
-						   	<th width="80%">
-						   		<a class="slideOption" href="#bill_${loop.count }">${vo.title }</a>
-						   		<c:if test="${vo.onTopChkbox eq 'Y' }">
-						   			<img src="${pageContext.request.contextPath}/resources/images/on_top.gif" />
-						   		</c:if>
-						   	</th>
-						    <th width="15%">${vo.updateTime }</th>
-						</tr>
-						<tr>
-						 	<td colspan="9" class="content" bgcolor="#FFFFFF">
-						 		<c:choose>
-		            				<c:when test="${vo.isOpenedChkbox eq 'Y'}">
-		            					<div id="bill_${loop.count }"  style="display:inline;">  <!--控制細項顯示與隱藏 -->
-									      	${vo.content }
-									    </div>
-		            				</c:when>
-		            				<c:otherwise>
-		            					<div id="bill_${loop.count }"  style="display:none;">  <!--控制細項顯示與隱藏 -->
-									      	${vo.content }
-									    </div>
-		            				</c:otherwise>
-		            			</c:choose>
-						   </td>
-						</tr>
+						 <thead>
+							<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
+							 	<th width="5%">#${loop.count }</th>
+							   	<th width="75%">
+							   		<a class="slideOption" href="#bill_${loop.count }"><b><font color="white">${vo.title }</font></b></a>
+							   		<c:if test="${vo.onTopChkbox eq 'Y' }">
+							   			<img src="${pageContext.request.contextPath}/resources/images/on_top.gif" />
+							   		</c:if>
+							   	</th>
+							    <th width="20%">${vo.updateTime }</th>
+							</tr>
+						 </thead>
+							<tr>
+							 	<td colspan="9" class="content" bgcolor="#FFFFFF">
+							 		<c:choose>
+			            				<c:when test="${vo.isOpenedChkbox eq 'Y'}">
+			            					<div id="bill_${loop.count }"  style="display:inline;">  <!--控制細項顯示與隱藏 -->
+										      	${vo.content }
+										    </div>
+			            				</c:when>
+			            				<c:otherwise>
+			            					<div id="bill_${loop.count }"  style="display:none;">  <!--控制細項顯示與隱藏 -->
+										      	${vo.content }
+										    </div>
+			            				</c:otherwise>
+			            			</c:choose>
+							   </td>
+							</tr>
 					</c:forEach>
 				</table>
 			</c:if>

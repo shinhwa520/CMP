@@ -9,20 +9,14 @@
 		/<spring:message code="reward"/>
 		&nbsp;＞&nbsp;<span class="badge badge-info"><spring:message code="channel"/>&nbsp;:&nbsp; ${ userName }</span></h3>
 		
-		
-		<a href="#" onclick="btnSaveClicked();">
-			<span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%; margin-left: 10px;">
-				<spring:message code="save"/>
-			</span>
-		</a>
-		<a href="#" onclick="oneClickClicked();">
-			<span class="label label-warning pull-right" style="padding:5px 10px 5px 10px; font-size: 95%; margin-left: 1px;">
-				<spring:message code="replaceBydefault"/>
-			</span>
-		</a>
-		<input id="defaultCommission" class="pull-right" type="text" readonly="true" value="${defaultCommission }" size="2"/>
+		<button type="button" class="btn btn-success pull-right" id="btnPermissionSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
+		<span class="pull-right">&nbsp;</span>
+		<button type="button" class="btn label-warning pull-right" id="oneClickClicked" onclick="oneClickClicked();"><spring:message code="replaceBydefault"/></button>
+		<span class="pull-right">&nbsp;</span>	
+		<input id="defaultCommission" class="pull-right" type="text" readonly value="${defaultCommission }" size="2"/>
 		<span class="pull-right" style="margin-right: 1px;"><spring:message code="defaultCommission"/></span>
 	</div>
+	<div class="modal_msg pull-right" style="display: none; width: 100%;" align="center"></div>
 	<div class="box-body no-padding">
 		<form role="form" id="formEdit" name="formEdit">
 		<input type="hidden" name="user_id" id="user_id" value="${userId }" />
@@ -34,7 +28,7 @@
 							<div class="box-body">
 					        	<div class="form-group">
 									<label for="productName"><spring:message code="productInfo"/></label>
-									<input type="text" readonly="true" class="form-control" value="${vo.productInfo.productName }"/>
+									<input type="text" readonly class="form-control" value="${vo.productInfo.productName }"/>
 					            </div>                              
 					        </div>
 					        
@@ -115,7 +109,7 @@ function btnSaveClicked(input) {
 		success : function(resp) {
 			console.log(resp);
 			if (resp.code == '200') {
-				successMessage(resp.message);
+				successMsgModal(resp.message);
 			} else {
 				alert(resp);
 			}
@@ -149,6 +143,12 @@ td .box-body .form-group{ margin-bottom: 2px; }
 	vertical-align: text-top; 
 	border-radius: 5px;
 }
+form .box-body .form-group label {
+    width: 15%;
+}
 
+form .box-body .form-group .form-control{
+	display: inline-block;
+	width: 80%;
 
 </style>

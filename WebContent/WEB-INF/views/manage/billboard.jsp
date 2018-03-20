@@ -76,18 +76,20 @@
 <form:form method="POST" modelAttribute="BillboardForm" action="">
 
 	<div class="box-body" id="billboard">
-		<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
+		<button type="button" class="btn btn-warning pull-right" onclick="btnAddClicked();"><spring:message code='add'/></button>
 		<c:if test="${!BillboardForm.billboardList.isEmpty() }">
-			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table table-striped">
-				<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
-				 	<th width="5%">#</th>
-				   	<th width="70%"><spring:message code="title"/></th>
-				    <th width="15%"><spring:message code="announcementTime"/></th>
-				    <th width="5%"><spring:message code="edit"/></th>
-				    <th width="5%">
-				    	<input type="checkbox" id="delChkAll" onClick="doChkAll()" value="${vo.seqNo }" /> <spring:message code="selectAll"/>
-				    </th>
-				</tr>
+			<table width="100%" border="1" align="center" cellpadding="1" cellspacing="1" bordercolor="#000000" class="table color-table info-table">
+				<thead>
+					<tr bgcolor="#CCCCCC">  <!--(主)標題 -->
+					 	<th width="5%">#</th>
+					   	<th width="70%"><spring:message code="title"/></th>
+					    <th width="15%"><spring:message code="announcementTime"/></th>
+					    <th width="5%"><spring:message code="edit"/></th>
+					    <th width="5%">
+					    	<input type="checkbox" id="delChkAll" onClick="doChkAll()" value="${vo.seqNo }" /> <spring:message code="selectAll"/>
+					    </th>
+					</tr>
+				</thead>
 				<c:forEach var="vo" items="${ BillboardForm.billboardList }" varStatus="loop">
 					<tr>  <!--(主)標題 -->
 					 	<td width="5%">#${loop.count }</td>
@@ -99,7 +101,7 @@
 					   	</td>
 					    <td width="15%">${vo.updateTime }</td>
 					    <td width="5%">
-					    	<a href="#"><span class="label label-warning" style="width:70px; margin-right:10px" seqNo="${vo.seqNo }" onclick="btnEditClicked($(this));"><i class="fa fa-close" style="margin-right:5px"></i><spring:message code="edit"/></span></a>
+					    	<a href="#"><span class="ti-pencil" style="width:70px; margin-right:10px" seqNo="${vo.seqNo }" onclick="btnEditClicked($(this));" title="<spring:message code="edit"/>"></span></a>
 					    </td>
 					    <td width="5%"><input type="checkbox" name="delChkbox" class="delChkbox" value="${vo.seqNo }"/></td>
 					</tr>
@@ -123,7 +125,7 @@
 					<tr>  <!--(主)標題 -->
 					 	<td colspan="4">&nbsp;</td>
 					   	<td>
-					   		<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i>Delete</span></a>
+					   		<button type="button" class="btn btn-danger pull-right" onclick="doDelete();"><spring:message code='delete'/></button>
 					   	</td>
 					</tr>
 			</table>
@@ -153,12 +155,12 @@
 </script>
 
 <!--.燈箱 Edit -->         
-<div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit">
@@ -206,7 +208,7 @@
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnGustSaveClicked();"><spring:message code='save'/></button>
+	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnGustSaveClicked();"><spring:message code='save'/></button>
 				</div>
 			</form>
 		</div>	

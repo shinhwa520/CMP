@@ -1,61 +1,67 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <section class="content">
-<div class="box-body"></div>
 
-<div class="box box-primary">
-	<div class="box-header with-border">
-		<h3 class="box-title"><spring:message code="allChannels" /></h3>
+	<div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="allChannels" /></h3>
+	     </div>
 	</div>
-	<div class="box-body no-padding">
-		<table class="table table-striped" id="tblMain">
-			<thead>
-				<tr>
-					<th rowspan="2"><spring:message code="name"/></th>
-					<th rowspan="2"><spring:message code="status"/></th>
-					<th rowspan="2"><spring:message code="upstream"/></th>
-					<th rowspan="2"><spring:message code="defaultReward"/></th>
-					<th colspan="2"><spring:message code="channelsNo"/></th>
-					<th colspan="2"><spring:message code="tourNo"/></th>
-					<th colspan="2"><spring:message code="salesNo"/></th>
-					<th rowspan="2" style="width: 100px;"><spring:message code="option"/></th>
-				</tr>
-				<tr>
-					<th><spring:message code="target"/></th>
-					<th><spring:message code="accomplished"/></th>
-					<th><spring:message code="target"/></th>
-					<th><spring:message code="accomplished"/></th>
-					<th><spring:message code="target"/></th>
-					<th><spring:message code="accomplished"/></th>
-				</tr>
-			</thead>
-		</table>
+	
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<table class="table table-striped" id="tblMain">
+						<thead>
+							<tr>
+								<th rowspan="2"><b><spring:message code="name"/></b></th>
+								<th rowspan="2"><b><spring:message code="status"/></b></th>
+								<th rowspan="2"><b><spring:message code="upstream"/></b></th>
+								<th rowspan="2"><b><spring:message code="defaultReward"/></b></th>
+								<th colspan="2"><b><spring:message code="channelsNo"/></b></th>
+								<th colspan="2"><b><spring:message code="tourNo"/></b></th>
+								<th colspan="2"><b><spring:message code="salesNo"/></b></th>
+								<th rowspan="2" style="width: 50px;"><b><spring:message code="option"/></b></th>
+							</tr>
+							<tr>
+								<th><b><spring:message code="target"/></b></th>
+								<th><b><spring:message code="accomplished"/></b></th>
+								<th><b><spring:message code="target"/></b></th>
+								<th><b><spring:message code="accomplished"/></b></th>
+								<th><b><spring:message code="target"/></b></th>
+								<th><b><spring:message code="accomplished"/></b></th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
 </section>
 
 <!--.燈箱 Edit -->         
-<div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal fade bs-example-modal-lg" id="modal_Edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
-      	<div class="modal-body">                    
+      	<div class="modal-body">
             <form role="form" id="formEdit" name="formEdit">
             	<input type="hidden" name="user_id" id="user_id" value="" />
 		        <div class="box-body">
-		        	<div class="form-group">
+	                <div class="form-group">
 						<label for="user_name"><spring:message code="name"/><span class="pull-right" style="color: red;">＊ </span></label>
-						<input type="text" class="form-control" name="user_name" id="user_name" maxlength="8"/>
+						<input type="text" class="form-control" name="user_name" id="user_name" maxlength="8" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="account"><spring:message code="account"/><span class="pull-right" style="color: red;">＊ </span></label>
-						<input type="text" class="form-control" name="account" id="account" readonly="true" />
+						<input type="text" class="form-control" name="account" id="account" readonly />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
@@ -66,7 +72,7 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="phone"><spring:message code="phone"/><span class="pull-right" style="color: red;">＊ </span></label>
+						<label for="phone"><spring:message code="phoneNo"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="phone" id="phone" />
 		            </div>                              
 		        </div>
@@ -85,7 +91,7 @@
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="status"><spring:message code="status"/></label>
-						<select name="status" id="status" >
+						<select name="status" id="status" class="form-control selectpicker m-b-5" data-style="btn-default">
 							<option value="1">登錄帳號</option>
 							<option value="2">確認email</option>
 							<option value="3">維護個資</option>
@@ -98,42 +104,42 @@
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
-						<label for="user_name"><spring:message code="remark"/></label>
+						<label for="user_name"><spring:message code="remarks"/></label>
 						<input type="text" class="form-control" name="remark" id="remark" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="user_name"><spring:message code="defaultReward"/></label>
-						<input type="text" class="form-control" name="reward" id="reward" readonly="true" />%
+						<input type="text" class="form-control" name="reward" id="reward" readonly />%
 		            </div>                              
 		        </div>
 		        <div class="box-body">
 		        	<table style="width: 100%">
 		        		<tr>
-		        			<td style="width: 12%"><label><spring:message code="targetChannelsNo"/></label></td>
-		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
-		        			<td style="width: 12%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
-		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 18%"><label><spring:message code="targetChannelsNo"/></label></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="agent_user" id="agent_user" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 18%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_agent_user" id="_agent_user" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        		<tr>
-		        			<td style="width: 12%"><label><spring:message code="targetTourNo"/></label></td>
-		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
-		        			<td style="width: 12%"><label><spring:message code="accomplishedTourNo"/></label></td>
-		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 18%"><label><spring:message code="targetTourNo"/></label></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="agent_cust" id="agent_cust" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 18%"><label><spring:message code="accomplishedTourNo"/></label></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_agent_cust" id="_agent_cust" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        		<tr>
-		        			<td style="width: 12%"><label><spring:message code="targetSalesNo"/></label></td>
-		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="volume" id="volume" style="width: 80%; text-align:right;"/></td>
-		        			<td style="width: 12%"><label><spring:message code="accomplishedSalesNo"/></label></td>
-		        			<td style="width: 38%" class="form-group"><input type="text" readonly="true" class="form-control" name="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 18%"><label><spring:message code="targetSalesNo"/></label></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="volume" id="volume" style="width: 80%; text-align:right;"/></td>
+		        			<td style="width: 18%"><label><spring:message code="accomplishedSalesNo"/></label></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_volume" id="_volume" style="width: 80%; text-align:right;"/></td>
 		        		</tr>
 		        	</table>
 		        </div>
 	            
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
+	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -192,8 +198,7 @@ $(function() {
 					"data" : 'id',
 					"render" : function(data, type, row) {
 						return '<a href="#">'
-								+'<span class="label label-warning" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i>Edit</span></a>';
+								+'<span class="ti-pencil" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>';
 					}
 				}
 			],
@@ -213,7 +218,7 @@ function btnEditClicked(btn) {
 			async: false,
 
 			success : function(resp) {
-				console.log(resp);				
+				//console.log(resp);				
 				if (resp.code == '200') {
 					$('#user_id').val(btn.attr('userId'));
 					$('#user_name').val(resp.data.user.name);
@@ -233,7 +238,7 @@ function btnEditClicked(btn) {
 					$('#_volume').val(resp.data.user._volume);
 					
 					$('#modal_Edit').modal();
-					successMsgModal(resp.message);
+					//successMsgModal(resp.message);
 				} else {
 					alert(resp.message);
 				}
@@ -320,3 +325,13 @@ function btnSaveClicked() {
 	});
 }
 </script>
+<style>
+.modal-body form .box-body .form-group label {
+    width: 15%;
+}
+
+.modal-body form .box-body .form-group .form-control{
+	display: inline-block;
+	width: 82%;
+}
+</style>

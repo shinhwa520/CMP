@@ -69,15 +69,17 @@
         </div>
          -->
 		<div class="modal-footer">
-       		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
+       		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 		</div>
 	</div>
 </div>
 <div class="box-body"></div>
 <div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><spring:message code="personalKPI"/></h3>
-    </div>
+    <div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="personalKPI" /></h3>
+	     </div>
+	</div>
     <div class="box-body">
         <table style="width: 100%">
             <tr>
@@ -189,4 +191,13 @@ function validateInt(input) {
 <style>
 .box-primary .box-body .box-body{ padding-bottom: 2px; }
 .modal-footer { padding-top: 5px; padding-bottom: 5px; }
+
+.box-body .form-group label {
+    width: 10%;
+}
+
+.box-body .form-group .form-control{
+	display: inline-block;
+	width: 87%;
+}
 </style>

@@ -60,7 +60,7 @@
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="user_name"><spring:message code="name"/></label>
-						<input type="text" readonly="true" class="form-control" name="user_name" id="user_name" />
+						<input type="text" readonly class="form-control" name="user_name" id="user_name" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
@@ -134,8 +134,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
@@ -144,7 +144,7 @@
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="user_name"><spring:message code="name"/></label>
-						<input type="text" readonly="true" class="form-control" name="user_name_Demo" id="user_name_Demo" value="Demo" />
+						<input type="text" readonly class="form-control" name="user_name_Demo" id="user_name_Demo" value="Demo" />
 		            </div>                              
 		        </div>
 		        <div class="box-body">
@@ -159,19 +159,19 @@
 		        			<td style="width: 18%"><label><spring:message code="targetChannelsNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" class="form-control" name="agent_user_Demo" id="agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        			<td style="width: 18%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
-		        			<td style="width: 32%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_user_Demo" id="_agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_agent_user_Demo" id="_agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        		</tr>
 		        		<tr>
 		        			<td style="width: 18%"><label><spring:message code="targetTourNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" class="form-control" name="agent_cust_Demo" id="agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        			<td style="width: 18%"><label><spring:message code="accomplishedTourNo"/></label></td>
-		        			<td style="width: 32%" class="form-group"><input type="text" readonly="true" class="form-control" name="_agent_cust_Demo" id="_agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_agent_cust_Demo" id="_agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        		</tr>
 		        		<tr>
 		        			<td style="width: 18%"><label><spring:message code="targetSalesNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" class="form-control" name="volume_Demo" id="volume_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        			<td style="width: 18%"><label><spring:message code="accomplishedSalesNo"/></label></td>
-		        			<td style="width: 32%" class="form-group"><input type="text" readonly="true" class="form-control" name="_volume_Demo" id="_volume_Demo" style="width: 80%; text-align:right;" value="0" /></td>
+		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_volume_Demo" id="_volume_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        		</tr>
 		        	</table>                             
 		        </div>
@@ -195,7 +195,7 @@ $(function() {
 	tblMain = $('#tblMain').DataTable(
 		{
 			"bFilter" : false,
-			"ordering" : true,
+			"ordering" : false,
 			"info" : false,
 			"serverSide" : true,
 			"bLengthChange" : false,
@@ -396,3 +396,13 @@ function validateInt(input) {
 }
 
 </script>
+<style>
+.modal-body form .box-body .form-group label {
+    width: 12%;
+}
+
+.modal-body form .box-body .form-group .form-control{
+	display: inline-block;
+	width: 85%;
+}
+</style>
