@@ -13,7 +13,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div>
-						<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="padding:5px 10px 5px 10px; font-size: 95%;"><spring:message code="add"/></span></a>
+						<button type="button" class="btn btn-warning pull-right" onclick="btnAddClicked();"><spring:message code='add'/></button>
 					</div>
 					<table id="tblMain" class="table table-bordered table-striped">
 						<thead>
@@ -166,12 +166,12 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="status"><spring:message code='status'/></label>
-	                  <input type="text" class="form-control" id="status" name="status" readonly="true" >
+	                  <input type="text" class="form-control" id="status" name="status" readonly>
 	                </div>
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code='save'/></button>
+	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code='save'/></button>
 				</div>
 			</form>
 		</div>
@@ -302,12 +302,12 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="status"><spring:message code='status'/></label>
-	                  <input type="text" class="form-control" id="status_Demo" name="status_Demo" readonly="true" >
+	                  <input type="text" class="form-control" id="status_Demo" name="status_Demo" readonly >
 	                </div>
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
-	        		<button type="button" class="btn btn-primary" id="btnProfileSave_Demo" ><spring:message code='save'/></button>
+	        		<button type="button" class="btn btn-success" id="btnProfileSave_Demo" ><spring:message code='save'/></button>
 				</div>
 			</form>
 		</div>
@@ -330,13 +330,12 @@
 				<input type="hidden" name="fileType" id="queryFileType" value="" />
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<b><font style="font-size: 1.5em;"><spring:message code='custFile'/>&nbsp;&nbsp;>&nbsp;&nbsp;<span id="custNameLabel"></span></font></b>
-						<a href="#" onclick="btnAddFileClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"><spring:message code='add'/></span></a>
+						<button type="button" class="btn btn-warning pull-right" onclick="btnAddFileClicked();"><spring:message code='add'/></button>
 						<span class="pull-right">&nbsp;</span>
-						<a href="#" onclick="btnDeleteClicked();"><span class="label label-danger pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"><spring:message code='delete'/></span></a>
+						<button type="button" class="btn btn-danger pull-right" onclick="btnDeleteClicked();"><spring:message code='delete'/></button>
 					</div>
 					<div class="box-body no-padding">
-						<table class="table table-striped" id="custFileMain" width="100%">
+						<table class="table table-striped" id="custFileMain" style="width:100%">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -373,13 +372,12 @@
 				<input type="hidden" name="fileType_Demo" id="queryFileType_Demo" value="" />
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<b><font style="font-size: 1.5em;"><spring:message code='custFile'/>&nbsp;&nbsp;>&nbsp;&nbsp;<span id="custNameLabel_Demo">Demo</span></font></b>
-						<a href="#" ><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='add'/></span></a>
+						<button type="button" class="btn btn-warning pull-right" onclick="btnAddFileClicked();"><spring:message code='add'/></button>
 						<span class="pull-right">&nbsp;</span>
-						<a href="#" ><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code='delete'/></span></a>
+						<button type="button" class="btn btn-danger pull-right" onclick="btnDeleteClicked();"><spring:message code='delete'/></button>
 					</div>
 					<div class="box-body no-padding">
-						<table class="table table-striped" id="custFileMain_Demo" width="100%">
+						<table class="table table-striped" id="custFileMain_Demo" style="width:100%">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -407,8 +405,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="upload"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -422,7 +420,7 @@
 		        <div class="box-body">
 		        	<div class="form-upload-group">
 						<label for="fullFileName"><spring:message code="fileName"/><span class="pull-right" style="color: red;">＊ </span> </label>
-            			<input type="text" class="form-control" name="fullFileName" id="editFullFileName" readonly="true" />
+            			<input type="text" class="form-control" name="fullFileName" id="editFullFileName" readonly />
             			<input type="file" name="uploadFile" id="uploadFile" />
 		            </div>
 		        </div>
@@ -516,10 +514,10 @@ function btnEditClicked(btn) {
 					$('#email').val(resp.data.cust.email);
 					$('#weChat').val(resp.data.cust.weChat);
 
-					$('#identity1_id').val(resp.data.cust.identity1_id);
+					$('#identity1_id').val(resp.data.cust.identity1_id).change();
 					$('#identity1_code').val(resp.data.cust.identity1_code);
 					$('#identity1_name').val(resp.data.cust.identity1_name);
-					$('#identity2_id').val(resp.data.cust.identity2_id);
+					$('#identity2_id').val(resp.data.cust.identity2_id).change();
 					$('#identity2_code').val(resp.data.cust.identity2_code);
 					$('#identity2_name').val(resp.data.cust.identity2_name);
 
@@ -730,20 +728,9 @@ $(function() {
 				"targets" : [5],
 				"render" : function(data, type, row) {
 							var sort = row['status'].sort;
-							var html = '<div class="progress" style="width: 250px;">';
+							var html = '<div class="progress">';
 							html += '<div class="progress-bar bg-info active progress-bar-striped" role="progressbar" style="width: '+Math.round((sort/12)*100)+'%;height:15px;"></div>';
 							html+='</div>';
-							
-							/*
-							var html = '<div class="progress">';
-							for(var i=0; i<12; i++){
-								if(i<sort)
-									html += '<li class="active"><a></a></li>';
-								else
-									html += '<li><a></a></li>';
-							}
-							html+='</div>';
-							*/
 							return html;
 						}
 			},
@@ -755,7 +742,7 @@ $(function() {
 							+'<span class="ti-pencil" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>'
 							+'&nbsp;'
 							+'<a href="#">'
-							+'<span class="icon-folder-alt" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));" title="<spring:message javaScriptEscape="true" code="file"/>"></span></a>';
+							+'<span class="ti-files" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));" title="<spring:message javaScriptEscape="true" code="file"/>"></span></a>';
 				}
 			}
 		],
@@ -823,7 +810,7 @@ Number.prototype.format = function(n, x) {
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
 
-//[Add] 進入modal_Edit編輯
+//[Add] 進入modal_Upload編輯
 function btnAddFileClicked() {
 	formAction = 'upload';
 	$('#editSeqNo').val('');
@@ -832,6 +819,9 @@ function btnAddFileClicked() {
 	$('#uploadFile').show();
 	$('#editFullFileName').hide();
 	$('#editFileDescription').val('');
+	$('#alertMsg').text('');
+	$('#progressBar').text('');
+	$('#progressBar').css('width','0%');
 
 	$('#modal_Upload').modal();
 }
@@ -1000,11 +990,11 @@ function bsStep(i) {
 
 <style>
 .modal-body form .box-body .form-group label {
-    width: 12%;
+    width: 15%;
 }
 
 .modal-body form .box-body .form-group .form-control{
 	display: inline-block;
-	width: 85%;
+	width: 82%;
 }
 </style>
