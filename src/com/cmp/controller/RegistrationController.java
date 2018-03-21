@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContext;
 
+import com.cmp.AppResponse;
 import com.cmp.Response;
 import com.cmp.form.registration.UserInfoForm;
 import com.cmp.model.User;
@@ -35,67 +36,46 @@ public class RegistrationController extends BaseController {
     
 	/**
 	 * login頁面按下[註冊]
-	 * return email 表單提供輸入
+	 * return process 頁面
 	 */
-	@RequestMapping(value = { "/email" }, method = RequestMethod.GET)
-    public String email(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-		model.addAttribute("message", "");
-        return "registration/email";
+	@RequestMapping(value = { "/process" }, method = RequestMethod.GET)
+    public String process(@ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+        return "registration/process";
     }
 	
 	/**
-	 * user 輸入email
-	 * return 驗證碼頁面
+	 * user提交[邮箱]
+	 * 寄發 驗證碼
 	 */
-	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.POST)
-    public String emailConfirm(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "/emailConfirm" }, method = RequestMethod.GET)
+    public @ResponseBody AppResponse emailConfirm(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam(name="emailAddress", required=true) String emailAddress) {
+		AppResponse appResponse = null;
+		RequestContext req = new RequestContext(request);
 		try {
-    		String mailAddress = form.getEmail();
-			RequestContext req = new RequestContext(request);
-
-			User checkUser = registrationService.checkEmailAvailable(mailAddress);
+			User checkUser = registrationService.checkEmailAvailable(emailAddress);
     		//驗證email是否重複	//null =>可使用
     		if(null!=checkUser && 6<=checkUser.getStatus().getSort()){
-    			model.addAttribute("message", req.getMessage("error.emailExist"));
-    			return "registration/email";
+    			appResponse = new AppResponse(HttpServletResponse.SC_BAD_REQUEST, req.getMessage("error.emailExist"));
+    			return appResponse;
     		}
     		
     		StringBuffer sb = request.getRequestURL();
     		String appName = request.getContextPath();
     		String url = sb.substring(0, sb.indexOf(appName)) +appName+ "/registration/user";
-    		User user = registrationService.initUser(mailAddress, url, checkUser);
-    		form.setUserId(user.getId());
-//    		model.addAttribute("message", req.getMessage("confirmEmail"));
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	return "registration/token";
-    }
-	
-	/**
-	 * user 輸入驗證碼
-	 * return user 表單提供輸入
-	 */
-	@RequestMapping(value = { "/user" }, method = RequestMethod.POST)
-    public String user(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-		try {
-    		User user = registrationService.verifyToken(form.getUserId(), form.getVerificationCode());
-			RequestContext req = new RequestContext(request);
-
-    		if(null==user){
-    			model.addAttribute("message", req.getMessage("error.verifyFail"));
-    			return "registration/token";
-    		}
-    		model.addAttribute("message", "");
-    		form.setUserId(user.getId());
+    		User user = registrationService.initUser(emailAddress, url, checkUser);
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+			appResponse.putData("userId",  user.getId());
+			
 		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
 			e.printStackTrace();
 		}
-        return "registration/user";
+		return appResponse;
     }
 	
 	/**
-	 * 重新获取验证码
+	 * [重新获取验证码]
 	 */
 	@RequestMapping(value = { "/reGenToken" }, method = RequestMethod.GET)
     public @ResponseBody String reGenToken(@RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) {
@@ -108,132 +88,96 @@ public class RegistrationController extends BaseController {
     }
 	
 	/**
-	 * user 輸入userInfo
+	 * user提交[验证码]
+	 * return userInfo 表單
+	 */
+	@RequestMapping(value = { "/tokenConfirm" }, method = RequestMethod.GET)
+    public @ResponseBody AppResponse tokenConfirm(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam(name="userId", required=true) String userId
+    		, @RequestParam(name="verificationCode", required=true) String verificationCode) {
+		AppResponse appResponse = null;
+		RequestContext req = new RequestContext(request);
+		try {
+    		User user = registrationService.verifyToken(userId, verificationCode);
+
+    		if(null==user){
+    			appResponse = new AppResponse(HttpServletResponse.SC_BAD_REQUEST, req.getMessage("error.verifyFail"));
+    			return appResponse;
+    		}
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+			appResponse.putData("userId",  user.getId());
+		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
+			e.printStackTrace();
+		}
+		return appResponse;
+    }
+	
+	/**
+	 * user提交[userInfo 表單]
 	 * return 問題頁面
 	 */
-	@RequestMapping(value = { "/userInfo" }, method = RequestMethod.POST)//POST
-    public String userInfo(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "/userInfoConfirm" }, method = RequestMethod.GET)
+    public @ResponseBody AppResponse userInfoConfirm(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam(name="userId", required=true) String userId
+    		, @RequestParam(name="account", required=true) String account
+    		, @RequestParam(name="password", required=true) String password
+    		, @RequestParam(name="userName", required=true) String userName
+    		, @RequestParam(name="phone", required=true) String phone
+    		, @RequestParam(name="weChat", required=true) String weChat
+    		, @RequestParam(name="channelAccount", required=true) String channelAccount) {
+		AppResponse appResponse = null;
 		RequestContext req = new RequestContext(request);
-    	try {
-    		if(!registrationService.findUserByAccount(form.getAccount()).isEmpty()){
-    			model.addAttribute("message", req.getMessage("error.accountExist"));
-    			return "registration/user";
+		try {
+    		if(!registrationService.findUserByAccount(account).isEmpty()){
+    			return new AppResponse(HttpServletResponse.SC_BAD_REQUEST, req.getMessage("error.accountExist"));
     		}
+    		if(!registrationService.upstream(userId, channelAccount)){
+    			return new AppResponse(HttpServletResponse.SC_BAD_REQUEST, req.getMessage("error.noDataAutoChannel"));
+			}
 			registrationService.saveUserInfo(new RegistrationUserVO(
-							form.getUserId()
-			    			,new String(form.getName().getBytes("iso-8859-1"), "utf-8")
-			    			,form.getAccount()
-			    			,form.getPassword()
-			    			,form.getPhone()
-			    			,form.getWeChat())
+							userId
+			    			,new String(userName.getBytes("iso-8859-1"), "utf-8")
+			    			,account
+			    			,password
+			    			,phone
+			    			,weChat
+			    			,registrationService.findUserByAccount(channelAccount).get(0))
 					);
+			
 			RegistrationUserVO vo = registrationService.initQuestList();
-			form.setQuesMap(vo.getQuesMap());
-			form.setAns(vo.getAns());
-			form.setQuesMapkeySize(vo.getQuesMap().keySet().size());
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+			appResponse.putData("quesMap",  vo.getQuesMap());
+			appResponse.putData("ans",  vo.getAns());
+			appResponse.putData("quesMapKeySize",  vo.getQuesMap().keySet().size());
 		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
 			e.printStackTrace();
 		}
-        return "registration/question";
+		return appResponse;
     }
 	
 	/**
-	 * user 提交問題答案
-	 * return 上游account輸入頁
+	 * user 正確回答問題
+	 * return 合同頁面
 	 */
-	@RequestMapping(value = { "/upstream" }, method = RequestMethod.GET)
-    public String upstream(
-    		@RequestParam(name="userId", required=true) String userId, 
-    		@ModelAttribute("UserInfoForm") UserInfoForm form) {
-    	form.setUserId(userId);
-        return "registration/upstream";
-    }
-	
-	/**
-	 * user 輸入上游 user.account
-	 * return 合同頁
-	 */
-	@RequestMapping(value = { "/agreement" }, method = RequestMethod.POST)//POST
-    public String agreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
-    	try {
-            RequestContext req = new RequestContext(request);
-//    		if(StringUtils.isBlank(form.getChannelAccount())){
-//    			registrationService.upstream(form.getUserId(), form.getChannelAccount());
-//    			model.addAttribute("message", req.getMessage("error.noFillParentChannel"));
-//    		}else{
-//        		if(registrationService.upstream(form.getUserId(), form.getChannelAccount()))
-//        			model.addAttribute("message", "");
-//        		else
-//        			model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
-//    		}
-
-    		if(StringUtils.isBlank(form.getChannelAccount()) || !registrationService.upstream(form.getUserId(), form.getChannelAccount())){
-				model.addAttribute("message", req.getMessage("error.noDataAutoChannel"));
-				return "registration/upstream";
-			}else{
-    			model.addAttribute("message", "");
-			}
-
+	@RequestMapping(value = { "/getAgreement" }, method = RequestMethod.GET)
+    public @ResponseBody AppResponse getAgreement(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam(name="userId", required=true) String userId) {
+		AppResponse appResponse = null;
+		RequestContext req = new RequestContext(request);
+		try {
     		String rootPath = request.getSession().getServletContext().getRealPath("");
     		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
-    		model.addAttribute("agreement", agreementTxt(form.getUserId(), srcPath));
+    		appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+    		appResponse.putData("agreement",  agreementTxt(userId, srcPath));
 		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
 			e.printStackTrace();
 		}
-        return "registration/agreement";
+		return appResponse;
     }
 	
-	/**
-	 * user 簽署合同
-	 * return jsonResponse
-	 */
-	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
-    public @ResponseBody String agreeAgreement(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request) {
-    	try {
-			RequestContext req = new RequestContext(request);
-
-			if(StringUtils.isBlank(form.getChannelAccount()) || !registrationService.upstream(form.getUserId(), form.getChannelAccount())){
-				return jsonResponse(Response.PARAMETER_ERROR);
-			}
-
-			String rootPath = request.getSession().getServletContext().getRealPath("");
-
-    		registrationService.agreement(form.getUserId(), rootPath);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        return jsonResponse(Response.REGISTRATION_SUCCESS);
-    }
-	
-//    @RequestMapping(value = "/agreementPdf", method = RequestMethod.GET)
-//    protected String agreementPdf(Model model, @RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		User user = registrationService.findUserByUserId(userId);
-//		String rootPath = request.getSession().getServletContext().getRealPath("");
-//		String srcPath = rootPath + "/template/APS_Partners_Agreement.txt";
-//
-//		String[] arr = (sdfDate.format(new Date())).split("-");
-//		String agreementDate = arr[0]+"年"+arr[1]+"月"+arr[2]+"日";
-//
-//
-//		StringBuffer sb = new StringBuffer();
-//		BufferedReader br = new BufferedReader(new FileReader(srcPath));
-//        String line;
-//        while ((line = br.readLine()) != null) {
-//        	if(line.contains("$UpStream$"))
-//        		line = line.replace("$UpStream$", user.getChannel().getName());
-//        	if(line.contains("$Date$"))
-//        		line = line.replace("$Date$", agreementDate);
-//        	if(line.contains("$UserName$"))
-//        		line = line.replace("$UserName$", user.getName());
-//        	if(line.contains("$Company$"))
-//        		line = line.replace("$Company$", "CMP信息服务网联");
-//
-//        	sb.append(line);
-//        }
-//        model.addAttribute("agreement", sb.toString());
-//        return "registration/partnersAgreement";
-//    }
-    
     private String agreementTxt(String userId, String srcPath) throws Exception {
     	User user = registrationService.findUserByUserId(userId);
 		String[] arr = (sdfDate.format(new Date())).split("-");
@@ -256,14 +200,24 @@ public class RegistrationController extends BaseController {
         return sb.toString();
     }
     
-    
+	
 	/**
-	 * login頁面按下[註冊]
-	 * return process
+	 * user[簽署合同]
+	 * 寄發 註冊成功mail
 	 */
-	@RequestMapping(value = { "/process" }, method = RequestMethod.GET)
-    public String process(Model model, @ModelAttribute("UserInfoForm") UserInfoForm form, HttpServletRequest request, HttpServletResponse response) {
-		model.addAttribute("message", "");
-        return "registration/process";
+	@RequestMapping(value = { "/agreeAgreement" }, method = RequestMethod.GET)
+    public @ResponseBody AppResponse agreeAgreement(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam(name="userId", required=true) String userId) {
+		AppResponse appResponse = null;
+		RequestContext req = new RequestContext(request);
+		try {
+			String rootPath = request.getSession().getServletContext().getRealPath("");
+    		registrationService.agreement(userId, rootPath);
+    		appResponse = new AppResponse(HttpServletResponse.SC_OK, req.getMessage("gotMail"));
+		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
+			e.printStackTrace();
+		}
+		return appResponse;
     }
 }

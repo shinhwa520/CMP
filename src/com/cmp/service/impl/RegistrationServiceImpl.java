@@ -223,10 +223,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 		List<User> upstreamList = userDao.findUserByAccountAndStatus(upstreamAccount, 6);
 		
 		if(null!=upstreamList && !upstreamList.isEmpty()){
-			User user = userDao.findUserById(userId);
-			user.setStatus(statusDAO.findStatus("USER", 5));//輸入上游
-			user.setChannel(upstreamList.get(0));
-			userDao.saveUser(user);
+//			User user = userDao.findUserById(userId);
+//			user.setStatus(statusDAO.findStatus("USER", 5));//輸入上游
+//			user.setChannel(upstreamList.get(0));
+//			userDao.saveUser(user);
 			findUpstream = true;
 		}else{
 			//查無上游

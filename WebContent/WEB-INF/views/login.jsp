@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
           <div class="col-md-12">
-            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
+            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> <spring:message code="forgotPassword"/>?</a> </div>
         </div>
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
@@ -48,7 +48,7 @@
         </div>
         <div class="form-group m-b-0">
           <div class="col-sm-12 text-center">
-            <p>Don't have an account? <a href="<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/email" class="text-primary m-l-5"><b><spring:message code='signUp'/></b></a></p>
+            <p><spring:message code="haveNoAccount"/>? <a href="<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/process" class="text-primary m-l-5"><b><spring:message code='signUp'/></b></a></p>
           </div>
         </div>
       </form>
@@ -78,7 +78,7 @@
 <script type="text/javascript">
 
 	function doRegistration() {
-		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/email';
+		window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/registration/process';
 	}
     function doChangeLang(lang) {
         var url = '${pageContext.request.contextPath}/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;

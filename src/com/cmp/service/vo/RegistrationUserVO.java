@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import com.cmp.model.Question;
 import com.cmp.model.QuestionDetail;
+import com.cmp.model.User;
 
 public class RegistrationUserVO {
 	
@@ -18,11 +19,13 @@ public class RegistrationUserVO {
 	private TreeMap<Question, ArrayList<QuestionDetail>> quesMap;
 	private String ans;
 	private String weChat;
-	
+	private User channel;
+
+
 	public RegistrationUserVO() {
 	}
 	
-	public RegistrationUserVO(String userId, String name, String account, String password, String phone, String weChat) {
+	public RegistrationUserVO(String userId, String name, String account, String password, String phone, String weChat, User channel) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -30,6 +33,7 @@ public class RegistrationUserVO {
 		this.password = password;
 		this.phone = phone;
 		this.weChat = weChat;
+		this.channel = channel;
 	}
 
 	public String getUserId() {
@@ -93,5 +97,13 @@ public class RegistrationUserVO {
 		this.weChat = weChat;
 	}
 
+	public User getChannel() {
+		return channel;
+	}
+
+	public void setChannel(User channel) {
+		this.channel = channel;
+	}
+	
 
 }

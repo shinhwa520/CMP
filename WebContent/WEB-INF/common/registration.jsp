@@ -19,6 +19,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/assets/plugins/wizard/steps.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/icheck/skins/all.css" rel="stylesheet">
+    <!-- Typehead CSS -->
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/typeahead.js-master/dist/typehead-min.css" rel="stylesheet">
     <!--alerts CSS -->
     <link href="${pageContext.request.contextPath}/resources/assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
@@ -43,9 +46,6 @@
 	<decorator:body />
 </body>
     <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery/jquery.min.js"></script>
@@ -60,6 +60,12 @@
     <script src="${pageContext.request.contextPath}/resources/js/sidebarmenu.js"></script>
     <!--stickey kit -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!-- icheck -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/icheck/icheck.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/icheck/icheck.init.js"></script>
+    <!-- Typehead Plugin JavaScript -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/typeahead.js-master/dist/typeahead.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/typeahead.js-master/dist/typeahead-init.js"></script>
     <!--Custom JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/moment/min/moment.min.js"></script>
@@ -68,6 +74,11 @@
     <!-- Sweet-Alert  -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/wizard/steps.js"></script>
+    <script type="text/javascript">
+	$('.div_scroll').slimScroll({
+		height: '360px'
+	});
+    </script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

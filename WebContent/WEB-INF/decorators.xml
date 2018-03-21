@@ -11,7 +11,7 @@
 	<decorator name="outsite" page="blank.jsp">
 		<pattern>/outsite*</pattern>
 	</decorator>
-	<decorator name="main_sign_on" page="main_sign_on.jsp">
+	<decorator name="monster-admin_registration" page="registration.jsp">
 		<pattern>/registration*</pattern>
 	</decorator>
 </decorators>
