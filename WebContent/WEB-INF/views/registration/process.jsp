@@ -11,12 +11,12 @@
 				<div class="card">
 					<div class="card-body wizard-content ">
 					
-						<h4 class="card-title">用戶註冊</h4>
+						<h4 class="card-title"><spring:message code='userRegistration'/></h4>
 						<form:form  modelAttribute="UserInfoForm" action="#" class="tab-wizard vertical wizard-circle">
 						<form:hidden path="userId" id="userId" />
 						
 <!------------------------- Step 1 [驗證信箱] ------------------------->
-							<h6><spring:message code='confirmEmail'/></h6>
+							<h6><spring:message code='verificationEmail'/></h6>
 							<section>
 							
 								<!-- Step 1.1 [邮箱] ------------------------->
@@ -57,7 +57,7 @@
 							
 							
 <!------------------------- Step 2 [創建帐号] ------------------------->
-							<h6><spring:message code='fillBasicInfo'/></h6>
+							<h6><spring:message code='createAccount'/></h6>
 							<section>
 					        <spring:message code='name' var="name"/>
 					        <spring:message code='account' var="account"/>
@@ -144,15 +144,6 @@
 										</div>
 									</div>
 								</div>
-								
-														</div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                        </div>
-									</div>
-								</div>
-								
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
@@ -160,11 +151,18 @@
 										</div>
 									</div>
 								</div>
+														</div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+									</div>
+								</div>
 							</section>
 							
 							
 <!------------------------- Step 3 [回答問題] ------------------------->
-							<h6><spring:message code='ansewerQuestions'/></h6>
+							<h6><spring:message code='answerQuestions'/></h6>
 							<section>
 				                <div class="row">
 				                    <div class="col-12">
@@ -173,28 +171,28 @@
 												<div class="row">
 				                                    <div class="col-lg-12 col-md-12">
 				                                        <div class="div_scroll">
-															<table>
-																<tbody id="quesList"></tbody>
-															</table>
+				                                        	<div id="quesList"></div>
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<input class="btn btn-primary pull-right" value="<spring:message code='confirm'/>" type="button" onclick="checkAns();">
+																	</div>
+																</div>
+															</div>
 				                                        </div>
 				                                    </div>
 												</div>
+
 				                            </div>
 				                        </div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<input class="btn btn-primary pull-right" value="<spring:message code='confirm'/>" type="button" onclick="checkAns();">
-										</div>
-									</div>
-								</div>
+
 							</section>
 							
 							
 <!------------------------- Step 4 [簽署合同] ------------------------->
-							<h6><spring:message code='agreementTitle'/></h6>
+							<h6><spring:message code='signingContract'/></h6>
 							<section>
 				                <div class="row">
 				                    <div class="col-12">
@@ -203,7 +201,7 @@
 				                                <!--<h4 class="card-title"></h4>--->
 				                                <div class="row">
 				                                    <div class="col-lg-12 col-md-12">
-				                                        <div id="agreement_txt" class="div_scroll"></div>
+				                                        <div id="agreement_txt" class="agreement_scroll"></div>
 				                                    </div>
 				                                </div>
 				                            </div>
@@ -215,7 +213,7 @@
 										<div class="form-group">
 											<spring:message code="agreeContract"/>
 											<input type="checkbox" class="check" id="iAgree" checked data-checkbox="icheckbox_square-blue">
-											<label for="iAgree">I agree!</label>
+											<label for="iAgree"><spring:message code='iAgree'/></label>
 											<input class="btn btn-primary pull-right" value="<spring:message code='confirm'/>" type="button" onclick="agreeAgreement();">
 										</div>
 									</div>
@@ -242,6 +240,7 @@ function emailConfirm() {
 	if(''==_emailAddress){
 		errMsg += '<spring:message javaScriptEscape="true" code="error.enterEmail"/>';
 		$('#emailAddress').addClass('input-has-error');
+		$('#emailAddress').focus();
 		$('#emailAddress').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#emailAddress').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -249,6 +248,7 @@ function emailConfirm() {
   	if(!validateEmail(_emailAddress)){
 		errMsg += '<spring:message javaScriptEscape="true" code="error.emailFormat"/>';
 		$('#emailAddress').addClass('input-has-error');
+		$('#emailAddress').focus();
 		$('#emailAddress').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#emailAddress').parents('.form-group').children(".alert_txt").addClass('text-danger');
 	  	return false;
@@ -278,7 +278,7 @@ function emailConfirm() {
 function tokenConfirm() {
 	cleanErrAlert();
 	if(''==$('#userId').val()){
-		alert('請重新驗證email');
+		alert("<spring:message code='verifyEmailAgain'/>");
 		return false;
 	}
 	var _verificationCode = $('#verificationCode').val().trim();
@@ -286,6 +286,7 @@ function tokenConfirm() {
 	if(''==_verificationCode){
 		errMsg += '<spring:message javaScriptEscape="true" code="enterVerificationCode"/>';
 		$('#verificationCode').addClass('input-has-error');
+		$('#verificationCode').focus();
 		$('#verificationCode').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#verificationCode').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -314,7 +315,7 @@ function tokenConfirm() {
 
 function reGenToken(o) {
 	if(''==$('#userId').val()){
-		alert('請重新驗證email');
+		alert("<spring:message code='verifyEmailAgain'/>");
 		return false;
 	}
 	$.ajax({
@@ -359,7 +360,7 @@ function time(o) {
 function userInfoConfirm() {
 	cleanErrAlert();
 	if(''==$('#userId').val()){
-		alert('請重新驗證email');
+		alert("<spring:message code='verifyEmailAgain'/>");
 		return false;
 	}
 	var account = $('#account').val().trim();
@@ -426,20 +427,14 @@ function addOption(detail) {
 
 function checkAns() {
 	if(''==$('#userId').val()){
-		alert('請重新驗證email');
+		alert("<spring:message code='verifyEmailAgain'/>");
 		return false;
 	}
 
 	//checkAns
 	$('.card-ques').removeClass('card-has-error');
-	var checkAns;
-	for(var i=0; i<quesRadioName.length; i++){
-		checkAns = $('input:radio:checked[name="'+quesRadioName[i]+'"]').val()
-		if(undefined===checkAns){
-			$('#cardBody_'+quesRadioName[i]).addClass('card-has-error');
-		}
-	}	
-
+	var firstErr=20;
+	//填錯的框起來
 	var results;
 	var resultCount;
 	var hasError = false;
@@ -452,6 +447,11 @@ function checkAns() {
 	            if(val!=_ansArray[index-1]){
 	            	hasError = true;
 	            	$('#cardBody_'+name).addClass('card-has-error');
+	            	console.log('[firstErr]'+firstErr+'[name]'+name);
+	            	console.log(name<firstErr);
+	            	if(parseInt(name, 10)<parseInt(firstErr, 10)){
+	            		firstErr = name;
+	            	}
 		        }
 	        }
 	    });
@@ -459,14 +459,31 @@ function checkAns() {
 	};
 	results = getResult().join(',');
 	resultCount = results.split(',').length;
+	//未填的框起來
 
-	//先檢核是否全都回答
+	var checkAns;
+	for(var i=quesRadioName.length-1; 0<=i; i--){
+		checkAns = $('input:radio:checked[name="'+quesRadioName[i]+'"]').val()
+		if(undefined===checkAns){
+			$('#cardBody_'+quesRadioName[i]).addClass('card-has-error');
+        	if(parseInt(quesRadioName[i], 10)<parseInt(firstErr, 10)){
+        		firstErr=quesRadioName[i];
+        	}
+		}
+	}
+	console.log('[firstErr quesRadioName[i]]'+firstErr);
+	
+
+	console.log('[firstErr]'+firstErr);
+	//檢核是否全都回答
 	if(''==results || resultCount<_quesMapKeySize){
 		if(hasError){
 			alert("<spring:message code='error.mustAllCheck'/>"+"<spring:message code='notAllCorrect'/>");
+			$('input:radio[name="'+firstErr+'"]')[0].focus();
 			return false;
 		}else{
 			alert("<spring:message code='error.mustAllCheck'/>");
+			$('input:radio[name="'+firstErr+'"]')[0].focus();
 			return false;
 		}
 
@@ -474,6 +491,7 @@ function checkAns() {
 	
 	if(results != _ans){
 		alert("<spring:message code='notAllCorrect'/>");
+		$('input:radio[name="'+firstErr+'"]')[0].focus();
 		return false;
 	}
 
@@ -501,7 +519,8 @@ function checkAns() {
 
 function agreeAgreement() {
 	if(!$('#iAgree').prop("checked")){
-		alert("請勾選我同意");
+		alert("<spring:message code='tickAgree'/>");
+		$('#iAgree').focus();
 		return false;
 	}	
 	$.ajax({
@@ -544,12 +563,14 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if (''==account) {
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustAccount"/>';
 		$('#account').addClass('input-has-error');
+		$('#account').focus();
 		$('#account').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#account').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateLength(account, 4, 12)){
 		errMsg += '<spring:message code="inputLengthLimit"/> 4~12<spring:message code="characters"/>';
 		$('#account').addClass('input-has-error');
+		$('#account').focus();
 		$('#account').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#account').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -559,18 +580,21 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if (''==password) {
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustPassword"/>';
 		$('#password').addClass('input-has-error');
+		$('#password').focus();
 		$('#password').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#password').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateLength(password, 4, 12)){
 		errMsg += '<spring:message code="inputLengthLimit"/> 4~12<spring:message code="characters"/>';
 		$('#password').addClass('input-has-error');
+		$('#password').focus();
 		$('#password').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#password').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateEngInt(password)){
 		errMsg += '<spring:message code="InputFormatError"/>(<spring:message code="enterEngAndNum"/>)';
 		$('#password').addClass('input-has-error');
+		$('#password').focus();
 		$('#password').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#password').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -579,6 +603,7 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if(password!=password2){
 		errMsg += '<spring:message code="reConfirmPassword"/>';
 		$('#password2').addClass('input-has-error');
+		$('#password2').focus();
 		$('#password2').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#password2').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -588,12 +613,14 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if (''==userName) {
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustName"/>';
 		$('#name').addClass('input-has-error');
+		$('#name').focus();
 		$('#name').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#name').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateLength(userName, 2, 20)){
 		errMsg += '<spring:message code="inputLengthLimit"/> 2~20<spring:message code="characters"/>';
 		$('#name').addClass('input-has-error');
+		$('#name').focus();
 		$('#name').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#name').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -603,18 +630,21 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if (''==phone) {
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustPhoneNo"/>';
 		$('#phone').addClass('input-has-error');
+		$('#phone').focus();
 		$('#phone').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#phone').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateLength(phone, 8, 20)){
 		errMsg += '<spring:message code="inputLengthLimit"/> 8~20<spring:message code="characters"/>';
 		$('#phone').addClass('input-has-error');
+		$('#phone').focus();
 		$('#phone').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#phone').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateInt(phone)){
 		errMsg += '<spring:message code="InputFormatError"/>(<spring:message code="enterNumber"/>)';
 		$('#phone').addClass('input-has-error');
+		$('#phone').focus();
 		$('#phone').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#phone').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -624,12 +654,14 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if (''==weChat) {
 		errMsg += '<spring:message javaScriptEscape="true" code="error.mustWechat"/>';
 		$('#weChat').addClass('input-has-error');
+		$('#weChat').focus();
 		$('#weChat').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#weChat').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateLength(weChat, 4, 20)){
 		errMsg += '<spring:message code="inputLengthLimit"/> 4~20<spring:message code="characters"/>';
 		$('#weChat').addClass('input-has-error');
+		$('#weChat').focus();
 		$('#weChat').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#weChat').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -639,12 +671,14 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	if (''==channelAccount) {
 		errMsg += '<spring:message javaScriptEscape="true" code="fillParentChannel"/>';
 		$('#channelAccount').addClass('input-has-error');
+		$('#channelAccount').focus();
 		$('#channelAccount').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#channelAccount').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	} else if (!validateLength(channelAccount, 4, 12)){
 		errMsg += '<spring:message code="inputLengthLimit"/> 4~12<spring:message code="characters"/>';
 		$('#channelAccount').addClass('input-has-error');
+		$('#channelAccount').focus();
 		$('#channelAccount').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#channelAccount').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -657,6 +691,7 @@ function validatePassword2() {
 	var password2 = $('#password2').val().trim();
 	if(password!=password2){
 		$('#password2').addClass('input-has-error');
+		$('#password2').focus();
 		$('#password2').parents('.form-group').children(".alert_txt").text(errMsg);
 		$('#password2').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
@@ -705,5 +740,7 @@ function validateLength(input, lower, upper) {
     border-width: medium;
     border-color: #f62d51;
 }
-
+.card {
+    margin-bottom: 10px;
+}
 </style>

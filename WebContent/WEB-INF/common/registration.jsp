@@ -76,6 +76,9 @@
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/wizard/steps.js"></script>
     <script type="text/javascript">
 	$('.div_scroll').slimScroll({
+		height: '420px'
+	});
+	$('.agreement_scroll').slimScroll({
 		height: '360px'
 	});
     </script>
