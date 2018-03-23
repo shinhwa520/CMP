@@ -64,32 +64,10 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-	<script>    
-		function successMessage(message) {
-		  	var msg = $('#message');
-		  	msg.addClass('alert-info');
-		  	msg.html(message);
-	      
-			msg.fadeIn();
-			setTimeout(function(){
-				msg.fadeOut();
-			}, 2000);
-		}
-		function errorMessage(message) {
-			var msg = $('#message');
-			$(document).scrollTop(0);
-			msg.addClass('alert-danger');
-			msg.html(message);
-	      
-			msg.fadeIn();
-			setTimeout(function(){
-				msg.fadeOut();
-			}, 2000);
-		}
-	</script>
 <style>
-body{
+nav.navbar-HF{
     background-color: #555;
+    opacity: .9;
 }
 nav.navbar-HF {
     padding-bottom: 0px;

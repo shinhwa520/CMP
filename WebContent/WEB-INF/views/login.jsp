@@ -5,7 +5,7 @@
 <section id="wrapper" class="login-register login-sidebar" >
   <div class="login-box card">
     <div class="card-body">
-		<div class="topic" style="padding-top: 180px;"><strong><spring:message code="userLogin"/></strong>
+		<div class="topic" style="padding-top: 100px;"><strong><spring:message code="userLogin"/></strong>
 				<ul class="nav navbar-nav pull-right">
 					<li>
 						<a href="javascript:void(0)" onclick="doChangeLang('en_US')">
@@ -52,8 +52,10 @@
           </div>
         </div>
       </form>
-      
+
       <form class="form-horizontal" id="recoverform" action="index.html">
+				                        <div class="card">
+				                            <div class="card-body">
         <div class="form-group ">
           <div class="col-xs-12">
             <h3>Recover Password</h3>
@@ -70,7 +72,11 @@
             <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
           </div>
         </div>
+                </div>
+        </div>
       </form>
+
+      
     </div>
   </div>
 </section>

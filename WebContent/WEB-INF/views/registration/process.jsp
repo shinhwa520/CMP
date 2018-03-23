@@ -743,4 +743,16 @@ function validateLength(input, lower, upper) {
 .card {
     margin-bottom: 10px;
 }
+body{
+    background-image:url(${pageContext.request.contextPath}/resources/assets/images/background/GtqDqDn.jpg);
+    background-repeat:no-repeat;
+    background-position: bottom;
+    background-size: cover;
+}
+.page-wrapper{
+    background-image:url(${pageContext.request.contextPath}/resources/assets/images/background/GtqDqDn_m.jpg);
+    background-repeat:no-repeat;
+    background-position: bottom;
+    background-size: cover;
+}
 </style>

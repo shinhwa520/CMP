@@ -87,7 +87,16 @@
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 <style>
-
+nav.navbar-HF{
+    background-color: #555;
+    opacity: .9;
+}
+nav.navbar-HF .navbar-header{
+    width: 100%;
+    margin-left: 10px;
+    color: #ffffff;
+    background-color: #555;
+}
 </style>
 </html>
 
