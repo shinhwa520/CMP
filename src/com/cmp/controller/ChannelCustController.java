@@ -27,6 +27,7 @@ import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
 import com.cmp.service.FileService;
+import com.cmp.service.vo.CustServiceVO;
 import com.cmp.service.vo.FileServiceVO;
 
 @Controller
@@ -66,6 +67,19 @@ public class ChannelCustController extends BaseController {
 		}
 
 		return new DatatableResponse(total, datalist, total);
+	}
+	
+	@RequestMapping(value="getCustAndVisitByUserId.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse getCustAndVisitByUserId(
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="25") Integer length,
+			@RequestParam(name="visitId", required=true) Integer visitId) {
+		
+		String userId = SecurityUtil.getSecurityUser().getUser().getId();
+		List<CustServiceVO> custList = custService.findCustAndVisitByUserId(visitId, userId, start, length);
+		
+		long total = custService.countCustByUserId(userId);
+		return new DatatableResponse(total, custList, total);
 	}
 	
 	/**

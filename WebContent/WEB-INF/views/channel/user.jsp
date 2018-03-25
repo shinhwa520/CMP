@@ -252,7 +252,6 @@ $(function() {
 	
 		// Order by the grouping
 	    $('#tblMain tbody').on('click', 'tr.group', function() {
-	    	alert('...');
 	        var currentOrder = table.order()[0];
 	        if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
 	            table.order([2, 'desc']).draw();

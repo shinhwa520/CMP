@@ -22,6 +22,7 @@ import com.cmp.form.CustForm;
 import com.cmp.model.Customer;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
+import com.cmp.service.vo.CustServiceVO;
 
 @Controller
 @RequestMapping(value="/cust")

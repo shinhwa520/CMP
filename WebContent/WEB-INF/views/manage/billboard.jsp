@@ -188,16 +188,16 @@
 	            <div class="box-body">
 	                <div class="form-group">
 	                  <label for="beginTime"><spring:message code='postTime'/></label>
-	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" placeholder="年-月-日" />
-		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" placeholder="時:分:秒" />
+	                  	<input id="date-input1" type="text" style="width: 90px;" name="beginDateStr" placeholder="<spring:message code='yearMonthDate'/>" />
+		  				<input id="time-input1" type="text" style="width: 60px;" name="beginTimeStr" placeholder="<spring:message code='hourMinuteSecond'/>" />
 		  				<span style="color: red;"><spring:message code='aliveTimeDesc'/></span>
 	                </div>                              
 	            </div>  
 	            <div class="box-body">
 	                <div class="form-group">
-	                  <label for="beginTime"><spring:message code='endTime'/></label>
-	                  	<input id="date-input2" type="text" style="width: 90px;" name="endDateStr" placeholder="年-月-日" />
-		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" placeholder="時:分:秒" />
+	                  <label for="endTime"><spring:message code='endTime'/></label>
+	                  	<input id="date-input2" type="text" style="width: 90px;" name="endDateStr" placeholder="<spring:message code='yearMonthDate'/>" />
+		  				<input id="time-input2" type="text" style="width: 60px;" name="endTimeStr" placeholder="<spring:message code='hourMinuteSecond'/>" />
 		  				<span style="color: red;"><spring:message code='aliveTimeDesc'/></span>
 	                </div>                              
 	            </div>

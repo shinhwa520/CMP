@@ -41,7 +41,9 @@ public class BillboardController extends BaseController {
 			form.setAdminRole(true);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
 			
 		} finally {
 			setActiveMenu(model, MenuItem.MANAGE_BILLBOARD);
@@ -57,7 +59,9 @@ public class BillboardController extends BaseController {
 			form.setBillboardList(billboardList);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
 		}
 		
 		return "billboard/list";
@@ -69,7 +73,9 @@ public class BillboardController extends BaseController {
 			billboardService.deleteBillboardRecords(form.getDelChkbox());
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
 			
 		} finally {
 			setActiveMenu(model, MenuItem.MANAGE_BILLBOARD);
@@ -83,12 +89,15 @@ public class BillboardController extends BaseController {
 			@RequestParam(name="seqNo", required=true) Integer seqNo) {
 		try {
 			BillboardServiceVO retVO = billboardService.getBillboardBySeqNo(seqNo);
+			
 			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得Customer資料成功");
 			appResponse.putData("billboard",  retVO);
 			return appResponse;
+			
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 	}
@@ -122,8 +131,9 @@ public class BillboardController extends BaseController {
 			
 			return new AppResponse(HttpServletResponse.SC_OK, seqNo != null ? "修改成功" : "新增成功");
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e);
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
 	}

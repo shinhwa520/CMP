@@ -9,6 +9,7 @@ import com.cmp.service.vo.CustServiceVO;
 public interface CustService {
 	Customer findCustById(int id);
 	List<Customer> findCustByUserId(String userId, Integer start,Integer length);
+	List<CustServiceVO> findCustAndVisitByUserId(Integer visitId, String userId, Integer start,Integer length);
 	long countCustByUserId(String userId);
 	List<Customer> findCust4Search(String keyword, Integer start,Integer length);
 	long countCust4Search(String keyword);

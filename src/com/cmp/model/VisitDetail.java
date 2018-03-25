@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(
 	name = "visit_detail",
@@ -21,9 +23,10 @@ import javax.persistence.UniqueConstraint;
 public class VisitDetail {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
 	@Column(name = "visit_detail_id", unique = true)
-	private Integer id;
+	private String id;
 	
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "visit_id", nullable = false)
@@ -33,10 +36,6 @@ public class VisitDetail {
     @JoinColumn(name = "cust_id", nullable = false)
 	private Customer cust;
 	
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "status_id", nullable = true)
-    private Status status;
-    
     @Column(name = "remark", nullable = true)
 	private String remark;
     
@@ -47,7 +46,7 @@ public class VisitDetail {
 	private String accommodationStatus;
     
     @Column(name = "amount_received", nullable = true)
-	private int amountReceived = 0;
+	private Integer amountReceived = 0;
 	
 	@Column(name = "create_time", nullable = true)
 	private Timestamp createTime;
@@ -64,14 +63,13 @@ public class VisitDetail {
 	public VisitDetail() {
 	}
 
-	public VisitDetail(Integer id, VisitInfo visitInfo, Customer cust, Status status, String remark,
-			String visaStatus, String accommodationStatus, int amountReceived, Timestamp createTime, String createBy,
+	public VisitDetail(String id, VisitInfo visitInfo, Customer cust, String remark, String visaStatus,
+			String accommodationStatus, Integer amountReceived, Timestamp createTime, String createBy,
 			Timestamp updateTime, String updateBy) {
 		super();
 		this.id = id;
 		this.visitInfo = visitInfo;
 		this.cust = cust;
-		this.status = status;
 		this.remark = remark;
 		this.visaStatus = visaStatus;
 		this.accommodationStatus = accommodationStatus;
@@ -82,11 +80,11 @@ public class VisitDetail {
 		this.updateBy = updateBy;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -104,14 +102,6 @@ public class VisitDetail {
 
 	public void setCust(Customer cust) {
 		this.cust = cust;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 
 	public String getRemark() {
@@ -138,11 +128,11 @@ public class VisitDetail {
 		this.accommodationStatus = accommodationStatus;
 	}
 
-	public int getAmountReceived() {
+	public Integer getAmountReceived() {
 		return amountReceived;
 	}
 
-	public void setAmountReceived(int amountReceived) {
+	public void setAmountReceived(Integer amountReceived) {
 		this.amountReceived = amountReceived;
 	}
 
