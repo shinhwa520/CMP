@@ -16,7 +16,7 @@
 			<div id="ca-container" class="ca-container">
 				<div class="ca-wrapper">
 				
-					<!-- 圖片區塊 -->
+					<!-- Start. 圖片區塊 -->
 					<div class="ca-item">
 						<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0002.jpg" alt="魅力大馬">
 							<h3> 魅力大馬 </h3>
@@ -60,6 +60,7 @@
 							</div>
 						</div>
 					</div>
+					<!-- End. 圖片區塊 -->
 					
 				</div>
 			</div>

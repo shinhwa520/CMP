@@ -1,11 +1,11 @@
 package com.cmp.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.cmp.model.Status;
-import com.cmp.service.vo.CustServiceVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cmp.dao.CustomerDAO;
 import com.cmp.dao.StatusDAO;
 import com.cmp.dao.UserDAO;
+import com.cmp.dao.VisitDAO;
 import com.cmp.model.Customer;
+import com.cmp.model.Status;
 import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.CustService;
+import com.cmp.service.vo.CustServiceVO;
 
 @Service("custService")
 @Transactional
@@ -27,6 +30,8 @@ public class CustServiceImpl implements CustService {
 	private UserDAO userDao;
 	@Autowired
 	private StatusDAO statusDAO;
+	@Autowired
+	private VisitDAO visitDAO;
 	
 	@Override
 	public Customer findCustById(int id){
@@ -151,5 +156,32 @@ public class CustServiceImpl implements CustService {
 		customer.setUpdateBy(user.getName());
 
 		customerDAO.saveCust(customer);
+	}
+
+	@Override
+	public List<CustServiceVO> findCustAndVisitByUserId(Integer visitId, String userId, Integer start, Integer length) {
+		List<Customer> custList = null;
+		List<CustServiceVO> reList = new ArrayList<CustServiceVO>();
+		
+		try {
+			custList = customerDAO.findCustByUserId(userId, start, length);
+			
+			CustServiceVO custVO = null;
+			for (Customer cust : custList) {
+				custVO = new CustServiceVO();
+				BeanUtils.copyProperties(cust, custVO);
+				
+				long count = visitDAO.checkCustHasJoinTheVisitOrNot(visitId, cust.getId());
+				if (count > 0) {
+					custVO.setJoined(true);
+				}
+				
+				reList.add(custVO);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reList;
 	}
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.UserQuesDAO;
-import com.cmp.model.QuestionDetail;
 import com.cmp.model.UserQues;
 
 

@@ -14,6 +14,7 @@ public class CustForm {
 	private String updateBy;
 	private String createDateStr;
 	private String updateDateStr;
+	private boolean isJoined;
 	
 	public int getId() {
 		return id;
@@ -74,5 +75,11 @@ public class CustForm {
 	}
 	public void setUpdateDateStr(String updateDateStr) {
 		this.updateDateStr = updateDateStr;
+	}
+	public boolean isJoined() {
+		return isJoined;
+	}
+	public void setJoined(boolean isJoined) {
+		this.isJoined = isJoined;
 	}
 }

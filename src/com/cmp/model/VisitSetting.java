@@ -11,17 +11,20 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(
 	name = "visit_setting",
-	uniqueConstraints = {@UniqueConstraint(columnNames = {"visit_id"})}
+	uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})}
 )
 public class VisitSetting {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "visit_id", unique = true)
-	private Integer visitId;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
+	@Column(name = "id", unique = true)
+	private String id;
 	
 	@Column(name = "order_num", nullable = false)
 	private Integer orderNum;
@@ -51,10 +54,10 @@ public class VisitSetting {
 		super();
 	}
 
-	public VisitSetting(Integer visitId, Integer orderNum, Timestamp activationBegin, Timestamp activationEnd,
+	public VisitSetting(String id, Integer orderNum, Timestamp activationBegin, Timestamp activationEnd,
 			Timestamp createTime, String createBy, Timestamp updateTime, String updateBy, VisitInfo visitInfo) {
 		super();
-		this.visitId = visitId;
+		this.id = id;
 		this.orderNum = orderNum;
 		this.activationBegin = activationBegin;
 		this.activationEnd = activationEnd;
@@ -65,12 +68,12 @@ public class VisitSetting {
 		this.visitInfo = visitInfo;
 	}
 
-	public Integer getVisitId() {
-		return visitId;
+	public String getId() {
+		return id;
 	}
 
-	public void setVisitId(Integer visitId) {
-		this.visitId = visitId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Integer getOrderNum() {

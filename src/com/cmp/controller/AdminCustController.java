@@ -5,9 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cmp.model.Status;
-import com.cmp.service.StatusService;
-import com.cmp.service.vo.CustServiceVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,7 @@ import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.model.Customer;
 import com.cmp.service.CustService;
+import com.cmp.service.vo.CustServiceVO;
 
 @Controller
 @RequestMapping(value="/admin/cust")

@@ -368,8 +368,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-globe"></i></a>
                             <div class="dropdown-menu  dropdown-menu-right animated bounceInDown"> 
-                            	<a class="dropdown-item" href="#" onclick="doChangeLang('zh_CN')"><i class="flag-icon flag-icon-cn"></i> China</a> 
-                            	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> USA</a> 
+                            	<a class="dropdown-item" href="#" onclick="doChangeLang('zh_CN')"><i class="flag-icon flag-icon-cn"></i> </a> 
+                            	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> </a> 
                             </div>
                         </li>
                     </ul>
@@ -392,10 +392,13 @@
                             <a href="${pageContext.request.contextPath}/"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/manage/billboard/list"> <i class="mdi mdi-email"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
+                            <a href="${pageContext.request.contextPath}/manage/billboard/list"> <i class="mdi mdi-content-paste"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/visit/list"> <i class="mdi mdi-table"></i><span class="hide-menu"><spring:message code="visitInfo" /></span></a>
+                        </li>
+                       	<li>
+                            <a href="${pageContext.request.contextPath}/visit/tour"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="registration" /></span></a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/product/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="productInfo" /></span></a>
@@ -412,9 +415,6 @@
 	                        </li>
 	                        <li>
 	                            <a href="${pageContext.request.contextPath}/admin/status/list"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="status" /></span></a>
-	                        </li>
-	                        <li>
-	                            <a href="${pageContext.request.contextPath}/admin/registration/list"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="registration" /></span></a>
 	                        </li>
 	                        <li>
                             <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu"><spring:message code="api" /></span></a>
@@ -434,7 +434,7 @@
 	                            	</sec:authorize>
 	                                <li><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
 	                                <li><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
-	                                <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
+	                                <!-- <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li> -->
 	                            </ul>
 	                        </li>
                         </sec:authorize>

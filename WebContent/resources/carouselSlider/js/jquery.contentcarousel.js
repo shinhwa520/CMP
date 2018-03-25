@@ -224,6 +224,7 @@
 							aux.navigate( 1, $el, $wrapper, settings, cache );
 						});
 						
+						/*
 						// adds events to the mouse
 						$el.bind('mousewheel.contentcarousel', function(e, delta) {
 							if(delta > 0) {
@@ -238,6 +239,7 @@
 							}	
 							return false;
 						});
+						*/
 						
 					});
 				}
