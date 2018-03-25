@@ -25,7 +25,7 @@
 										<div class="form-group">
 											<label for="emailAddress"><spring:message code='enterEmail'/>:</label><br>
 											<spring:message code='email' var="email"/>
-											<input type="email" class="form-control required" id="emailAddress"  placeholder="${email}">
+											<input type="email" class="form-control required" id="emailAddress" placeholder="${email}">
 											<span class="alert_txt"></span>
 										</div>
 									</div>
@@ -229,6 +229,15 @@
 </div>
 <script>
 var _ans, _ansArray,_quesMapKeySize;
+var msg = '${message}';
+$(function() {
+	if(''!=msg) {
+		errorMessage(msg);
+	}
+    $( "#password2" ).focusout(function(){
+    	validatePassword2();
+    });
+});
 function nextStep() {
 	$('.actions ul a')[1].click();
 }
@@ -667,7 +676,7 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 		return false;
 	}
 
-	//account
+	//channelAccount
 	if (''==channelAccount) {
 		errMsg += '<spring:message javaScriptEscape="true" code="fillParentChannel"/>';
 		$('#channelAccount').addClass('input-has-error');
@@ -685,14 +694,16 @@ function validateUserInfo(account, password, password2, userName, phone, weChat,
 	}
 	return true;
 }
-
+$( "#password2" ).focusout(function(){
+	validatePassword2();
+});
 function validatePassword2() {
 	var password = $('#password').val().trim();
 	var password2 = $('#password2').val().trim();
 	if(password!=password2){
 		$('#password2').addClass('input-has-error');
 		$('#password2').focus();
-		$('#password2').parents('.form-group').children(".alert_txt").text(errMsg);
+		$('#password2').parents('.form-group').children(".alert_txt").text('<spring:message code="reConfirmPassword"/>');
 		$('#password2').parents('.form-group').children(".alert_txt").addClass('text-danger');
 		return false;
 	}

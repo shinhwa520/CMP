@@ -28,6 +28,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="${pageContext.request.contextPath}/resources/css/colors/blue.css" id="theme" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -44,7 +45,6 @@
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
 	<decorator:body />
-</body>
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
@@ -86,6 +86,7 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+</body>
 <style>
 nav.navbar-HF{
     background-color: #555;

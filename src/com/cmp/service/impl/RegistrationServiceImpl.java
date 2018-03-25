@@ -11,8 +11,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
-import com.cmp.utils.Html2PDF;
-import com.cmp.utils.PDFMerge;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -36,6 +34,7 @@ import com.cmp.model.UserQues;
 import com.cmp.model.WebApiDetail;
 import com.cmp.service.RegistrationService;
 import com.cmp.service.vo.RegistrationUserVO;
+import com.cmp.utils.Html2PDF;
 
 @Service("registrationService")
 @Transactional
@@ -139,6 +138,21 @@ public class RegistrationServiceImpl implements RegistrationService {
 			User user = token.getUser();
 			user.setStatus(statusDAO.findStatus("USER", 2));//確認email
 			return userDao.saveUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public User verifyToken(String tokenId) throws Exception {
+		try {
+			Token token = tokenDAO.findTokenById(tokenId);
+			if(null==token)
+				return null;
+			if(token.getCreateDateTime().getTime() + duration < new Date().getTime())
+				return null;
+			return token.getUser();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -284,5 +298,27 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 //		Send
 		sendSimpleMail(user.getEmail(), subject, mailbody, pathList);
+	}
+	
+	@Override
+	public User recoverPassword(String mailAddress, String mailContent, User user) throws Exception {
+		Date current = new Date();
+		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
+		String mailbody = "请点击下方连结重新设定密码。<br>";
+		mailbody += "Please click on the link below to reset your password.<br>";
+		mailbody += "<h3>"+mailContent+"?tokenId="+token.getId()+"</h3>";
+		mailbody += "<br><br><br>";
+
+		
+		String subject = "CMP信息服务网联 重新设定密码通知";
+		sendSimpleMail(mailAddress, subject, mailbody, null);
+		return user;
+	}
+	
+	@Override
+	public void resetUserPassword(String userId, String password) throws Exception {
+		User user = userDao.findUserById(userId);
+		user.setPassword(password);
+		userDao.saveUser(user);
 	}
 }
