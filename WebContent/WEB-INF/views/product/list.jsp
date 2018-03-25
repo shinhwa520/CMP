@@ -9,6 +9,7 @@
 	</div>
 	
 	
+	<spring:message code='reward' var="reward"/>
 	<div class="row el-element-overlay">
 		<span style="padding-left: 15px;">
 			<h4 class="text-themecolor m-b-0 m-t-0">吉隆坡 Kuala Lumpur</h4>
@@ -27,8 +28,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">康莱</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">康莱</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_1}%</small>
+		                     </div>
 		            	</div>
 			  	</div>
 			  	<!-- Card -->
@@ -43,8 +44,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">Arte满家乐</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">Arte满家乐</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_2}%</small>
+		                     </div>
 			            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -59,8 +60,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">白沙罗城豪华公寓</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">白沙罗城豪华公寓</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_3}%</small>
+		                     </div>
 			            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -75,8 +76,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">奥普斯</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">奥普斯</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_4}%</small>
+		                     </div>
 			            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -91,8 +92,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">丽思卡尔顿</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">丽思卡尔顿</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_5}%</small>
+		                     </div>
 			            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -107,8 +108,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">大马金豪</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">大马金豪</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_6}%</small>
+		                     </div>
 			            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -134,8 +135,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">Avira花园联排别墅</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">Avira花园联排别墅</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_7}%</small>
+		                     </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -166,8 +167,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">聚富湾</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">聚富湾</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_8}%</small>
+		                     </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -182,8 +183,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">皇庭海湾1号</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">皇庭海湾1号</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_9}%</small>
+		                     </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -213,8 +214,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">安达曼海景公寓</h3> <small>Managing Director</small>
-		                    <br/> </div>
+		                    <h3 class="box-title">安达曼海景公寓</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_10}%</small>
+		                     </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->

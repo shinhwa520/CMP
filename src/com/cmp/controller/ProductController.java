@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
+import com.cmp.model.Commission;
+import com.cmp.model.User;
+import com.cmp.security.SecurityUtil;
+import com.cmp.service.CommissionService;
 import com.cmp.service.FileService;
 import com.cmp.service.UserService;
 import com.cmp.service.vo.FileServiceVO;
@@ -30,10 +34,17 @@ public class ProductController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private CommissionService commissionService;
 
 	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
     public String fileMain(Model model, HttpServletRequest request, HttpServletResponse response) {
 		setActiveMenu(model, MenuItem.PRODUCT_INFO);
+		User user = SecurityUtil.getSecurityUser().getUser();
+		List<Commission> commissionList = commissionService.initCommissionList(user.getId());
+		for(Commission commission:commissionList){
+			model.addAttribute("commission_"+commission.getProductInfo().getProductId(), commission.getCommissionPercent());
+		}
 		return "product/list";
     }
 	
