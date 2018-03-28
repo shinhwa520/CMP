@@ -137,7 +137,7 @@ public class RegistrationController extends BaseController {
 			}
 			registrationService.saveUserInfo(new RegistrationUserVO(
 							userId
-			    			,new String(userName.getBytes("iso-8859-1"), "utf-8")
+			    			,userName
 			    			,account
 			    			,password
 			    			,phone
