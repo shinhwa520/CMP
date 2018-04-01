@@ -17,6 +17,20 @@ import com.cmp.model.User;
 @Transactional
 public class UserDAOImpl extends BaseDaoHibernate implements UserDAO {
 	@Override
+	public List<User> findUserByChannelId(String channelId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select u ")
+		.append(" from User u ")
+		.append(" where 1=1 ")
+		.append(" and u.channel.id = :channelId ");
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    q.setParameter("channelId", channelId);
+	    return (List<User>) q.list();
+	}
+	
+	
+	@Override
 	public List<Object[]> findUserByChannelId(String channelId, String yearMonth, Integer start, Integer length) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select u ")
