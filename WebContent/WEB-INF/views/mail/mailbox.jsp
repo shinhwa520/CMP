@@ -3,7 +3,7 @@
 <section class="content">
 	<div class="row page-titles">
 	    <div class="col-md-6 col-8 align-self-center">
-	        <h3 class="text-themecolor m-b-0 m-t-0">Email App</h3>
+	        <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code='emailApp'/></h3>
 	    </div>
 	</div>
 	<!-- ============================================================== -->
@@ -17,13 +17,13 @@
 	                    <div class="card-body inbox-panel">
 	                        <ul class="list-group list-group-full">
 	                            <li id="composeOption" class="list-group-item" onclick="modalCompose();">
-	                                <a href="javascript:void(0)"> <i class="mdi mdi-pen"></i> Compose </a>
+	                                <a href="javascript:void(0)"> <i class="mdi mdi-pen"></i> <spring:message code='compose'/> </a>
 	                            </li>
 	                            <li id="inboxOption" class="list-group-item active" onclick="viewInboxList();">
-	                            	<a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> Inbox </a><span id="countUnread" class="badge badge-success ml-auto">0</span>
+	                            	<a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> <spring:message code='inbox'/> </a><span id="countUnread" class="badge badge-success ml-auto">0</span>
 	                            </li>
 	                            <li id="trashOption" class="list-group-item" onclick="viewTrashList();">
-	                                <a href="javascript:void(0)"> <i class="mdi mdi-delete"></i> Trash </a><span id="countNotAlive" class="badge badge-secondary ml-auto">0</span>
+	                                <a href="javascript:void(0)"> <i class="mdi mdi-delete"></i> <spring:message code='trashCan'/> </a><span id="countNotAlive" class="badge badge-secondary ml-auto">0</span>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -87,35 +87,45 @@
 	<!-- ============================================================== -->
 </section>
 <!--.燈箱 Compose -->
+
+<spring:message code='subject' var="subject"/>
+<spring:message code='enterText' var="enterText"/>
 <div class="modal fade bs-example-modal-lg" id="modal_Compose" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg container">
 	<div class="modal-content">
         <div class="row">
-			<div class="col-md-4">
+			<div class="col-md-12">
 				<div class="card">
+					<h5 class="card-header"><spring:message code='newMessage'/></h5>
 				    <div class="card-body">
-				        <h3 class="card-title">Mail To</h3>
-				        <div class="form-group" id="mailToDiv"></div>
-				    </div>
-				</div>
-			</div>
-			<div class="col-md-8">
-				<div class="card">
-				    <div class="card-body">
-				        <h3 class="card-title">Compose New Message</h3>
-				        <div class="form-group">
-				            <input id="newSubject" class="form-control" placeholder="Subject:">
-				        </div>
-				        <div class="form-group">
-				            <textarea id="newContent" class="textarea_editor form-control" rows="15" placeholder="Enter text ..."></textarea>
-				        </div>
-				        
-				        <button type="button" class="btn btn-success m-t-20" onclick="sendMail();"><i class="fa fa-envelope-o"></i> Send</button>
-				        <button class="btn btn-inverse m-t-20" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> Discard</button>
+				        <div class="row">
+							<div class="col-md-4">
+								<div class="card">
+								    <div class="card-body">
+								        <h3 class="card-title"><spring:message code='to'/></h3>
+								        <div class="form-group" id="mailToDiv"></div>
+								    </div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="card">
+								    <div class="card-body">
+								        <div class="form-group">
+								            <input id="newSubject" class="form-control" placeholder="${subject}：">
+								        </div>
+								        <div class="form-group">
+								            <textarea id="newContent" class="textarea_editor form-control" rows="15" placeholder="${enterText} ..."></textarea>
+								        </div>
+								        
+								        <button type="button" class="btn btn-success m-t-20" onclick="sendMail();"><i class="fa fa-envelope-o"></i> <spring:message code='send'/></button>
+								        <button class="btn btn-inverse m-t-20" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> <spring:message code='discard'/></button>
+								    </div>
+							    </div>
+							</div>
+						</div>
 				    </div>
 			    </div>
 			</div>
-				
 		</div>
 	</div>
   </div>
