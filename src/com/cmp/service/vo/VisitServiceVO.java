@@ -40,6 +40,8 @@ public class VisitServiceVO {
 	private String visaStatus;	//簽證情況
 	private String accommodationSituation;	//住宿情況
 	private String amountReceived;	//已收金額
+	private Integer custId;
+	private boolean custNotReady = false;	//客戶狀態 or資料尚不完整
 	
 	private String updateDate;
 	private String updateBy;
@@ -270,5 +272,17 @@ public class VisitServiceVO {
 	}
 	public void setAmountReceived(String amountReceived) {
 		this.amountReceived = amountReceived;
+	}
+	public Integer getCustId() {
+		return custId;
+	}
+	public void setCustId(Integer custId) {
+		this.custId = custId;
+	}
+	public boolean isCustNotReady() {
+		return custNotReady;
+	}
+	public void setCustNotReady(boolean custNotReady) {
+		this.custNotReady = custNotReady;
 	}
 }

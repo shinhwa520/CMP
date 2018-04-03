@@ -2,6 +2,7 @@ package com.cmp.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -86,13 +87,19 @@ public class VisitDAOImpl extends BaseDaoHibernate implements VisitDAO {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select vd from VisitDetail vd ")
 		  .append(" where 1=1 ")
-		  .append(" and vd.visitInfo.visitId = :visitId ")
-		  .append(" and vd.cust.user.id = :userId ");
+		  .append(" and vd.visitInfo.visitId = :visitId ");
+		
+		if (StringUtils.isNotBlank(userId)) {
+			sb.append(" and vd.cust.user.id = :userId ");
+		}
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
 	    q.setParameter("visitId", visitId);
-	    q.setParameter("userId", userId);
+	    
+	    if (StringUtils.isNotBlank(userId)) {
+	    	q.setParameter("userId", userId);
+	    }
 	    
 		return (List<VisitDetail>)q.list();
 	}

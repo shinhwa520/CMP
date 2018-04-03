@@ -51,7 +51,7 @@ public class LoginContoller extends BaseController {
 	
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String indexPage(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form, HttpServletRequest request, HttpServletResponse response) {
-		List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
+    	List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
 		form.setBillboardList(billboardList);
 		setActiveMenu(model, MenuItem.INDEX);
 		return "billboard/list";

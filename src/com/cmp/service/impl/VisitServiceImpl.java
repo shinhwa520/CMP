@@ -28,6 +28,7 @@ import com.cmp.model.VisitInfo;
 import com.cmp.model.VisitSetting;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.RoleService;
+import com.cmp.service.StatusService;
 import com.cmp.service.VisitService;
 import com.cmp.service.vo.VisitServiceVO;
 
@@ -392,6 +393,12 @@ public class VisitServiceImpl implements VisitService {
 		List<VisitDetail> modelList = null;
 		try {
 			String userId = SecurityUtil.getSecurityUser().getUser().getId();
+			String role = SecurityUtil.getSecurityUser().getUser().getRole().getName();
+			
+			if (role.equals(RoleService.ROLE_NAME_SU) || role.equals(RoleService.ROLE_NAME_ASST)) {
+				//SU & ASST(助理) 能看所有入團客戶清單
+				userId = "";
+			}
 			modelList = visitDAO.findVisitDetailByVistiIdAndUserId(visitId, userId);
 			
 			VisitServiceVO vsVO = null;
@@ -399,6 +406,22 @@ public class VisitServiceImpl implements VisitService {
 				vsVO = new VisitServiceVO();
 				vsVO.setUserName(userDAO.findUserById(vd.getCust().getUser().getId()).getName());
 				vsVO.setCustName(vd.getCust().getName());
+				vsVO.setCustId(vd.getCust().getId());
+				
+				/*
+				 * 判斷客戶狀態(!=已收團費) or 客戶的基本必填欄位資料不齊全
+				 * => custNotReady 設定為 true。用以頁面判斷醒目顯示用
+				 */
+				if ((vd.getCust().getStatus().getId() < StatusService.CUST_2_RECEIVED_TOUR_FEE)
+						|| StringUtils.isBlank(vd.getCust().getName())
+						|| StringUtils.isBlank(vd.getCust().getEmail())
+						|| (vd.getCust().getIdentity1_id() == 0)
+						|| StringUtils.isBlank(vd.getCust().getIdentity1_code())
+						|| StringUtils.isBlank(vd.getCust().getIdentity1_name())
+						|| StringUtils.isBlank(vd.getCust().getCensus())) {
+					vsVO.setCustNotReady(true);
+				}
+				
 				vsVO.setVisaStatus(StringUtils.isNotBlank(vd.getVisaStatus()) ? vd.getVisaStatus() : "");
 				vsVO.setAccommodationSituation(StringUtils.isNotBlank(vd.getAccommodationStatus()) ? vd.getAccommodationStatus() : "");
 				vsVO.setAmountReceived(Integer.toString(vd.getAmountReceived()));

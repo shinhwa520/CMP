@@ -62,6 +62,8 @@ public class BillboardController extends BaseController {
 			if (log.isErrorEnabled()) {
 				log.error(e.toString(), e);
 			}
+		} finally {
+			setActiveMenu(model, MenuItem.MANAGE_BILLBOARD);
 		}
 		
 		return "billboard/list";

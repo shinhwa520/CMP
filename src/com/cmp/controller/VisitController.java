@@ -20,7 +20,6 @@ import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.form.VisitForm;
-import com.cmp.model.VisitDetail;
 import com.cmp.service.VisitService;
 import com.cmp.service.vo.VisitServiceVO;
 
@@ -50,6 +49,9 @@ public class VisitController extends BaseController {
 			if (log.isErrorEnabled()) {
 				log.error(e.toString(), e);
 			}
+			
+		} finally {
+			setActiveMenu(model, MenuItem.VISIT_INFO);
 		}
 		return "visit/visit_tour";
     }

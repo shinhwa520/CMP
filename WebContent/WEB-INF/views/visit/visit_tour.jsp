@@ -33,10 +33,10 @@
 		                                			<button class="btn btn-info waves-effect waves-light m-t-20" onClick="btnEditClicked(${vo.visitId })"><spring:message code="edit"/></button>
 		                                		</c:if>
 	                                            <c:if test="${vo.status ne 23}">
-	                                            	<button class="btn waves-effect waves-light m-t-20" style="width:50%;" disabled><spring:message code="addMembers"/></button>
+	                                            	<button class="btn waves-effect waves-light m-t-20" style="width:50%;" disabled><spring:message code="joinGo"/></button>
 	                                            </c:if>
 	                                            <c:if test="${vo.status eq 23}">
-	                                            	<button class="btn btn-success waves-effect waves-light m-t-20 btn-add" visitId="${vo.visitId }" style="width:50%"><spring:message code="addMembers"/></button>
+	                                            	<button class="btn btn-success waves-effect waves-light m-t-20 btn-add" visitId="${vo.visitId }" style="width:50%"><spring:message code="joinGo"/></button>
 	                                            </c:if>
 	                                            <c:if test="${vo.canModify}">
 	                                            	<button class="btn btn-danger waves-effect waves-light m-t-20" onClick="btnDeleteClicked(${vo.visitId }, '${vo.visitName }')"><spring:message code="delete"/></button>
@@ -289,19 +289,19 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<h4 class="modal-title"><spring:message code="edit"/>&nbsp;&nbsp;(<spring:message code="custStatusOrDataNotReadyPS"/>)</h4>
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit">
-            	<input type="hidden" name="visitId" id="visitId" value="" />
+            	<input type="hidden" name="custByVisitId" id="custByVisitId" value="" />
 	            <div class="box-body">
 	                <table id="tblMain_VisitDetail" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
 			                    <th style="width:15%"><b><spring:message code="channel"/></b></th>
-			                    <th style="width:15%"><b><spring:message code="custName"/></b></th>
+			                    <th style="min-width:100px"><b><spring:message code="custName"/></b></th>
 			                    <th><b><spring:message code="visaStatus"/></b></th>
 			                    <th><b><spring:message code="accommodationSituation"/></b></th>
 			                    <th><b><spring:message code="amountReceived"/></b></th>
@@ -403,10 +403,18 @@
 				$(".visit-wrapper").append($('.visit-cust-panel').html()).fadeIn('slow');
 				
 				var custIdArray = new Array();
+				var idx = 0;
+				var length = $('input[type=checkbox][name=joinCust]').length;
 				$('input[type=checkbox][name=joinCust]').each(function(i, item) {
+					if (idx == length/2) {
+						return;
+					}
+					
 					if (this.checked) {
 						custIdArray.push($(item).val());
 					}
+					
+					idx += 1;
 				});
 				
 				$('#oriJoinCustIds').val(custIdArray.join(','));
@@ -511,12 +519,20 @@
 		var addCustIds = new Array();
 		var deleteCustIds = new Array();
 		
+		var idx = 0;
+		var length = $('input[type=checkbox][name=joinCust]').length;
 		$('input[type=checkbox][name=joinCust]').each(function(i, item) {
+			if (idx == length/2) {
+				return;
+			}
+			
 			if (this.checked) {
 				newJoinCustIds.push($(item).val());
 			}
+			
+			idx += 1;
 		});
-				
+		
 		if (newJoinCustIds.length == 0 && oriJoinCustIds.length == 0) {
 			alert("請選擇");
 			
@@ -594,8 +610,16 @@
 	
 	var checked = true;
 	function btnPanelCheckAllClicked() {
+		var idx = 0;
+		var length = $('input[type=checkbox][name=joinCust]').length;
 		$('input[type=checkbox][name=joinCust]').each(function(i, item) {
+			if (idx == length/2) {
+				return;
+			}
+			
 			$(item).prop('checked', checked);
+			
+			idx += 1;
 		});
 		
 		if (checked) {
@@ -774,6 +798,8 @@
 	}
 	
 	function editCustInfo(visitId) {
+		$('#custByVisitId').val(visitId);
+		
 		if (tblMain_VisitDetail) {
 			tblMain_VisitDetail.destroy();	//重查資料
 		} 
@@ -796,9 +822,9 @@
 				$('#modal_Edit_VisitDetail').modal();
 		    },
 			"columns" : [
-				{ "data" : "userName" },
-				{ "data" : "custName" }
+				{ "data" : "userName" }
 				/*
+				{ "data" : "custName" }
 				{ "data" : "visaStatus" },
 				{ "data" : "accommodationSituation" },
 				{ "data" : "amountReceived" },
@@ -807,27 +833,38 @@
 			],
 			"columnDefs" : [
 				{
+					"targets" : [1],
+					"render" : function(data, type, row) {
+								if (row['custNotReady']) {
+									return '<span style="color:red" title="<spring:message javaScriptEscape="true" code="custStatusOrDataNotReady"/>">' + row['custName'] + '</span>';
+								} else {
+									return '<span>' + row['custName'] + '</span>';
+								}
+							}
+				},
+				{
 					"targets" : [2],
 					"render" : function(data, type, row) {
-								return '<input type="text" style="width:100px" name="visaStatus" value="' + row['visaStatus'] + '"/>';
+								return '<input type="text" class="form-control" name="visaStatus" value="' + row['visaStatus'] + '"/>';
 							}
 				},
 				{
 					"targets" : [3],
 					"render" : function(data, type, row) {
-								return '<input type="text" style="width:100px" name="accommodationSituation" value="' + row['accommodationSituation'] + '"/>';
+								return '<input type="text" class="form-control" name="accommodationSituation" value="' + row['accommodationSituation'] + '"/>';
 							}
 				},
 				{
 					"targets" : [4],
 					"render" : function(data, type, row) {
-								return '<input type="text" style="width:100px" name="amountReceived" value="' + row['amountReceived'] + '"/>';
+								return '<input type="text" class="form-control" style="text-align:right" name="amountReceived" value="' + row['amountReceived'] + '"/>';
 							}
 				},
 				{
 					"targets" : [5],
 					"render" : function(data, type, row) {
-								return '<input type="text" style="width:150px" name="remark" value="' + row['remark'] + '"/>';
+								return '<input type="text" class="form-control" name="remark" value="' + row['remark'] + '"/>'
+									   + '<input type="hidden" name="custId" value="' + row['custId'] + '"/>';
 							}
 				},
 			],

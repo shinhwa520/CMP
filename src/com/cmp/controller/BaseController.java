@@ -85,14 +85,17 @@ public class BaseController {
 		
 		String userName = "";
 		String userRole = "";
+		String email = "";
 		if (securityUser != null) {
 			userName = securityUser.getUser().getName();
 			userRole = securityUser.getUser().getRole().getName();
+			email = securityUser.getUser().getEmail();
 		}
 		
 		model.addAttribute("versionCode", Constants.VERSION_CODE);
 //		model.addAttribute("accountId", account.getId());
 		model.addAttribute("username", userName);
+		model.addAttribute("email", email);
 		model.addAttribute("isAdmin", isAdmin);
 		model.addAttribute("isAvailable", isAvailable);
 		model.addAttribute("userRole", userRole);
