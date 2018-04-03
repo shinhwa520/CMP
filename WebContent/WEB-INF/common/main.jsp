@@ -22,6 +22,10 @@
     <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/assets/plugins/prism/prism.css" rel="stylesheet">
+    <!-- wysihtml5 CSS -->
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/html5-editor/bootstrap-wysihtml5.css" rel="stylesheet" />
+    <!-- Dropzone css -->
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/dropzone-master/dist/dropzone.css" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -72,6 +76,9 @@
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <!--Custom JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/html5-editor/wysihtml5-0.3.0.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/html5-editor/bootstrap-wysihtml5.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/dropzone-master/dist/dropzone.js"></script>
     
     <script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
@@ -300,12 +307,20 @@
                             <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul>
                                     <li>
-                                        <div class="drop-title">You have 0 new messages</div>
+                                        <div class="drop-title">You have ${mailMap.countUnread} new messages</div>
                                     </li>
+                                    
                                     <li>
                                         <div class="message-center">
-                                            <!-- Message -->
-                                            Coming soon...
+											<c:if test="${!mailMap.listUnread.isEmpty() }">
+											<c:forEach var="vo" items="${ mailMap.listUnread }">
+												<a href='${pageContext.request.contextPath}/mail/mailbox?mailId=${ vo.id }'>
+													<div class="mail-contnet">
+														<h5>${vo.mailFrom.name}</h5> <span class="mail-desc">${vo.subject}</span> <span class="time">${vo.createTime}</span> 
+													</div>
+												</a>
+											</c:forEach>
+											</c:if>
                                         </div>
                                     </li>
                                 </ul>
@@ -359,7 +374,7 @@
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="${pageContext.request.contextPath}/channel/personalInfo/info"><i class="ti-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li><a href='${pageContext.request.contextPath}/mail/mailbox'><i class="ti-email"></i> Inbox</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="<c:url value="/logout" />"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>

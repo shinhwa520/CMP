@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,11 +28,13 @@ import com.cmp.MenuItem;
 import com.cmp.Response;
 import com.cmp.security.SecurityUser;
 import com.cmp.security.SecurityUtil;
+import com.cmp.service.MailService;
 
 
 @Controller
 public class BaseController {
-
+	@Autowired
+	private MailService mailService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 	SimpleDateFormat sdfYearMonth = new SimpleDateFormat("yyyyMM");
@@ -102,6 +105,10 @@ public class BaseController {
 //		String currentPrincipalName = authentication.getName();
 //		logger.debug("currentPrincipalName: " + currentPrincipalName);
 //		model.addAttribute("username", currentPrincipalName);
+		
+		
+		HashMap<String, Object> mailMap = mailService.getMailInfo();
+		model.addAttribute("mailMap", mailMap);
 	}
 	
 	/**
