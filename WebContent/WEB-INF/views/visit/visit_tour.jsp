@@ -294,7 +294,7 @@
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
-            <form role="form" id="formEdit" name="formEdit">
+            <form role="form" id="visitDetailForm" name="visitDetailForm">
             	<input type="hidden" name="custByVisitId" id="custByVisitId" value="" />
 	            <div class="box-body">
 	                <table id="tblMain_VisitDetail" class="table table-bordered table-striped" style="width:100%">
@@ -312,7 +312,7 @@
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
-	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
+	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnVisitDetailSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -694,9 +694,26 @@
 			isError = true;
 			$('#status').parents('.form-group').addClass('has-error');
 		}
-
 		if(isError){
-			errorMsgModal('必填欄位未填<br/>');
+			errorMsgModal('<spring:message code="error.mustFillMustField"/><br/>');
+			return false;
+		}
+		
+		//人數上限不可低於下限
+		if (Number(maxMemberCount) < Number(minMemberCount)) {
+			$('#maxMemberCount').parents('.form-group').addClass('has-error');
+			errorMsgModal('<spring:message code="error.peopleLowerThanLower"/><br/>');
+			return false;
+		}
+		
+		var currentDate = Date.parse((new Date()).toDateString());
+		var bDate = Date.parse(beginDate);
+		
+		//生效起始日若晚於當下日期，狀態不可設定為「招人中」
+		if ((currentDate < bDate) && (status == 23)) {
+			$('#date-input-beginDate').parents('.form-group').addClass('has-error');
+			$('#status').parents('.form-group').addClass('has-error');
+			errorMsgModal('<spring:message code="error.startDateAndStatusNotMatch"/> 「<spring:message code="visitIng"/>」<br/>');
 			return false;
 		}
 		
@@ -869,6 +886,32 @@
 				},
 			],
 			select: true
+		});
+	}
+	
+	function btnVisitDetailSaveClicked() {
+		$.ajax({
+			url : '${pageContext.request.contextPath}/visit/saveDetail',
+			data : $('#visitDetailForm').serialize(),
+			type : "POST",
+			dataType : 'json',
+			async: false,
+			success : function(resp) {
+				if (resp.code == '200') {
+					successMsgModal("<spring:message code='success.update'/>");
+					setTimeout(function(){
+						$('#modal_Edit_VisitDetail').modal('hide');
+					}, 1000);
+					
+				} else {
+					alert(resp);
+				}
+			},
+
+			error : function(xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
 		});
 	}
 </script>

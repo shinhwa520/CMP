@@ -171,4 +171,9 @@ public class VisitDAOImpl extends BaseDaoHibernate implements VisitDAO {
 	    
 		return (List<VisitDetail>)q.list();
 	}
+
+	@Override
+	public void updateVisitDetail(VisitDetail visitDetail) {
+		getHibernateTemplate().update(visitDetail);
+	}
 }

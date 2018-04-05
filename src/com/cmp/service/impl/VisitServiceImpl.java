@@ -454,4 +454,44 @@ public class VisitServiceImpl implements VisitService {
 		}
 		return count;
 	}
+
+	@Override
+	public boolean saveVisitDetail(VisitServiceVO vsVO) {
+		VisitDetail visitDetail;
+		Integer visitId;
+		try {
+			visitId = vsVO.getVisitId();
+			
+			int idx = 0;
+			for (Integer custId : vsVO.getCustIdArray()) {
+				visitDetail = visitDAO.findVisitDetailByCustIds(visitId, Arrays.asList(new Integer[] {custId})).get(0);
+				
+				if (visitDetail != null) {
+					visitDetail.setAccommodationStatus(
+							vsVO.getAccommodationSituationArray().length == 0 ? null : vsVO.getAccommodationSituationArray()[idx]);
+					visitDetail.setAmountReceived(
+							vsVO.getAmountReceivedArray().length == 0 ? 0 : vsVO.getAmountReceivedArray()[idx] == null ? 0 : vsVO.getAmountReceivedArray()[idx]);
+					visitDetail.setRemark(
+							vsVO.getRemarkArray().length == 0 ? null : vsVO.getRemarkArray()[idx]);
+					visitDetail.setVisaStatus(
+							vsVO.getVisaStatusArray().length == 0 ? null : vsVO.getVisaStatusArray()[idx]);
+					visitDetail.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
+					visitDetail.setUpdateTime(new Timestamp((new java.util.Date()).getTime()));
+					
+					visitDAO.updateVisitDetail(visitDetail);
+				}
+				
+				idx += 1;
+			}
+			
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
+			e.printStackTrace();
+			
+			return false;
+		}
+		return true;
+	}
 }

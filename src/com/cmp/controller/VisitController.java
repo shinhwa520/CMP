@@ -111,6 +111,37 @@ public class VisitController extends BaseController {
 		}
     }
 	
+	@RequestMapping(value="saveDetail", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public AppResponse saveVisit(
+			@RequestParam(name="custByVisitId", required=true) Integer visitId,
+			@RequestParam(name="visaStatus", required=false) String[] visaStatusArray,
+			@RequestParam(name="accommodationSituation", required=false) String[] accommodationSituationArray,
+			@RequestParam(name="amountReceived", required=false) Integer[] amountReceivedArray,
+			@RequestParam(name="remark", required=false) String[] remarkArray,
+			@RequestParam(name="custId", required=true) Integer[] custIdArray) {
+		
+		VisitServiceVO vsVO = null;
+		try {
+			vsVO = new VisitServiceVO();
+			vsVO.setVisitId(visitId);
+			vsVO.setVisaStatusArray(visaStatusArray);
+			vsVO.setAccommodationSituationArray(accommodationSituationArray);
+			vsVO.setAmountReceivedArray(amountReceivedArray);
+			vsVO.setRemarkArray(remarkArray);
+			vsVO.setCustIdArray(custIdArray);
+			
+			visitService.saveVisitDetail(vsVO);
+			
+			return new AppResponse(HttpServletResponse.SC_OK, "新增成功");
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
+			return new AppResponse(super.getLineNumber(), e.getMessage());
+		}
+    }
+	
 	@RequestMapping(value="getVisit", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public AppResponse getVisit(

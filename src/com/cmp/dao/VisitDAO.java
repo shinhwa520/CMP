@@ -30,4 +30,6 @@ public interface VisitDAO {
 	public boolean addVisitDetail(List<VisitDetail> addModelList);
 	
 	public List<VisitDetail> findVisitDetailByCustIds(Integer visitId, List<Integer> custIdList);
+	
+	public void updateVisitDetail(VisitDetail visitDetail);
 }

@@ -15,6 +15,12 @@ public class VisitServiceVO {
 	private VisitInfo visitInfo;
 	private List<FilesVisit> filesVisit;
 	
+	public String[] visaStatusArray;
+	public String[] accommodationSituationArray;
+	public Integer[] amountReceivedArray;
+	public String[] remarkArray;
+	public Integer[] custIdArray;
+	
 	private String visitName;
 	private String description;
 	private String beginDate;
@@ -284,5 +290,35 @@ public class VisitServiceVO {
 	}
 	public void setCustNotReady(boolean custNotReady) {
 		this.custNotReady = custNotReady;
+	}
+	public String[] getVisaStatusArray() {
+		return visaStatusArray;
+	}
+	public void setVisaStatusArray(String[] visaStatusArray) {
+		this.visaStatusArray = visaStatusArray;
+	}
+	public String[] getAccommodationSituationArray() {
+		return accommodationSituationArray;
+	}
+	public void setAccommodationSituationArray(String[] accommodationSituationArray) {
+		this.accommodationSituationArray = accommodationSituationArray;
+	}
+	public Integer[] getAmountReceivedArray() {
+		return amountReceivedArray;
+	}
+	public void setAmountReceivedArray(Integer[] amountReceivedArray) {
+		this.amountReceivedArray = amountReceivedArray;
+	}
+	public String[] getRemarkArray() {
+		return remarkArray;
+	}
+	public void setRemarkArray(String[] remarkArray) {
+		this.remarkArray = remarkArray;
+	}
+	public Integer[] getCustIdArray() {
+		return custIdArray;
+	}
+	public void setCustIdArray(Integer[] custIdArray) {
+		this.custIdArray = custIdArray;
 	}
 }
