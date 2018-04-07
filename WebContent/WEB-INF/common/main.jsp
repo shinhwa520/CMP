@@ -302,12 +302,12 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                                <c:if test="${!mailMap.listUnread.isEmpty() }"><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div></c:if>
                             </a>
                             <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul>
                                     <li>
-                                        <div class="drop-title">You have ${mailMap.countUnread} new messages</div>
+                                        <div class="drop-title"><spring:message code="youHave" /> ${mailMap.countUnread} <spring:message code="newMSG" /></div>
                                     </li>
                                     
                                     <li>

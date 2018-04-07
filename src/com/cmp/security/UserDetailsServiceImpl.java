@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.cmp.model.SysLog;
 import com.cmp.model.User;
 import com.cmp.service.LoginService;
+import com.cmp.service.SysLogService;
 
 
 
@@ -25,6 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	SysLogService sysLogService;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -46,6 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				accountNonLocked,
 				getAuthorities(user.getRole().getName())
 			);
+		sysLogService.saveSysLog(new SysLog(user, SysLogService.LOGIN));
 		return securityUser;
 	}
 	
