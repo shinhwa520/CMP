@@ -29,12 +29,15 @@ import com.cmp.Response;
 import com.cmp.security.SecurityUser;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.MailService;
+import com.cmp.service.SysMailService;
 
 
 @Controller
 public class BaseController {
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private SysMailService sysMailService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 	SimpleDateFormat sdfYearMonth = new SimpleDateFormat("yyyyMM");
@@ -109,6 +112,9 @@ public class BaseController {
 		
 		HashMap<String, Object> mailMap = mailService.getMailInfo();
 		model.addAttribute("mailMap", mailMap);
+		
+		HashMap<String, Object> sysMailMap = sysMailService.getSysMailInfo();
+		model.addAttribute("sysMailMap", sysMailMap);
 	}
 	
 	/**

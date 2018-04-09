@@ -278,17 +278,25 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                                <c:if test="${!sysMailMap.listUnread.isEmpty() }"><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div></c:if>
                             </a>
                             <div class="dropdown-menu mailbox animated bounceInDown">
                                 <ul>
                                     <li>
-                                        <div class="drop-title">Notifications</div>
+                                        <div class="drop-title"><spring:message code="youHave" /> ${sysMailMap.countUnread} <spring:message code="newSysMSG" /></div>
                                     </li>
+                                    
                                     <li>
                                         <div class="message-center">
-                                            <!-- Message -->
-                                            Coming soon...
+											<c:if test="${!sysMailMap.listUnread.isEmpty() }">
+											<c:forEach var="vo" items="${ sysMailMap.listUnread }">
+												<a href='${pageContext.request.contextPath}/sysMail/sysMailbox?sysMailId=${ vo.id }'>
+													<div class="mail-contnet">
+														<h5>${vo.mailFrom.name}</h5> <span class="mail-desc">${vo.subject}</span> <span class="time">${vo.createTime}</span> 
+													</div>
+												</a>
+											</c:forEach>
+											</c:if>
                                         </div>
                                     </li>
                                 </ul>

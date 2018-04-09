@@ -3,7 +3,7 @@
 <section class="content">
 	<div class="row page-titles">
 	    <div class="col-md-6 col-8 align-self-center">
-	        <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code='emailApp'/></h3>
+	        <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code='sysMail'/></h3>
 	    </div>
 	</div>
 	<!-- ============================================================== -->
@@ -16,9 +16,11 @@
 	                <div class="col-xlg-2 col-lg-4 col-md-4">
 	                    <div class="card-body inbox-panel">
 	                        <ul class="list-group list-group-full">
+	                        	<!-- 
 	                            <li id="composeOption" class="list-group-item" onclick="modalCompose();">
 	                                <a href="javascript:void(0)"> <i class="mdi mdi-pen"></i> <spring:message code='compose'/> </a>
 	                            </li>
+	                            -->
 	                            <li id="inboxOption" class="list-group-item active" onclick="viewInboxList();">
 	                            	<a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> <spring:message code='inbox'/> </a><span id="countUnread" class="badge badge-success ml-auto">0</span>
 	                            </li>
@@ -61,9 +63,9 @@
 	                    </div>
                         <div class="card-body p-t-0">
                             <div class="card b-all shadow-none">
-                            	<input type="hidden" id="dtlId" value="${mail.id }">
+                            	<input type="hidden" id="dtlId" value="${sysMail.id }">
                                 <div class="card-body">
-                                    <h3 id="dtlSubject" class="card-title m-b-0">${mail.subject }</h3>
+                                    <h3 id="dtlSubject" class="card-title m-b-0">${sysMail.subject }</h3>
                                 </div>
                                 <div>
                                     <hr class="m-t-0">
@@ -71,10 +73,10 @@
                                 <div class="card-body">
                                     <div class="d-flex m-b-40">
                                         <div class="p-l-10">
-                                            From: <small id="dtlMailFrom" class="text-muted">${mail.mailFrom.name }</small>
+                                            From: <small id="dtlMailFrom" class="text-muted">${sysMail.mailFrom.name }</small>
                                         </div>
                                     </div>
-                                    <p id="dtlContent" >${mail.content }</p>
+                                    <p id="dtlContent" >${sysMail.content }</p>
                                 </div>
                             </div>
                         </div>
@@ -87,53 +89,10 @@
 	<!-- End PAge Content -->
 	<!-- ============================================================== -->
 </section>
-<!--.燈箱 Compose -->
 
-<spring:message code='subject' var="subject"/>
-<spring:message code='enterText' var="enterText"/>
-<div class="modal fade bs-example-modal-lg" id="modal_Compose" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg container">
-	<div class="modal-content">
-        <div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<h5 class="card-header"><spring:message code='newMessage'/></h5>
-				    <div class="card-body">
-				        <div class="row">
-							<div class="col-md-4">
-								<div class="card">
-								    <div class="card-body">
-								        <h3 class="card-title"><spring:message code='to'/></h3>
-								        <div class="form-group" id="mailToDiv"></div>
-								    </div>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div class="card">
-								    <div class="card-body">
-								        <div class="form-group">
-								            <input id="newSubject" class="form-control" placeholder="${subject}：">
-								        </div>
-								        <div class="form-group">
-								            <textarea id="newContent" class="textarea_editor form-control" rows="15" placeholder="${enterText} ..."></textarea>
-								        </div>
-								        
-								        <button type="button" class="btn btn-success m-t-20" onclick="sendMail();"><i class="fa fa-envelope-o"></i> <spring:message code='send'/></button>
-								        <button class="btn btn-inverse m-t-20" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i> <spring:message code='discard'/></button>
-								    </div>
-							    </div>
-							</div>
-						</div>
-				    </div>
-			    </div>
-			</div>
-		</div>
-	</div>
-  </div>
-</div>
 <script>
 var tblMain;
-var targetMail = '${mail}';
+var targetMail = '${sysMail}';
 
 //[Init.]
 $(function() {
@@ -255,7 +214,7 @@ function inbox() {
 				"serverSide" : true,
 				"bLengthChange" : false,
 				"ajax" : {
-					"url" : '${pageContext.request.contextPath}/mail/listMailByUser.json',
+					"url" : '${pageContext.request.contextPath}/sysMail/listSysMailByUser.json',
 					"type" : 'GET',
 					"data" : function(d) {}
 				},
@@ -294,7 +253,7 @@ function inbox() {
 
 function getMailInfo() {
 	$.ajax({
-		url : '${pageContext.request.contextPath}/mail/getMailInfo',
+		url : '${pageContext.request.contextPath}/sysMail/getSysMailInfo',
 		type : "GET",
 		dataType : 'json',
 		async: false,
@@ -343,7 +302,7 @@ function sendMail() {
 	var results = getResult().join(',');
 
 	$.ajax({
-		url : '${pageContext.request.contextPath}/mail/sendMail?newSubject='+_newSubject
+		url : '${pageContext.request.contextPath}/sysMail/sendSysMail?newSubject='+_newSubject
 															+ '&newContent=' + _newContent
 															+ '&mailTo=' + results,
 		type : "GET",
@@ -366,7 +325,7 @@ function sendMail() {
 
 function mailboxDetail(mailId) {
 	$.ajax({
-		url : '${pageContext.request.contextPath}/mail/mailboxDetail?mailId=' + mailId,
+		url : '${pageContext.request.contextPath}/sysMail/sysMailboxDetail?sysMailId=' + mailId,
 		type : "GET",
 		dataType : 'json',
 		async: false,
@@ -374,9 +333,9 @@ function mailboxDetail(mailId) {
 		success : function(data) {
             if (data.code === 200) {
             	$('#dtlId').val(mailId);
-            	$('#dtlSubject').html(data.data.targetMail.subject);
-            	$('#dtlMailFrom').html(data.data.targetMail.mailFrom.name);
-            	$('#dtlContent').html(data.data.targetMail.content);
+            	$('#dtlSubject').html(data.data.targetSysMail.subject);
+            	$('#dtlMailFrom').html(data.data.targetSysMail.mailFrom.name);
+            	$('#dtlContent').html(data.data.targetSysMail.content);
             	viewDetail();
             } else {
             	alert(data.message);
@@ -391,7 +350,7 @@ function mailboxDetail(mailId) {
 
 function deleteMail(results) {
 	$.ajax({
-		url : '${pageContext.request.contextPath}/mail/deleteMail?target=' + results,
+		url : '${pageContext.request.contextPath}/sysMail/deleteSysMail?target=' + results,
 		type : "GET",
 		dataType : 'json',
 		async: false,
@@ -412,7 +371,7 @@ function deleteMail(results) {
 
 function trashMail(results) {
 	$.ajax({
-		url : '${pageContext.request.contextPath}/mail/trashMail?target=' + results,
+		url : '${pageContext.request.contextPath}/sysMail/trashSysMail?target=' + results,
 		type : "GET",
 		dataType : 'json',
 		async: false,
@@ -443,7 +402,7 @@ function trash() {
 				"serverSide" : true,
 				"bLengthChange" : false,
 				"ajax" : {
-					"url" : '${pageContext.request.contextPath}/mail/trash.json',
+					"url" : '${pageContext.request.contextPath}/sysMail/trash.json',
 					"type" : 'GET',
 					"data" : function(d) {}
 				},
