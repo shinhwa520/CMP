@@ -34,10 +34,7 @@
 	                <!-- mailbox_div ============================================================== -->
 	                <div id="mailbox_div" class="col-xlg-10 col-lg-8 col-md-8">
 	                    <div class="card-body">
-	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
-	                            <button id="delChkAll" type="button" class="btn btn-secondary font-18 text-dark"><i class="mdi mdi-inbox-arrow-down"></i></button>
-	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteClicked();"><i class="mdi mdi-delete"></i></button>
-	                        </div>
+	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark"  onclick="btnDeleteClicked();"><i class="mdi mdi-delete font-18"></i></button>
 	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark"  onclick="btnReloadClicked();"><i class="mdi mdi-reload font-18"></i></button>
 	                    </div>
 	                    <div class="card-body p-t-0">
@@ -55,10 +52,6 @@
 	                <!-- detail_div ============================================================== -->
 	                <div id="detail_div" class="col-xlg-10 col-lg-8 col-md-8">
 	                    <div class="card-body">
-	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
-	                            <button id="delChkAll" type="button" class="btn btn-secondary font-18 text-dark"><i class="mdi mdi-swap-horizontal"></i></button>
-	                            <button type="button" class="btn btn-secondary font-18 text-dark"><i class="mdi mdi-share"></i></button>
-	                        </div>
 	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark" onclick="btnDeleteOne();"><i class="mdi mdi-delete font-18"></i></button>
 	                    </div>
                         <div class="card-body p-t-0">
@@ -96,7 +89,6 @@ var targetMail = '${sysMail}';
 
 //[Init.]
 $(function() {
-	//alert('[targetMail]'+targetMail);
 	if(''!=targetMail){
     	$('#dtlSubject').html(targetMail.subject);
     	$('#dtlMailFrom').html(targetMail.mailFrom);

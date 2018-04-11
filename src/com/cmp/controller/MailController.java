@@ -31,10 +31,6 @@ public class MailController extends BaseController {
 	
 	@RequestMapping(value = "mailbox", method = RequestMethod.GET)
 	public String viewList(Model model, @RequestParam(name="mailId", required=false) Long mailId) {
-		if(null!=mailId){
-			Mail mail = mailService.findMailById(mailId);
-			model.addAttribute("mail", mail);
-		}
 		setActiveMenu(model, MenuItem.ADMIN_STATUS);
 		return "mail/mailbox";
 	}
@@ -51,8 +47,8 @@ public class MailController extends BaseController {
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		List<Mail> datalist = mailService.listMailByUser(null, userId, true, null, start, length);
-		long total = mailService.countMailByUser(null, userId, true, null);
+		List<Mail> datalist = mailService.listMailByUser(null, userId, 1, null, start, length);
+		long total = mailService.countMailByUser(null, userId, 1, null);
 		return new DatatableResponse(total, datalist, total);
 	}
 	
@@ -132,8 +128,46 @@ public class MailController extends BaseController {
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		List<Mail> datalist = mailService.listMailByUser(null, userId, false, null, start, length);
-		long total = mailService.countMailByUser(null, userId, false, null);
+		List<Mail> datalist = mailService.listMailByUser(null, userId, 0, null, start, length);
+		long total = mailService.countMailByUser(null, userId, 0, null);
 		return new DatatableResponse(total, datalist, total);
 	}
+	
+	@RequestMapping(value = { "/saveMail" }, method = RequestMethod.GET, produces="application/json")
+    public @ResponseBody AppResponse saveMail(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(name="target", required=false) String target) {
+		AppResponse appResponse = null;
+		try {
+			mailService.saveMail(target);
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
+			e.printStackTrace();
+		}
+		return appResponse;
+    }
+	
+	@RequestMapping(value="saved.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse saved(
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+		String userId = SecurityUtil.getSecurityUser().getUser().getId();
+		List<Mail> datalist = mailService.listMailByUser(null, userId, 2, null, start, length);
+		long total = mailService.countMailByUser(null, userId, 2, null);
+		return new DatatableResponse(total, datalist, total);
+	}
+	
+	@RequestMapping(value = { "/inboxMail" }, method = RequestMethod.GET, produces="application/json")
+    public @ResponseBody AppResponse inboxMail(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(name="target", required=false) String target) {
+		AppResponse appResponse = null;
+		try {
+			mailService.inboxMail(target);
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
+			e.printStackTrace();
+		}
+		return appResponse;
+    }
 }

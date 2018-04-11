@@ -48,8 +48,8 @@ public class Mail implements java.io.Serializable {
 	@Column(name = "beenRead", nullable = true)
 	private boolean beenRead=false;
 	
-	@Column(name = "alive", nullable = true)
-	private boolean alive=true;
+	@Column(name = "status", nullable = true)
+	private int status=1;//TINYINT(2) 0:垃圾桶 1:收件夾 2:已儲存
 	
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = true)
@@ -83,7 +83,7 @@ public class Mail implements java.io.Serializable {
 	}
 	
 	public Mail(Long id, User mailFrom, User mailTo, String subject, String content, int type, int flag, boolean beenRead,
-			boolean alive, Date createTime, User updateBy, Date updateTime) {
+			int status, Date createTime, User updateBy, Date updateTime) {
 		super();
 		this.id = id;
 		this.mailFrom = mailFrom;
@@ -93,7 +93,7 @@ public class Mail implements java.io.Serializable {
 		this.type = type;
 		this.flag = flag;
 		this.beenRead = beenRead;
-		this.alive = alive;
+		this.status = status;
 		this.createTime = createTime;
 		this.updateBy = updateBy;
 		this.updateTime = updateTime;
@@ -156,15 +156,6 @@ public class Mail implements java.io.Serializable {
 		this.flag = flag;
 	}
 
-
-	public boolean isAlive() {
-		return alive;
-	}
-
-	public void setAlive(boolean alive) {
-		this.alive = alive;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -195,5 +186,13 @@ public class Mail implements java.io.Serializable {
 
 	public void setBeenRead(boolean beenRead) {
 		this.beenRead = beenRead;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

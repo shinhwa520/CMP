@@ -44,21 +44,22 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public List<Mail> listMailByUser(String mailFromId, String mailToId, boolean alive, Boolean beenRead, Integer start,Integer length){
-		return mailDAO.findMailByUser(mailFromId, mailToId, alive, beenRead, start, length);
+	public List<Mail> listMailByUser(String mailFromId, String mailToId, int status, Boolean beenRead, Integer start,Integer length){
+		return mailDAO.findMailByUser(mailFromId, mailToId, status, beenRead, start, length);
 	}
 	
 	@Override
-	public long countMailByUser(String mailFromId, String mailToId, boolean alive, Boolean beenRead){
-		return mailDAO.countMailByUser(mailFromId, mailToId, alive, beenRead);
+	public long countMailByUser(String mailFromId, String mailToId, int status, Boolean beenRead){
+		return mailDAO.countMailByUser(mailFromId, mailToId, status, beenRead);
 	}
 	
 	public HashMap<String, Object> getMailInfo(){
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
-		data.put("listUnread", mailDAO.findMailByUser(null, userId, true, false, 0, 3));
-		data.put("countUnread", mailDAO.countMailByUser(null, userId, true, false));
-		data.put("countNotAlive", mailDAO.countMailByUser(null, userId, false, null));
+		data.put("listUnread", mailDAO.findMailByUser(null, userId, 1, false, 0, 3));
+		data.put("countUnread", mailDAO.countMailByUser(null, userId, 1, false));
+		data.put("countSaved", mailDAO.countMailByUser(null, userId, 2, null));
+		data.put("countNotAlive", mailDAO.countMailByUser(null, userId, 0, null));
 		data.put("mailTo", userDao.findUserByChannelId(userId));
 		return data;
 	}
@@ -75,6 +76,20 @@ public class MailServiceImpl implements MailService {
 	
 	@Override
 	public void trashMail(String mailIds) {
+		changeMailStatus(mailIds, 0);
+	}
+	
+	@Override
+	public void saveMail(String mailIds) {
+		changeMailStatus(mailIds, 2);
+	}
+	
+	@Override
+	public void inboxMail(String mailIds) {
+		changeMailStatus(mailIds, 1);
+	}
+	
+	private void changeMailStatus(String mailIds, int status) {
 		User editor = SecurityUtil.getSecurityUser().getUser();
 		Date current = new Date();
 		String[] tmpArr = mailIds.split(",");
@@ -82,7 +97,7 @@ public class MailServiceImpl implements MailService {
 			if(StringUtils.isBlank(tmpArr[i]))
 				continue;
 			Mail mail = mailDAO.findMailById(Long.parseLong(tmpArr[i]));
-			mail.setAlive(false);
+			mail.setStatus(status);
 			mail.setUpdateBy(editor);
 			mail.setUpdateTime(current);
 			mailDAO.saveMail(mail);

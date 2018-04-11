@@ -48,12 +48,12 @@ public class MailDAOImpl extends BaseDaoHibernate implements MailDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Mail> findMailByUser(String mailFromId, String mailToId, boolean alive, Boolean beenRead, Integer start,Integer length) {
+	public List<Mail> findMailByUser(String mailFromId, String mailToId, int status, Boolean beenRead, Integer start,Integer length) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select m ")
 		.append(" from Mail m ")
 		.append(" where 1=1 ")
-		.append(" and m.alive = :alive ");
+		.append(" and m.status = :status ");
 		if(StringUtils.isNotBlank(mailFromId)){
 			sb.append(" and m.mailFrom.id = :mailFromId ");
 		}
@@ -75,17 +75,17 @@ public class MailDAOImpl extends BaseDaoHibernate implements MailDAO {
 		if(null!=beenRead){
 			q.setParameter("beenRead", beenRead);
 		}
-		q.setParameter("alive", alive);
+		q.setParameter("status", status);
 	    q.setFirstResult(start).setMaxResults(length);
 	    return (List<Mail>) q.list();
 	}
 	
-	public long countMailByUser(String mailFromId, String mailToId, boolean alive, Boolean beenRead) {
+	public long countMailByUser(String mailFromId, String mailToId, int status, Boolean beenRead) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select count(*) ")
 		.append(" from Mail m ")
 		.append(" where 1=1 ")
-		.append(" and m.alive = :alive ");
+		.append(" and m.status = :status ");
 		if(StringUtils.isNotBlank(mailFromId)){
 			sb.append(" and m.mailFrom.id = :mailFromId ");
 		}
@@ -106,7 +106,7 @@ public class MailDAOImpl extends BaseDaoHibernate implements MailDAO {
 		if(null!=beenRead){
 			q.setParameter("beenRead", beenRead);
 		}
-		q.setParameter("alive", alive);
+		q.setParameter("status", status);
 	    return (long) q.uniqueResult();
 	}
 }

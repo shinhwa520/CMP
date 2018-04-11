@@ -22,6 +22,9 @@
 	                            <li id="inboxOption" class="list-group-item active" onclick="viewInboxList();">
 	                            	<a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> <spring:message code='inbox'/> </a><span id="countUnread" class="badge badge-success ml-auto">0</span>
 	                            </li>
+	                            <li id="savedOption" class="list-group-item" onclick="viewSavedList();">
+	                            	<a href="javascript:void(0)"><i class="mdi mdi-inbox-arrow-down"></i> <spring:message code='save'/> </a><span id="countSaved" class="badge badge-info ml-auto">0</span>
+	                            </li>
 	                            <li id="trashOption" class="list-group-item" onclick="viewTrashList();">
 	                                <a href="javascript:void(0)"> <i class="mdi mdi-delete"></i> <spring:message code='trashCan'/> </a><span id="countNotAlive" class="badge badge-secondary ml-auto">0</span>
 	                            </li>
@@ -33,16 +36,23 @@
 	                <div id="mailbox_div" class="col-xlg-10 col-lg-8 col-md-8">
 	                    <div class="card-body">
 	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
-	                            <button id="delChkAll" type="button" class="btn btn-secondary font-18 text-dark"><i class="mdi mdi-inbox-arrow-down"></i></button>
+	                        	<button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxClicked()"><i class="mdi mdi-gmail"></i></button>
+	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveClicked()"><i class="mdi mdi-inbox-arrow-down"></i></button>
 	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteClicked();"><i class="mdi mdi-delete"></i></button>
 	                        </div>
-	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark"  onclick="btnReloadClicked();"><i class="mdi mdi-reload font-18"></i></button>
+	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark"  onclick="triggerMenuOption();"><i class="mdi mdi-reload font-18"></i></button>
 	                    </div>
 	                    <div class="card-body p-t-0">
 	                        <div class="card b-all shadow-none">
 	                            <div class="inbox-center b-all table-responsive">
 	                                <table id="tblMain" class="table table-hover no-wrap">
 	                                    <thead>
+	                                    	<tr>
+	                                    		<th style="width: 5%"><div class="checkbox"><input type="checkbox" name="optChkAll" id="optChkAll" ><label for="optChkAll"></label></div></th>
+	                                    		<th></th>
+	                                    		<th></th>
+	                                    		<th></th>
+	                                    	</tr>
 	                                    </thead>
 	                                </table>
 	                            </div>
@@ -53,15 +63,27 @@
 	                <!-- detail_div ============================================================== -->
 	                <div id="detail_div" class="col-xlg-10 col-lg-8 col-md-8">
 	                    <div class="card-body">
+	                    	<!-- 返回 -->
+	                    	<button id="backBTN" type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark" onclick="doBack();"><i class="mdi mdi-keyboard-return font-18"></i></button>
 	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
-	                            <button id="delChkAll" type="button" class="btn btn-secondary font-18 text-dark"><i class="mdi mdi-swap-horizontal"></i></button>
-	                            <button type="button" class="btn btn-secondary font-18 text-dark"><i class="mdi mdi-share"></i></button>
+	                        	<!-- 回复 -->
+	                        	<button type="button" class="btn btn-secondary font-18 text-dark" onclick="doReply();"><i class="mdi mdi-reply"></i></button>
+	                        	<!-- 转寄 -->
+	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="doForward();"><i class="mdi mdi-share"></i></button>
+	                            <!-- 移至收件夹 -->
+	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxOne();"><i class="mdi mdi-gmail"></i></button>
+	                            <!-- 封存 -->
+	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveOne();"><i class="mdi mdi-inbox-arrow-down"></i></button>
+		                        <!--  删除 -->
+		                        <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteOne();"><i class="mdi mdi-delete"></i></button>
 	                        </div>
-	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark" onclick="btnDeleteOne();"><i class="mdi mdi-delete font-18"></i></button>
 	                    </div>
                         <div class="card-body p-t-0">
                             <div class="card b-all shadow-none">
                             	<input type="hidden" id="dtlId" value="${mail.id }">
+                            	<input type="hidden" id="dtlMailFromId" value="${mail.mailFrom.id }">
+                            	<input type="hidden" id="dtlMailToName" value="${mail.mailTo.name }">
+                            	<input type="hidden" id="dtlMailCreateTime" value="${mail.createTime }">
                                 <div class="card-body">
                                     <h3 id="dtlSubject" class="card-title m-b-0">${mail.subject }</h3>
                                 </div>
@@ -71,7 +93,7 @@
                                 <div class="card-body">
                                     <div class="d-flex m-b-40">
                                         <div class="p-l-10">
-                                            From: <small id="dtlMailFrom" class="text-muted">${mail.mailFrom.name }</small>
+                                            From: <small id="dtlMailFromName" class="text-muted">${mail.mailFrom.name }</small>
                                         </div>
                                     </div>
                                     <p id="dtlContent" >${mail.content }</p>
@@ -133,27 +155,25 @@
 </div>
 <script>
 var tblMain;
-var targetMail = '${mail}';
 
 //[Init.]
 $(function() {
-	//alert('[targetMail]'+targetMail);
-	if(''!=targetMail){
-    	$('#dtlSubject').html(targetMail.subject);
-    	$('#dtlMailFrom').html(targetMail.mailFrom);
-    	$('#dtlContent').html(targetMail.content);
-		viewDetail()
-	}else{
+	var mailId = '<%=request.getParameter("mailId")%>';
+    if (mailId === 'null') {
 		inbox();
 		viewMailBox();
-	}
+    }else{
+    	mailboxDetail(mailId);
+    }
+
 	getMailInfo();
+	$('.move2Inbox').hide();
+	$('.move2Saved').show();
 	$('#newContent').wysihtml5();
-	$('#delChkAll').click(function () {
-	    $(':checkbox.delChkbox').prop('checked', this.checked);
+	$('#optChkAll').click(function () {
+	    $(':checkbox.optChkbox').prop('checked', this.checked);
 	});
 });
-
 
 function viewMailBox() {
 	$('#mailbox_div').show();
@@ -168,10 +188,38 @@ function viewDetail() {
 function modalCompose() {
 	$(':checkbox.mailToChkbox').prop('checked', false);
 	$('#newSubject').val('');
-	$('#newContent').val('');
 	$('#newContent').data("wysihtml5").editor.clear();
 	$('#modal_Compose').modal();
 }
+
+function doReply() {
+	$(':checkbox.mailToChkbox').prop('checked', false);
+	$('#newSubject').val('RE: '+$('#dtlSubject').html());
+	var txt = "<br><br><br>------回复信件------"
+		+ "<br>From:"+$('#dtlMailFromName').html()
+		+ "<br>To:"+$('#dtlMailToName').val()
+		+ "<br>Sent:"+ getFormattedDate(getProperDate($('#dtlMailCreateTime').val()))
+		+ "<br>"+$('#dtlContent').html()
+		; 
+	$('#newContent').data("wysihtml5").editor.setValue(txt);
+	var dtlMailFromId = $('#dtlMailFromId').val();
+	$('#mailToChkbox_'+dtlMailFromId).prop('checked', true);
+	$('#modal_Compose').modal();	
+}
+
+function doForward() {
+	$(':checkbox.mailToChkbox').prop('checked', false);
+	$('#newSubject').val('FW: '+$('#dtlSubject').html());
+	var txt = "<br><br><br>------转寄信件------"
+			+ "<br>From:"+$('#dtlMailFromName').html()
+			+ "<br>To:"+$('#dtlMailToName').val()
+			+ "<br>Sent:"+ getFormattedDate(getProperDate($('#dtlMailCreateTime').val()))
+			+ "<br>"+$('#dtlContent').html()
+			; 
+	$('#newContent').data("wysihtml5").editor.setValue(txt);
+	$('#modal_Compose').modal();
+}
+
 
 function viewInboxList() {
 	$('.list-group-item').removeClass('active');
@@ -179,6 +227,20 @@ function viewInboxList() {
 	inbox();
 	getMailInfo();
 	viewMailBox();
+	$('.move2Inbox').hide();
+	$('.move2Saved').show();
+	$(':checkbox#optChkAll').prop('checked', false);
+}
+
+function viewSavedList() {
+	$('.list-group-item').removeClass('active');
+	$('#savedOption').addClass('active');
+	saved();
+	getMailInfo();
+	viewMailBox();
+	$('.move2Inbox').show();
+	$('.move2Saved').hide();
+	$(':checkbox#optChkAll').prop('checked', false);
 }
 
 function viewTrashList() {
@@ -187,6 +249,9 @@ function viewTrashList() {
 	trash();
 	getMailInfo();
 	viewMailBox();
+	$('.move2Inbox').show();
+	$('.move2Saved').show();
+	$(':checkbox#optChkAll').prop('checked', false);
 }
 
 function getFormattedDate(d) {
@@ -197,6 +262,18 @@ function getFormattedDate(d) {
 			+ ("00" + d.getMinutes()).slice(-2);
 	//+ ":" + ("00" + d.getSeconds()).slice(-2)
 	return dformat;
+}
+
+function btnInboxOne() {
+	var results = $('#dtlId').val();
+	if(''==results) return false;
+	inboxMail(results);
+}
+
+function btnSaveOne() {
+	var results = $('#dtlId').val();
+	if(''==results) return false;
+	saveMail(results);
 }
 
 function btnDeleteOne() {
@@ -213,7 +290,7 @@ function btnDeleteOne() {
 function btnDeleteClicked() {
 	var getResult = function () {
 	    var result = [];
-	    $('input[name="delChkbox"]').each(function () {
+	    $('input[name="optChkbox"]').each(function () {
 	        var $this = $(this), id = $this.attr('id'), val = $this.val();
 	        if ($(this).prop('checked')) {
 	            result.push(val);
@@ -223,7 +300,6 @@ function btnDeleteClicked() {
 	};
 	var results = getResult().join(',');
 	if(''==results) return false;
-
 	
 	if($('#trashOption').hasClass('active')){
 		deleteMail(results);
@@ -232,16 +308,37 @@ function btnDeleteClicked() {
 	}
 }
 
-function btnReloadClicked() {
-	if($('#trashOption').hasClass('active')){
-    	trash();
-    	getMailInfo();
-	}else{
-		inbox();
-    	getMailInfo();
-	}
+function btnInboxClicked() {
+	var getResult = function () {
+	    var result = [];
+	    $('input[name="optChkbox"]').each(function () {
+	        var $this = $(this), id = $this.attr('id'), val = $this.val();
+	        if ($(this).prop('checked')) {
+	            result.push(val);
+	        }
+	    });
+	    return result;
+	};
+	var results = getResult().join(',');
+	if(''==results) return false;
+	inboxMail(results);
 }
 
+function btnSaveClicked() {
+	var getResult = function () {
+	    var result = [];
+	    $('input[name="optChkbox"]').each(function () {
+	        var $this = $(this), id = $this.attr('id'), val = $this.val();
+	        if ($(this).prop('checked')) {
+	            result.push(val);
+	        }
+	    });
+	    return result;
+	};
+	var results = getResult().join(',');
+	if(''==results) return false;
+	saveMail(results);
+}
 
 function inbox() {
 	if (tblMain) {
@@ -270,7 +367,7 @@ function inbox() {
 						"targets" : 0,
 						"data":   "id",
 		                "render": function ( data, type, row ) {
-		                	return '<div class="checkbox"><input type="checkbox" name="delChkbox" class="delChkbox" id="delChkbox_'+data+'" value="'+data+'"><label for="delChkbox_'+data+'"></label></div>';
+		                	return '<div class="checkbox"><input type="checkbox" name="optChkbox" class="optChkbox" id="optChkbox_'+data+'" value="'+data+'"><label for="optChkbox_'+data+'"></label></div>';
 		                }
 					},
 					{
@@ -306,6 +403,7 @@ function getMailInfo() {
             		addMailTo(this);
             	});
             	$('#countUnread').html(data.data.countUnread);
+            	$('#countSaved').html(data.data.countSaved);
             	$('#countNotAlive').html(data.data.countNotAlive);
             } else {
             	alert(data.message);
@@ -374,8 +472,11 @@ function mailboxDetail(mailId) {
 		success : function(data) {
             if (data.code === 200) {
             	$('#dtlId').val(mailId);
+            	$('#dtlMailFromId').val(data.data.targetMail.mailFrom.id);
+            	$('#dtlMailToName').val(data.data.targetMail.mailTo.name);
+            	$('#dtlMailCreateTime').val(data.data.targetMail.createTime);
             	$('#dtlSubject').html(data.data.targetMail.subject);
-            	$('#dtlMailFrom').html(data.data.targetMail.mailFrom.name);
+            	$('#dtlMailFromName').html(data.data.targetMail.mailFrom.name);
             	$('#dtlContent').html(data.data.targetMail.content);
             	viewDetail();
             } else {
@@ -398,7 +499,7 @@ function deleteMail(results) {
 		contentType:"application/json;charset=utf-8", 
 		success : function(data) {
             if (data.code === 200) {
-            	$('#trashOption').trigger('click');
+            	triggerMenuOption();
             } else {
             	alert(data.message);
             }
@@ -419,7 +520,49 @@ function trashMail(results) {
 		contentType:"application/json;charset=utf-8", 
 		success : function(data) {
             if (data.code === 200) {
-            	$('#inboxOption').trigger('click');
+            	triggerMenuOption();
+            } else {
+            	alert(data.message);
+            }
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+	});
+}
+
+function saveMail(results) {
+	$.ajax({
+		url : '${pageContext.request.contextPath}/mail/saveMail?target=' + results,
+		type : "GET",
+		dataType : 'json',
+		async: false,
+		contentType:"application/json;charset=utf-8", 
+		success : function(data) {
+            if (data.code === 200) {
+            	triggerMenuOption();
+            } else {
+            	alert(data.message);
+            }
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			alert(thrownError);
+		}
+	});
+}
+
+function inboxMail(results) {
+	$.ajax({
+		url : '${pageContext.request.contextPath}/mail/inboxMail?target=' + results,
+		type : "GET",
+		dataType : 'json',
+		async: false,
+		contentType:"application/json;charset=utf-8", 
+		success : function(data) {
+            if (data.code === 200) {
+            	triggerMenuOption();
             } else {
             	alert(data.message);
             }
@@ -458,7 +601,7 @@ function trash() {
 						"targets" : 0,
 						"data":   "id",
 		                "render": function ( data, type, row ) {
-		                	return '<div class="checkbox"><input type="checkbox" name="delChkbox" class="delChkbox" id="delChkbox_'+data+'" value="'+data+'"><label for="delChkbox_'+data+'"></label></div>';
+		                	return '<div class="checkbox"><input type="checkbox" name="optChkbox" class="optChkbox" id="optChkbox_'+data+'" value="'+data+'"><label for="optChkbox_'+data+'"></label></div>';
 		                }
 					},
 					{
@@ -479,6 +622,78 @@ function trash() {
 				select: true
 			});
 }
+
+function saved() {
+	if (tblMain) {
+		$('#tblMain').DataTable().destroy();
+	}
+	tblMain = $('#tblMain').DataTable(
+			{
+				"bFilter" : false,
+				"ordering" : false,
+				"info" : false,
+				"serverSide" : true,
+				"bLengthChange" : false,
+				"ajax" : {
+					"url" : '${pageContext.request.contextPath}/mail/saved.json',
+					"type" : 'GET',
+					"data" : function(d) {}
+				},
+				"columns" : [
+					{ "data" : "id" },
+					{ "data" : "mailFrom.name" },
+					{ "data" : "subject" },
+					{ "data" : "createTime" }
+				],
+				"columnDefs" : [
+					{
+						"targets" : 0,
+						"data":   "id",
+		                "render": function ( data, type, row ) {
+		                	return '<div class="checkbox"><input type="checkbox" name="optChkbox" class="optChkbox" id="optChkbox_'+data+'" value="'+data+'"><label for="optChkbox_'+data+'"></label></div>';
+		                }
+					},
+					{
+						"targets" : 2,
+						"data" : 'subject',
+						"render" : function(data, type, row) {
+							return '<div class="link" role="link" onclick="mailboxDetail('+row['id']+');">'+data+'</div>';
+						}
+					},
+					{
+						"targets" : 3,
+						"data" : 'createTime',
+						"render" : function(data, type, row) {
+							return getFormattedDate(new Date(row['createTime']));
+						}
+					}
+				],
+				select: true
+			});
+}
+
+function triggerMenuOption() {
+	if($('#inboxOption').hasClass('active')){
+		$('#inboxOption').trigger('click');
+	}else if($('#savedOption').hasClass('active')){
+		$('#savedOption').trigger('click');
+	}else if($('#trashOption').hasClass('active')){
+		$('#trashOption').trigger('click');
+	}
+}
+
+
+
+function doBack() {
+	triggerMenuOption();
+}
+
+
+function getProperDate(date) {
+    if (date == null) return null;
+    return new Date(+parseInt(date));
+}
+
 </script>
 <style>
 div.link {

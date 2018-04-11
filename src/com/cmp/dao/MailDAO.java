@@ -10,6 +10,6 @@ public interface MailDAO {
 	public void deleteMailById(long id);
 	public void deleteMails(List<Mail> mail);
 	public Mail findMailById(long id);
-	public List<Mail> findMailByUser(String mailFromId, String mailToId, boolean alive, Boolean beenRead, Integer start,Integer length);
-	public long countMailByUser(String mailFromId, String mailToId, boolean alive, Boolean beenRead);
+	public List<Mail> findMailByUser(String mailFromId, String mailToId, int status, Boolean beenRead, Integer start,Integer length);
+	public long countMailByUser(String mailFromId, String mailToId, int status, Boolean beenRead);
 }
