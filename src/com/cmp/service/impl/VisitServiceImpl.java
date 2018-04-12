@@ -19,8 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
+import com.cmp.dao.StatusDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.VisitDAO;
+import com.cmp.model.Customer;
 import com.cmp.model.Status;
 import com.cmp.model.User;
 import com.cmp.model.VisitDetail;
@@ -45,6 +47,9 @@ public class VisitServiceImpl implements VisitService {
 	
 	@Autowired
 	private CustomerDAO customerDAO;
+	
+	@Autowired
+	private StatusDAO statusDAO;
 	
 	private SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
@@ -407,6 +412,8 @@ public class VisitServiceImpl implements VisitService {
 				vsVO.setUserName(userDAO.findUserById(vd.getCust().getUser().getId()).getName());
 				vsVO.setCustName(vd.getCust().getName());
 				vsVO.setCustId(vd.getCust().getId());
+				vsVO.setStatusId(vd.getCust().getStatus().getId());
+				vsVO.setSort(vd.getCust().getStatus().getSort());
 				
 				/*
 				 * 判斷客戶狀態(!=已收團費) or 客戶的基本必填欄位資料不齊全
@@ -458,6 +465,7 @@ public class VisitServiceImpl implements VisitService {
 	@Override
 	public boolean saveVisitDetail(VisitServiceVO vsVO) {
 		VisitDetail visitDetail;
+		Customer customer;
 		Integer visitId;
 		try {
 			visitId = vsVO.getVisitId();
@@ -479,6 +487,15 @@ public class VisitServiceImpl implements VisitService {
 					visitDetail.setUpdateTime(new Timestamp((new java.util.Date()).getTime()));
 					
 					visitDAO.updateVisitDetail(visitDetail);
+					
+					customer = customerDAO.findCustById(custId);
+					
+					if (customer != null) {
+						customer.setStatus(statusDAO.findStatus("CUST", vsVO.getStatusSortArray()[idx]));
+						customer.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+						customer.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
+						customerDAO.saveCust(customer);
+					}
 				}
 				
 				idx += 1;

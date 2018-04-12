@@ -306,6 +306,7 @@
 			                    <th><b><spring:message code="accommodationSituation"/></b></th>
 			                    <th><b><spring:message code="amountReceived"/></b></th>
 			                    <th><b><spring:message code="remarks"/></b></th>
+			                    <th><b><spring:message code="status"/></b></th>
 							</tr>
 						</thead>
 					</table>                           
@@ -882,6 +883,27 @@
 					"render" : function(data, type, row) {
 								return '<input type="text" class="form-control" name="remark" value="' + row['remark'] + '"/>'
 									   + '<input type="hidden" name="custId" value="' + row['custId'] + '"/>';
+							}
+				},
+				{
+					"targets" : [6],
+					"render" : function(data, type, row) {
+								var ret = '<select class="form-control" name="statusSort" width="120" style="min-width:120px" />';
+								ret += '<option value="1" ' + ((row['sort'] == 1) ? 'selected' : '') + '><spring:message code="registered"/></option>';
+								ret += '<option value="2" ' + ((row['sort'] == 2) ? 'selected' : '') + '><spring:message code="bookingFeePaid"/></option>';
+								ret += '<option value="3" ' + ((row['sort'] == 3) ? 'selected' : '') + '><spring:message code="bookedAirTicket"/></option>';
+								ret += '<option value="4" ' + ((row['sort'] == 4) ? 'selected' : '') + '><spring:message code="visaIssued"/></option>';
+								ret += '<option value="5" ' + ((row['sort'] == 5) ? 'selected' : '') + '><spring:message code="bookedHotel"/></option>';
+								ret += '<option value="6" ' + ((row['sort'] == 6) ? 'selected' : '') + '><spring:message code="visited"/></option>';
+								ret += '<option value="7" ' + ((row['sort'] == 7) ? 'selected' : '') + '><spring:message code="contractsSigned"/></option>';
+								ret += '<option value="8" ' + ((row['sort'] == 8) ? 'selected' : '') + '><spring:message code="depositPaid"/></option>';
+								ret += '<option value="9" ' + ((row['sort'] == 9) ? 'selected' : '') + '><spring:message code="downPayment"/></option>';
+								ret += '<option value="10" ' + ((row['sort'] == 10) ? 'selected' : '') + '><spring:message code="loanApplication"/></option>';
+								ret += '<option value="11" ' + ((row['sort'] == 11) ? 'selected' : '') + '><spring:message code="progressPayments"/></option>';
+								ret += '<option value="12" ' + ((row['sort'] == 12) ? 'selected' : '') + '><spring:message code="settlement"/></option>';
+								ret += '</select>';
+
+								return ret;
 							}
 				},
 			],

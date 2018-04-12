@@ -99,9 +99,9 @@ public class CustServiceImpl implements CustService {
 		
 		cust.setStatus(statusDAO.findStatus("CUST", 1));
 		cust.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		cust.setCreateBy(user.getName());
+		cust.setCreateBy(user.getAccount());
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		cust.setUpdateBy(user.getName());
+		cust.setUpdateBy(user.getAccount());
 
 		cust.setDataStatus(statusDAO.findStatus("DATA", 1));
 		
@@ -141,7 +141,7 @@ public class CustServiceImpl implements CustService {
 //		cust.setCreateTime(new Timestamp(System.currentTimeMillis()));
 //		cust.setCreateBy(user.getName());
 		cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		cust.setUpdateBy(user.getName());
+		cust.setUpdateBy(user.getAccount());
 		customerDAO.saveCust(cust);
 	}
 
@@ -153,7 +153,7 @@ public class CustServiceImpl implements CustService {
 
 		User user = userDao.findUserById(SecurityUtil.getSecurityUser().getUser().getId());
 		customer.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		customer.setUpdateBy(user.getName());
+		customer.setUpdateBy(user.getAccount());
 
 		customerDAO.saveCust(customer);
 	}

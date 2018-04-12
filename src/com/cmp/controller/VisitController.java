@@ -119,6 +119,7 @@ public class VisitController extends BaseController {
 			@RequestParam(name="accommodationSituation", required=false) String[] accommodationSituationArray,
 			@RequestParam(name="amountReceived", required=false) Integer[] amountReceivedArray,
 			@RequestParam(name="remark", required=false) String[] remarkArray,
+			@RequestParam(name="statusSort", required=false) Integer[] statusSortArray,
 			@RequestParam(name="custId", required=true) Integer[] custIdArray) {
 		
 		VisitServiceVO vsVO = null;
@@ -130,6 +131,7 @@ public class VisitController extends BaseController {
 			vsVO.setAmountReceivedArray(amountReceivedArray);
 			vsVO.setRemarkArray(remarkArray);
 			vsVO.setCustIdArray(custIdArray);
+			vsVO.setStatusSortArray(statusSortArray);
 			
 			visitService.saveVisitDetail(vsVO);
 			

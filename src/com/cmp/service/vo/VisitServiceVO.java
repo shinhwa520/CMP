@@ -20,6 +20,7 @@ public class VisitServiceVO {
 	public Integer[] amountReceivedArray;
 	public String[] remarkArray;
 	public Integer[] custIdArray;
+	public Integer[] statusSortArray;
 	
 	private String visitName;
 	private String description;
@@ -48,6 +49,8 @@ public class VisitServiceVO {
 	private String amountReceived;	//已收金額
 	private Integer custId;
 	private boolean custNotReady = false;	//客戶狀態 or資料尚不完整
+	private Integer statusId;
+	private Integer sort;
 	
 	private String updateDate;
 	private String updateBy;
@@ -320,5 +323,23 @@ public class VisitServiceVO {
 	}
 	public void setCustIdArray(Integer[] custIdArray) {
 		this.custIdArray = custIdArray;
+	}
+	public Integer getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(Integer statusId) {
+		this.statusId = statusId;
+	}
+	public Integer getSort() {
+		return sort;
+	}
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+	public Integer[] getStatusSortArray() {
+		return statusSortArray;
+	}
+	public void setStatusSortArray(Integer[] statusSortArray) {
+		this.statusSortArray = statusSortArray;
 	}
 }

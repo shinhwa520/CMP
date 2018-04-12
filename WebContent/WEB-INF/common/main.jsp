@@ -391,8 +391,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-globe"></i></a>
                             <div class="dropdown-menu  dropdown-menu-right animated bounceInDown"> 
-                            	<a class="dropdown-item" href="#" onclick="doChangeLang('zh_CN')"><i class="flag-icon flag-icon-cn"></i> </a> 
-                            	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> </a> 
+                            	<a class="dropdown-item" href="#" onclick="doChangeLang('zh_CN')"><i class="flag-icon flag-icon-cn">简体中文</i> </a> 
+                            	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us">English</i> </a> 
                             </div>
                         </li>
                     </ul>

@@ -28,9 +28,9 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">康莱</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_1}%</small>
-		                     </div>
-		            	</div>
+		                    <h3 class="box-title">康莱</h3><br/><small style="color: blue;">${reward} : ${commission_1}%</small>
+	                    </div>
+	            	</div>
 			  	</div>
 			  	<!-- Card -->
 			  	<!-- Card -->
@@ -44,9 +44,9 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">Arte满家乐</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_2}%</small>
-		                     </div>
-			            </div>
+		                    <h3 class="box-title">Arte满家乐</h3><br/><small style="color: blue;">${reward} : ${commission_2}%</small>
+	                    </div>
+		            </div>
 			  	</div>
 			  	<!-- Card -->
 			  	<!-- Card -->
@@ -60,9 +60,9 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">白沙罗城豪华公寓</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_3}%</small>
-		                     </div>
-			            </div>
+		                    <h3 class="box-title">白沙罗城豪华公寓</h3><br/><small style="color: blue;">${reward} : ${commission_3}%</small>
+	                    </div>
+		            </div>
 			  	</div>
 			  	<!-- Card -->
 			  	<!-- Card -->
@@ -76,9 +76,9 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">奥普斯</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_4}%</small>
-		                     </div>
-			            </div>
+		                    <h3 class="box-title">奥普斯</h3><br/><small style="color: blue;">${reward} : ${commission_4}%</small>
+	                    </div>
+		            </div>
 			  	</div>
 			  	<!-- Card -->
 			  	<!-- Card -->
@@ -92,9 +92,9 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">丽思卡尔顿</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_5}%</small>
-		                     </div>
-			            </div>
+		                    <h3 class="box-title">丽思卡尔顿</h3><br/><small style="color: blue;">${reward} : ${commission_5}%</small>
+	                    </div>
+		            </div>
 			  	</div>
 			  	<!-- Card -->
 			  	<!-- Card -->
@@ -108,9 +108,9 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">大马金豪</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_6}%</small>
-		                     </div>
-			            </div>
+		                    <h3 class="box-title">大马金豪</h3><br/><small style="color: blue;">${reward} : ${commission_6}%</small>
+		                </div>
+			        </div>
 			  	</div>
 			  	<!-- Card -->
 			</div>
@@ -135,8 +135,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">Avira花园联排别墅</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_7}%</small>
-		                     </div>
+		                    <h3 class="box-title">Avira花园联排别墅</h3><br/><small style="color: blue;">${reward} : ${commission_7}%</small>
+		                </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -167,8 +167,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">聚富湾</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_8}%</small>
-		                     </div>
+		                    <h3 class="box-title">聚富湾</h3><br/><small style="color: blue;">${reward} : ${commission_8}%</small>
+		                </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -183,8 +183,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">皇庭海湾1号</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_9}%</small>
-		                     </div>
+		                    <h3 class="box-title">皇庭海湾1号</h3><br/><small style="color: blue;">${reward} : ${commission_9}%</small>
+		                </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -214,8 +214,8 @@
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">安达曼海景公寓</h3> <small>Managing Director</small><br/><small style="color: blue;">${reward} : ${commission_10}%</small>
-		                     </div>
+		                    <h3 class="box-title">安达曼海景公寓</h3><br/><small style="color: blue;">${reward} : ${commission_10}%</small>
+		                </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
@@ -250,9 +250,11 @@
 									<th>#</th>
 									<th><spring:message code="fileName"/></th>
 									<th><spring:message code="fileSize"/></th>
+									<!-- 
 									<th><spring:message code="downloadTimes"/></th>
 									<th><spring:message code="fileDescription"/></th>
 									<th><spring:message code="updatedTime"/></th>
+									 -->
 									<th style="width: 50px;"><spring:message code="option"/></th>
 								</tr>
 							</thead>
@@ -328,10 +330,12 @@
 						{ "data" : "fullFileName" },
 						{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
 														      return data.format() + ' KB';
-													    } },
+													    } }
+						/*
 						{ "data" : "downloadTimes" },
 						{ "data" : "fileDescription" },
 						{ "data" : "updateTime" }
+						*/
 					],
 					"columnDefs" : [
 						{
@@ -341,7 +345,7 @@
 						    }
 						},
 						{
-							"targets" : 6,
+							"targets" : 3,
 							"data" : 'seqNo',
 							"render" : function(data, type, row) {
 								return '<a href="#">'
