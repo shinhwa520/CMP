@@ -23,10 +23,10 @@
 	                            	<a href="javascript:void(0)"><i class="mdi mdi-gmail"></i> <spring:message code='inbox'/> </a><span id="countUnread" class="badge badge-success ml-auto">0</span>
 	                            </li>
 	                            <li id="savedOption" class="list-group-item" onclick="viewSavedList();">
-	                            	<a href="javascript:void(0)"><i class="mdi mdi-inbox-arrow-down"></i> <spring:message code='save'/> </a><span id="countSaved" class="badge badge-info ml-auto">0</span>
+	                            	<a href="javascript:void(0)"><i class="mdi mdi-inbox-arrow-down"></i> <spring:message code='saved'/><spring:message code='mail'/> </a><span id="countSaved" class="badge badge-info ml-auto">0</span>
 	                            </li>
 	                            <li id="trashOption" class="list-group-item" onclick="viewTrashList();">
-	                                <a href="javascript:void(0)"> <i class="mdi mdi-delete"></i> <spring:message code='trashCan'/> </a><span id="countNotAlive" class="badge badge-secondary ml-auto">0</span>
+	                                <a href="javascript:void(0)"> <i class="mdi mdi-delete"></i> <spring:message code='deleted'/><spring:message code='mail'/> </a><span id="countNotAlive" class="badge badge-secondary ml-auto">0</span>
 	                            </li>
 	                        </ul>
 	                    </div>
@@ -36,11 +36,11 @@
 	                <div id="mailbox_div" class="col-xlg-10 col-lg-8 col-md-8">
 	                    <div class="card-body">
 	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
-	                        	<button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxClicked()"><i class="mdi mdi-gmail"></i></button>
-	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveClicked()"><i class="mdi mdi-inbox-arrow-down"></i></button>
-	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteClicked();"><i class="mdi mdi-delete"></i></button>
+	                        	<button type="button" class="btn btn-secondary font-18 text-dark" onclick="triggerMenuOption();" title="<spring:message code='refresh'/>" ><i class="mdi mdi-reload"></i></button>
+	                        	<button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxClicked()" title="<spring:message code='moveTo'/><spring:message code='inbox'/>" ><i class="mdi mdi-gmail"></i></button>
+	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveClicked()" title="<spring:message code='save'/>" ><i class="mdi mdi-inbox-arrow-down"></i></button>
+	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteClicked();" title="<spring:message code='delete'/>" ><i class="mdi mdi-delete"></i></button>
 	                        </div>
-	                        <button type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark"  onclick="triggerMenuOption();"><i class="mdi mdi-reload font-18"></i></button>
 	                    </div>
 	                    <div class="card-body p-t-0">
 	                        <div class="card b-all shadow-none">
@@ -48,7 +48,9 @@
 	                                <table id="tblMain" class="table table-hover no-wrap">
 	                                    <thead>
 	                                    	<tr>
-	                                    		<th style="width: 5%"><div class="checkbox"><input type="checkbox" name="optChkAll" id="optChkAll" ><label for="optChkAll"></label></div></th>
+	                                    		<th style="width: 5%; padding-top: 20px;">
+	                                    			<div class="checkbox"><input type="checkbox" name="optChkAll" id="optChkAll" ><label for="optChkAll" class="badge badge-secondary ml-auto" style="font-size: 90%;"><spring:message code='selectAll'/></label></div>
+	                                    		</th>
 	                                    		<th></th>
 	                                    		<th></th>
 	                                    		<th></th>
