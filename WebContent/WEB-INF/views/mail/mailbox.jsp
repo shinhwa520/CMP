@@ -37,7 +37,7 @@
 	                    <div class="card-body">
 	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
 	                        	<button type="button" class="btn btn-secondary font-18 text-dark" onclick="triggerMenuOption();" title="<spring:message code='refresh'/>" ><i class="mdi mdi-reload"></i></button>
-	                        	<button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxClicked()" title="<spring:message code='moveTo'/><spring:message code='inbox'/>" ><i class="mdi mdi-gmail"></i></button>
+	                        	<button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxClicked()" title="<spring:message code='moveTo'/>&nbsp;<spring:message code='inbox'/>" ><i class="mdi mdi-gmail"></i></button>
 	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveClicked()" title="<spring:message code='save'/>" ><i class="mdi mdi-inbox-arrow-down"></i></button>
 	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteClicked();" title="<spring:message code='delete'/>" ><i class="mdi mdi-delete"></i></button>
 	                        </div>
@@ -69,15 +69,15 @@
 	                    	<button id="backBTN" type="button" class="btn btn-secondary m-r-10 m-b-10 text-dark" onclick="doBack();"><i class="mdi mdi-keyboard-return font-18"></i></button>
 	                        <div class="btn-group m-b-10 m-r-10" role="group" aria-label="Button group with nested dropdown">
 	                        	<!-- 回复 -->
-	                        	<button type="button" class="btn btn-secondary font-18 text-dark" onclick="doReply();"><i class="mdi mdi-reply"></i></button>
+	                        	<button type="button" class="btn btn-secondary font-18 text-dark" onclick="doReply();" title="<spring:message code='reply'/>" ><i class="mdi mdi-reply"></i></button>
 	                        	<!-- 转寄 -->
-	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="doForward();"><i class="mdi mdi-share"></i></button>
+	                            <button type="button" class="btn btn-secondary font-18 text-dark" onclick="doForward();" title="<spring:message code='forwarding'/>" ><i class="mdi mdi-share"></i></button>
 	                            <!-- 移至收件夹 -->
-	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxOne();"><i class="mdi mdi-gmail"></i></button>
+	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Inbox" onclick="btnInboxOne();" title="<spring:message code='moveTo'/>&nbsp;<spring:message code='inbox'/>" ><i class="mdi mdi-gmail"></i></button>
 	                            <!-- 封存 -->
-	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveOne();"><i class="mdi mdi-inbox-arrow-down"></i></button>
+	                            <button type="button" class="btn btn-secondary font-18 text-dark move2Saved" onclick="btnSaveOne();" title="<spring:message code='save'/>" ><i class="mdi mdi-inbox-arrow-down"></i></button>
 		                        <!--  删除 -->
-		                        <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteOne();"><i class="mdi mdi-delete"></i></button>
+		                        <button type="button" class="btn btn-secondary font-18 text-dark" onclick="btnDeleteOne();" title="<spring:message code='delete'/>" ><i class="mdi mdi-delete"></i></button>
 	                        </div>
 	                    </div>
                         <div class="card-body p-t-0">
