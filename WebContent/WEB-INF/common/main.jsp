@@ -504,7 +504,7 @@
                         </li>
                         <li class="nav-item dropdown">
                         	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" onclick="showTip(); return false;" aria-expanded="false"> 
-                        		<i s class="mdi mdi-information-outline"></i>
+                        		<i class="icon-info"></i>
                         	</a>
                         </li>
                         
