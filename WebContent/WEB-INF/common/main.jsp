@@ -212,6 +212,32 @@
             var url = '${pageContext.request.contextPath}/changeLanguage?langType='+lang+'&refresh='+window.location.pathname;
             window.location.href = url;
         }
+
+        function contactUs() {
+            var _subject = $('#contactSubject').val();
+            var _content = $('#contactContent').val();
+        	$.ajax({
+        		url : '${pageContext.request.contextPath}/contact/contactUs?subject='+_subject
+        															+ '&content=' + _content,
+        		type : "GET",
+        		dataType : 'json',
+        		async: false,
+        		contentType:"application/json;charset=utf-8", 
+        		success : function(data) {
+                    if (data.code === 200) {
+                    	alert('<spring:message code="thankFeedback" />');
+                    	$('#contactUsIcon').trigger('click');
+                    } else {
+                    	alert(data.message);
+                    }
+        		},
+        		error : function(xhr, ajaxOptions, thrownError) {
+        			alert(xhr.status);
+        			alert(thrownError);
+        		}
+        	});
+        }
+        
 	</script>
 </head>
 
@@ -283,7 +309,10 @@
                             <div class="dropdown-menu mailbox animated bounceInDown">
                                 <ul>
                                     <li>
-                                        <div class="drop-title"><spring:message code="youHave" /> ${sysMailMap.countUnread} <spring:message code="newSysMSG" /></div>
+                                        <div class="drop-title">
+                                        	<spring:message code="youHave" /> ${sysMailMap.countUnread} <spring:message code="newSysMSG" />
+                                        	<a href='${pageContext.request.contextPath}/sysMail/sysMailbox' title="<spring:message code='moveTo'/><spring:message code='sysMail'/>" ><i class="mdi mdi-folder-move"></i></a>
+                                        </div>
                                     </li>
                                     
                                     <li>
@@ -315,7 +344,10 @@
                             <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
                                 <ul>
                                     <li>
-                                        <div class="drop-title"><spring:message code="youHave" /> ${mailMap.countUnread} <spring:message code="newMSG" /></div>
+                                        <div class="drop-title">
+                                        	<spring:message code="youHave" /> ${mailMap.countUnread} <spring:message code="newMSG" />
+                                        	<a href='${pageContext.request.contextPath}/mail/mailbox' title="<spring:message code='moveTo'/><spring:message code='emailApp'/>" ><i class="mdi mdi-folder-move"></i></a>
+                                        </div>
                                     </li>
                                     
                                     <li>
@@ -340,22 +372,32 @@
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
-                            <div class="dropdown-menu animated bounceInDown">
-                                <ul class="mega-dropdown-menu row">
-                                    <li class="col-lg-3  m-b-30">
-                                        <h4 class="m-b-20">CONTACT US</h4>
-                                        <!-- Contact -->
-                                        <form>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" placeholder="Enter email"> </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-info">Submit</button>
-                                        </form>
+                        <li class="nav-item dropdown"> 
+                        	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        		<i id="contactUsIcon" class="mdi mdi-view-grid"></i>
+                        	</a>
+                            
+                            <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">
+                                        	<spring:message code="contact_us" />
+                                        </div>
+                                    </li>
+                                    
+                                    <li>
+			                            <div class="card">
+			                                <div class="card-body">
+				                                 <form>
+				                                     <div class="form-group">
+				                                         <input type="text" class="form-control" id="contactSubject" placeholder="<spring:message code="subject" />"> </div>
+				                                     <div class="form-group">
+				                                         <textarea class="form-control" id="contactContent" placeholder="<spring:message code="content" />" style="min-height: 88px;"></textarea>
+				                                     </div>
+				                                     <button type="button" class="btn btn-info" onclick="contactUs();"><spring:message code="submit" /></button>
+				                                 </form>
+			                                </div>
+			                            </div>
                                     </li>
                                 </ul>
                             </div>
