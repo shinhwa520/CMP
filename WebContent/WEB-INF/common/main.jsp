@@ -239,6 +239,8 @@
         }
 
         function showTip(){
+        	$("html, body").animate({ scrollTop: 0 }, "slow");
+        	
         	$("#navigationBlock").css("display", "block");
         	$("#navigationTip").css("display", "block");
         }
