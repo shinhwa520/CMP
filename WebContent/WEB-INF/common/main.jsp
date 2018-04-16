@@ -237,11 +237,76 @@
         		}
         	});
         }
-        
+
+        function showTip(){
+        	$("#navigationBlock").css("display", "block");
+        	$("#navigationTip").css("display", "block");
+        }
+
+        function hideTip(){
+        	$("#navigationBlock").hide();
+        	$("#navigationTip").hide();
+        }
 	</script>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
+
+<div id="navigationBlock" style="width: 100%; height: 100%; left: 0px; top: 0px; z-index: 999; background-color: rgb(0, 0, 0); opacity: 0.55; position: fixed; display: none;"></div>
+<div id="navigationTip"   style="width: 100%; height: 100%; left: 0px; top: 0px; z-index: 1005; background-color: transparent; position: absolute; display: none;">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+	            <div class="card">
+	            	
+	                <div class="card-body">
+	                	<button class="btn btn-inverse float-right" onclick="hideTip();" aria-hidden="true"><i class="fa fa-times"></i> <spring:message code='discard'/></button>
+	                    <h4 class="card-title">Customtab vertical Tab</h4>
+	                    <h6 class="card-subtitle">Use default tab with class <code>vtabs, tabs-vertical & customvtab</code></h6>
+	                <!-- Nav tabs -->
+	                <div class="vtabs customvtab card-body">
+	                    <ul class="nav nav-tabs tabs-vertical" role="tablist">
+							<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#dashboard3" role="tab"><i class="mdi mdi-gauge"></i> 
+								<span class="hide-menu"><spring:message code="dashboard" /></span></a> </li>
+							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#billboard3" role="tab"><i class="mdi mdi-content-paste"></i> 
+								<span class="hide-menu"><spring:message code="billboard" /></span></a> </li>
+							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#visitInfo3" role="tab"><i class="mdi mdi-table"></i> 
+								<span class="hide-menu"><spring:message code="visitInfo" /></span></a> </li>
+							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#registration3" role="tab"><i class="mdi mdi-book-multiple"></i> 
+								<span class="hide-menu"><spring:message code="registration" /></span></a> </li>
+							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productInfo3" role="tab"><i class="mdi mdi-file"></i> 
+								<span class="hide-menu"><spring:message code="productInfo" /></span></a> </li>
+							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myChannels3" role="tab"><i class="mdi mdi-book-open-variant"></i> 
+								<span class="hide-menu"><spring:message code="myChannels" /></span></a> </li>
+							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myClients3" role="tab"><i class="mdi mdi-face"></i> 
+								<span class="hide-menu"><spring:message code="myClients" /></span></a> </li>
+	                    </ul>
+                   <!-- Tab panes -->
+                         <div class="tab-content">
+                             <div class="tab-pane p-20 active" id="dashboard3" role="tabpanel">
+                                 <div>
+                                     <h3>Best Clean Tab ever</h3>
+                                     <h4>you can use it with the small code</h4>
+                                     <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
+                                 </div>
+                             </div>
+                             <div class="tab-pane p-20" id="billboard3" role="tabpanel">2</div>
+                             <div class="tab-pane p-20" id="visitInfo3" role="tabpanel">2</div>
+                             <div class="tab-pane p-20" id="registration3" role="tabpanel">2</div>
+                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">2</div>
+                             <div class="tab-pane p-20" id="myChannels3" role="tabpanel">2</div>
+                             <div class="tab-pane p-20" id="myClients3" role="tabpanel">2</div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -437,6 +502,12 @@
                             	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> English</a> 
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                        	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" onclick="showTip(); return false;" aria-expanded="false"> 
+                        		<i s class="mdi mdi-information-outline"></i>
+                        	</a>
+                        </li>
+                        
                     </ul>
                 </div>
             </nav>
