@@ -269,9 +269,9 @@ public class FileServiceImpl implements FileService {
 				fsModel.setActivationBegin(beginDate == null ? null : new Timestamp(beginDate.getTime()));
 				fsModel.setActivationEnd(endDate == null ? null : new Timestamp(endDate.getTime()));
 				fsModel.setCreateTime(new Timestamp(new Date().getTime()));
-				fsModel.setCreateBy("admin");
+				fsModel.setCreateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				fsModel.setUpdateTime(new Timestamp(new Date().getTime()));
-				fsModel.setUpdateBy("admin");
+				fsModel.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				fsModel.setFilesBaseConfig(fbcModel);
 				
 				// Model >> FilesPermission
@@ -280,9 +280,9 @@ public class FileServiceImpl implements FileService {
 				fpModel.setSettingLevel("*");
 				fpModel.setSettingValue("*");
 				fpModel.setCreateTime(new Timestamp(new Date().getTime()));
-				fpModel.setCreateBy("admin");
+				fpModel.setCreateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				fpModel.setUpdateTime(new Timestamp(new Date().getTime()));
-				fpModel.setUpdateBy("admin");
+				fpModel.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				
 				addedSeqNo = fileDAO.addFile(entity, fsModel, Arrays.asList(fpModel));
 				retVO.setAddedSeqNo(addedSeqNo);
@@ -399,7 +399,7 @@ public class FileServiceImpl implements FileService {
 				fsModel.setActivationBegin(beginDate == null ? null : new Timestamp(beginDate.getTime()));
 				fsModel.setActivationEnd(endDate == null ? null : new Timestamp(endDate.getTime()));
 				fsModel.setUpdateTime(new Timestamp(new Date().getTime()));
-				fsModel.setUpdateBy("admin");
+				fsModel.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
 				
 				fileDAO.modifyFile(Arrays.asList(new Object[]{sourceModel, fsModel}));
 			}

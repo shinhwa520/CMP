@@ -19,7 +19,7 @@
 			
 		} else {
 			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
-			FileForm.queryFileType.value = "VISIT";
+			FileForm.queryFileType.value = "PRODUCT";
 			FileForm.submit();
 		}
 	}
@@ -92,10 +92,10 @@
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
-            	<input type="hidden" name="fileType" id="editFileType" value="VISIT" />
+            	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
-            	<input type="hidden" name="productId" id="productId" value="4" />
-            	<input type="hidden" name="visitId" id="productId" value="1" />
+            	<input type="hidden" name="productId" id="productId" value="28" />
+            	<input type="hidden" name="visitId" id="visitId" value="1" />
             	<input type="hidden" name="fileCategory" id="fileCategory" value="SCHEDULE" />
             	
 		        <div class="box-body">
@@ -246,7 +246,7 @@ function btnAddClicked() {
 	formAction = 'modify';
 	$('#isAdd').val('Y');
 	$('#editSeqNo').val('');
-	$('#editFileType').val('VISIT');
+	$('#editFileType').val('PRODUCT');
 	$('#editFullFileName').val('');
 	$('#uploadFile').val('');
 	$('#uploadFile').show();
@@ -263,6 +263,9 @@ function btnAddClicked() {
 	
 	$('#btnSave').hide();
 	$('#btnUpload').show();
+	
+	$('#progressBar').text('');
+	$('#progressBar').css('width','0%');
 }
 
 //[Edit] 進入modal_Edit編輯

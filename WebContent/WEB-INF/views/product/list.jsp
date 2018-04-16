@@ -11,24 +11,197 @@
 	
 	<spring:message code='reward' var="reward"/>
 	<div class="row el-element-overlay">
-		<span style="padding-left: 15px;">
-			<h4 class="text-themecolor m-b-0 m-t-0">吉隆坡 Kuala Lumpur</h4>
-		</span>
+		<h4 class="text-themecolor m-b-0 m-t-0">
+			<span style="padding-left: 15px;">
+				马来西亚 Malaysia
+			</span>
+		</h4>
+		<!-- column -->
+		<div class="col-12 m-t-5">
+			<div class="card-deck">
+				<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_19.PNG" alt="Universal-通用" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(19);"><i class="icon-docs"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Universal<br/>通用</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+				<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_20.PNG" alt="马来西亚投资潜力" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(20);"><i class="icon-docs"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">马来西亚投资潜力</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_21.PNG" alt="马来西亚第二家园" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(21);"><i class="icon-docs"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">马来西亚第二家园</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_22.PNG" alt="销售流程,费用" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(22);"><i class="icon-docs"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">销售流程,费用</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_23.PNG" alt="参团照片-第2天  柔佛APC" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(23);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第2天  柔佛APC</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_24.PNG" alt="参团照片-第2天  柔佛APC介绍会" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(24);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第2天  柔佛APC介绍会</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			</div>
+		</div>
+		<!-- column -->
+		<div class="col-12 m-t-5">
+			<div class="card-deck">
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_25.PNG" alt="参团照片-马六甲Haleton介绍会" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(25);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第2天 马六甲Haleton介绍会</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_26.PNG" alt="参团照片-马六甲Haleton产业" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(26);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第2天 马六甲Haleton产业</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_27.PNG" alt="参团照片-柔佛双威依斯干达" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(27);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第3天 柔佛双威依斯干达</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_28.PNG" alt="参团照片-吉隆坡大马金豪" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(28);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第4天 吉隆坡大马金豪</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
+			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="row el-element-overlay">
+		<h4 class="text-themecolor m-b-0 m-t-0">
+			<span style="padding-left: 15px;">
+				吉隆坡 Kuala Lumpur
+			</span>
+		</h4>
 		<!-- column -->
 		<div class="col-12 m-t-5">
 			<div class="card-deck">
 				<!-- Card -->
 			  	<div class="card">
 			  		<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_01.PNG" alt="image01" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_01.PNG" alt="8 Conlay-康莱" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(1);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(1);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">康莱</h3><br/><small style="color: blue;">${reward} : ${commission_1}%</small>
+		                    <h4 class="box-title">8 Conlay<br/>康莱</h4><br/><small style="color: blue;">${reward} : ${commission_1}%</small>
 	                    </div>
 	            	</div>
 			  	</div>
@@ -36,15 +209,15 @@
 			  	<!-- Card -->
 			  	<div class="card">
 			  		<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_02.PNG" alt="image02" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_02.PNG" alt="Arte-满家乐" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(2);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(2);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">Arte满家乐</h3><br/><small style="color: blue;">${reward} : ${commission_2}%</small>
+		                    <h4 class="box-title">Arte<br/>满家乐</h4><br/><small style="color: blue;">${reward} : ${commission_2}%</small>
 	                    </div>
 		            </div>
 			  	</div>
@@ -52,15 +225,15 @@
 			  	<!-- Card -->
 			  	<div class="card">
 			  		<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_03.PNG" alt="image03" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_03.PNG" alt="DC Residensi-白沙罗城豪华公寓" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(3);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(3);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">白沙罗城豪华公寓</h3><br/><small style="color: blue;">${reward} : ${commission_3}%</small>
+		                    <h4 class="box-title">DC Residensi<br/>白沙罗城豪华公寓</h4><br/><small style="color: blue;">${reward} : ${commission_3}%</small>
 	                    </div>
 		            </div>
 			  	</div>
@@ -68,15 +241,15 @@
 			  	<!-- Card -->
 			  	<div class="card">
 			  		<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_04.PNG" alt="image04" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_04.PNG" alt="Opus-奥普斯" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(4);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(4);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">奥普斯</h3><br/><small style="color: blue;">${reward} : ${commission_4}%</small>
+		                    <h4 class="box-title">Opus<br/>奥普斯</h4><br/><small style="color: blue;">${reward} : ${commission_4}%</small>
 	                    </div>
 		            </div>
 			  	</div>
@@ -84,15 +257,15 @@
 			  	<!-- Card -->
 			  	<div class="card">
 			  		<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_05.PNG" alt="image05" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_05.PNG" alt="Ritz-Carlton-丽思卡尔顿" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(5);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(5);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">丽思卡尔顿</h3><br/><small style="color: blue;">${reward} : ${commission_5}%</small>
+		                    <h4 class="box-title">Ritz-Carlton<br/>丽思卡尔顿</h4><br/><small style="color: blue;">${reward} : ${commission_5}%</small>
 	                    </div>
 		            </div>
 			  	</div>
@@ -100,47 +273,133 @@
 			  	<!-- Card -->
 			  	<div class="card">
 			  		<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_06.PNG" alt="image06" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_06.PNG" alt="The Manor-大马金豪" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(6);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(6);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">大马金豪</h3><br/><small style="color: blue;">${reward} : ${commission_6}%</small>
+		                    <h4 class="box-title">The Manor<br/>大马金豪</h4><br/><small style="color: blue;">${reward} : ${commission_6}%</small>
 		                </div>
 			        </div>
 			  	</div>
+			</div>
+		</div>
+		<br/>
+		<!-- column -->
+		<div class="col-12 m-t-5">
+			<div class="card-deck">
 			  	<!-- Card -->
+			  	<div class="card">
+			  		<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_11.PNG" alt="Sunway-双威依斯干达" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(11);"><i class="icon-docs"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(12);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Sunway<br/>双威依斯干达</h4><br/>
+	                    </div>
+	            	</div>
+			  	</div>
+			  	<!-- Card -->
+			  	<div class="card">
+			  		<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_13.PNG" alt="Sunway-双威依斯干达" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(13);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Sunway<br/>双威依斯干达<br/>(第二項目)</h4><br/>
+	                    </div>
+	            	</div>
+			  	</div>
+			  	<!-- Card -->
+			  	<div class="card">
+			  		<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_14.PNG" alt="Sunway-双威依斯干达" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(14);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Sunway<br/>双威依斯干达<br/>(三拼三層)</h4><br/>
+	                    </div>
+	            	</div>
+			  	</div>
+			  	<!-- Card -->
+			  	<div class="card">
+			  		<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_15.PNG" alt="Famous school-知名学校" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(15);"><i class="icon-docs"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(16);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Famous school<br/>知名学校</h4><br/>
+	                    </div>
+	            	</div>
+			  	</div>
+			  	<!-- Card -->
+			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
+			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			</div>
 		</div>
 	</div>
 	<br />
 	<div class="row el-element-overlay">
-		<span style="padding-left: 15px;">
-			<h4 class="text-themecolor m-b-0 m-t-0">新山 Johor</h4>
-		</span>
+		<h4 class="text-themecolor m-b-0 m-t-0">
+			<span style="padding-left: 15px;">
+				新山 Johor
+			</span>
+		</h4>
 		<!-- column -->
 		<div class="col-12 m-t-5">
 			<div class="card-deck">
 				<!-- Card -->
 				<div class="card">
 				  	<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_07.PNG" alt="image07" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_17.PNG" alt="Regional-地區通用" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(7);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(17);"><i class="icon-picture"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">Avira花园联排别墅</h3><br/><small style="color: blue;">${reward} : ${commission_7}%</small>
+		                    <h4 class="box-title">Regional<br/>地區通用</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+				<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_07.PNG" alt="Avira-花园联排别墅" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(7);"><i class="icon-docs"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Avira<br/>花园联排别墅</h4><br/><small style="color: blue;">${reward} : ${commission_7}%</small>
 		                </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
-			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
@@ -150,24 +409,41 @@
 	</div>
 	<br />
 	<div class="row el-element-overlay">
-		<span style="padding-left: 15px;">
-			<h4 class="text-themecolor m-b-0 m-t-0">马六甲 Malacca</h4>
-		</span>
+		<h4 class="text-themecolor m-b-0 m-t-0">
+			<span style="padding-left: 15px;">
+				马六甲 Malacca
+			</span>
+		</h4>
 		<!-- column -->
 		<div class="col-12 m-t-5">
 			<div class="card-deck">
 				<!-- Card -->
 				<div class="card">
 				  	<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_08.PNG" alt="image08" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_18.PNG" alt="Regional-地區通用" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(8);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(18);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">聚富湾</h3><br/><small style="color: blue;">${reward} : ${commission_8}%</small>
+		                    <h4 class="box-title">Regional<br/>地區通用</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+				<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_08.PNG" alt="Haleton Towers-聚富湾" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(8);"><i class="icon-docs"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">Haleton Towers<br/>聚富湾</h4><br/><small style="color: blue;">${reward} : ${commission_8}%</small>
 		                </div>
 		            </div>
 			  	</div>
@@ -175,20 +451,19 @@
 			  	<!-- Card -->
 				<div class="card">
 				  	<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_09.PNG" alt="image09" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_09.PNG" alt="Regalia Beachfront Residence-皇庭海湾1号" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(9);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(9);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">皇庭海湾1号</h3><br/><small style="color: blue;">${reward} : ${commission_9}%</small>
+		                    <h4 class="box-title">Regalia Beachfront Residence<br/>皇庭海湾1号</h4><br/><small style="color: blue;">${reward} : ${commission_9}%</small>
 		                </div>
 		            </div>
 			  	</div>
 			  	<!-- Card -->
-			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
@@ -206,15 +481,15 @@
 				<!-- Card -->
 				<div class="card">
 				  	<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_10.PNG" alt="image10" />
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_10.PNG" alt="18 East At Andaman-安达曼海景公寓" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(10);"><i class="icon-cloud-download"></i></a></li>
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(10);"><i class="icon-docs"></i></a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="el-card-content">
-		                    <h3 class="box-title">安达曼海景公寓</h3><br/><small style="color: blue;">${reward} : ${commission_10}%</small>
+		                    <h4 class="box-title">18 East At Andaman<br/>安达曼海景公寓</h4><br/><small style="color: blue;">${reward} : ${commission_10}%</small>
 		                </div>
 		            </div>
 			  	</div>
@@ -349,7 +624,7 @@
 							"data" : 'seqNo',
 							"render" : function(data, type, row) {
 								return '<a href="#">'
-										+'<span class="icon-cloud-download" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>';
+										+'<span class="icon-docs" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>';
 							}
 						}
 					],
