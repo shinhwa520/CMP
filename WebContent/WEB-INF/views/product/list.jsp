@@ -597,7 +597,8 @@
 						"url" : '${pageContext.request.contextPath}/product/getProductFiles.json',
 						"type" : 'POST',
 						"data" : function(d) {
-									d.productId = $('#productId').val()
+									d.productId = $('#productId').val(),
+									d.isAdmin = false
 								}
 					},
 					"columns" : [

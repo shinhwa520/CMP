@@ -232,7 +232,7 @@
                                     <th><spring:message code="fileDescription"/></th>
                                     <th><spring:message code="updatedTime"/></th>
                                     <th style="width: 30px;"><spring:message code="option"/></th>
-                                    <th style="width: 60px;"><input type="checkbox" id="delChkAll" /> <spring:message code="selectAll"/></th>
+                                    <th style="width: 60px;"><input type="checkbox" id="delChkAll" />&nbsp;<spring:message code="selectAll"/></th>
                                 </tr>
                                 </thead>
                             </table>

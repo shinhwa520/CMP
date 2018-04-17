@@ -572,7 +572,7 @@
 	                            	</sec:authorize>
 	                                <li><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
 	                                <li><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
-	                                <!-- <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li> -->
+	                                <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
 	                            </ul>
 	                        </li>
                         </sec:authorize>

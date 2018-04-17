@@ -27,36 +27,43 @@
 </SCRIPT>
 
 <section class="content">
-	<div class="box-body"></div>
+	<div class="row page-titles">
+	     <div class="col-md-6 col-8 align-self-center">
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="shareResource" /></h3>
+	     </div>
+	</div> 
 
-	<form:form method="POST" modelAttribute="FileForm" action="">
-		<input type="hidden" name="fileType" id="queryFileType" value="" />
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<b><font style="font-size: 1.5em;"><spring:message code="shareResource"/></font></b>
-				<a href="#" onclick="btnAddClicked();"><span class="label label-success pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="add"/></span></a>
-				<span class="pull-right">&nbsp;</span>
-				<a href="#" onclick="doDelete();"><span class="label label-info pull-right" style="width:70px; padding:5px 10px 5px 10px; font-size: 95%;"> <i class="fa  fa-plus" ></i><spring:message code="delete"/></span></a>
-			</div>
-			<div class="box-body no-padding">
-				<table class="table table-striped" id="tblMain">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th><spring:message code="fileName"/></th>
-							<th><spring:message code="fileSize"/></th>
-							<th><spring:message code="downloadTimes"/></th>
-							<th><spring:message code="fileDescription"/></th>
-							<th><spring:message code="updatedTime"/></th>
-							<th style="width: 100px;"><spring:message code="option"/></th>
-							<th style="width: 100px;"><spring:message code="edit"/></th>
-							<th style="width: 100px;"><input type="checkbox" id="delChkAll" /><spring:message code="selectAll"/></th>
-						</tr>
-					</thead>
-				</table>
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<button type="button" class="btn btn-warning pull-right" id="btnAdd" onclick="btnAddClicked();"><spring:message code="add"/></button>
+					<span class="pull-right">&nbsp;</span>
+					<button type="button" class="btn btn-danger pull-right" id="btnDelete" onclick="doDelete();"><spring:message code="delete"/></button>
+				</div>
+				<div class="card-body">
+					<form:form method="POST" modelAttribute="FileForm" action="">
+						<input type="hidden" name="fileType" id="queryFileType" value="" />
+						<table class="table table-striped" id="tblMain">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th><spring:message code="productName"/></th>
+									<th><spring:message code="fileName"/></th>
+									<th><spring:message code="fileSize"/></th>
+									<th><spring:message code="downloadTimes"/></th>
+									<th><spring:message code="fileDescription"/></th>
+									<!-- <th><spring:message code="updatedTime"/></th> -->
+									<th style="width: 100px;"><spring:message code="option"/></th>
+									<th style="width: 100px;"><input type="checkbox" id="delChkAll" />&nbsp;<spring:message code="selectAll"/></th>
+								</tr>
+							</thead>
+						</table>
+					</form:form>
+				</div>
 			</div>
 		</div>
-	</form:form>
+	</div>
 </section>
 
 <script>
@@ -85,8 +92,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
@@ -94,10 +101,45 @@
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
             	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
-            	<input type="hidden" name="productId" id="productId" value="28" />
+            	<!-- <input type="hidden" name="productId" id="productId" value="28" /> -->
             	<input type="hidden" name="visitId" id="visitId" value="1" />
             	<input type="hidden" name="fileCategory" id="fileCategory" value="SCHEDULE" />
             	
+            	<div class="box-body">
+		        	<div class="form-group">
+		        		<label for="productName"><spring:message code="productName"/><span class="pull-right" style="color: red;">＊ </span> </label>
+		        		<select class="form-control" style="width:80%" name="productId">
+		        			<option value="1">8 Conlay - 康莱</option>
+		        			<option value="2">Arte MK - 满家乐</option>
+		        			<option value="3">DC Residensi - 白沙罗城豪华公寓</option>
+		        			<option value="4">Opus - 奥普斯</option>
+		        			<option value="5">Ritz-Carlton - 丽思卡尔顿</option>
+		        			<option value="6">The Manor - 大马金豪</option>
+		        			<option value="7">Avira Garden Terraces - 花园联排别墅</option>
+		        			<option value="8">Haleton Towers - 聚富湾</option>
+		        			<option value="9">Regalia Beachfront Residence - 皇庭海湾1号</option>
+		        			<option value="10">18 East At Andaman - 安达曼海景公寓</option>
+		        			<option value="11">Sunway - 双威依斯干达(文档)</option>
+		        			<option value="12">Sunway - 双威依斯干达(图档)</option>
+		        			<option value="13">Sunway - 双威依斯干达(第二項目)</option>
+		        			<option value="14">Sunway - 双威依斯干达(三拼三層)</option>
+		        			<option value="15">Famous school - 知名学校(文档)</option>
+		        			<option value="16">Famous school - 知名学校(图档)</option>
+		        			<option value="17">Regional(Johor) - 地區通用(新山)</option>
+		        			<option value="18">Regional(Malacca) - 地區通用(马六甲)</option>
+		        			<option value="19">Universal(Malaysia) - 通用(马来西亚)</option>
+		        			<option value="20">马来西亚投资潜力</option>
+		        			<option value="21">马来西亚第二家园</option>
+		        			<option value="22">销售流程,费用</option>
+		        			<option value="23">参团照片(第2天  柔佛APC)</option>
+		        			<option value="24">参团照片(第2天  柔佛APC介绍会)</option>
+		        			<option value="25">参团照片(第2天 马六甲Haleton介绍会)</option>
+		        			<option value="26">参团照片(第2天 马六甲Haleton产业)</option>
+		        			<option value="27">参团照片(第3天 柔佛双威依斯干达)</option>
+		        			<option value="28">参团照片(第4天 吉隆坡大马金豪)</option>
+		        		</select>
+		        	</div>
+		        </div>
 		        <div class="box-body">
 		        	<div class="form-group">
 						<label for="fullFileName"><spring:message code="fileName"/><span class="pull-right" style="color: red;">＊ </span> </label>
@@ -136,7 +178,7 @@
 	            </div>
 	            
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" id="btnFileClose" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-info" id="btnFileClose" data-dismiss="modal"><spring:message code="close"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnSave" onclick="btnSaveClicked();" style="display: none"><spring:message code="save"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();" style="display: none"><spring:message code="upload"/></button>
 				</div>
@@ -189,18 +231,19 @@ $(function() {
 				//"type" : 'GET',
 				"type" : 'POST',
 				"data" : function(d) {
-					//d.isAdmin = true
+					d.isAdmin = true
 				}
 			},
 			"columns" : [
 				{ "data" : "dataSeq" },
+				{ "data" : "productName" },
 				{ "data" : "fullFileName" },
 				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
 												      return data.format() + ' KB';
 											    } },
 				{ "data" : "downloadTimes" },
-				{ "data" : "fileDescription" },
-				{ "data" : "updateTime" }
+				{ "data" : "fileDescription" }
+				//{ "data" : "updateTime" }
 			],
 			"columnDefs": [
 				{
@@ -213,23 +256,16 @@ $(function() {
 					"targets" : 6,
 					"data" : 'seqNo',
 					"render" : function(data, type, row) {
+						//return '<button class="btn btn-info waves-effect waves-light m-t-20" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onClick="btnDownloadClicked($(this))"><spring:message code="download"/></button>';
 						return '<a href="#">'
-								+'<span class="label label-success pull-center" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="download"/></span></a>';
+								+'<span class="icon-cloud-download" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this))" title="<spring:message javaScriptEscape="true" code="download"/>"></span></a>'
+								+'&nbsp;'
+								+'<a href="#">'
+								+'<span class="ti-pencil" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>';
 					}
 				},
 				{
-					
 					"targets" : 7,
-					"data" : 'seqNo',
-					"render" : function(data, type, row) {
-						return '<a href="#">'
-								+'<span class="label label-warning" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnEditClicked($(this));">'
-								+'<i class="fa fa-close" style="margin-right:5px"></i><spring:message javaScriptEscape="true" code="edit"/></span></a>';
-					}
-				},
-				{
-					"targets" : 8,
 					data:   "seqNo",
 	                render: function ( data, type, row ) {
 	                	return '<input type="checkbox" name="delChkbox" class="delChkbox" value="'+data+'" onclick="chkCheckAllBtn();">';

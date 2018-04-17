@@ -23,6 +23,7 @@ import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
 import com.cmp.model.FilesSetting;
 import com.cmp.model.FilesVisit;
+import com.cmp.model.ProductInfo;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
@@ -63,6 +64,50 @@ public class FileServiceImpl implements FileService {
 	public List<FileServiceVO> findAllCustomerFiles(boolean isAdmin, Integer startRow, Integer pageLength) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private List<FileServiceVO> transProductModel2ServiceVO(List<Object[]> modelList) {
+		List<FileServiceVO> reList = new ArrayList<FileServiceVO>();
+		FilesProduct filesProduct = null;
+		ProductInfo productInfo = null;
+		
+		FileServiceVO fsVO;
+		int dataSeq = 1;
+		for (Object[] models : modelList) {
+			filesProduct = (FilesProduct)models[0];
+			productInfo = (ProductInfo)models[1];
+			
+			if (filesProduct != null) {
+				fsVO = new FileServiceVO();
+				fsVO.setDataSeq(dataSeq);
+				BeanUtils.copyProperties(filesProduct, fsVO, new String[] {"updateTime"});
+				fsVO.setFullFileName(filesProduct.getFileName().concat(".").concat(filesProduct.getFileExtension()));
+				fsVO.setUpdateTime(filesProduct.getUpdateTime() != null ? DATE_TIME_FORMAT.format(filesProduct.getUpdateTime()) : "");
+				
+				fsVO.setOnTopChkbox(filesProduct.getFilesSetting().getOnTop());
+				
+				fsVO.setBeginDateStr(filesProduct.getFilesSetting().getActivationBegin() != null ? DATE_FORMAT.format(filesProduct.getFilesSetting().getActivationBegin()) : "");
+				fsVO.setBeginTimeStr(filesProduct.getFilesSetting().getActivationBegin() != null ? TIME_FORMAT.format(filesProduct.getFilesSetting().getActivationBegin()) : "");
+			
+				fsVO.setEndDateStr(filesProduct.getFilesSetting().getActivationEnd() != null ? DATE_FORMAT.format(filesProduct.getFilesSetting().getActivationEnd()) : "");
+				fsVO.setEndTimeStr(filesProduct.getFilesSetting().getActivationEnd() != null ? TIME_FORMAT.format(filesProduct.getFilesSetting().getActivationEnd()) : "");
+				
+				FilesBaseConfig config = filesProduct.getFilesSetting().getFilesBaseConfig();
+				fsVO.setFileType(config != null ? config.getConfigName() : "");
+				
+				if (productInfo != null) {
+					fsVO.setProductName(
+							StringUtils.isNotBlank(productInfo.getEngName()) 
+								? productInfo.getEngName().concat(" - ").concat(productInfo.getProductName())
+								: productInfo.getProductName());
+				}
+				reList.add(fsVO);
+			}
+			
+			dataSeq += 1;
+		}
+		
+		return reList;
 	}
 	
 	private List<FileServiceVO> transModel2ServiceVO(List<Object> modelList) {
@@ -148,10 +193,11 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public FileServiceVO getFileByFileTypeAndSeqNoOrFileName(String fileType, Integer seqNo, String oriFileName) {
+	public FileServiceVO getFileByFileTypeAndSeqNoOrFileName(boolean isAdmin, String fileType, Integer seqNo, String oriFileName) {
 		FileServiceVO retVO = new FileServiceVO();
 		FileDAOVO fileDAOVO;
 		List<Object> modelList = null;
+		List<Object[]> model2List = null;
 		
 		try {
 			fileDAOVO = new FileDAOVO();
@@ -164,13 +210,25 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 				
+			}  else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+				fileDAOVO.setAdmin(isAdmin);
+				model2List = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
+				
 			} else {
 				
 			}
 			
-			if (modelList != null && !modelList.isEmpty()) {
-				retVO = transModel2ServiceVO(modelList).get(0);
+			if (!StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+				if (modelList != null && !modelList.isEmpty()) {
+					retVO = transModel2ServiceVO(modelList).get(0);
+				}
+				
+			} else {
+				if (model2List != null && !model2List.isEmpty()) {
+					retVO = transProductModel2ServiceVO(model2List).get(0);
+				}
 			}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -211,7 +269,7 @@ public class FileServiceImpl implements FileService {
 			fileServiceVO.setUpperFileName(
 					(fileServiceVO.getFileType()+"_"+id+"_"+fileServiceVO.getOriginFileName()).toUpperCase());
 			
-			retVO = getFileByFileTypeAndSeqNoOrFileName(fileServiceVO.getFileType(), null, fileServiceVO.getUpperFileName());
+			retVO = getFileByFileTypeAndSeqNoOrFileName(true, fileServiceVO.getFileType(), null, fileServiceVO.getUpperFileName());
 			
 			if (retVO != null && retVO.getSeqNo() != null) {
 				errMsg = "相同檔案名稱資料已存在，請調整名稱或先刪除既有資料後再新增";
@@ -299,6 +357,7 @@ public class FileServiceImpl implements FileService {
 	public void deleteFile(String fileType, Integer[] seqNos, boolean deleteBucketFile) {
 		FileDAOVO fileDAOVO;
 		List<Object> reList = null;
+		List<Object[]> reList2 = null;
 		List<Object> modelList = null;
 		List<String> bucketKeys = new ArrayList<String>();
 		
@@ -320,17 +379,33 @@ public class FileServiceImpl implements FileService {
 						
 					} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 						reList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
+						
+					} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+						fileDAOVO.setAdmin(true);
+						reList2 = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
+						
 					}
 					
+					FilesSetting fs = null;
+					Object tmpModel = null;
 					if (reList != null && !reList.isEmpty()) {
-						bucketKeys.add((String)reList.get(0).getClass().getMethod("getUpperFileName").invoke(reList.get(0)));
+						tmpModel = reList.get(0);
 						
-						FilesSetting fs = (FilesSetting)reList.get(0).getClass().getMethod("getFilesSetting").invoke(reList.get(0));
-						modelList.addAll(fs.getFilesPermissions());
-						modelList.add(reList.get(0));
-						modelList.add(fs);
+					} else if (reList2 != null && !reList2.isEmpty()) {
+						tmpModel = reList2.get(0)[0];
+					}
+					
+					if (tmpModel != null) {
+						bucketKeys.add((String)tmpModel.getClass().getMethod("getUpperFileName").invoke(tmpModel));
+						fs = (FilesSetting)tmpModel.getClass().getMethod("getFilesSetting").invoke(tmpModel);
 						
-						fileDAO.deleteFile(modelList);
+						if (fs != null) {
+							modelList.addAll(fs.getFilesPermissions());
+							modelList.add(tmpModel);
+							modelList.add(fs);
+							
+							fileDAO.deleteFile(modelList);
+						}
 					}
 				}
 			}
@@ -365,6 +440,7 @@ public class FileServiceImpl implements FileService {
 	public void modifyFile(FileServiceVO fileServiceVO) {
 		FileDAOVO fileDAOVO;
 		List<Object> modelList = null;
+		List<Object[]> model2List = null;
 		Object sourceModel;
 		FilesSetting fsModel;
 		
@@ -379,12 +455,24 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_CUSTOMER)) {
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 				
+			}  else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
+				fileDAOVO.setAdmin(true);
+				model2List = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
+				
 			} else {
 				throw new Exception("[ERROR] fileType not exists! >> " + fileServiceVO.getFileType());
 			}
 			
-			if (modelList != null && !modelList.isEmpty()) {
-				sourceModel = modelList.get(0);
+			if ((StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) && model2List != null && !model2List.isEmpty())
+				|| (!StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) && modelList != null && !modelList.isEmpty())) {
+				
+				if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
+					sourceModel = model2List.get(0)[0];
+					
+				} else {
+					sourceModel = modelList.get(0);
+				}
+				
 				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "fileDescription", fileServiceVO.getFileDescription());
 				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "updateTime", new Timestamp(new Date().getTime()));
 				org.apache.commons.beanutils.BeanUtils.setProperty(sourceModel, "updateBy", SecurityUtil.getSecurityUser().getUser().getAccount());
@@ -414,6 +502,7 @@ public class FileServiceImpl implements FileService {
 		FileDAOVO fileDAOVO;
 		String entity = null;
 		List<Object> modelList = null;
+		List<Object[]> model2List = null;
 		FileServiceVO retVO = null;
 		
 		try {
@@ -430,11 +519,17 @@ public class FileServiceImpl implements FileService {
 				
 			} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
 				entity = "FilesProduct";
-				modelList = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
+				model2List = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
 			}
 			
 			if (modelList != null && !modelList.isEmpty()) {
 				retVO = transModel2ServiceVO(modelList).get(0);
+				
+				fileDAO.addDownloadCount(entity, seqNo);
+			}
+			
+			if (model2List != null && !model2List.isEmpty()) {
+				retVO = transProductModel2ServiceVO(model2List).get(0);
 				
 				fileDAO.addDownloadCount(entity, seqNo);
 			}
@@ -482,18 +577,19 @@ public class FileServiceImpl implements FileService {
 	}
 	
 	@Override
-	public List<FileServiceVO> findProductFilesByProductId(Integer productId, Integer startRow, Integer pageLength) {
+	public List<FileServiceVO> findProductFilesByProductId(boolean isAdmin, Integer productId, Integer startRow, Integer pageLength) {
 		List<FileServiceVO> reList = null;
-		List<Object> fpList;
+		List<Object[]> fpList;
 		FileDAOVO fileDAOVO;
 		
 		try {
 			fileDAOVO = new FileDAOVO();
 			fileDAOVO.setProductId(productId);
+			fileDAOVO.setAdmin(isAdmin);
 			fpList = fileDAO.findProductFileByDAOVO(fileDAOVO, startRow, pageLength);
 			
 			if (fpList != null && !fpList.isEmpty()) {
-				reList = transModel2ServiceVO(fpList);
+				reList = transProductModel2ServiceVO(fpList);
 			}
 			
 		} catch (Exception e) {
@@ -543,13 +639,14 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public long countProductFilesByProductId(Integer productId) {
+	public long countProductFilesByProductId(boolean isAdmin, Integer productId) {
 		long count = 0;
 		FileDAOVO fileDAOVO;
 		
 		try {
 			fileDAOVO = new FileDAOVO();
 			fileDAOVO.setProductId(productId);
+			fileDAOVO.setAdmin(isAdmin);
 			count = fileDAO.countProductFileByDAOVO(fileDAOVO);
 			
 		} catch (Exception e) {

@@ -86,7 +86,7 @@ public class FileController extends BaseController {
 			@RequestParam(name="fileType", required=true) String fileType,
 			@RequestParam(name="seqNo", required=true) Integer seqNo) {
 		try {
-			FileServiceVO retVO = fileService.getFileByFileTypeAndSeqNoOrFileName(fileType, seqNo, null);
+			FileServiceVO retVO = fileService.getFileByFileTypeAndSeqNoOrFileName(true, fileType, seqNo, null);
 			AppResponse appResponse = new AppResponse(HttpServletResponse.SC_OK, "取得File資料成功");
 			appResponse.putData("fileInfo",  retVO);
 			return appResponse;
