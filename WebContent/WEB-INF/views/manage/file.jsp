@@ -105,7 +105,7 @@
             	<input type="hidden" name="visitId" id="visitId" value="1" />
             	<input type="hidden" name="fileCategory" id="fileCategory" value="SCHEDULE" />
             	
-            	<div class="box-body">
+            	<div class="box-body" id="productNameDiv" style="display:none">
 		        	<div class="form-group">
 		        		<label for="productName"><spring:message code="productName"/><span class="pull-right" style="color: red;">＊ </span> </label>
 		        		<select class="form-control" style="width:80%" name="productId">
@@ -302,12 +302,15 @@ function btnAddClicked() {
 	
 	$('#progressBar').text('');
 	$('#progressBar').css('width','0%');
+	
+	$('#productNameDiv').show();
 }
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
 	$('#btnSave').show();
 	$('#btnUpload').hide();
+	$('#productNameDiv').hide();
 	
 	formAction = 'getFileInfo';
 	console.log(btn.attr('seqNo'));
