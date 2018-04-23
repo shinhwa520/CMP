@@ -123,10 +123,12 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> findProductFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength) {
+	public List<Object[]> findProductFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select fp from FilesProduct fp ")
-		  .append(" where 1=1 ");
+		sb.append(" select fp, pi ")
+		  .append(" from FilesProduct fp, ProductInfo pi ")
+		  .append(" where 1=1 ")
+		  .append(" and fp.productId = pi.productId ");
 	
 		if (fileDAOVO.getSeqNo() != null) {
 			sb.append(" and fp.seqNo = :seqNo ");
@@ -138,9 +140,12 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 			sb.append(" and fp.productId = :productId ");
 		}
 		
-		sb.append(" and (fp.filesSetting.activationBegin is null or fp.filesSetting.activationBegin <= sysdate()) ")
-		  .append(" and (fp.filesSetting.activationEnd is null or fp.filesSetting.activationEnd >= sysdate()) ")
-		  .append(" order by fp.seqNo desc ");
+		if (!fileDAOVO.isAdmin()) {
+			sb.append(" and (fp.filesSetting.activationBegin is null or fp.filesSetting.activationBegin <= sysdate()) ")
+			  .append(" and (fp.filesSetting.activationEnd is null or fp.filesSetting.activationEnd >= sysdate()) ");
+		}
+		
+		sb.append(" order by fp.filesSetting.onTop desc, fp.seqNo desc ");
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
@@ -159,7 +164,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    	q.setParameter("productId", fileDAOVO.getProductId());
 		}
 	    
-		return (List<Object>) q.list();
+		return (List<Object[]>) q.list();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -378,8 +383,10 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 			sb.append(" and fp.productId = :productId ");
 		}
 		
-		sb.append(" and (fp.filesSetting.activationBegin is null or fp.filesSetting.activationBegin <= sysdate()) ")
-		  .append(" and (fp.filesSetting.activationEnd is null or fp.filesSetting.activationEnd >= sysdate()) ");
+		if (!fileDAOVO.isAdmin()) {
+			sb.append(" and (fp.filesSetting.activationBegin is null or fp.filesSetting.activationBegin <= sysdate()) ")
+			  .append(" and (fp.filesSetting.activationEnd is null or fp.filesSetting.activationEnd >= sysdate()) ");
+		}
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());

@@ -34,6 +34,8 @@ public class FileServiceVO {
 	private Integer productId;
 	private Integer visitId;
 	
+	private String productName;
+	
 	public Integer getSeqNo() {
 		return seqNo;
 	}
@@ -248,5 +250,13 @@ public class FileServiceVO {
 
 	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 }

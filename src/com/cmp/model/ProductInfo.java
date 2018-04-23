@@ -27,6 +27,9 @@ public class ProductInfo {
 	@Column(name = "product_name", nullable = true)
 	private String productName;
 	
+	@Column(name = "eng_name", nullable = true)
+	private String engName;
+	
 	@Column(name = "main_title", nullable = true)
 	private String mainTitle;
 	
@@ -59,12 +62,13 @@ public class ProductInfo {
 		super();
 	}
 
-	public ProductInfo(Integer productId, String productName, String mainTitle, String mainContent, String subTitle,
-			String subContent, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
-			ProductSetting productSetting) {
+	public ProductInfo(Integer productId, String productName, String engName, String mainTitle, String mainContent,
+			String subTitle, String subContent, Timestamp createTime, String createBy, Timestamp updateTime,
+			String updateBy, ProductSetting productSetting) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
+		this.engName = engName;
 		this.mainTitle = mainTitle;
 		this.mainContent = mainContent;
 		this.subTitle = subTitle;
@@ -90,6 +94,14 @@ public class ProductInfo {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public String getEngName() {
+		return engName;
+	}
+
+	public void setEngName(String engName) {
+		this.engName = engName;
 	}
 
 	public String getMainTitle() {

@@ -20,15 +20,15 @@ public interface FileService {
 	
 	public List<FileServiceVO> findAllCustomerFiles(boolean isAdmin, Integer startRow, Integer pageLength);
 	
-	public long countProductFilesByProductId(Integer productId);
+	public long countProductFilesByProductId(boolean isAdmin, Integer productId);
 	
-	public List<FileServiceVO> findProductFilesByProductId(Integer productId, Integer startRow, Integer pageLength);
+	public List<FileServiceVO> findProductFilesByProductId(boolean isAdmin, Integer productId, Integer startRow, Integer pageLength);
 	
 	public long countCustomerFilesByCustId(Integer custId);
 	
 	public List<FileServiceVO> findCustomerFilesByCustId(Integer custId, Integer startRow, Integer pageLength);
 	
-	public FileServiceVO getFileByFileTypeAndSeqNoOrFileName(String fileType, Integer seqNo, String oriFileName);
+	public FileServiceVO getFileByFileTypeAndSeqNoOrFileName(boolean isAdmin, String fileType, Integer seqNo, String oriFileName);
 	
 	public List<FileServiceVO> findFilesByDAOVO(FileServiceVO fileServiceVO);
 	

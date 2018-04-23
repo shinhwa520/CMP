@@ -14,6 +14,8 @@ public class FileDAOVO {
 	private Integer productId;
 	private Integer visitId;
 	
+	private boolean isAdmin;
+	
 	public Integer getSeqNo() {
 		return seqNo;
 	}
@@ -76,5 +78,13 @@ public class FileDAOVO {
 
 	public void setFileCategory(String fileCategory) {
 		this.fileCategory = fileCategory;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

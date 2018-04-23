@@ -91,6 +91,7 @@ public class ProductController extends BaseController {
 	@RequestMapping(value="getProductFiles.json", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody DatatableResponse getPublicFiles(
 			@RequestParam(name="productId", required=false) Integer productId,
+			@RequestParam(name="isAdmin", required=false) boolean isAdmin,
 			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
 			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
 		
@@ -98,10 +99,10 @@ public class ProductController extends BaseController {
 		List<FileServiceVO> datalist = new ArrayList<FileServiceVO>();
 		
 		try {
-			count = fileService.countProductFilesByProductId(productId);
+			count = fileService.countProductFilesByProductId(isAdmin, productId);
 			
 			if (count > 0) {
-				datalist = fileService.findProductFilesByProductId(productId, start, length);
+				datalist = fileService.findProductFilesByProductId(isAdmin, productId, start, length);
 			}
 			
 		} catch (Exception e) {
