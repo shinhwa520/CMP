@@ -96,14 +96,17 @@ public class Customer implements java.io.Serializable {
     @JoinColumn(name = "data_status_id", nullable = false)
 	private Status dataStatus;
     
-    
+	@Column(name = "sys_msg", nullable = true)
+	private Boolean sysMsg=false;
+
 	public Customer() {
 	}
 
 	public Customer(int id, String name, String gender, Date birthday, String phone, String email, String weChat,
 			Integer identity1_id, String identity1_code, String identity1_name, Integer identity2_id,
 			String identity2_code, String identity2_name, String city, String census, String address, Status status,
-			User user, String remark, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy, Status dataStatus) {
+			User user, String remark, Timestamp createTime, String createBy, Timestamp updateTime, String updateBy,
+			Status dataStatus, Boolean sysMsg) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -129,7 +132,9 @@ public class Customer implements java.io.Serializable {
 		this.updateTime = updateTime;
 		this.updateBy = updateBy;
 		this.dataStatus = dataStatus;
+		this.sysMsg = sysMsg;
 	}
+
 
 	public int getId() {
 		return id;
@@ -368,5 +373,13 @@ public class Customer implements java.io.Serializable {
 
 	public void setDataStatus(Status dataStatus) {
 		this.dataStatus = dataStatus;
+	}
+
+	public Boolean getSysMsg() {
+		return sysMsg;
+	}
+
+	public void setSysMsg(Boolean sysMsg) {
+		this.sysMsg = sysMsg;
 	}
 }

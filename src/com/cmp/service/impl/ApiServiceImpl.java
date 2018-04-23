@@ -289,7 +289,7 @@ public class ApiServiceImpl implements ApiService {
 						cust.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 						cust.setUpdateBy("SYS");
 						cust.setStatus(status);
-						
+						cust.setSysMsg(true);
 						customerDAO.insertCustByModel(cust);
 					}
 				}

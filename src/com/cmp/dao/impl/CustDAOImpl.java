@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
 import com.cmp.model.Customer;
-import com.cmp.model.User;
 
 
 @Repository
@@ -45,6 +44,24 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	    return (List<Customer>) q.list();
 //		List<Customer> returnList = (List<Customer>)getHibernateTemplate().find(sb.toString(), new String[] {userId});
 //		return returnList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> findCust4SysMsg(String userId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from Customer c where 1=1 ");
+		sb.append(" and c.dataStatus.id <> 21 ");
+		sb.append(" and c.sysMsg=1 ");
+		if(StringUtils.isNotBlank(userId)){
+			sb.append(" and c.user.id = :userId ");
+		}
+	    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    if(StringUtils.isNotBlank(userId)){
+	    	q.setParameter("userId", userId);
+	    }
+	    return (List<Customer>) q.list();
 	}
 	
 	@Override

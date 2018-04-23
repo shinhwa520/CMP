@@ -85,7 +85,7 @@ public class SysMailController extends BaseController {
     }
 	
 	@RequestMapping(value = { "/sysMailboxDetail" }, method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody AppResponse sysMailboxDetail(HttpServletRequest request, HttpServletResponse response,
+    public @ResponseBody AppResponse sysMailboxDetail(HttpServletRequest request, HttpServletResponse response, Model model,
     		@RequestParam(name="sysMailId", required=true) Long sysMailId) {
 		AppResponse appResponse = null;
 		try {
@@ -96,6 +96,7 @@ public class SysMailController extends BaseController {
 			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
 			e.printStackTrace();
 		}
+		setActiveMenu(model, MenuItem.ADMIN_STATUS);
 		return appResponse;
     }
 	

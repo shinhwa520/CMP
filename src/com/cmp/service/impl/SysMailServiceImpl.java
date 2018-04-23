@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cmp.dao.CustomerDAO;
 import com.cmp.dao.SysMailDAO;
 import com.cmp.dao.UserDAO;
+import com.cmp.model.Customer;
 import com.cmp.model.SysMail;
 import com.cmp.model.User;
 import com.cmp.security.SecurityUtil;
@@ -23,6 +25,8 @@ public class SysMailServiceImpl implements SysMailService {
 	private SysMailDAO sysMailDAO;
 	@Autowired
 	private UserDAO userDao;
+	@Autowired
+	private CustomerDAO customerDAO;
 	
 	@Override
 	public void sendSysMail(String newSubject, String newContent, String mailTo) {
@@ -54,8 +58,19 @@ public class SysMailServiceImpl implements SysMailService {
 	}
 	
 	public HashMap<String, Object> getSysMailInfo(){
-		HashMap<String, Object> data = new HashMap<String, Object>();
 		String userId = SecurityUtil.getSecurityUser().getUser().getId();
+		List<Customer> custList = customerDAO.findCust4SysMsg(userId);
+		for(Customer cust:custList){
+			SysMail sysMail = new SysMail(userDao.findUserById("002")
+					, userDao.findUserById(userId)
+					, "新进客户通知 New customer notification"
+					, "名称 Name："+cust.getName()+"<br>日期 Date："+cust.getCreateTime());
+			sysMailDAO.saveSysMail(sysMail);
+			cust.setSysMsg(false);
+			customerDAO.saveCust(cust);
+		}
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("listUnread", sysMailDAO.findSysMailByUser(null, userId, true, false, 0, 3));
 		data.put("countUnread", sysMailDAO.countSysMailByUser(null, userId, true, false));
 		data.put("countNotAlive", sysMailDAO.countSysMailByUser(null, userId, false, null));

@@ -8,6 +8,7 @@ import com.cmp.model.Customer;
 public interface CustomerDAO {
 	Customer findCustById(int id);
 	List<Customer> findCustByUserId(String userId, Integer start,Integer length);
+	List<Customer> findCust4SysMsg(String userId);
 	long countCustByUserId(String userId);
 	List<Customer> findCust4Search(String keyword, Integer start,Integer length);
 	long countCust4Search(String keyword);

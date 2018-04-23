@@ -66,7 +66,7 @@
                                 <div class="card-body">
                                     <div class="d-flex m-b-40">
                                         <div class="p-l-10">
-                                            From: <small id="dtlMailFrom" class="text-muted">${sysMail.mailFrom.name }</small>
+                                            From: <small id="dtlMailFrom" class="text-muted">${sysMail.mailFrom.role.name }</small>
                                         </div>
                                     </div>
                                     <p id="dtlContent" >${sysMail.content }</p>
@@ -91,7 +91,7 @@ var targetMail = '${sysMail}';
 $(function() {
 	if(''!=targetMail){
     	$('#dtlSubject').html(targetMail.subject);
-    	$('#dtlMailFrom').html(targetMail.mailFrom);
+    	$('#dtlMailFrom').html(targetMail.mailFrom.role.name);
     	$('#dtlContent').html(targetMail.content);
 		viewDetail()
 	}else{
@@ -212,7 +212,7 @@ function inbox() {
 				},
 				"columns" : [
 					{ "data" : "id" },
-					{ "data" : "mailFrom.name" },
+					{ "data" : "mailFrom.role.name" },
 					{ "data" : "subject" },
 					{ "data" : "createTime" }
 				],
@@ -326,7 +326,7 @@ function mailboxDetail(mailId) {
             if (data.code === 200) {
             	$('#dtlId').val(mailId);
             	$('#dtlSubject').html(data.data.targetSysMail.subject);
-            	$('#dtlMailFrom').html(data.data.targetSysMail.mailFrom.name);
+            	$('#dtlMailFrom').html(data.data.targetSysMail.mailFrom.role.name);
             	$('#dtlContent').html(data.data.targetSysMail.content);
             	viewDetail();
             } else {
@@ -400,7 +400,7 @@ function trash() {
 				},
 				"columns" : [
 					{ "data" : "id" },
-					{ "data" : "mailFrom.name" },
+					{ "data" : "mailFrom.role.name" },
 					{ "data" : "subject" },
 					{ "data" : "createTime" }
 				],
