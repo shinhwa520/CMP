@@ -404,7 +404,7 @@ public class VisitServiceImpl implements VisitService {
 				//SU & ASST(助理) 能看所有入團客戶清單
 				userId = "";
 			}
-			modelList = visitDAO.findVisitDetailByVistiIdAndUserId(visitId, userId);
+			modelList = visitDAO.findVisitDetailByVisitIdAndUserId(visitId, userId);
 			
 			VisitServiceVO vsVO = null;
 			for (VisitDetail vd : modelList) {
@@ -451,7 +451,7 @@ public class VisitServiceImpl implements VisitService {
 		long count = 0;
 		try {
 			String userId = SecurityUtil.getSecurityUser().getUser().getId();
-			count = visitDAO.countVisitDetailByVistiIdAndUserId(visitId, userId);
+			count = visitDAO.countVisitDetailByVisitIdAndUserId(visitId, userId);
 			
 		} catch (Exception e) {
 			if (log.isErrorEnabled()) {

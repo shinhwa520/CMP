@@ -539,6 +539,9 @@
                             <a href="${pageContext.request.contextPath}/visit/tour"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="registration" /></span></a>
                         </li>
                         <li>
+                            <a href="${pageContext.request.contextPath}/salon/list"> <i class="mdi mdi-coffee"></i><span class="hide-menu"><spring:message code="salon" /></span></a>
+                        </li>
+                        <li>
                             <a href="${pageContext.request.contextPath}/product/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="productInfo" /></span></a>
                         </li>
                         <li>

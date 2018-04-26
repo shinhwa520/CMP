@@ -21,9 +21,9 @@ public interface VisitDAO {
 	
 	public long checkCustHasJoinTheVisitOrNot(Integer visitId, Integer custId);
 	
-	public List<VisitDetail> findVisitDetailByVistiIdAndUserId(Integer visitId, String userId);
+	public List<VisitDetail> findVisitDetailByVisitIdAndUserId(Integer visitId, String userId);
 	
-	public long countVisitDetailByVistiIdAndUserId(Integer visitId, String userId);
+	public long countVisitDetailByVisitIdAndUserId(Integer visitId, String userId);
 	
 	public Integer deleteVisitDetail(List<VisitDetail> deleteModelList);
 	

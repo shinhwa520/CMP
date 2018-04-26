@@ -83,7 +83,7 @@ public class VisitDAOImpl extends BaseDaoHibernate implements VisitDAO {
 	}
 
 	@Override
-	public List<VisitDetail> findVisitDetailByVistiIdAndUserId(Integer visitId, String userId) {
+	public List<VisitDetail> findVisitDetailByVisitIdAndUserId(Integer visitId, String userId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select vd from VisitDetail vd ")
 		  .append(" where 1=1 ")
@@ -105,7 +105,7 @@ public class VisitDAOImpl extends BaseDaoHibernate implements VisitDAO {
 	}
 	
 	@Override
-	public long countVisitDetailByVistiIdAndUserId(Integer visitId, String userId) {
+	public long countVisitDetailByVisitIdAndUserId(Integer visitId, String userId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select count(id) from VisitDetail vd ")
 		  .append(" where 1=1 ")

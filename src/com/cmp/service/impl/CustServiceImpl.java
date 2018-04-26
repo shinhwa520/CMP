@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmp.dao.CustomerDAO;
+import com.cmp.dao.SalonDAO;
 import com.cmp.dao.StatusDAO;
 import com.cmp.dao.UserDAO;
 import com.cmp.dao.VisitDAO;
@@ -32,6 +33,8 @@ public class CustServiceImpl implements CustService {
 	private StatusDAO statusDAO;
 	@Autowired
 	private VisitDAO visitDAO;
+	@Autowired
+	private SalonDAO salonDAO;
 	
 	@Override
 	public Customer findCustById(int id){
@@ -172,6 +175,33 @@ public class CustServiceImpl implements CustService {
 				BeanUtils.copyProperties(cust, custVO);
 				
 				long count = visitDAO.checkCustHasJoinTheVisitOrNot(visitId, cust.getId());
+				if (count > 0) {
+					custVO.setJoined(true);
+				}
+				
+				reList.add(custVO);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reList;
+	}
+
+	@Override
+	public List<CustServiceVO> findCustAndSalonByUserId(Integer visitId, String userId, Integer start, Integer length) {
+		List<Customer> custList = null;
+		List<CustServiceVO> reList = new ArrayList<CustServiceVO>();
+		
+		try {
+			custList = customerDAO.findCustByUserId(userId, start, length);
+			
+			CustServiceVO custVO = null;
+			for (Customer cust : custList) {
+				custVO = new CustServiceVO();
+				BeanUtils.copyProperties(cust, custVO);
+				
+				long count = salonDAO.checkCustHasJoinTheSalonOrNot(visitId, cust.getId());
 				if (count > 0) {
 					custVO.setJoined(true);
 				}
