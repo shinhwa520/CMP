@@ -1,6 +1,7 @@
 package com.cmp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,10 +11,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
@@ -31,13 +34,27 @@ public class SysMailController extends BaseController {
 	
 	@RequestMapping(value = "sysMailbox", method = RequestMethod.GET)
 	public String viewList(Model model, @RequestParam(name="sysMailId", required=false) Long sysMailId) {
-		if(null!=sysMailId){
-			SysMail sysMail = sysMailService.findSysMailById(sysMailId);
-			model.addAttribute("sysMail", sysMail);
-		}
 		setActiveMenu(model, MenuItem.ADMIN_STATUS);
 		return "sysMail/sysMailbox";
 	}
+	
+	@RequestMapping(value = { "sysMailbox/{sysMailId}" }, method = RequestMethod.GET)
+    public String sysMailboxDtl(HttpServletRequest request, HttpServletResponse response,
+    		Model model, @PathVariable Long sysMailId) {
+		try {
+			SysMail sysMail = sysMailService.findSysMailById(sysMailId);
+			model.addAttribute("targetSysMail_subject", sysMail.getSubject());
+			model.addAttribute("targetSysMail_mailFrom", sysMail.getMailFrom().getRole().getName());
+			model.addAttribute("targetSysMail_content", sysMail.getContent());
+			model.addAttribute("targetSysMail_alive", sysMail.isAlive());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+			pathVariables.remove("sysMailId");
+		}
+		setActiveMenu(model, MenuItem.ADMIN_STATUS);
+		return "sysMail/sysMailbox";
+    }
 	
 	/**
 	 * Retrieve SysMailByUser
@@ -85,7 +102,7 @@ public class SysMailController extends BaseController {
     }
 	
 	@RequestMapping(value = { "/sysMailboxDetail" }, method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody AppResponse sysMailboxDetail(HttpServletRequest request, HttpServletResponse response, Model model,
+    public @ResponseBody AppResponse sysMailboxDetail(HttpServletRequest request, HttpServletResponse response,
     		@RequestParam(name="sysMailId", required=true) Long sysMailId) {
 		AppResponse appResponse = null;
 		try {
@@ -96,7 +113,6 @@ public class SysMailController extends BaseController {
 			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
 			e.printStackTrace();
 		}
-		setActiveMenu(model, MenuItem.ADMIN_STATUS);
 		return appResponse;
     }
 	

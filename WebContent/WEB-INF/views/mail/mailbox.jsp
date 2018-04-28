@@ -1,5 +1,8 @@
 <%@ include file="../../common/taglib.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="org.springframework.web.servlet.HandlerMapping" %>
 <section class="content">
 	<div class="row page-titles">
 	    <div class="col-md-6 col-8 align-self-center">
@@ -160,12 +163,30 @@ var tblMain;
 
 //[Init.]
 $(function() {
-	var mailId = '<%=request.getParameter("mailId")%>';
+	var mailId = '<%=((Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE)).get("mailId")%>';
     if (mailId === 'null') {
 		inbox();
 		viewMailBox();
     }else{
-    	mailboxDetail(mailId);
+    	$('#dtlId').val(mailId);
+    	$('#dtlMailFromId').val(mailId);
+    	$('#dtlMailToName').val(mailId);
+    	$('#dtlMailCreateTime').val(mailId);
+    	$('#dtlSubject').html('${targetMail_subject }');
+    	$('#dtlMailFrom').html('${targetMail_mailFrom }');
+    	$('#dtlContent').html('${targetMail_content }');
+    	var status = '${targetMail_status }';
+    	if('1'==status){
+    		$('.list-group-item').removeClass('active');
+    		$('#inboxOption').addClass('active');
+    	}else if('0'==status){
+    		$('.list-group-item').removeClass('active');
+    		$('#trashOption').addClass('active');
+        }else if('2'==status){
+    		$('.list-group-item').removeClass('active');
+    		$('#savedOption').addClass('active');
+        }
+		viewDetail();
     }
 
 	getMailInfo();
@@ -465,6 +486,8 @@ function sendMail() {
 }
 
 function mailboxDetail(mailId) {
+	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/mail/mailbox/' + mailId;
+	/*
 	$.ajax({
 		url : '${pageContext.request.contextPath}/mail/mailboxDetail?mailId=' + mailId,
 		type : "GET",
@@ -490,6 +513,7 @@ function mailboxDetail(mailId) {
 			alert(thrownError);
 		}
 	});
+	*/
 }
 
 function deleteMail(results) {

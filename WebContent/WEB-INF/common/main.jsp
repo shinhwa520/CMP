@@ -386,7 +386,7 @@
                                         <div class="message-center">
 											<c:if test="${!sysMailMap.listUnread.isEmpty() }">
 											<c:forEach var="vo" items="${ sysMailMap.listUnread }">
-												<a href='${pageContext.request.contextPath}/sysMail/sysMailbox?sysMailId=${ vo.id }'>
+												<a href='${pageContext.request.contextPath}/sysMail/sysMailbox/${ vo.id }'>
 													<div class="mail-contnet">
 														<h5>${vo.mailFrom.name}</h5> <span class="mail-desc">${vo.subject}</span> <span class="time">${vo.createTime}</span> 
 													</div>
@@ -421,7 +421,7 @@
                                         <div class="message-center">
 											<c:if test="${!mailMap.listUnread.isEmpty() }">
 											<c:forEach var="vo" items="${ mailMap.listUnread }">
-												<a href='${pageContext.request.contextPath}/mail/mailbox?mailId=${ vo.id }'>
+												<a href='${pageContext.request.contextPath}/mail/mailbox/${ vo.id }'>
 													<div class="mail-contnet">
 														<h5>${vo.mailFrom.name}</h5> <span class="mail-desc">${vo.subject}</span> <span class="time">${vo.createTime}</span> 
 													</div>

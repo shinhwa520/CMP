@@ -1,6 +1,7 @@
 package com.cmp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,10 +11,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.cmp.AppResponse;
 import com.cmp.DatatableResponse;
@@ -34,6 +37,28 @@ public class MailController extends BaseController {
 		setActiveMenu(model, MenuItem.ADMIN_STATUS);
 		return "mail/mailbox";
 	}
+	
+	@RequestMapping(value = { "mailbox/{mailId}" }, method = RequestMethod.GET)
+    public String mailboxDtl(HttpServletRequest request, HttpServletResponse response,
+    		Model model, @PathVariable Long mailId) {
+		try {
+			Mail mail = mailService.findMailById(mailId);
+			model.addAttribute("targetMail_subject", mail.getSubject());
+			model.addAttribute("targetMail_mailFrom", mail.getMailFrom().getName());
+			model.addAttribute("targetMail_content", mail.getContent());
+			model.addAttribute("targetMail_status", mail.getStatus());
+			
+			model.addAttribute("targetMail_mailFromId", mail.getMailFrom().getId());
+			model.addAttribute("targetMail_mailTo", mail.getMailTo().getName());
+			model.addAttribute("targetMail_createTime", mail.getCreateTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+			pathVariables.remove("mailId");
+		}
+		setActiveMenu(model, MenuItem.ADMIN_STATUS);
+		return "mail/mailbox";
+    }
 	
 	/**
 	 * Retrieve MailByUser

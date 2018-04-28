@@ -1,5 +1,8 @@
 <%@ include file="../../common/taglib.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="org.springframework.web.servlet.HandlerMapping" %>
 <section class="content">
 	<div class="row page-titles">
 	    <div class="col-md-6 col-8 align-self-center">
@@ -56,9 +59,9 @@
 	                    </div>
                         <div class="card-body p-t-0">
                             <div class="card b-all shadow-none">
-                            	<input type="hidden" id="dtlId" value="${sysMail.id }">
+                            	<input type="hidden" id="dtlId" >
                                 <div class="card-body">
-                                    <h3 id="dtlSubject" class="card-title m-b-0">${sysMail.subject }</h3>
+                                    <h3 id="dtlSubject" class="card-title m-b-0"></h3>
                                 </div>
                                 <div>
                                     <hr class="m-t-0">
@@ -66,10 +69,10 @@
                                 <div class="card-body">
                                     <div class="d-flex m-b-40">
                                         <div class="p-l-10">
-                                            From: <small id="dtlMailFrom" class="text-muted">${sysMail.mailFrom.role.name }</small>
+                                            From: <small id="dtlMailFrom" class="text-muted"></small>
                                         </div>
                                     </div>
-                                    <p id="dtlContent" >${sysMail.content }</p>
+                                    <p id="dtlContent" ></p>
                                 </div>
                             </div>
                         </div>
@@ -85,18 +88,26 @@
 
 <script>
 var tblMain;
-var targetMail = '${sysMail}';
 
 //[Init.]
 $(function() {
-	if(''!=targetMail){
-    	$('#dtlSubject').html(targetMail.subject);
-    	$('#dtlMailFrom').html(targetMail.mailFrom.role.name);
-    	$('#dtlContent').html(targetMail.content);
-		viewDetail()
-	}else{
+	var sysMailId = '<%=((Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE)).get("sysMailId")%>';
+	if (sysMailId === 'null') {
 		inbox();
 		viewMailBox();
+	}else{
+    	$('#dtlId').val(sysMailId);
+    	$('#dtlSubject').html('${targetSysMail_subject }');
+    	$('#dtlMailFrom').html('${targetSysMail_mailFrom }');
+    	$('#dtlContent').html('${targetSysMail_content }');
+    	if('true'=='${targetSysMail_alive }'){
+    		$('.list-group-item').removeClass('active');
+    		$('#inboxOption').addClass('active');
+    	}else{
+    		$('.list-group-item').removeClass('active');
+    		$('#trashOption').addClass('active');
+        }
+		viewDetail();
 	}
 	getMailInfo();
 	$('#newContent').wysihtml5();
@@ -316,6 +327,8 @@ function sendMail() {
 }
 
 function mailboxDetail(mailId) {
+	window.location.href = '<%=StringEscapeUtils.escapeHtml(request.getContextPath())%>/sysMail/sysMailbox/' + mailId;
+	/*
 	$.ajax({
 		url : '${pageContext.request.contextPath}/sysMail/sysMailboxDetail?sysMailId=' + mailId,
 		type : "GET",
@@ -338,6 +351,7 @@ function mailboxDetail(mailId) {
 			alert(thrownError);
 		}
 	});
+	*/
 }
 
 function deleteMail(results) {
