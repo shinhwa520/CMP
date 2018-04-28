@@ -7,7 +7,7 @@
 
 	<div class="row page-titles">
 	    <div class="col-md-6 col-8 align-self-center">
-	        <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="registration" />&nbsp;
+	        <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="salon" />&nbsp;
 				<button type="button" class="btn btn-warning" onclick="btnAddClicked();" style="width:30%"><spring:message code='add'/></button>
 		   	</h3>
 	    </div>
@@ -20,28 +20,28 @@
          <div class="col-12">
              <div class="card">
                  <div class="card-body">
-                    <div class="visit-wrapper row pricing-plan">
-                    	<c:if test="${!VisitForm.visitList.isEmpty() }">
-                    		<c:forEach var="vo" items="${ VisitForm.visitList }" varStatus="loop">
-                    			<div class="visit-item col-md-4 col-xs-6 col-sm-12 no-padding">
+                    <div class="salon-wrapper row pricing-plan">
+                    	<c:if test="${!SalonForm.salonList.isEmpty() }">
+                    		<c:forEach var="vo" items="${ SalonForm.salonList }" varStatus="loop">
+                    			<div class="salon-item col-md-4 col-xs-6 col-sm-12 no-padding">
 		                            <div class="pricing-box">
 		                                <div class="pricing-body b-l b-r">
 		                                	<div class="pricing-header">
 		                                		<c:if test="${vo.canModify}">
-		                                			<button class="btn btn-info waves-effect waves-light m-t-20" onClick="btnEditClicked(${vo.visitId })"><spring:message code="edit"/></button>
+		                                			<button class="btn btn-info waves-effect waves-light m-t-20" onClick="btnEditClicked(${vo.salonId })"><spring:message code="edit"/></button>
 		                                		</c:if>
 	                                            <c:if test="${vo.status ne 23}">
 	                                            	<button class="btn waves-effect waves-light m-t-20" style="width:50%;" disabled><spring:message code="joinGo"/></button>
 	                                            </c:if>
 	                                            <c:if test="${vo.status eq 23}">
-	                                            	<button class="btn btn-success waves-effect waves-light m-t-20 btn-add" visitId="${vo.visitId }" style="width:50%"><spring:message code="joinGo"/></button>
+	                                            	<button class="btn btn-success waves-effect waves-light m-t-20 btn-add" salonId="${vo.salonId }" style="width:50%"><spring:message code="joinGo"/></button>
 	                                            </c:if>
 	                                            <c:if test="${vo.canModify}">
-	                                            	<button class="btn btn-danger waves-effect waves-light m-t-20" onClick="btnDeleteClicked(${vo.visitId }, '${vo.visitName }')"><spring:message code="delete"/></button>
+	                                            	<button class="btn btn-danger waves-effect waves-light m-t-20" onClick="btnDeleteClicked(${vo.salonId }, '${vo.salonName }')"><spring:message code="delete"/></button>
 	                                        	</c:if>
 	                                        </div>
 		                                    <div class="pricing-header">
-		                                        <h2 class="text-center"><b>${vo.visitName }</b></h2>
+		                                        <h2 class="text-center"><b>${vo.salonName }</b></h2>
 		                                        <p class="uppercase">${vo.description }&nbsp;</p>
 		                                    </div>
 		                                    <div class="price-table-content">
@@ -50,16 +50,16 @@
 	                                        	  	<h3 class="text-center">
 	                                        	  		<b>
 			                                        		<c:if test="${vo.status eq 22}">
-			                                        			<span style="color:#c77f0a"><i class="icon-lock"></i> <spring:message code="visitNotOpen"/></span>
+			                                        			<span style="color:#c77f0a"><i class="icon-lock"></i> <spring:message code="salonNotOpen"/></span>
 			                                        		</c:if>
 			                                        		<c:if test="${vo.status eq 23}">
-			                                        			<span style="color:#24d12a"><i class="icon-user-follow"></i> <spring:message code="visitIng"/></span>
+			                                        			<span style="color:#24d12a"><i class="icon-user-follow"></i> <spring:message code="salonIng"/></span>
 			                                        		</c:if>
 			                                        		<c:if test="${vo.status eq 24}">
-			                                        			<span style="color:#dc3545"><i class="icon-close"></i> <spring:message code="visitStop"/></span>
+			                                        			<span style="color:#dc3545"><i class="icon-close"></i> <spring:message code="salonStop"/></span>
 			                                        		</c:if>
 			                                        		<c:if test="${vo.status eq 25}">
-			                                        			<span style="color:#00f"><i class="icon-check"></i> <spring:message code="visitGo"/></span>
+			                                        			<span style="color:#00f"><i class="icon-check"></i> <spring:message code="salonGo"/></span>
 			                                        		</c:if>
 	                                        			</b>
 	                                        		</h3> 
@@ -74,7 +74,7 @@
 		                                        	<p class="uppercase"><i class="icon-user"></i> <spring:message code='numberLimit'/>: ${vo.minMemberCount } ~ ${vo.maxMemberCount }</p>
 		                                        	<h3 class="text-center">
 		                                        		<c:if test="${vo.memberCount ne 0}">
-		                                        			<a href="#" onClick="editCustInfo(${vo.visitId })" style="text-decoration: underline;">
+		                                        			<a href="#" onClick="editCustInfo(${vo.salonId })" style="text-decoration: underline;">
 		                                        				<span style="color:blue;font-size:1.5em">${vo.memberCount }</span>&nbsp;
 		                                        				<span style="color:blue;"><spring:message code="member" /></span>
 		                                        			</a> 
@@ -84,36 +84,6 @@
 		                                        		</c:if>
 		                                        		
 		                                        	</h3>
-		                                        </div>
-		                                        <!-- 出發日期 -->
-		                                        <div class="price-row"> 
-		                                        	<p class="uppercase"><i class="icon-calender"></i> <spring:message code='departureDate'/>:</p>
-		                                        	<h4 class="text-center">${vo.departureDate } ${vo.departureTime }&nbsp;</h4>
-		                                        </div>
-		                                        <!-- 出發城市 -->
-		                                        <div class="price-row"> 
-		                                        	<p class="uppercase"><i class="icon-plane"></i> <spring:message code='departureCity'/>:</p>
-		                                        	<h4 class="text-center">${vo.departureCity }&nbsp;</h4>
-		                                        </div>
-		                                        <!-- 到達日期 -->
-		                                        <div class="price-row"> 
-		                                        	<p class="uppercase"><i class="icon-calender"></i> <spring:message code='arrivalDate'/>:</p>
-		                                        	<h4 class="text-center">${vo.arrivalDate } ${vo.arrivalTime }&nbsp;</h4>
-		                                        </div>
-		                                        <!-- 到達機場航站樓 -->
-		                                        <div class="price-row"> 
-		                                        	<p class="uppercase"><i class="icon-location-pin"></i> <spring:message code='arrivalAirportTerminal'/>:</p>
-		                                        	<h4 class="text-center">${vo.arrivalAirportTerminal }&nbsp;</h4>
-		                                        </div>
-		                                        <!-- 返程日期 -->
-		                                        <div class="price-row"> 
-		                                        	<p class="uppercase"><i class="icon-calender"></i> <spring:message code='returnDate'/>:</p>
-		                                        	<h4 class="text-center">${vo.returnDate } ${vo.returnTime }&nbsp;</h4>
-		                                        </div>
-		                                        <!-- 返程機場航站樓 -->
-		                                        <div class="price-row"> 
-		                                        	<p class="uppercase"><i class="icon-home"></i> <spring:message code='returnAirportTerminal'/>:</p>
-		                                        	<h4 class="text-center">${vo.returnAirportTerminal }&nbsp;</h4>
 		                                        </div>
 		                                        <!-- 備註 -->
 		                                        <div class="price-row"> 
@@ -126,8 +96,8 @@
 		                        </div>
                     		</c:forEach>
                     	</c:if>
-                    	<c:if test="${VisitForm.visitList.isEmpty() }">
-                    		<spring:message code='noVisitTour'/>
+                    	<c:if test="${SalonForm.salonList.isEmpty() }">
+                    		<spring:message code='noSalonTour'/>
                     	</c:if>
                     </div>
                  </div>
@@ -138,13 +108,13 @@
      <!-- End PAge Content -->
      <!-- ============================================================== -->
 	
-	<div class="visit-cust-panel" style="display:none">
-		<div class="visit-cust-panel-content col-md-8 col-xs-6 col-sm-12 no-padding">
+	<div class="salon-cust-panel" style="display:none">
+		<div class="salon-cust-panel-content col-md-8 col-xs-6 col-sm-12 no-padding">
 			<div class="pricing-box">
 				<div class="pricing-body b-l b-r">
 					<div class="pricing-header">
 						<button class="btn btn-info waves-effect waves-light m-t-20" onClick="btnPanelCloseClicked()"><spring:message code="close"/></button>
-		          		<button class="btn btn-success waves-effect waves-light m-t-20" onClick="btnPanelSaveClicked(${vo.visitId })" style="width:30%"><spring:message code="save"/></button>
+		          		<button class="btn btn-success waves-effect waves-light m-t-20" onClick="btnPanelSaveClicked(${vo.salonId })" style="width:30%"><spring:message code="save"/></button>
 	                	<button class="btn btn-primary waves-effect waves-light m-t-20" onClick="btnPanelCheckAllClicked()"><spring:message code="selectAll"/></button>
 	                </div>
 	                <div class="price-table-content">
@@ -181,17 +151,17 @@
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit">
-            	<input type="hidden" name="visitId" id="visitId" value="" />
+            	<input type="hidden" name="salonId" id="salonId" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="visitName" class="control-label"><spring:message code="visitName"/><span class="pull-right" style="color: red;">＊ </span></label>
-	                  <input type="text" class="form-control" id="visitName" name="visitName" placeholder="<spring:message code="visitName"/>">
+	                  <label for="salonName" class="control-label"><spring:message code="salonName"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <input type="text" class="form-control" id="salonName" name="salonName" placeholder="<spring:message code="salonName"/>">
 	                </div>                              
 	            </div>
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="visitDescription" class="control-label"><spring:message code="description"/></label>
-	                  <input type="text" class="form-control" id="visitDescription" name="visitDescription" placeholder="<spring:message code="description"/>">
+	                  <label for="salonDescription" class="control-label"><spring:message code="description"/></label>
+	                  <input type="text" class="form-control" id="salonDescription" name="salonDescription" placeholder="<spring:message code="description"/>">
 	                </div>                              
 	            </div>      
 	            <div class="box-body">
@@ -211,57 +181,14 @@
 	                </div>                              
 	            </div>
 	            <div class="box-body">
-	                <div class="form-group">
-	                  	<label for="departureDate" class="control-label"><spring:message code='departureDate'/></label>
-	                  	<input id="date-input-departureDate" class="form-control small" type="text" name="departureDate" placeholder="<spring:message code='yearMonthDate'/>" />
-	               		<label for="departureTime" class="control-label"><spring:message code='departureTime'/></label>
-	               		<input id="time-input-departureTime" class="form-control small" type="text" name="departureTime" placeholder="<spring:message code='hourMinuteSecond'/>" />
-	                </div>
-	            </div>
-	            <div class="box-body">
-	                <div class="form-group">
-	                  	<label for="departureCity" class="control-label"><spring:message code='departureCity'/></label>
-	                	<input type="text" class="form-control" id="departureCity" name="departureCity" placeholder="<spring:message code='departureCity'/>">
-	                </div>
-	            </div>
-	            <div class="box-body">
-	                <div class="form-group">
-	                  	<label for="arrivalDate" class="control-label"><spring:message code='arrivalDate'/></label>
-	                  	<input id="date-input-arrivalDate" class="form-control small" type="text" name="arrivalDate" placeholder="<spring:message code='yearMonthDate'/>" />
-	               		<label for="arrivalTime" class="control-label"><spring:message code='arrivalTime'/></label>
-	               		<input id="time-input-arrivalTime" class="form-control small" type="text" name="arrivalTime" placeholder="<spring:message code='hourMinuteSecond'/>" />
-	                </div>
-	            </div>
-	            <div class="box-body">
-	                <div class="form-group">
-	                  	<label for="arrivalAirportTerminal" class="control-label"><spring:message code='arrivalAirportTerminal'/></label>
-	                	<input type="text" class="form-control" id="arrivalAirportTerminal" name="arrivalAirportTerminal" placeholder="<spring:message code='arrivalAirportTerminal'/>">
-	                </div>
-	            </div>
-	            
-	            <div class="box-body">
-	                <div class="form-group">
-	                  	<label for="returnDate" class="control-label"><spring:message code='visitReturnDate'/></label>
-	                  	<input id="date-input-returnDate" class="form-control small" type="text" name="returnDate" placeholder="<spring:message code='yearMonthDate'/>" />
-	               		<label for="returnTime" class="control-label"><spring:message code='takeOffTime'/></label>
-	               		<input id="time-input-returnTime" class="form-control small" type="text" name="returnTime" placeholder="<spring:message code='hourMinuteSecond'/>" />
-	                </div>
-	            </div>
-	            <div class="box-body">
-	                <div class="form-group">
-	                  	<label for="returnAirportTerminal" class="control-label"><spring:message code='visitReturnAirportTerminal'/></label>
-	                	<input type="text" class="form-control" id="returnAirportTerminal" name="returnAirportTerminal" placeholder="<spring:message code='visitReturnAirportTerminal'/>">
-	                </div>
-	            </div>
-	            <div class="box-body">
 		        	<div class="form-group">
 						<label for="status" class="control-label"><spring:message code="status"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<select name="status" id="status" class="form-control selectpicker m-b-5" >
 							<option value="">=== <spring:message code="pleaseChoose"/> ===</option>
-							<option value="22"><spring:message code="visitNotOpen"/></option>
-							<option value="23"><spring:message code="visitIng"/></option>
-							<option value="24"><spring:message code="visitStop"/></option>
-							<option value="25"><spring:message code="visitGo"/></option>
+							<option value="22"><spring:message code="salonNotOpen"/></option>
+							<option value="23"><spring:message code="salonIng"/></option>
+							<option value="24"><spring:message code="salonStop"/></option>
+							<option value="25"><spring:message code="salonGo"/></option>
 						</select>
 		            </div>                              
 		        </div>
@@ -283,26 +210,23 @@
 <!--/.燈箱 Edit -->
 
 <!--.燈箱 Edit VistiDetail -->         
-<div class="modal fade bs-example-modal-lg" id="modal_Edit_VisitDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade bs-example-modal-lg" id="modal_Edit_SalonDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<h4 class="modal-title"><spring:message code="edit"/>&nbsp;&nbsp;(<spring:message code="custStatusOrDataNotReadyPS"/>)</h4>
+			<h4 class="modal-title"><spring:message code="edit"/></h4>
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">                    
-            <form role="form" id="visitDetailForm" name="visitDetailForm">
-            	<input type="hidden" name="custByVisitId" id="custByVisitId" value="" />
+            <form role="form" id="salonDetailForm" name="salonDetailForm">
+            	<input type="hidden" name="custBySalonId" id="custBySalonId" value="" />
 	            <div class="box-body">
-	                <table id="tblMain_VisitDetail" class="table table-bordered table-striped" style="width:100%">
+	                <table id="tblMain_SalonDetail" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
 			                    <th style="width:15%"><b><spring:message code="channel"/></b></th>
 			                    <th style="min-width:100px"><b><spring:message code="custName"/></b></th>
-			                    <th><b><spring:message code="visaStatus"/></b></th>
-			                    <th><b><spring:message code="accommodationSituation"/></b></th>
-			                    <th><b><spring:message code="amountReceived"/></b></th>
 			                    <th><b><spring:message code="remarks"/></b></th>
 			                    <th><b><spring:message code="status"/></b></th>
 							</tr>
@@ -311,7 +235,7 @@
 	            </div>
 				<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
-	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnVisitDetailSaveClicked();"><spring:message code="save"/></button>
+	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnSalonDetailSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -322,16 +246,16 @@
 
 <script type="text/javascript">
 	var tblMain;
-	var tblMain_VisitDetail;
+	var tblMain_SalonDetail;
 
 	$(document).ready(function() {
 		$(".btn-add").bind("click", function( e ) {
-			$("#visitId").val($(this).attr('visitId'));
-			var $item = $(this).closest("div.visit-item");
+			$("#salonId").val($(this).attr('salonId'));
+			var $item = $(this).closest("div.salon-item");
 			
-			var $wrapper = $(document).find('div.visit-wrapper');
+			var $wrapper = $(document).find('div.salon-wrapper');
 			
-			$wrapper.find('div.visit-item').not( $item ).fadeOut();
+			$wrapper.find('div.salon-item').not( $item ).fadeOut();
 			$item.find('button.btn-add').hide();
 			
 			setTimeout(function(){
@@ -392,14 +316,14 @@
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/channel/cust/getCustAndVisitByUserId.json',
+				"url" : '${pageContext.request.contextPath}/channel/cust/getCustAndSalonByUserId.json',
 				"type" : 'GET',
 				"data" : function(d) {
-					d.visitId = $("#visitId").val()
+					d.salonId = $("#salonId").val()
 				}
 			},
 			"drawCallback": function( settings ) {
-				$(".visit-wrapper").append($('.visit-cust-panel').html()).fadeIn('slow');
+				$(".salon-wrapper").append($('.salon-cust-panel').html()).fadeIn('slow');
 				
 				var custIdArray = new Array();
 				var idx = 0;
@@ -506,10 +430,10 @@
 	}
 	
 	function btnPanelCloseClicked() {
-		var $wrapper = $(document).find('div.visit-wrapper');
-		$wrapper.find('div.visit-cust-panel-content').remove();
-		$wrapper.find('div.visit-item').find('button.btn-add').show();
-		$wrapper.find('div.visit-item').fadeIn();
+		var $wrapper = $(document).find('div.salon-wrapper');
+		$wrapper.find('div.salon-cust-panel-content').remove();
+		$wrapper.find('div.salon-item').find('button.btn-add').show();
+		$wrapper.find('div.salon-item').fadeIn();
 	}
 	
 	function btnPanelSaveClicked() {
@@ -575,9 +499,9 @@
 				
 			} else {
 				$.ajax({
-					url : '${pageContext.request.contextPath}/visit/join',
+					url : '${pageContext.request.contextPath}/salon/join',
 					data : {
-						'visitId' : $("#visitId").val(),
+						'salonId' : $("#salonId").val(),
 						'deleteCustIds' : deleteCustIds.join(','),
 						'addCustIds' : addCustIds.join(',')
 					},
@@ -590,7 +514,7 @@
 							setTimeout(function(){
 								$('#modal_Edit').modal('hide');
 								//重新查詢
-								window.location.href = '${pageContext.request.contextPath}/visit/tour';
+								window.location.href = '${pageContext.request.contextPath}/salon/list';
 							}, 1000);
 							
 						} else {
@@ -634,22 +558,13 @@
 	function btnAddClicked() {
 		formAction = 'save';
 		$('.form-group').removeClass('has-error');
-		$('#visitId').val('');
-		$('#visitName').val('');
-		$('#visitDescription').val('');
+		$('#salonId').val('');
+		$('#salonName').val('');
+		$('#salonDescription').val('');
 		$('#beginDate').val('');
 		$('#endDate').val('');
 		$('#minMemberCount').val('');
 		$('#maxMemberCount').val('');
-		$('#departureDate').val('');
-		$('#departureTime').val('');
-		$('#departureCity').val('');
-		$('#arrivalDate').val('');
-		$('#arrivalTime').val('');
-		$('#arrivalAirportTerminal').val('');
-		$('#returnDate').val('');
-		$('#returnTime').val('');
-		$('#returnAirportTerminal').val('');
 		$('#status').val('');
 		$('#remarks').val('');
 
@@ -658,7 +573,7 @@
 	
 	//[Save] modal_Edit >>按下Save 儲存
 	function btnSaveClicked() {
-		var visitName = $('#visitName').val();
+		var salonName = $('#salonName').val();
 		var beginDate = $('#date-input-beginDate').val();
 		var endDate = $('#date-input-endDate').val();
 		var minMemberCount = $('#minMemberCount').val();
@@ -669,9 +584,9 @@
 		$('.form-group').removeClass('has-error');
 		var isError = false;
 		var errMsg = '';
-		if ('' == visitName.trim()) {
+		if ('' == salonName.trim()) {
 			isError = true;
-			$('#visitName').parents('.form-group').addClass('has-error');
+			$('#salonName').parents('.form-group').addClass('has-error');
 		} 
 		if ('' == beginDate.trim()) {
 			isError = true;
@@ -712,12 +627,12 @@
 		if ((currentDate < bDate) && (status == 23)) {
 			$('#date-input-beginDate').parents('.form-group').addClass('has-error');
 			$('#status').parents('.form-group').addClass('has-error');
-			errorMsgModal('<spring:message code="error.startDateAndStatusNotMatch"/> 「<spring:message code="visitIng"/>」<br/>');
+			errorMsgModal('<spring:message code="error.startDateAndStatusNotMatch"/> 「<spring:message code="salonIng"/>」<br/>');
 			return false;
 		}
 		
 		$.ajax({
-			url : '${pageContext.request.contextPath}/visit/save',
+			url : '${pageContext.request.contextPath}/salon/save',
 			data : $('#formEdit').serialize(),
 			type : "POST",
 			dataType : 'json',
@@ -728,7 +643,7 @@
 					setTimeout(function(){
 						$('#modal_Edit').modal('hide');
 						//重新查詢
-						window.location.href = '${pageContext.request.contextPath}/visit/tour';
+						window.location.href = '${pageContext.request.contextPath}/salon/list';
 					}, 1000);
 					
 				} else {
@@ -744,33 +659,24 @@
 	}
 	
 	//[Edit] 進入modal_Edit編輯
-	function btnEditClicked(visitId) {
+	function btnEditClicked(salonId) {
 		$.ajax({
-				url : '${pageContext.request.contextPath}/visit/getVisit',
-				data : {visitId: visitId},
+				url : '${pageContext.request.contextPath}/salon/getSalon',
+				data : {salonId: salonId},
 				type : "POST",
 				dataType : 'json',
 				async: false,
 				success : function(resp) {
 					if (resp.code == "200") {
-						$('#visitId').val(visitId);
-						$('#visitName').val(resp.data.visit.visitName);
-						$('#visitDescription').val(resp.data.visit.description);
-						$('#date-input-beginDate').val(resp.data.visit.beginDate);
-						$('#date-input-endDate').val(resp.data.visit.endDate);
-						$('#minMemberCount').val(resp.data.visit.minMemberCount);
-						$('#maxMemberCount').val(resp.data.visit.maxMemberCount);
-						$('#date-input-departureDate').val(resp.data.visit.departureDate);
-						$('#time-input-departureTime').val(resp.data.visit.departureTime);
-						$('#departureCity').val(resp.data.visit.departureCity);
-						$('#date-input-arrivalDate').val(resp.data.visit.arrivalDate);
-						$('#time-input-arrivalTime').val(resp.data.visit.arrivalTime);
-						$('#arrivalAirportTerminal').val(resp.data.visit.arrivalAirportTerminal);
-						$('#date-input-returnDate').val(resp.data.visit.returnDate);
-						$('#time-input-returnTime').val(resp.data.visit.returnTime);
-						$('#returnAirportTerminal').val(resp.data.visit.returnAirportTerminal);
-						$('#status').val(resp.data.visit.status).change();
-						$('#remarks').val(resp.data.visit.remark);
+						$('#salonId').val(salonId);
+						$('#salonName').val(resp.data.salon.salonName);
+						$('#salonDescription').val(resp.data.salon.description);
+						$('#date-input-beginDate').val(resp.data.salon.beginDate);
+						$('#date-input-endDate').val(resp.data.salon.endDate);
+						$('#minMemberCount').val(resp.data.salon.minMemberCount);
+						$('#maxMemberCount').val(resp.data.salon.maxMemberCount);
+						$('#status').val(resp.data.salon.status).change();
+						$('#remarks').val(resp.data.salon.remark);
 						$('#modal_Edit').modal();
 					} else {
 						alert(resp.message);
@@ -784,13 +690,13 @@
 			});
 	}
 	
-	function btnDeleteClicked(visitId, visitName) {
-		var choose = confirm("<spring:message code='confirmToDelete'/> 「"+visitName+"」?");
+	function btnDeleteClicked(salonId, salonName) {
+		var choose = confirm("<spring:message code='confirmToDelete'/> 「"+salonName+"」?");
 		
 		if (choose) {
 			$.ajax({
-				url : '${pageContext.request.contextPath}/visit/delete/',
-				data : {visitId: visitId},
+				url : '${pageContext.request.contextPath}/salon/delete/',
+				data : {salonId: salonId},
 				type : "POST",
 				dataType : 'json',
 				async: false,
@@ -798,7 +704,7 @@
 					if (resp.code == '200') {
 						alert("<spring:message code='success.delete'/>");
 						//重新查詢
-						window.location.href = '${pageContext.request.contextPath}/visit/tour';
+						window.location.href = '${pageContext.request.contextPath}/salon/list';
 
 					} else {
 						alert(resp);
@@ -813,14 +719,14 @@
 		}
 	}
 	
-	function editCustInfo(visitId) {
-		$('#custByVisitId').val(visitId);
+	function editCustInfo(salonId) {
+		$('#custBySalonId').val(salonId);
 		
-		if (tblMain_VisitDetail) {
-			tblMain_VisitDetail.destroy();	//重查資料
+		if (tblMain_SalonDetail) {
+			tblMain_SalonDetail.destroy();	//重查資料
 		} 
 		
-		tblMain_VisitDetail = $('#tblMain_VisitDetail').DataTable(
+		tblMain_SalonDetail = $('#tblMain_SalonDetail').DataTable(
 		{
 			"bFilter" : false,
 			"ordering" : false,
@@ -828,19 +734,19 @@
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				"url" : '${pageContext.request.contextPath}/visit/getVisitDetails',
+				"url" : '${pageContext.request.contextPath}/salon/getSalonDetails',
 				"type" : 'POST',
 				"data" : {
-					'visitId' : visitId
+					'salonId' : salonId
 				}
 			},
 			"drawCallback": function( settings ) {
-				$('#modal_Edit_VisitDetail').modal();
+				$('#modal_Edit_SalonDetail').modal();
 		    },
 			"columns" : [
-				{ "data" : "userName" }
-				/*
+				{ "data" : "userName" },
 				{ "data" : "custName" }
+				/*
 				{ "data" : "visaStatus" },
 				{ "data" : "accommodationSituation" },
 				{ "data" : "amountReceived" },
@@ -849,42 +755,14 @@
 			],
 			"columnDefs" : [
 				{
-					"targets" : [1],
-					"render" : function(data, type, row) {
-								if (row['custNotReady']) {
-									return '<span style="color:red" title="<spring:message javaScriptEscape="true" code="custStatusOrDataNotReady"/>">' + row['custName'] + '</span>';
-								} else {
-									return '<span>' + row['custName'] + '</span>';
-								}
-							}
-				},
-				{
 					"targets" : [2],
-					"render" : function(data, type, row) {
-								return '<input type="text" class="form-control" name="visaStatus" value="' + row['visaStatus'] + '"/>';
-							}
-				},
-				{
-					"targets" : [3],
-					"render" : function(data, type, row) {
-								return '<input type="text" class="form-control" name="accommodationSituation" value="' + row['accommodationSituation'] + '"/>';
-							}
-				},
-				{
-					"targets" : [4],
-					"render" : function(data, type, row) {
-								return '<input type="text" class="form-control" style="text-align:right" name="amountReceived" value="' + row['amountReceived'] + '"/>';
-							}
-				},
-				{
-					"targets" : [5],
 					"render" : function(data, type, row) {
 								return '<input type="text" class="form-control" name="remark" value="' + row['remark'] + '"/>'
 									   + '<input type="hidden" name="custId" value="' + row['custId'] + '"/>';
 							}
 				},
 				{
-					"targets" : [6],
+					"targets" : [3],
 					"render" : function(data, type, row) {
 								var ret = '<select class="form-control" name="statusSort" width="120" style="min-width:120px" />';
 								ret += '<option value="1" ' + ((row['sort'] == 1) ? 'selected' : '') + '><spring:message code="registered"/></option>';
@@ -909,10 +787,10 @@
 		});
 	}
 	
-	function btnVisitDetailSaveClicked() {
+	function btnSalonDetailSaveClicked() {
 		$.ajax({
-			url : '${pageContext.request.contextPath}/visit/saveDetail',
-			data : $('#visitDetailForm').serialize(),
+			url : '${pageContext.request.contextPath}/salon/saveDetail',
+			data : $('#salonDetailForm').serialize(),
 			type : "POST",
 			dataType : 'json',
 			async: false,
@@ -920,7 +798,7 @@
 				if (resp.code == '200') {
 					successMsgModal("<spring:message code='success.update'/>");
 					setTimeout(function(){
-						$('#modal_Edit_VisitDetail').modal('hide');
+						$('#modal_Edit_SalonDetail').modal('hide');
 					}, 1000);
 					
 				} else {

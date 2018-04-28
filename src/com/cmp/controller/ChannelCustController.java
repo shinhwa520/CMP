@@ -82,6 +82,19 @@ public class ChannelCustController extends BaseController {
 		return new DatatableResponse(total, custList, total);
 	}
 	
+	@RequestMapping(value="getCustAndSalonByUserId.json", method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody DatatableResponse getCustAndSalonByUserId(
+			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+			@RequestParam(name="length", required=false, defaultValue="25") Integer length,
+			@RequestParam(name="salonId", required=true) Integer salonId) {
+		
+		String userId = SecurityUtil.getSecurityUser().getUser().getId();
+		List<CustServiceVO> custList = custService.findCustAndSalonByUserId(salonId, userId, start, length);
+		
+		long total = custService.countCustByUserId(userId);
+		return new DatatableResponse(total, custList, total);
+	}
+	
 	/**
 	 * 取得Customer資料 by custId
 	 * @return AppResponse
