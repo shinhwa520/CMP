@@ -121,6 +121,29 @@
 		}
 	</style>
 	 -->
+	 
+	<style type="text/css">
+	#tab-guide .tab-pane{
+		min-width: 900px; 
+		padding:10px;
+	}
+	
+	#tab-guide .tab-pane .div_scroll .card{
+		border:2px #ccc solid;
+		padding:5px;
+	}
+	
+	#tab-guide .tab-pane .div_scroll .card .card-body{
+		padding-top: 0px;
+		padding-bottom: 5px;
+	}
+	
+	#tab-guide .tab-pane .div_scroll .card .card-body img{
+		width: 900px;
+		border:2px #ccc solid;
+		padding:5px;
+	}
+	</style>
 	<script>
 		Date.prototype.Format = function(fmt) { //author: meizz
 	
@@ -256,7 +279,7 @@
 
 <div id="navigationBlock" style="width: 100%; height: 100%; left: 0px; top: 0px; z-index: 999; background-color: rgb(0, 0, 0); opacity: 0.55; position: fixed; display: none;"></div>
 <div id="navigationTip"   style="width: 100%; height: 100%; left: 0px; top: 0px; z-index: 1005; background-color: transparent; position: absolute; display: none;">
-	<div class="container-fluid">
+	<div class="container-fluid" style="padding: 25px 100px;">
 		<div class="row">
 			<div class="col-md-12">
 	            <div class="card">
@@ -266,40 +289,82 @@
 	                    <h4 class="card-title">Customtab vertical Tab</h4>
 	                    <h6 class="card-subtitle">Use default tab with class <code>vtabs, tabs-vertical & customvtab</code></h6>
 	                <!-- Nav tabs -->
-	                <div class="vtabs customvtab card-body">
-	                    <ul class="nav nav-tabs tabs-vertical" role="tablist">
-							<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#dashboard3" role="tab"><i class="mdi mdi-gauge"></i> 
-								<span class="hide-menu"><spring:message code="dashboard" /></span></a> </li>
-							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#billboard3" role="tab"><i class="mdi mdi-content-paste"></i> 
-								<span class="hide-menu"><spring:message code="billboard" /></span></a> </li>
-							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#visitInfo3" role="tab"><i class="mdi mdi-table"></i> 
-								<span class="hide-menu"><spring:message code="visitInfo" /></span></a> </li>
-							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#registration3" role="tab"><i class="mdi mdi-book-multiple"></i> 
-								<span class="hide-menu"><spring:message code="registration" /></span></a> </li>
-							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productInfo3" role="tab"><i class="mdi mdi-file"></i> 
-								<span class="hide-menu"><spring:message code="productInfo" /></span></a> </li>
-							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myChannels3" role="tab"><i class="mdi mdi-book-open-variant"></i> 
-								<span class="hide-menu"><spring:message code="myChannels" /></span></a> </li>
-							<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myClients3" role="tab"><i class="mdi mdi-face"></i> 
-								<span class="hide-menu"><spring:message code="myClients" /></span></a> </li>
-	                    </ul>
-                   <!-- Tab panes -->
-                         <div class="tab-content">
-                             <div class="tab-pane p-20 active" id="dashboard3" role="tabpanel">
-                                 <div>
-                                     <h3>Best Clean Tab ever</h3>
-                                     <h4>you can use it with the small code</h4>
-                                     <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
-                                 </div>
-                             </div>
-                             <div class="tab-pane p-20" id="billboard3" role="tabpanel">2</div>
-                             <div class="tab-pane p-20" id="visitInfo3" role="tabpanel">2</div>
-                             <div class="tab-pane p-20" id="registration3" role="tabpanel">2</div>
-                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">2</div>
-                             <div class="tab-pane p-20" id="myChannels3" role="tabpanel">2</div>
-                             <div class="tab-pane p-20" id="myClients3" role="tabpanel">2</div>
-                         </div>
-                     </div>
+		                <div class="vtabs customvtab">
+		                    <ul class="nav nav-tabs tabs-vertical" role="tablist">
+								<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#dashboard3" role="tab"><i class="mdi mdi-gauge"></i> 
+									<span class="hide-menu"><spring:message code="dashboard" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#billboard3" role="tab"><i class="mdi mdi-content-paste"></i> 
+									<span class="hide-menu"><spring:message code="billboard" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#visitInfo3" role="tab"><i class="mdi mdi-table"></i> 
+									<span class="hide-menu"><spring:message code="visitInfo" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#registration3" role="tab"><i class="mdi mdi-book-multiple"></i> 
+									<span class="hide-menu"><spring:message code="registration" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productInfo3" role="tab"><i class="mdi mdi-file"></i> 
+									<span class="hide-menu"><spring:message code="productInfo" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myChannels3" role="tab"><i class="mdi mdi-book-open-variant"></i> 
+									<span class="hide-menu"><spring:message code="myChannels" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myClients3" role="tab"><i class="mdi mdi-face"></i> 
+									<span class="hide-menu"><spring:message code="myClients" /></span></a> </li>
+		                    </ul>
+	                   <!-- Tab panes -->
+	                         <div id="tab-guide" class="tab-content" style="padding: 0px;">
+	                             <div class="tab-pane p-20 active" id="dashboard3" role="tabpanel">
+	                                 <div>
+	                                     <h3>Best Clean Tab ever</h3>
+	                                     <h4>you can use it with the small code</h4>
+	                                     <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
+	                                 </div>
+	                             </div>
+	                             
+	                             <!-- Nav tabs -->
+	                             <div class="tab-pane p-20" id="billboard3" role="tabpanel">2</div>
+	                             <!-- Nav tabs -->
+	                             <div class="tab-pane p-20" id="visitInfo3" role="tabpanel">2</div>
+	                             <!-- Nav tabs -->
+	                             <div class="tab-pane p-20" id="registration3" role="tabpanel">2</div>
+	                             <!-- Nav tabs -->
+	                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">2</div>
+	                             <!-- 我的渠道 -->
+	                             <div class="tab-pane p-20" id="myChannels3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header">渠道清單</h4>
+							                <div class="card-body">
+							                	<code>點擊左方『我的渠道』頁籤查看渠道清單</code>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list.jpg" />
+					                         </div>
+					                     </div>
+					                     <div class="card">
+					                     	<h4 class="card-header">編輯渠道下月目標</h4>
+											<div class="card-body">
+												<code>點擊<span class="ti-pencil"></span>图标進入編輯渠道視窗</code>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list_editBtn.jpg" />
+												<br/>
+												<code>點擊保存完成編輯</code>
+												<br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_edit_saveBtn.jpg" />
+											</div>
+										</div>
+					                     <div class="card">
+					                     	<h4 class="card-header">編輯渠道於各產品的傭金</h4>
+											<div class="card-body">
+												<code>點擊<span class="ti-money"></span>图标進入編輯傭金視窗</code>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list_commissionBtn.jpg" />
+												<br/>
+												<code>可點擊『代入預設值』一次設定為預設值，也可以各別設定</code>
+												<br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_commission_defaultBtn.jpg" />
+												<br/>
+												<code>點擊保存完成編輯</code>
+												<br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_commission_saveBtn.jpg" />
+											</div>
+										</div>
+                                      </div>
+								</div>
+	                             <div class="tab-pane p-20" id="myClients3" role="tabpanel">2</div>
+	                         </div>
+	                     </div>
                  </div>
              </div>
 			</div>
@@ -663,6 +728,11 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script>
+    	$('.div_scroll').slimScroll({
+    		height: '510px'
+    	});
+	</script>
 </body>
 
 </html>
