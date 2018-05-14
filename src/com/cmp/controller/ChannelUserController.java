@@ -159,4 +159,17 @@ public class ChannelUserController extends BaseController {
 			return new AppResponse(super.getLineNumber(), e.getMessage());
 		}
     }
+    
+	@RequestMapping(value = { "/doCloseGuide" }, method = RequestMethod.GET, produces="application/json")
+    public @ResponseBody AppResponse contactUs(HttpServletRequest request, HttpServletResponse response) {
+		AppResponse appResponse = null;
+		try {
+			userService.closeGuide();
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
+			e.printStackTrace();
+		}
+		return appResponse;
+    }
 }

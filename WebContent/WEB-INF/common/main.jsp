@@ -272,6 +272,29 @@
         	$("#navigationBlock").hide();
         	$("#navigationTip").hide();
         }
+
+        function doCloseGuide() {
+        	hideTip();
+        	$.ajax({
+        		url : '${pageContext.request.contextPath}/channel/user/doCloseGuide',
+        		type : "GET",
+        		dataType : 'json',
+        		async: false,
+        		contentType:"application/json;charset=utf-8", 
+        		success : function(data) {
+                    if (data.code === 200) {
+
+                    } else {
+                    	alert(data.message);
+                    }
+        		},
+        		error : function(xhr, ajaxOptions, thrownError) {
+        			alert(xhr.status);
+        			alert(thrownError);
+        		}
+        	});
+        }
+
 	</script>
 </head>
 
@@ -286,12 +309,15 @@
 	            	
 	                <div class="card-body">
 	                	<button class="btn btn-inverse float-right" onclick="hideTip();" aria-hidden="true"><i class="fa fa-times"></i> <spring:message code='discard'/></button>
-	                    <h4 class="card-title">Customtab vertical Tab</h4>
-	                    <h6 class="card-subtitle">Use default tab with class <code>vtabs, tabs-vertical & customvtab</code></h6>
+	                	<button class="btn float-right" onclick="doCloseGuide();" aria-hidden="true"><i class="fa fa-ban"></i> 不再顯示</button>
+	                    <h4 class="card-title">平台功能导览</h4>
+	                    <h6 class="card-subtitle">Platform Features Guide </h6>
 	                <!-- Nav tabs -->
 		                <div class="vtabs customvtab">
 		                    <ul class="nav nav-tabs tabs-vertical" role="tablist">
-								<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#dashboard3" role="tab"><i class="mdi mdi-gauge"></i> 
+								<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#guide3" role="tab"><i class="icon-info"></i> 
+									<span class="hide-menu"><spring:message code="guide_guide_0" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#dashboard3" role="tab"><i class="mdi mdi-gauge"></i> 
 									<span class="hide-menu"><spring:message code="dashboard" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#billboard3" role="tab"><i class="mdi mdi-content-paste"></i> 
 									<span class="hide-menu"><spring:message code="billboard" /></span></a> </li>
@@ -299,70 +325,287 @@
 									<span class="hide-menu"><spring:message code="visitInfo" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#registration3" role="tab"><i class="mdi mdi-book-multiple"></i> 
 									<span class="hide-menu"><spring:message code="registration" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#salon3" role="tab"><i class="mdi mdi-coffee"></i> 
+									<span class="hide-menu"><spring:message code="salon" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productInfo3" role="tab"><i class="mdi mdi-file"></i> 
 									<span class="hide-menu"><spring:message code="productInfo" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myChannels3" role="tab"><i class="mdi mdi-book-open-variant"></i> 
 									<span class="hide-menu"><spring:message code="myChannels" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myClients3" role="tab"><i class="mdi mdi-face"></i> 
 									<span class="hide-menu"><spring:message code="myClients" /></span></a> </li>
+									
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sysMail3" role="tab"><i class="mdi mdi-message"></i> 
+									<span class="hide-menu"><spring:message code="guide_sysMail_0" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#mail3" role="tab"><i class="mdi mdi-email"></i> 
+									<span class="hide-menu"><spring:message code="guide_mail_0" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#contact_us3" role="tab"><i class="mdi mdi-view-grid"></i> 
+									<span class="hide-menu"><spring:message code="guide_contact_us_0" /></span></a> </li>
+								<!--
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#my3" role="tab"><img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" alt="user" class="profile-pic" />
+									<span class="hide-menu">个人中心</span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#language3" role="tab"><i class="icon-globe"></i> 
+									<span class="hide-menu">语系</span></a> </li>
+
+								-->
 		                    </ul>
 	                   <!-- Tab panes -->
 	                         <div id="tab-guide" class="tab-content" style="padding: 0px;">
-	                             <div class="tab-pane p-20 active" id="dashboard3" role="tabpanel">
-	                                 <div>
-	                                     <h3>Best Clean Tab ever</h3>
-	                                     <h4>you can use it with the small code</h4>
-	                                     <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
-	                                 </div>
+	                         
+	                             <!-- 导览 -->
+	                             <div class="tab-pane p-20 active" id="guide3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_guide_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_guide_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/guide.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
 	                             </div>
 	                             
-	                             <!-- Nav tabs -->
-	                             <div class="tab-pane p-20" id="billboard3" role="tabpanel">2</div>
-	                             <!-- Nav tabs -->
-	                             <div class="tab-pane p-20" id="visitInfo3" role="tabpanel">2</div>
-	                             <!-- Nav tabs -->
-	                             <div class="tab-pane p-20" id="registration3" role="tabpanel">2</div>
-	                             <!-- Nav tabs -->
-	                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">2</div>
+	                         	 <!-- 仪表板 -->
+	                             <div class="tab-pane p-20" id="dashboard3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_dashboard_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_dashboard_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 系统公告 -->
+	                             <div class="tab-pane p-20" id="billboard3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_billboard_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_billboard_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/billboard/billboard_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 参团信息 -->
+	                             <div class="tab-pane p-20" id="visitInfo3" role="tabpanel">
+									<div class="div_scroll">
+										<div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_visitInfo_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_visitInfo_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit/visit_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      
+										<div class="card">
+					                     	<h4 class="card-header"><spring:message code="guide_visitInfo_2" /></h4>
+											<div class="card-body">
+												<code><spring:message code="guide_visitInfo_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit/visit_detailBtn.JPG" /><br/>
+												<code><spring:message code="guide_visitInfo_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit/visit_h5.jpg" /><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit/visit_download1.jpg" /><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit/visit_download2.jpg" /><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit/visit_schedule.jpg" /><br/>
+											</div>
+										</div>
+									</div>
+	                             </div>
+	                             
+	                             <!-- 报团 -->
+	                             <div class="tab-pane p-20" id="registration3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_registration_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_registration_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit_tour/visit_tour_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_registration_2" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_registration_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit_tour/visit_tour_list_newBtn.JPG" /><br/>
+							                	<img src="${pageContext.request.contextPath}/resources/guide/visit_tour/visit_tour_new.JPG" /><br/>
+							                	<code><spring:message code="guide_registration_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit_tour/visit_tour_new_saveBtn.JPG" /><br/>
+					                         </div>
+					                     </div>
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_registration_5" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_registration_6" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit_tour/visit_tour_list_joinBtn.JPG" /><br/>
+							                	<code><spring:message code="guide_registration_7" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/visit_tour/visit_tour_join_saveBtn.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 沙龙 -->
+	                             <div class="tab-pane p-20" id="salon3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_salon_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_salon_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/salon/salon_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_salon_2" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_salon_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/salon/salon_list_newBtn.JPG" /><br/>
+							                	<code><spring:message code="guide_salon_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/salon/salon_new_saveBtn.JPG" /><br/>
+					                         </div>
+					                     </div>
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_salon_5" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_salon_6" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/salon/salon_list_joinBtn.JPG" /><br/>
+							                	<code><spring:message code="guide_salon_7" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/salon/salon_join_saveBtn.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 产品信息 -->
+	                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header">产品信息清單</h4>
+							                <div class="card-body">
+							                	<code>點擊左方『产品信息』查看产品信息清單</code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/product/product_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
 	                             <!-- 我的渠道 -->
 	                             <div class="tab-pane p-20" id="myChannels3" role="tabpanel">
 									<div class="div_scroll">
 							            <div class="card">
-							            	<h4 class="card-header">渠道清單</h4>
+							            	<h4 class="card-header"><spring:message code="guide_myChannels_0" /></h4>
 							                <div class="card-body">
-							                	<code>點擊左方『我的渠道』頁籤查看渠道清單</code>
-												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list.jpg" />
+							                	<code><spring:message code="guide_myChannels_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list.jpg" /><br/>
 					                         </div>
 					                     </div>
 					                     <div class="card">
-					                     	<h4 class="card-header">編輯渠道下月目標</h4>
+					                     	<h4 class="card-header"><spring:message code="guide_myChannels_2" /></h4>
 											<div class="card-body">
-												<code>點擊<span class="ti-pencil"></span>图标進入編輯渠道視窗</code>
-												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list_editBtn.jpg" />
-												<br/>
-												<code>點擊保存完成編輯</code>
-												<br/>
-												<img src="${pageContext.request.contextPath}/resources/guide/user/user_edit_saveBtn.jpg" />
+												<code><spring:message code="guide_myChannels_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list_editBtn.jpg" /><br/>
+												<code><spring:message code="guide_myChannels_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_edit_saveBtn.jpg" /><br/>
 											</div>
 										</div>
 					                     <div class="card">
-					                     	<h4 class="card-header">編輯渠道於各產品的傭金</h4>
+					                     	<h4 class="card-header"><spring:message code="guide_myChannels_5" /></h4>
 											<div class="card-body">
-												<code>點擊<span class="ti-money"></span>图标進入編輯傭金視窗</code>
-												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list_commissionBtn.jpg" />
-												<br/>
-												<code>可點擊『代入預設值』一次設定為預設值，也可以各別設定</code>
-												<br/>
-												<img src="${pageContext.request.contextPath}/resources/guide/user/user_commission_defaultBtn.jpg" />
-												<br/>
-												<code>點擊保存完成編輯</code>
-												<br/>
-												<img src="${pageContext.request.contextPath}/resources/guide/user/user_commission_saveBtn.jpg" />
+												<code><spring:message code="guide_myChannels_6" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_list_commissionBtn.jpg" /><br/>
+												<code><spring:message code="guide_myChannels_7" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_commission_defaultBtn.jpg" /><br/>
+												<code><spring:message code="guide_myChannels_8" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/user/user_commission_saveBtn.jpg" /><br/>
 											</div>
 										</div>
                                       </div>
 								</div>
-	                             <div class="tab-pane p-20" id="myClients3" role="tabpanel">2</div>
+								
+								<!-- 我的客戶 -->
+	                            <div class="tab-pane p-20" id="myClients3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_myClients_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_myClients_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_list.JPG" /><br/>
+					                         </div>
+					                     </div>
+					                     <div class="card">
+					                     	<h4 class="card-header"><spring:message code="guide_myClients_2" /></h4>
+											<div class="card-body">
+												<code><spring:message code="guide_myClients_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_list_editBtn.JPG" /><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_edit.JPG" /><br/>
+												<code><spring:message code="guide_myClients_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_edit_save.JPG" /><br/>
+											</div>
+										</div>
+					                     <div class="card">
+					                     	<h4 class="card-header"><spring:message code="guide_myClients_5" /></h4>
+											<div class="card-body">
+												<code><spring:message code="guide_myClients_6" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_list_fileBtn.JPG" /><br/>
+												<code><spring:message code="guide_myClients_7" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_file.JPG" /><br/>
+												<code><spring:message code="guide_myClients_8" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/cust/cust_file_uploadBtn.JPG" /><br/>
+											</div>
+										</div>
+                                      </div>
+	                            </div>
+	                            
+	                             <!-- 系统通知 -->
+	                             <div class="tab-pane p-20" id="sysMail3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_sysMail_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_sysMail_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/mail1.JPG" /><br/>
+												<code><spring:message code="guide_sysMail_2" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/mail2.JPG" /><br/>
+												<code><spring:message code="guide_sysMail_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/mail3.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 站内信 -->
+	                             <div class="tab-pane p-20" id="mail3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_mail_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_mail_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/sysMail1.JPG" /><br/>
+												<code><spring:message code="guide_mail_2" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/sysMail2.JPG" /><br/>
+												<code><spring:message code="guide_mail_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/sysMail3.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 联系我们 -->
+	                             <div class="tab-pane p-20" id="contact_us3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_contact_us_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_contact_us_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/topbar/contact_us.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                            
 	                         </div>
 	                     </div>
                  </div>
@@ -729,9 +972,16 @@
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <script>
-    	$('.div_scroll').slimScroll({
-    		height: '510px'
-    	});
+    var showGuide = '${showGuide}';
+    $(function() {
+        if("Y"===showGuide)
+        	showTip();
+        
+    });
+    
+   	$('.div_scroll').slimScroll({
+   		height: '510px'
+   	});
 	</script>
 </body>
 
