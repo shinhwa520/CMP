@@ -598,26 +598,14 @@ public class FileServiceImpl implements FileService {
 		
 		return reList;
 	}
-/*
+	
 	@Override
-	public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo) {
-		try {
-			FileDAOVO fileDAOVO	 = new FileDAOVO();
-			fileDAOVO.setProductId(vo.getProductId());
-			
-			List<FilesProduct> productList = fileDAO.findProductFileByDAOVO(fileDAOVO);
-			
-			if (productList != null && !productList.isEmpty()) {
-				vo.setFilesProduct(productList);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return vo;
+	public List<FileServiceVO> findReferenceFilesByReferenceId(boolean isAdmin, Integer referenceId, Integer startRow,
+			Integer pageLength) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-*/
+
 	@Override
 	public VisitServiceVO findVisitInfoByDAOVO(VisitServiceVO vo) {
 		try {
@@ -655,6 +643,12 @@ public class FileServiceImpl implements FileService {
 		
 		return count;
 	}
+	
+	@Override
+	public long countReferenceFilesByReferenceId(boolean isAdmin, Integer referenceId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public long countCustomerFilesByCustId(Integer custId) {
@@ -688,4 +682,5 @@ public class FileServiceImpl implements FileService {
 		
 		return count;
 	}
+
 }

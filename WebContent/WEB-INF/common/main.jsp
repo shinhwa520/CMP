@@ -545,6 +545,9 @@
                             <a href="${pageContext.request.contextPath}/product/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="productInfo" /></span></a>
                         </li>
                         <li>
+                            <a href="${pageContext.request.contextPath}/reference/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="referenceInfo" /></span></a>
+                        </li>
+                        <li>
                             <a href="${pageContext.request.contextPath}/channel/user/list"> <i class="mdi mdi-book-open-variant"></i><span class="hide-menu"><spring:message code="myChannels" /></span></a>
                         </li>
                         <li>
@@ -575,7 +578,8 @@
 	                            	</sec:authorize>
 	                                <li><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
 	                                <li><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
-	                                <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
+	                                <li><a href="${pageContext.request.contextPath}/manage/productFile"><spring:message code="productFileMaintain" /></a></li>
+	                                <li><a href="${pageContext.request.contextPath}/manage/referenceFile"><spring:message code="referenceFileMaintain" /></a></li>
 	                            </ul>
 	                        </li>
                         </sec:authorize>

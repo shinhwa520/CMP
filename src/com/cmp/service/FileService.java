@@ -12,6 +12,7 @@ public interface FileService {
 	public static final String FILE_TYPE_CUSTOMER = "CUSTOMER";
 	public static final String FILE_TYPE_PRODUCT = "PRODUCT";
 	public static final String FILE_TYPE_VISIT = "VISIT";
+	public static final String FILE_TYPE_REFERENCE = "REFERENCE";
 	
 	public static final String FILE_CATEGORY_JPG = "JPG";
 	public static final String FILE_CATEGORY_PDF = "PDF";
@@ -22,7 +23,11 @@ public interface FileService {
 	
 	public long countProductFilesByProductId(boolean isAdmin, Integer productId);
 	
+	public long countReferenceFilesByReferenceId(boolean isAdmin, Integer referenceId);
+	
 	public List<FileServiceVO> findProductFilesByProductId(boolean isAdmin, Integer productId, Integer startRow, Integer pageLength);
+	
+	public List<FileServiceVO> findReferenceFilesByReferenceId(boolean isAdmin, Integer referenceId, Integer startRow, Integer pageLength);
 	
 	public long countCustomerFilesByCustId(Integer custId);
 	

@@ -18,7 +18,7 @@
 			alert('<spring:message code="error.noSelectFile"/>');
 			
 		} else {
-			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
+			FileForm.action = "${pageContext.request.contextPath}/manage/referenceFile/delete";
 			FileForm.queryFileType.value = "PRODUCT";
 			FileForm.submit();
 		}
@@ -121,22 +121,6 @@
 		        			<option value="10">18 East At Andaman - 安达曼海景公寓</option>
 		        			<option value="11">Sunway - 双威依斯干达(文档)</option>
 		        			<option value="12">Sunway - 双威依斯干达(图档)</option>
-		        			<option value="13">Sunway - 双威依斯干达(第二項目)</option>
-		        			<option value="14">Sunway - 双威依斯干达(三拼三層)</option>
-		        			<option value="15">Famous school - 知名学校(文档)</option>
-		        			<option value="16">Famous school - 知名学校(图档)</option>
-		        			<option value="17">Regional(Johor) - 地區通用(新山)</option>
-		        			<option value="18">Regional(Malacca) - 地區通用(马六甲)</option>
-		        			<option value="19">Universal(Malaysia) - 通用(马来西亚)</option>
-		        			<option value="20">马来西亚投资潜力</option>
-		        			<option value="21">马来西亚第二家园</option>
-		        			<option value="22">销售流程,费用</option>
-		        			<option value="23">参团照片(第2天  柔佛APC)</option>
-		        			<option value="24">参团照片(第2天  柔佛APC介绍会)</option>
-		        			<option value="25">参团照片(第2天 马六甲Haleton介绍会)</option>
-		        			<option value="26">参团照片(第2天 马六甲Haleton产业)</option>
-		        			<option value="27">参团照片(第3天 柔佛双威依斯干达)</option>
-		        			<option value="28">参团照片(第4天 吉隆坡大马金豪)</option>
 		        		</select>
 		        	</div>
 		        </div>
@@ -226,7 +210,7 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				//"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
+				//"url" : '${pageContext.request.contextPath}/manage/referenceFile/getAllPublicFiles.json',
 				"url" : '${pageContext.request.contextPath}/product/getProductFiles.json',
 				//"type" : 'GET',
 				"type" : 'POST',
@@ -316,7 +300,7 @@ function btnEditClicked(btn) {
 	console.log(btn.attr('seqNo'));
 	$('.form-group').removeClass('has-error');
 	$.ajax({
-			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
+			url : '${pageContext.request.contextPath}/manage/referenceFile/' + formAction,
 			data : {
 					fileType: btn.attr('fileType'),
 					seqNo: btn.attr('seqNo')
@@ -394,7 +378,7 @@ function btnUploadClicked() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: '${pageContext.request.contextPath}/manage/file/' + formAction,
+        url: '${pageContext.request.contextPath}/manage/referenceFile/' + formAction,
         data: data,
         processData: false, //prevent jQuery from automatically transforming the data into a query string
         contentType: false,
@@ -473,7 +457,7 @@ function btnSaveClicked() {
 	}
 	
 	$.ajax({
-		url : '${pageContext.request.contextPath}/manage/file/' + formAction,
+		url : '${pageContext.request.contextPath}/manage/referenceFile/' + formAction,
 		data : $('#formEdit').serialize(),
 		type : "POST",
 		dataType : 'json',
@@ -504,7 +488,7 @@ function btnSaveClicked() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/file";
+	var downloadUrl = "${pageContext.request.contextPath}/manage/referenceFile/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/referenceFile";
     window.location.href = downloadUrl;
     
     setTimeout(function(){
