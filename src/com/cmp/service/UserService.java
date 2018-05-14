@@ -18,4 +18,5 @@ public interface UserService {
 	public void update(String userId, String userName, String password, String phone, String email, String weChat, String status, String remark);
 	
 	public User findUserByApiId(String apiId);
+	public User closeGuide();
 }

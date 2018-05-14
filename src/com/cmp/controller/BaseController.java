@@ -91,10 +91,12 @@ public class BaseController {
 		String userName = "";
 		String userRole = "";
 		String email = "";
+		String showGuide = "";
 		if (securityUser != null) {
 			userName = securityUser.getUser().getName();
 			userRole = securityUser.getUser().getRole().getName();
 			email = securityUser.getUser().getEmail();
+			showGuide = securityUser.getUser().getShowGuide();
 		}
 		
 		model.addAttribute("versionCode", Constants.VERSION_CODE);
@@ -104,6 +106,7 @@ public class BaseController {
 		model.addAttribute("isAdmin", isAdmin);
 		model.addAttribute("isAvailable", isAvailable);
 		model.addAttribute("userRole", userRole);
+		model.addAttribute("showGuide", showGuide);
 //		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //		String currentPrincipalName = authentication.getName();
 //		logger.debug("currentPrincipalName: " + currentPrincipalName);

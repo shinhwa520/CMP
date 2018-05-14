@@ -58,6 +58,9 @@ public class User implements java.io.Serializable {
     @Column(name = "remark", nullable = true)
 	private String remark;
     
+    @Column(name = "showGuide", nullable = true)
+	private String showGuide="Y";
+    
     @Column(name = "create_by", nullable = true)
 	private String createBy;
 	
@@ -317,6 +320,14 @@ public class User implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getShowGuide() {
+		return showGuide;
+	}
+
+	public void setShowGuide(String showGuide) {
+		this.showGuide = showGuide;
 	}
 
 

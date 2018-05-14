@@ -172,4 +172,15 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	
+	public User closeGuide() {
+		User user = SecurityUtil.getSecurityUser().getUser();
+		try {
+			user.setShowGuide("N");
+			user = userDAO.saveUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 }
