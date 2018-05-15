@@ -19,7 +19,7 @@
 			
 		} else {
 			FileForm.action = "${pageContext.request.contextPath}/manage/referenceFile/delete";
-			FileForm.queryFileType.value = "PRODUCT";
+			FileForm.queryFileType.value = "REFERENCE";
 			FileForm.submit();
 		}
 	}
@@ -48,7 +48,7 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th><spring:message code="productName"/></th>
+									<th><spring:message code="referenceName"/></th>
 									<th><spring:message code="fileName"/></th>
 									<th><spring:message code="fileSize"/></th>
 									<th><spring:message code="downloadTimes"/></th>
@@ -99,28 +99,28 @@
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
-            	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
+            	<input type="hidden" name="fileType" id="editFileType" value="REFERENCE" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
-            	<!-- <input type="hidden" name="productId" id="productId" value="28" /> -->
-            	<input type="hidden" name="visitId" id="visitId" value="1" />
-            	<input type="hidden" name="fileCategory" id="fileCategory" value="SCHEDULE" />
+            	<!-- <input type="hidden" name="referenceId" id="referenceId" value="28" /> -->
             	
-            	<div class="box-body" id="productNameDiv" style="display:none">
+            	<div class="box-body" id="referenceNameDiv" style="display:none">
 		        	<div class="form-group">
-		        		<label for="productName"><spring:message code="productName"/><span class="pull-right" style="color: red;">＊ </span> </label>
-		        		<select class="form-control" style="width:80%" name="productId">
-		        			<option value="1">8 Conlay - 康莱</option>
-		        			<option value="2">Arte MK - 满家乐</option>
-		        			<option value="3">DC Residensi - 白沙罗城豪华公寓</option>
-		        			<option value="4">Opus - 奥普斯</option>
-		        			<option value="5">Ritz-Carlton - 丽思卡尔顿</option>
-		        			<option value="6">The Manor - 大马金豪</option>
-		        			<option value="7">Avira Garden Terraces - 花园联排别墅</option>
-		        			<option value="8">Haleton Towers - 聚富湾</option>
-		        			<option value="9">Regalia Beachfront Residence - 皇庭海湾1号</option>
-		        			<option value="10">18 East At Andaman - 安达曼海景公寓</option>
-		        			<option value="11">Sunway - 双威依斯干达(文档)</option>
-		        			<option value="12">Sunway - 双威依斯干达(图档)</option>
+		        		<label for="referenceName"><spring:message code="referenceName"/><span class="pull-right" style="color: red;">＊ </span> </label>
+		        		<select class="form-control" style="width:80%" name="referenceId">
+ㄊ		        			<option value="15">Famous school - 知名学校(文档)</option>
+		        			<option value="16">Famous school - 知名学校(图档)</option>
+		        			<option value="17">Regional(Johor) - 地區通用(新山)</option>
+		        			<option value="18">Regional(Malacca) - 地區通用(马六甲)</option>
+		        			<option value="19">Universal(Malaysia) - 通用(马来西亚)</option>
+		        			<option value="20">马来西亚投资潜力</option>
+		        			<option value="21">马来西亚第二家园</option>
+		        			<option value="22">销售流程,费用</option>
+		        			<option value="23">参团照片(第2天  柔佛APC)</option>
+		        			<option value="24">参团照片(第2天  柔佛APC介绍会)</option>
+		        			<option value="25">参团照片(第2天 马六甲Haleton介绍会)</option>
+		        			<option value="26">参团照片(第2天 马六甲Haleton产业)</option>
+		        			<option value="27">参团照片(第3天 柔佛双威依斯干达)</option>
+		        			<option value="28">参团照片(第4天 吉隆坡大马金豪)</option>
 		        		</select>
 		        	</div>
 		        </div>
@@ -211,7 +211,7 @@ $(function() {
 			"bLengthChange" : false,
 			"ajax" : {
 				//"url" : '${pageContext.request.contextPath}/manage/referenceFile/getAllPublicFiles.json',
-				"url" : '${pageContext.request.contextPath}/product/getProductFiles.json',
+				"url" : '${pageContext.request.contextPath}/reference/getReferenceFiles.json',
 				//"type" : 'GET',
 				"type" : 'POST',
 				"data" : function(d) {
@@ -220,7 +220,7 @@ $(function() {
 			},
 			"columns" : [
 				{ "data" : "dataSeq" },
-				{ "data" : "productName" },
+				{ "data" : "referenceName" },
 				{ "data" : "fullFileName" },
 				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
 												      return data.format() + ' KB';
@@ -266,7 +266,7 @@ function btnAddClicked() {
 	formAction = 'modify';
 	$('#isAdd').val('Y');
 	$('#editSeqNo').val('');
-	$('#editFileType').val('PRODUCT');
+	$('#editFileType').val('REFERENCE');
 	$('#editFullFileName').val('');
 	$('#uploadFile').val('');
 	$('#uploadFile').show();
@@ -287,14 +287,14 @@ function btnAddClicked() {
 	$('#progressBar').text('');
 	$('#progressBar').css('width','0%');
 	
-	$('#productNameDiv').show();
+	$('#referenceNameDiv').show();
 }
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
 	$('#btnSave').show();
 	$('#btnUpload').hide();
-	$('#productNameDiv').hide();
+	$('#referenceNameDiv').hide();
 	
 	formAction = 'getFileInfo';
 	console.log(btn.attr('seqNo'));

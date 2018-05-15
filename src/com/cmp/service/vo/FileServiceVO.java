@@ -33,8 +33,10 @@ public class FileServiceVO {
 	private Integer custId;
 	private Integer productId;
 	private Integer visitId;
+	private Integer referenceId;
 	
 	private String productName;
+	private String referenceName;
 	
 	public Integer getSeqNo() {
 		return seqNo;
@@ -258,5 +260,21 @@ public class FileServiceVO {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public Integer getReferenceId() {
+		return referenceId;
+	}
+
+	public void setReferenceId(Integer referenceId) {
+		this.referenceId = referenceId;
+	}
+
+	public String getReferenceName() {
+		return referenceName;
+	}
+
+	public void setReferenceName(String referenceName) {
+		this.referenceName = referenceName;
 	}
 }

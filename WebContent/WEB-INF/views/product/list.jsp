@@ -383,7 +383,7 @@
 							"data" : 'seqNo',
 							"render" : function(data, type, row) {
 								return '<a href="#">'
-										+'<span class="icon-docs" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>';
+										+'<span class="icon-cloud-download" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>';
 							}
 						}
 					],
@@ -406,7 +406,7 @@
 	
 	//[Download] 按下Download按鈕
 	function btnDownloadClicked(btn) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=product/list";
+		var downloadUrl = "${pageContext.request.contextPath}/manage/productFile/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=product/list";
 	  	window.location.href = downloadUrl;
 
 	  	setTimeout(function(){

@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cmp.AppResponse;
-import com.cmp.DatatableResponse;
 import com.cmp.MenuItem;
 import com.cmp.form.FileForm;
 import com.cmp.i18n.DatabaseMessageSourceBase;
@@ -66,21 +65,21 @@ public class ReferenceFileController extends BaseController {
 		return "manage/reference_file";
     }
 	
-	@RequestMapping(value="getAllPublicFiles.json", method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody DatatableResponse getPublicFiles(
-			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
-			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
-		
-		List<FileServiceVO> datalist = fileService.findAllPublicFiles(true, start, length);
-		
-		long total = 0;
-		if (datalist != null && !datalist.isEmpty()) {
-			 total = datalist.size();
-		}
-		
-		return new DatatableResponse(total, datalist, total);
-	}
-	
+//	@RequestMapping(value="getAllPublicFiles.json", method = RequestMethod.GET, produces="application/json")
+//	public @ResponseBody DatatableResponse getPublicFiles(
+//			@RequestParam(name="start", required=false, defaultValue="0") Integer start,
+//			@RequestParam(name="length", required=false, defaultValue="10") Integer length) {
+//		
+//		List<FileServiceVO> datalist = fileService.findAllPublicFiles(true, start, length);
+//		
+//		long total = 0;
+//		if (datalist != null && !datalist.isEmpty()) {
+//			 total = datalist.size();
+//		}
+//		
+//		return new DatatableResponse(total, datalist, total);
+//	}
+//	
 	@RequestMapping(value="getFileInfo", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody AppResponse getFileBySeqNo(
 			@RequestParam(name="fileType", required=true) String fileType,

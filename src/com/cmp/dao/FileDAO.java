@@ -24,7 +24,11 @@ public interface FileDAO {
 	
 	public long countProductFileByDAOVO(FileDAOVO fileDAOVO);
 	
+	public long countReferenceFileByDAOVO(FileDAOVO fileDAOVO);
+	
 	public List<Object[]> findProductFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
+	
+	public List<Object[]> findReferenceFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength);
 	
 	public long countVisitFileByDAOVO(FileDAOVO fileDAOVO);
 	
