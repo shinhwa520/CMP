@@ -29,7 +29,7 @@
 <section class="content">
 	<div class="row page-titles">
 	     <div class="col-md-6 col-8 align-self-center">
-	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="shareResource" /></h3>
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="productFileMaintain" /></h3>
 	     </div>
 	</div> 
 
