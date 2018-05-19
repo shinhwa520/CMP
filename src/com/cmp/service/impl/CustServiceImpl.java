@@ -259,19 +259,19 @@ public class CustServiceImpl implements CustService {
 				
 				String yearMonth = String.valueOf(year).concat(StringUtils.leftPad(String.valueOf(month), 2, "0"));
 				
+				int count = 0;
 				for (Object[] obj : perMonthList) {
 					String yyyyMM = ObjectUtils.toString(obj[0]);
-					int count = 0;
 					
 					if (yearMonth.equals(yyyyMM)) {
 						count = ((BigInteger)obj[1]).intValue();
 					}
 					
-					perMonthWord = perMonthWord.concat("'").concat(monthWord[month-1]).concat("'");
-					perMonthCustCount = perMonthCustCount.concat(String.valueOf(count));
-					
 					maxCount = count > maxCount ? count : maxCount;
 				}
+				
+				perMonthWord = perMonthWord.concat("'").concat(monthWord[month-1]).concat("'");
+				perMonthCustCount = perMonthCustCount.concat(String.valueOf(count));
 				
 				if (i != 0) {
 					perMonthWord = perMonthWord.concat(",");
