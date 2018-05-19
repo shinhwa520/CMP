@@ -1,10 +1,13 @@
 package com.cmp.service.impl;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,8 @@ public class CustServiceImpl implements CustService {
 	private VisitDAO visitDAO;
 	@Autowired
 	private SalonDAO salonDAO;
+	
+	private String[] monthWord = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	
 	@Override
 	public Customer findCustById(int id){
@@ -213,5 +218,75 @@ public class CustServiceImpl implements CustService {
 			e.printStackTrace();
 		}
 		return reList;
+	}
+
+	@Override
+	public CustServiceVO findUserRecentlySixMonthCustCountPerMonth(String userId, String currentYearMonth) {
+		CustServiceVO retVO = new CustServiceVO();
+		
+		try {
+			int year = Integer.parseInt(currentYearMonth.substring(0, 4));
+			int month = Integer.parseInt(currentYearMonth.substring(4, currentYearMonth.length())) - 5;
+			if (month <= 0) {
+				year = year - 1;
+				month = 12 + month;
+			}
+			String sixMonthBefore = String.valueOf(year).concat(StringUtils.leftPad(String.valueOf(month), 2, "0"));
+			
+			year = Integer.parseInt(currentYearMonth.substring(0, 4));
+			month = Integer.parseInt(currentYearMonth.substring(4, currentYearMonth.length())) + 1;
+			if (month > 12) {
+				year = year + 1;
+				month = month - 12;
+			}
+			String oneMonthAfter = String.valueOf(year).concat(StringUtils.leftPad(String.valueOf(month), 2, "0"));
+			
+			
+			List<Object[]> perMonthList = customerDAO.retrieveCustCountPerMonth(userId, sixMonthBefore, oneMonthAfter);
+
+			String perMonthWord = "";
+			String perMonthCustCount = "";
+			Integer maxCount = 0;
+			
+			for (int i=5; i>=0; i--) {
+				year = Integer.parseInt(currentYearMonth.substring(0, 4));
+				month = Integer.parseInt(currentYearMonth.substring(4, currentYearMonth.length())) - i;
+				
+				if (month <= 0) {
+					year = year - 1;
+					month = 12 + month;
+				}
+				
+				String yearMonth = String.valueOf(year).concat(StringUtils.leftPad(String.valueOf(month), 2, "0"));
+				
+				for (Object[] obj : perMonthList) {
+					String yyyyMM = ObjectUtils.toString(obj[0]);
+					int count = 0;
+					
+					if (yearMonth.equals(yyyyMM)) {
+						count = ((BigInteger)obj[1]).intValue();
+					}
+					
+					perMonthWord = perMonthWord.concat("'").concat(monthWord[month-1]).concat("'");
+					perMonthCustCount = perMonthCustCount.concat(String.valueOf(count));
+					
+					maxCount = count > maxCount ? count : maxCount;
+				}
+				
+				if (i != 0) {
+					perMonthWord = perMonthWord.concat(",");
+					perMonthCustCount= perMonthCustCount.concat(",");
+				}
+			}
+			
+			retVO.setCustMonthWord(perMonthWord);
+			retVO.setCustCountPerMonth(perMonthCustCount);
+			retVO.setMaxCustCount(String.valueOf(maxCount+5));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return retVO;
 	}
 }

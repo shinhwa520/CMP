@@ -41,10 +41,39 @@ public class SalonDAOImpl extends BaseDaoHibernate implements SalonDAO {
 		  .append(" where 1=1 ")
 		  .append(" and si.deleteFlag = 'N' ");
 		
+		if (salonServiceVO.getStatusId() != null) {
+			sb.append(" and si.status.id = :statusId ");
+		}
+		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
 	    
+	    if (salonServiceVO.getStatusId() != null) {
+			q.setParameter("statusId", salonServiceVO.getStatusId());
+		}
+	    
 		return (List<SalonInfo>)q.list();
+	}
+	
+	@Override
+	public long countSalon(SalonServiceVO salonServiceVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(si.salonId) from SalonInfo si ")
+		  .append(" where 1=1 ")
+		  .append(" and si.deleteFlag = 'N' ");
+		
+		if (salonServiceVO.getStatusId() != null) {
+			sb.append(" and si.status.id = :statusId ");
+		}
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (salonServiceVO.getStatusId() != 0) {
+			q.setParameter("statusId", salonServiceVO.getStatusId());
+		}
+	    
+		return (long)q.list().get(0);
 	}
 
 	@Override
@@ -170,5 +199,4 @@ public class SalonDAOImpl extends BaseDaoHibernate implements SalonDAO {
 		getHibernateTemplate().update(salonDetail);
 		
 	}
-
 }

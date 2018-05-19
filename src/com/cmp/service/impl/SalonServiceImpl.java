@@ -387,4 +387,20 @@ private static Log log = LogFactory.getLog(SalonServiceImpl.class);
 		return true;
 	}
 
+	@Override
+	public long retriveOpenSalonCount(SalonServiceVO ssVO) {
+		long retCount = 0;
+		try {
+			retCount = salonDAO.countSalon(ssVO);
+			
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
+			e.printStackTrace();
+			
+			return 0;
+		}
+		return retCount;
+	}
 }

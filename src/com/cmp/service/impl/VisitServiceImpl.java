@@ -511,4 +511,25 @@ public class VisitServiceImpl implements VisitService {
 		}
 		return true;
 	}
+
+	@Override
+	public long retriveOpenVisitCount(VisitServiceVO vsVO) {
+		long retCount = 0;
+		try {
+			VisitServiceVO retVO = findVisit(vsVO);
+			
+			if (retVO.getVisitList() != null && !retVO.getVisitList().isEmpty()) {
+				retCount = retVO.getVisitList().size();
+			}
+			
+		} catch (Exception e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.toString(), e);
+			}
+			e.printStackTrace();
+			
+			return 0;
+		}
+		return retCount;
+	}
 }

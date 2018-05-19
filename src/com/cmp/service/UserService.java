@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.cmp.model.User;
+import com.cmp.service.vo.UserServiceVO;
 
 public interface UserService {
 	User findUserAndKpiById(String id, String yearMonth);
+	
+	UserServiceVO findUserRecentlySixMonthKpiById(String id, String currentYearMonth);
+	
 	User findUserById(String id);
 	User saveUserInfo(User user);
 	List<User> findUserByChannelId(String channelId, String yearMonth, Integer start, Integer length);

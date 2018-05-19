@@ -54,6 +54,10 @@ public interface StatusService {
 	 * 客戶狀態: 12-已结算佣
 	 */
 	public static final int CUST_12_BILLED_COMMISSION = 19;
+	/**
+	 * 開團/沙龍狀態: 23-招團中
+	 */
+	public static final int VISIT_23_JOIN = 23;
 	
 	List<Status> listStatus(Integer start, Integer length);
 	long countStatus();

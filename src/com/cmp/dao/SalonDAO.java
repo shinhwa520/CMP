@@ -12,6 +12,8 @@ public interface SalonDAO {
 	public SalonInfo findSalonBySalonId(Integer salonId);
 	
 	public List<SalonInfo> findSalon(SalonServiceVO salonServiceVO);
+	
+	public long countSalon(SalonServiceVO salonServiceVO);
 
 	public void saveSalon(SalonInfo salonInfo, SalonSetting salonSetting);
 	

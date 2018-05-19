@@ -25,4 +25,6 @@ public interface CustService {
 			, Integer identity1_id, String identity1_code, String identity1_name, Integer identity2_id, String identity2_code, String identity2_name
 			, String city, String census, String address, String remark, String status);
 	void deleteCust(CustServiceVO custServiceVO);
+	
+	CustServiceVO findUserRecentlySixMonthCustCountPerMonth(String userId, String currentYearMonth);
 }
