@@ -13,6 +13,7 @@ public class FileDAOVO {
 	private Integer custId;
 	private Integer productId;
 	private Integer visitId;
+	private Integer referenceId;
 	
 	private boolean isAdmin;
 	
@@ -86,5 +87,13 @@ public class FileDAOVO {
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public Integer getReferenceId() {
+		return referenceId;
+	}
+
+	public void setReferenceId(Integer referenceId) {
+		this.referenceId = referenceId;
 	}
 }

@@ -18,8 +18,8 @@
 			alert('<spring:message code="error.noSelectFile"/>');
 			
 		} else {
-			FileForm.action = "${pageContext.request.contextPath}/manage/file/delete";
-			FileForm.queryFileType.value = "PRODUCT";
+			FileForm.action = "${pageContext.request.contextPath}/manage/referenceFile/delete";
+			FileForm.queryFileType.value = "REFERENCE";
 			FileForm.submit();
 		}
 	}
@@ -29,7 +29,7 @@
 <section class="content">
 	<div class="row page-titles">
 	     <div class="col-md-6 col-8 align-self-center">
-	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="shareResource" /></h3>
+	         <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="referenceFileMaintain" /></h3>
 	     </div>
 	</div> 
 
@@ -48,7 +48,7 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th><spring:message code="productName"/></th>
+									<th><spring:message code="referenceName"/></th>
 									<th><spring:message code="fileName"/></th>
 									<th><spring:message code="fileSize"/></th>
 									<th><spring:message code="downloadTimes"/></th>
@@ -99,31 +99,15 @@
       	<div class="modal-body">                    
             <form role="form" id="formEdit" name="formEdit" enctype="multipart/form-data">
             	<input type="hidden" name="seqNo" id="editSeqNo" value="" />
-            	<input type="hidden" name="fileType" id="editFileType" value="PRODUCT" />
+            	<input type="hidden" name="fileType" id="editFileType" value="REFERENCE" />
             	<input type="hidden" name="isAdd" id="isAdd" value="" />
-            	<!-- <input type="hidden" name="productId" id="productId" value="28" /> -->
-            	<input type="hidden" name="visitId" id="visitId" value="1" />
-            	<input type="hidden" name="fileCategory" id="fileCategory" value="SCHEDULE" />
+            	<!-- <input type="hidden" name="referenceId" id="referenceId" value="28" /> -->
             	
-            	<div class="box-body" id="productNameDiv" style="display:none">
+            	<div class="box-body" id="referenceNameDiv" style="display:none">
 		        	<div class="form-group">
-		        		<label for="productName"><spring:message code="productName"/><span class="pull-right" style="color: red;">＊ </span> </label>
-		        		<select class="form-control" style="width:80%" name="productId">
-		        			<option value="1">8 Conlay - 康莱</option>
-		        			<option value="2">Arte MK - 满家乐</option>
-		        			<option value="3">DC Residensi - 白沙罗城豪华公寓</option>
-		        			<option value="4">Opus - 奥普斯</option>
-		        			<option value="5">Ritz-Carlton - 丽思卡尔顿</option>
-		        			<option value="6">The Manor - 大马金豪</option>
-		        			<option value="7">Avira Garden Terraces - 花园联排别墅</option>
-		        			<option value="8">Haleton Towers - 聚富湾</option>
-		        			<option value="9">Regalia Beachfront Residence - 皇庭海湾1号</option>
-		        			<option value="10">18 East At Andaman - 安达曼海景公寓</option>
-		        			<option value="11">Sunway - 双威依斯干达(文档)</option>
-		        			<option value="12">Sunway - 双威依斯干达(图档)</option>
-		        			<option value="13">Sunway - 双威依斯干达(第二項目)</option>
-		        			<option value="14">Sunway - 双威依斯干达(三拼三層)</option>
-		        			<option value="15">Famous school - 知名学校(文档)</option>
+		        		<label for="referenceName"><spring:message code="referenceName"/><span class="pull-right" style="color: red;">＊ </span> </label>
+		        		<select class="form-control" style="width:80%" name="referenceId">
+ㄊ		        			<option value="15">Famous school - 知名学校(文档)</option>
 		        			<option value="16">Famous school - 知名学校(图档)</option>
 		        			<option value="17">Regional(Johor) - 地區通用(新山)</option>
 		        			<option value="18">Regional(Malacca) - 地區通用(马六甲)</option>
@@ -226,8 +210,8 @@ $(function() {
 			"serverSide" : true,
 			"bLengthChange" : false,
 			"ajax" : {
-				//"url" : '${pageContext.request.contextPath}/manage/file/getAllPublicFiles.json',
-				"url" : '${pageContext.request.contextPath}/product/getProductFiles.json',
+				//"url" : '${pageContext.request.contextPath}/manage/referenceFile/getAllPublicFiles.json',
+				"url" : '${pageContext.request.contextPath}/reference/getReferenceFiles.json',
 				//"type" : 'GET',
 				"type" : 'POST',
 				"data" : function(d) {
@@ -236,7 +220,7 @@ $(function() {
 			},
 			"columns" : [
 				{ "data" : "dataSeq" },
-				{ "data" : "productName" },
+				{ "data" : "referenceName" },
 				{ "data" : "fullFileName" },
 				{ "data" : "fileSize", "render": function ( data, type, full, meta ) {
 												      return data.format() + ' KB';
@@ -282,7 +266,7 @@ function btnAddClicked() {
 	formAction = 'modify';
 	$('#isAdd').val('Y');
 	$('#editSeqNo').val('');
-	$('#editFileType').val('PRODUCT');
+	$('#editFileType').val('REFERENCE');
 	$('#editFullFileName').val('');
 	$('#uploadFile').val('');
 	$('#uploadFile').show();
@@ -303,20 +287,20 @@ function btnAddClicked() {
 	$('#progressBar').text('');
 	$('#progressBar').css('width','0%');
 	
-	$('#productNameDiv').show();
+	$('#referenceNameDiv').show();
 }
 
 //[Edit] 進入modal_Edit編輯
 function btnEditClicked(btn) {
 	$('#btnSave').show();
 	$('#btnUpload').hide();
-	$('#productNameDiv').hide();
+	$('#referenceNameDiv').hide();
 	
 	formAction = 'getFileInfo';
 	console.log(btn.attr('seqNo'));
 	$('.form-group').removeClass('has-error');
 	$.ajax({
-			url : '${pageContext.request.contextPath}/manage/file/' + formAction,
+			url : '${pageContext.request.contextPath}/manage/referenceFile/' + formAction,
 			data : {
 					fileType: btn.attr('fileType'),
 					seqNo: btn.attr('seqNo')
@@ -394,7 +378,7 @@ function btnUploadClicked() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: '${pageContext.request.contextPath}/manage/file/' + formAction,
+        url: '${pageContext.request.contextPath}/manage/referenceFile/' + formAction,
         data: data,
         processData: false, //prevent jQuery from automatically transforming the data into a query string
         contentType: false,
@@ -473,7 +457,7 @@ function btnSaveClicked() {
 	}
 	
 	$.ajax({
-		url : '${pageContext.request.contextPath}/manage/file/' + formAction,
+		url : '${pageContext.request.contextPath}/manage/referenceFile/' + formAction,
 		data : $('#formEdit').serialize(),
 		type : "POST",
 		dataType : 'json',
@@ -504,7 +488,7 @@ function btnSaveClicked() {
 
 //[Download] 按下Download按鈕
 function btnDownloadClicked(btn) {
-	var downloadUrl = "${pageContext.request.contextPath}/manage/file/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/file";
+	var downloadUrl = "${pageContext.request.contextPath}/manage/referenceFile/download?seqNo="+btn.attr('seqNo')+"&fileType="+btn.attr('fileType')+"&fromPage=manage/referenceFile";
     window.location.href = downloadUrl;
     
     setTimeout(function(){

@@ -58,6 +58,13 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-select/bootstrap-select.min.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-tour-0.12.0/css/bootstrap-tour-standalone.min.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/gridstack/gridstack.css">
+	
+	<!-- chartist CSS -->
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/css-chart/css-chart.css" rel="stylesheet">
 	
 	<!-- ============================================================== -->
     <!-- All Jquery -->
@@ -310,7 +317,7 @@
 	            	
 	                <div class="card-body">
 	                	<button class="btn btn-inverse float-right" onclick="hideTip();" aria-hidden="true"><i class="fa fa-times"></i> <spring:message code='discard'/></button>
-	                	<button class="btn float-right" onclick="doCloseGuide();" aria-hidden="true"><i class="fa fa-ban"></i> 不再顯示</button>
+	                	<!-- <button class="btn float-right" onclick="doCloseGuide();" aria-hidden="true"><i class="fa fa-ban"></i> 不再顯示</button> -->
 	                    <h4 class="card-title">平台功能导览</h4>
 	                    <h6 class="card-subtitle">Platform Features Guide </h6>
 	                <!-- Nav tabs -->
@@ -330,6 +337,8 @@
 									<span class="hide-menu"><spring:message code="salon" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#productInfo3" role="tab"><i class="mdi mdi-file"></i> 
 									<span class="hide-menu"><spring:message code="productInfo" /></span></a> </li>
+								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#referenceInfo3" role="tab"><i class="mdi mdi-file"></i> 
+									<span class="hide-menu"><spring:message code="referenceInfo" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myChannels3" role="tab"><i class="mdi mdi-book-open-variant"></i> 
 									<span class="hide-menu"><spring:message code="myChannels" /></span></a> </li>
 								<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#myClients3" role="tab"><i class="mdi mdi-face"></i> 
@@ -372,7 +381,19 @@
 							            	<h4 class="card-header"><spring:message code="guide_dashboard_0" /></h4>
 							                <div class="card-body">
 							                	<code><spring:message code="guide_dashboard_1" /></code><br/>
-												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_list.JPG" /><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_menu.JPG" /><br/>
+												<code><spring:message code="guide_dashboard_2" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_kpi_user.JPG" /><br/>
+												<code><spring:message code="guide_dashboard_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_kpi_visit.JPG" /><br/>
+												<code><spring:message code="guide_dashboard_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_kpi_volume.JPG" /><br/>
+												<code><spring:message code="guide_dashboard_5" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_cust.JPG" /><br/>
+												<code><spring:message code="guide_dashboard_6" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_visit.JPG" /><br/>
+												<code><spring:message code="guide_dashboard_7" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/dashboard/dashboard_salon.JPG" /><br/>
 					                         </div>
 					                     </div>
                                       </div>
@@ -484,10 +505,47 @@
 	                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">
 									<div class="div_scroll">
 							            <div class="card">
-							            	<h4 class="card-header"><spring:message code="guide_productInfo_0" /></h4>
+							            	<h4 class="card-header"><spring:message code="guide_product_0" /></h4>
 							                <div class="card-body">
 							                	<code><spring:message code="guide_productInfo_1" /></code><br/>
 												<img src="${pageContext.request.contextPath}/resources/guide/product/product_list.JPG" /><br/>
+							                	<code><spring:message code="guide_product_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/product/product_menu.JPG" /><br/>
+					                         </div>
+					                     </div>
+					                     <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_product_2" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_product_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/product/product_down.JPG" /><br/>
+												<code><spring:message code="guide_product_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/product/product_file.JPG" /><br/>
+												<code><spring:message code="guide_product_5" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/product/product_download.JPG" /><br/>
+					                         </div>
+					                     </div>
+                                      </div>
+	                             </div>
+	                             
+	                             <!-- 參考信息 -->
+	                             <div class="tab-pane p-20" id="referenceInfo3" role="tabpanel">
+									<div class="div_scroll">
+							            <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_reference_0" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_reference_1" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/reference/reference_menu.JPG" /><br/>
+					                         </div>
+					                     </div>
+					                     <div class="card">
+							            	<h4 class="card-header"><spring:message code="guide_reference_2" /></h4>
+							                <div class="card-body">
+							                	<code><spring:message code="guide_reference_3" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/reference/reference_down.JPG" /><br/>
+												<code><spring:message code="guide_reference_4" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/reference/reference_file.JPG" /><br/>
+												<code><spring:message code="guide_reference_5" /></code><br/>
+												<img src="${pageContext.request.contextPath}/resources/guide/reference/reference_download.JPG" /><br/>
 					                         </div>
 					                     </div>
                                       </div>
@@ -836,7 +894,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                     	<li id="dashboard-tag">
-                            <a href="${pageContext.request.contextPath}/"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
+                            <a href="${pageContext.request.contextPath}/dashboard"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
                         </li>
                         <li id="billboard-tag">
                             <a href="${pageContext.request.contextPath}/manage/billboard/list"> <i class="mdi mdi-content-paste"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
@@ -852,6 +910,9 @@
                         </li>
                         <li id="productInfo-tag">
                             <a href="${pageContext.request.contextPath}/product/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="productInfo" /></span></a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/reference/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="referenceInfo" /></span></a>
                         </li>
                         <li id="myChannels-tag">
                             <a href="${pageContext.request.contextPath}/channel/user/list"> <i class="mdi mdi-book-open-variant"></i><span class="hide-menu"><spring:message code="myChannels" /></span></a>
@@ -884,7 +945,8 @@
 	                            	</sec:authorize>
 	                                <li><a href="${pageContext.request.contextPath}/admin/cust/list"><spring:message code="allCust" /></a></li>
 	                                <li><a href="${pageContext.request.contextPath}/manage/billboard"><spring:message code="maintainInfo" /></a></li>
-	                                <li><a href="${pageContext.request.contextPath}/manage/file"><spring:message code="fileMaintain" /></a></li>
+	                                <li><a href="${pageContext.request.contextPath}/manage/productFile"><spring:message code="productFileMaintain" /></a></li>
+	                                <li><a href="${pageContext.request.contextPath}/manage/referenceFile"><spring:message code="referenceFileMaintain" /></a></li>
 	                            </ul>
 	                        </li>
                         </sec:authorize>
@@ -968,6 +1030,25 @@
 	 -->
 	<script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
 	
+	<!-- Draggable-portlet -->
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/jqueryui/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/gridstack/lodash.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/gridstack/gridstack.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/plugins/gridstack/gridstack.jQueryUI.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/chartist-js/dist/chartist.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<!-- Chart JS -->
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/echarts/echarts-all.js"></script>
+	<!-- Flot Charts JavaScript -->
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/flot/excanvas.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/flot/jquery.flot.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/flot/jquery.flot.time.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/plugins/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+	<!-- <script src="${pageContext.request.contextPath}/resources/js/widget-charts.js"></script> -->
+
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
@@ -980,7 +1061,7 @@
 		var tour = new Tour({
 			backdrop: true,
 			smartPlacement: true,
-			template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« Prev</button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'>Next »</button></div><button class='btn btn-default' data-role='end'>End tour</button></div>",
+			template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button></div><button class='btn btn-default' data-role='end'><spring:message code='endTour' /></button></div>",
 			steps: [
     	  		{
     	    		element: "#member-dropdown",
@@ -1065,9 +1146,10 @@
     
     
    	$('.div_scroll').slimScroll({
-   		height: '510px'
+   		height: '620px'
    	});
 	</script>
+	
 </body>
 
 </html>

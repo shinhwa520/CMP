@@ -21,4 +21,6 @@ public interface VisitService {
 	public List<VisitServiceVO> findVisitDetails(Integer visitId);
 	
 	public long countVisitDetails(Integer visitId);
+	
+	public long retriveOpenVisitCount(VisitServiceVO vsVO);
 }

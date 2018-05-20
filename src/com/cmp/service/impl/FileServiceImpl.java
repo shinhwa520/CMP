@@ -21,9 +21,11 @@ import com.cmp.model.FilesCustomer;
 import com.cmp.model.FilesPermission;
 import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
+import com.cmp.model.FilesReference;
 import com.cmp.model.FilesSetting;
 import com.cmp.model.FilesVisit;
 import com.cmp.model.ProductInfo;
+import com.cmp.model.ReferenceInfo;
 import com.cmp.security.SecurityUtil;
 import com.cmp.service.FileService;
 import com.cmp.service.vo.FileServiceVO;
@@ -100,6 +102,50 @@ public class FileServiceImpl implements FileService {
 							StringUtils.isNotBlank(productInfo.getEngName()) 
 								? productInfo.getEngName().concat(" - ").concat(productInfo.getProductName())
 								: productInfo.getProductName());
+				}
+				reList.add(fsVO);
+			}
+			
+			dataSeq += 1;
+		}
+		
+		return reList;
+	}
+	
+	private List<FileServiceVO> transReferenceModel2ServiceVO(List<Object[]> modelList) {
+		List<FileServiceVO> reList = new ArrayList<FileServiceVO>();
+		FilesReference filesReference = null;
+		ReferenceInfo referenceInfo = null;
+		
+		FileServiceVO fsVO;
+		int dataSeq = 1;
+		for (Object[] models : modelList) {
+			filesReference = (FilesReference)models[0];
+			referenceInfo = (ReferenceInfo)models[1];
+			
+			if (filesReference != null) {
+				fsVO = new FileServiceVO();
+				fsVO.setDataSeq(dataSeq);
+				BeanUtils.copyProperties(filesReference, fsVO, new String[] {"updateTime"});
+				fsVO.setFullFileName(filesReference.getFileName().concat(".").concat(filesReference.getFileExtension()));
+				fsVO.setUpdateTime(filesReference.getUpdateTime() != null ? DATE_TIME_FORMAT.format(filesReference.getUpdateTime()) : "");
+				
+				fsVO.setOnTopChkbox(filesReference.getFilesSetting().getOnTop());
+				
+				fsVO.setBeginDateStr(filesReference.getFilesSetting().getActivationBegin() != null ? DATE_FORMAT.format(filesReference.getFilesSetting().getActivationBegin()) : "");
+				fsVO.setBeginTimeStr(filesReference.getFilesSetting().getActivationBegin() != null ? TIME_FORMAT.format(filesReference.getFilesSetting().getActivationBegin()) : "");
+			
+				fsVO.setEndDateStr(filesReference.getFilesSetting().getActivationEnd() != null ? DATE_FORMAT.format(filesReference.getFilesSetting().getActivationEnd()) : "");
+				fsVO.setEndTimeStr(filesReference.getFilesSetting().getActivationEnd() != null ? TIME_FORMAT.format(filesReference.getFilesSetting().getActivationEnd()) : "");
+				
+				FilesBaseConfig config = filesReference.getFilesSetting().getFilesBaseConfig();
+				fsVO.setFileType(config != null ? config.getConfigName() : "");
+				
+				if (referenceInfo != null) {
+					fsVO.setReferenceName(
+							StringUtils.isNotBlank(referenceInfo.getEngName()) 
+								? referenceInfo.getEngName().concat(" - ").concat(referenceInfo.getReferenceName())
+								: referenceInfo.getReferenceName());
 				}
 				reList.add(fsVO);
 			}
@@ -210,22 +256,29 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileType, FILE_TYPE_CUSTOMER)) {
 				modelList = fileDAO.findCustomerFileByDAOVO(fileDAOVO, null, null);
 				
-			}  else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+			} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
 				fileDAOVO.setAdmin(isAdmin);
 				model2List = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
+				
+			} else if (StringUtils.equals(fileType, FILE_TYPE_REFERENCE)) {
+				fileDAOVO.setAdmin(isAdmin);
+				model2List = fileDAO.findReferenceFileByDAOVO(fileDAOVO, null, null);
 				
 			} else {
 				
 			}
 			
-			if (!StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+			if (!StringUtils.equals(fileType, FILE_TYPE_PRODUCT) && !StringUtils.equals(fileType, FILE_TYPE_REFERENCE)) {
 				if (modelList != null && !modelList.isEmpty()) {
 					retVO = transModel2ServiceVO(modelList).get(0);
 				}
 				
 			} else {
-				if (model2List != null && !model2List.isEmpty()) {
+				if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT) && model2List != null && !model2List.isEmpty()) {
 					retVO = transProductModel2ServiceVO(model2List).get(0);
+					
+				} else if (StringUtils.equals(fileType, FILE_TYPE_REFERENCE) && model2List != null && !model2List.isEmpty()) {
+					retVO = transReferenceModel2ServiceVO(model2List).get(0);
 				}
 			}
 			
@@ -265,6 +318,10 @@ public class FileServiceImpl implements FileService {
 				
 			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_VISIT)) {
 				id = fileServiceVO.getVisitId() != null ? fileServiceVO.getVisitId().toString() : "ALL";
+				
+			} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_REFERENCE)) {
+				id = fileServiceVO.getReferenceId() != null ? fileServiceVO.getReferenceId().toString() : "ALL";
+				
 			}
 			fileServiceVO.setUpperFileName(
 					(fileServiceVO.getFileType()+"_"+id+"_"+fileServiceVO.getOriginFileName()).toUpperCase());
@@ -301,6 +358,10 @@ public class FileServiceImpl implements FileService {
 				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_VISIT)) {
 					entity = new FilesVisit();
 					((FilesVisit)entity).setVisitId(fileServiceVO.getVisitId());
+					
+				} else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_REFERENCE)) {
+					entity = new FilesReference();
+					((FilesReference)entity).setReferenceId(fileServiceVO.getReferenceId());
 				}
 				
 				if (entity != null) {
@@ -384,6 +445,9 @@ public class FileServiceImpl implements FileService {
 						fileDAOVO.setAdmin(true);
 						reList2 = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
 						
+					} else if (StringUtils.equals(fileType, FILE_TYPE_REFERENCE)) {
+						fileDAOVO.setAdmin(true);
+						reList2 = fileDAO.findReferenceFileByDAOVO(fileDAOVO, null, null);
 					}
 					
 					FilesSetting fs = null;
@@ -459,14 +523,18 @@ public class FileServiceImpl implements FileService {
 				fileDAOVO.setAdmin(true);
 				model2List = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
 				
+			}  else if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_REFERENCE)) {
+				fileDAOVO.setAdmin(true);
+				model2List = fileDAO.findReferenceFileByDAOVO(fileDAOVO, null, null);
+				
 			} else {
 				throw new Exception("[ERROR] fileType not exists! >> " + fileServiceVO.getFileType());
 			}
 			
-			if ((StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) && model2List != null && !model2List.isEmpty())
-				|| (!StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) && modelList != null && !modelList.isEmpty())) {
+			if (((StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) || StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_REFERENCE)) && model2List != null && !model2List.isEmpty())
+				|| ((!StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) || StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_REFERENCE)) && modelList != null && !modelList.isEmpty())) {
 				
-				if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT)) {
+				if (StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_PRODUCT) || StringUtils.equals(fileServiceVO.getFileType(), FILE_TYPE_REFERENCE)) {
 					sourceModel = model2List.get(0)[0];
 					
 				} else {
@@ -520,6 +588,10 @@ public class FileServiceImpl implements FileService {
 			} else if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
 				entity = "FilesProduct";
 				model2List = fileDAO.findProductFileByDAOVO(fileDAOVO, null, null);
+				
+			} else if (StringUtils.equals(fileType, FILE_TYPE_REFERENCE)) {
+				entity = "FilesReference";
+				model2List = fileDAO.findReferenceFileByDAOVO(fileDAOVO, null, null);
 			}
 			
 			if (modelList != null && !modelList.isEmpty()) {
@@ -529,7 +601,12 @@ public class FileServiceImpl implements FileService {
 			}
 			
 			if (model2List != null && !model2List.isEmpty()) {
-				retVO = transProductModel2ServiceVO(model2List).get(0);
+				if (StringUtils.equals(fileType, FILE_TYPE_PRODUCT)) {
+					retVO = transProductModel2ServiceVO(model2List).get(0);
+					
+				} else if (StringUtils.equals(fileType, FILE_TYPE_REFERENCE)) {
+					retVO = transReferenceModel2ServiceVO(model2List).get(0);
+				}
 				
 				fileDAO.addDownloadCount(entity, seqNo);
 			}
@@ -598,26 +675,30 @@ public class FileServiceImpl implements FileService {
 		
 		return reList;
 	}
-/*
+	
 	@Override
-	public ProductServiceVO findProductInfoByDAOVO(ProductServiceVO vo) {
+	public List<FileServiceVO> findReferenceFilesByReferenceId(boolean isAdmin, Integer referenceId, Integer startRow, Integer pageLength) {
+		List<FileServiceVO> reList = null;
+		List<Object[]> fpList;
+		FileDAOVO fileDAOVO;
+		
 		try {
-			FileDAOVO fileDAOVO	 = new FileDAOVO();
-			fileDAOVO.setProductId(vo.getProductId());
+			fileDAOVO = new FileDAOVO();
+			fileDAOVO.setReferenceId(referenceId);
+			fileDAOVO.setAdmin(isAdmin);
+			fpList = fileDAO.findReferenceFileByDAOVO(fileDAOVO, startRow, pageLength);
 			
-			List<FilesProduct> productList = fileDAO.findProductFileByDAOVO(fileDAOVO);
-			
-			if (productList != null && !productList.isEmpty()) {
-				vo.setFilesProduct(productList);
+			if (fpList != null && !fpList.isEmpty()) {
+				reList = transReferenceModel2ServiceVO(fpList);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return vo;
+		return reList;
 	}
-*/
+
 	@Override
 	public VisitServiceVO findVisitInfoByDAOVO(VisitServiceVO vo) {
 		try {
@@ -648,6 +729,24 @@ public class FileServiceImpl implements FileService {
 			fileDAOVO.setProductId(productId);
 			fileDAOVO.setAdmin(isAdmin);
 			count = fileDAO.countProductFileByDAOVO(fileDAOVO);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+	
+	@Override
+	public long countReferenceFilesByReferenceId(boolean isAdmin, Integer referenceId) {
+		long count = 0;
+		FileDAOVO fileDAOVO;
+		
+		try {
+			fileDAOVO = new FileDAOVO();
+			fileDAOVO.setReferenceId(referenceId);
+			fileDAOVO.setAdmin(isAdmin);
+			count = fileDAO.countReferenceFileByDAOVO(fileDAOVO);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -688,4 +787,5 @@ public class FileServiceImpl implements FileService {
 		
 		return count;
 	}
+
 }

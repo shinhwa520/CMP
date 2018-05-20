@@ -21,4 +21,6 @@ public interface SalonService {
 	public List<SalonServiceVO> findSalonDetails(Integer salonId);
 	
 	public long countSalonDetails(Integer salonId);
+	
+	public long retriveOpenSalonCount(SalonServiceVO ssVO);
 }

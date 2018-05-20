@@ -44,11 +44,17 @@ public class VisitDAOImpl extends BaseDaoHibernate implements VisitDAO {
 		if (!visitServiceVO.getCanSeeAll()) {
 			sb.append(" and vi.createBy in (:createBy) ");
 		}
+		if (visitServiceVO.getStatusId() != null) {
+			sb.append(" and vi.status.id = :statusId ");
+		}
 		
 		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 	    Query<?> q = session.createQuery(sb.toString());
 	    if (!visitServiceVO.getCanSeeAll()) {
 	    	q.setParameter("createBy", visitServiceVO.getUserAccounts());
+		}
+	    if (visitServiceVO.getStatusId() != null) {
+	    	q.setParameter("statusId", visitServiceVO.getStatusId());
 		}
 	    
 		return (List<VisitInfo>)q.list();

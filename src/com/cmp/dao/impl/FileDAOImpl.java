@@ -15,6 +15,7 @@ import com.cmp.model.FilesCustomer;
 import com.cmp.model.FilesPermission;
 import com.cmp.model.FilesProduct;
 import com.cmp.model.FilesPublic;
+import com.cmp.model.FilesReference;
 import com.cmp.model.FilesSetting;
 import com.cmp.model.FilesVisit;
 
@@ -43,7 +44,7 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    
 		return (List<Object>) q.list();
 	}
-
+	
 	@Override
 	public List<Object> findAllCustomerFile(boolean isAdmin, Integer startRow, Integer pageLength) {
 		// TODO Auto-generated method stub
@@ -167,6 +168,51 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 		return (List<Object[]>) q.list();
 	}
 	
+	@Override
+	public List<Object[]> findReferenceFileByDAOVO(FileDAOVO fileDAOVO, Integer startRow, Integer pageLength) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select fr, ri ")
+		  .append(" from FilesReference fr, ReferenceInfo ri ")
+		  .append(" where 1=1 ")
+		  .append(" and fr.referenceId = ri.referenceId ");
+	
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fr.seqNo = :seqNo ");
+		}
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
+			sb.append(" and fr.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getReferenceId() != null) {
+			sb.append(" and fr.referenceId = :referenceId ");
+		}
+		
+		if (!fileDAOVO.isAdmin()) {
+			sb.append(" and (fr.filesSetting.activationBegin is null or fr.filesSetting.activationBegin <= sysdate()) ")
+			  .append(" and (fr.filesSetting.activationEnd is null or fr.filesSetting.activationEnd >= sysdate()) ");
+		}
+		
+		sb.append(" order by fr.filesSetting.onTop desc, fr.seqNo desc ");
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    if (startRow != null && pageLength != null) {
+	    	q.setFirstResult(startRow);
+		    q.setMaxResults(pageLength);
+	    }
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getReferenceId() != null) {
+	    	q.setParameter("referenceId", fileDAOVO.getReferenceId());
+		}
+	    
+		return (List<Object[]>) q.list();
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FilesVisit> findVisitFileByDAOVO(FileDAOVO fileDAOVO) {
@@ -225,6 +271,9 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 			
 		} else if (entity instanceof FilesVisit) {
 			((FilesVisit)entity).setFilesSetting(fSetting);
+			
+		} else if (entity instanceof FilesReference) {
+			((FilesReference)entity).setFilesSetting(fSetting);
 		}
 		
 		getHibernateTemplate().save(entity);
@@ -239,7 +288,9 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 								? ((FilesCustomer)entity).getSeqNo()
 								: (entity instanceof FilesProduct)
 									? ((FilesProduct)entity).getSeqNo()
-									: ((FilesVisit)entity).getSeqNo());
+									: (entity instanceof FilesReference)
+										? ((FilesReference)entity).getSeqNo()
+										: ((FilesVisit)entity).getSeqNo());
 			
 			seqNo = fm.getSeqNo();
 			getHibernateTemplate().save(fm);
@@ -403,6 +454,43 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    
 	    return (q.list() != null && !q.list().isEmpty()) ? (Long)q.list().get(0) : 0;
 	}
+	
+	@Override
+	public long countReferenceFileByDAOVO(FileDAOVO fileDAOVO) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select count(fr.seqNo) from FilesReference fr ")
+		  .append(" where 1=1 ");
+	
+		if (fileDAOVO.getSeqNo() != null) {
+			sb.append(" and fr.seqNo = :seqNo ");
+		}
+		if (StringUtils.isNotBlank(fileDAOVO.getUpperFileName())) {
+			sb.append(" and fr.upperFileName = :upperFileName ");
+		}
+		if (fileDAOVO.getReferenceId() != null) {
+			sb.append(" and fr.referenceId = :referenceId ");
+		}
+		
+		if (!fileDAOVO.isAdmin()) {
+			sb.append(" and (fr.filesSetting.activationBegin is null or fr.filesSetting.activationBegin <= sysdate()) ")
+			  .append(" and (fr.filesSetting.activationEnd is null or fr.filesSetting.activationEnd >= sysdate()) ");
+		}
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createQuery(sb.toString());
+	    
+	    if (fileDAOVO.getSeqNo() != null) {
+	    	q.setParameter("seqNo", fileDAOVO.getSeqNo());
+		}
+	    if (StringUtils.isNoneBlank(fileDAOVO.getUpperFileName())) {
+	    	q.setParameter("upperFileName", fileDAOVO.getUpperFileName());
+		}
+	    if (fileDAOVO.getReferenceId() != null) {
+	    	q.setParameter("referenceId", fileDAOVO.getReferenceId());
+		}
+	    
+	    return (q.list() != null && !q.list().isEmpty()) ? (Long)q.list().get(0) : 0;
+	}
 
 	@Override
 	public long countVisitFileByDAOVO(FileDAOVO fileDAOVO) {
@@ -438,4 +526,5 @@ public class FileDAOImpl extends BaseDaoHibernate implements FileDAO {
 	    
 	    return (q.list() != null && !q.list().isEmpty()) ? (Long)q.list().get(0) : 0;
 	}
+
 }

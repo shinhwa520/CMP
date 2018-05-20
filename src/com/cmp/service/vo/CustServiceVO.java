@@ -31,6 +31,10 @@ public class CustServiceVO {
 	private String weChat;
 	private Status status;
 	private boolean isJoined;
+	
+	private String custMonthWord;
+	private String custCountPerMonth;
+	private String maxCustCount;
 
 	public Integer getCust_Id() { return cust_Id; }
 	public void setCust_Id(Integer cust_Id) { this.cust_Id = cust_Id; }
@@ -141,5 +145,23 @@ public class CustServiceVO {
 	}
 	public void setJoined(boolean isJoined) {
 		this.isJoined = isJoined;
+	}
+	public String getCustCountPerMonth() {
+		return custCountPerMonth;
+	}
+	public void setCustCountPerMonth(String custCountPerMonth) {
+		this.custCountPerMonth = custCountPerMonth;
+	}
+	public String getCustMonthWord() {
+		return custMonthWord;
+	}
+	public void setCustMonthWord(String custMonthWord) {
+		this.custMonthWord = custMonthWord;
+	}
+	public String getMaxCustCount() {
+		return maxCustCount;
+	}
+	public void setMaxCustCount(String maxCustCount) {
+		this.maxCustCount = maxCustCount;
 	}
 }

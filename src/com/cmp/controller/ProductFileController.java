@@ -50,9 +50,9 @@ import com.cmp.utils.PDFMerge;
 import com.cmp.utils.PostObject2Aliyun;
 
 @Controller
-@RequestMapping("/manage/file")
-public class FileController extends BaseController {
-	private static Log log = LogFactory.getLog(FileController.class);
+@RequestMapping("/manage/productFile")
+public class ProductFileController extends BaseController {
+	private static Log log = LogFactory.getLog(ProductFileController.class);
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -62,8 +62,8 @@ public class FileController extends BaseController {
 	
 	@RequestMapping(value = { "" }, method = RequestMethod.GET)
     public String fileMain(Model model, @ModelAttribute("FileForm") FileForm form, HttpServletRequest request, HttpServletResponse response) {
-		setActiveMenu(model, MenuItem.MANAGE_FILE);
-		return "manage/file";
+		setActiveMenu(model, MenuItem.MANAGE_PRODUCT_FILE);
+		return "manage/product_file";
     }
 	
 	@RequestMapping(value="getAllPublicFiles.json", method = RequestMethod.GET, produces="application/json")
@@ -226,7 +226,7 @@ public class FileController extends BaseController {
 			e.printStackTrace();
 			
 		} finally {
-			setActiveMenu(model, MenuItem.MANAGE_FILE);
+			setActiveMenu(model, MenuItem.MANAGE_PRODUCT_FILE);
 		}
 		
 		return fileMain(model, form, request, response);

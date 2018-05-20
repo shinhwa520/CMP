@@ -1,6 +1,7 @@
 package com.cmp.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,11 +33,16 @@ public class SalonController extends BaseController {
 	@Autowired
 	private SalonService salonService;
 	
-	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
-    public String showSalonList(Model model, @ModelAttribute("SalonForm") SalonForm salonForm, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "list/{statusId}","list" }, method = RequestMethod.GET)
+    public String showSalonList(Model model, @ModelAttribute("SalonForm") SalonForm salonForm, HttpServletRequest request, HttpServletResponse response,
+    							@PathVariable Optional<Integer> statusId) {
 		SalonServiceVO reVO = null;
 		try {
-			reVO = salonService.findSalon(new SalonServiceVO());
+			reVO = new SalonServiceVO();
+			reVO.setStatusId(
+					statusId.isPresent() ? (statusId.get() != 23 ? null : statusId.get())
+									 	 : null);
+			reVO = salonService.findSalon(reVO);
 			salonForm.setSalonList(reVO.getSalonList());
 			
 		} catch (Exception e) {

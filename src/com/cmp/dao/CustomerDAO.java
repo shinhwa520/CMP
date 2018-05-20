@@ -1,5 +1,6 @@
 package com.cmp.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cmp.model.Customer;
@@ -19,4 +20,6 @@ public interface CustomerDAO {
 	
 	public void insertCustByModel(Customer customer);
 	public Customer saveCust(Customer cust);
+	
+	List<Object[]> retrieveCustCountPerMonth(String userId, String beginMonth, String endExcludedMonth);
 }

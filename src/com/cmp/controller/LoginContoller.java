@@ -2,9 +2,9 @@ package com.cmp.controller;
 
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,15 +15,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cmp.MenuItem;
-import com.cmp.form.IndexForm;
 import com.cmp.service.BillboardService;
-import com.cmp.service.vo.BillboardServiceVO;
 
 @Controller
 @RequestMapping("/")
@@ -33,28 +30,37 @@ public class LoginContoller extends BaseController {
 	BillboardService billboardService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form, HttpServletRequest request, HttpServletResponse response) {
+	public String index(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			if (null == principal) {
 				return "redirect:/login";
 			}
-			List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
-			form.setBillboardList(billboardList);
-			setActiveMenu(model, MenuItem.INDEX);
-//			changeLanguage(request, response, form.getLanguage(), cookieLanguage);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/dashboard");
+			rd.forward(request,response);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "index";
+		return null;
 	}
 	
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String indexPage(Model model, Principal principal, @ModelAttribute("IndexForm") IndexForm form, HttpServletRequest request, HttpServletResponse response) {
-    	List<BillboardServiceVO> billboardList = billboardService.findAllBillboardRecords(false, 0, 500);
-		form.setBillboardList(billboardList);
-		setActiveMenu(model, MenuItem.INDEX);
-		return "billboard/list";
+    public String indexPage(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+    	try {
+			if (null == principal) {
+				return "redirect:/login";
+			}
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/dashboard");
+			rd.forward(request,response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
     }
 	
     @RequestMapping(value = "login", method = RequestMethod.GET)

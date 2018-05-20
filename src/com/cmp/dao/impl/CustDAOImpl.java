@@ -1,5 +1,6 @@
 package com.cmp.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -157,5 +158,40 @@ public class CustDAOImpl extends BaseDaoHibernate implements CustomerDAO {
 	public Customer saveCust(Customer cust) {
 		return (Customer) getHibernateTemplate().merge(cust);
 //	   sessionFactory.getCurrentSession().save(user);
+	}
+
+	@Override
+	public List<Object[]> retrieveCustCountPerMonth(String userId, String beginMonth, String endExcludedMonth) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select date_format(c.create_time, '%Y%m'), count(c.cust_id) ")
+		  .append(" from Customer c ")
+		  .append(" where 1=1 ");
+		
+		if (StringUtils.isNotBlank(userId)) {
+			sb.append(" and c.user_id = :userId ");
+		}
+		if (StringUtils.isNotBlank(beginMonth)) {
+			sb.append("  and c.create_time >= STR_TO_DATE(:beginMonth, '%Y%m') ");
+		}
+		if (StringUtils.isNotBlank(endExcludedMonth)) {
+			sb.append("  and c.create_time < STR_TO_DATE(:endExcludedMonth, '%Y%m') ");
+		}
+		
+		sb.append(" group by date_format(c.create_time, '%Y%m') ")
+		  .append(" order by date_format(c.create_time, '%Y%m') asc ");
+		
+		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+	    Query<?> q = session.createSQLQuery(sb.toString());
+	    
+	    if (StringUtils.isNotBlank(userId)) {
+			q.setParameter("userId", userId);
+		}
+		if (StringUtils.isNotBlank(beginMonth)) {
+			q.setParameter("beginMonth", beginMonth);
+		}
+		if (StringUtils.isNotBlank(endExcludedMonth)) {
+			q.setParameter("endExcludedMonth", endExcludedMonth);
+		}
+		return (List<Object[]>)q.list();
 	}
 }
