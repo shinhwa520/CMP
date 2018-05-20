@@ -57,6 +57,7 @@
 	-->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jqueryui/jquery-ui.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-select/bootstrap-select.min.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-tour-0.12.0/css/bootstrap-tour-standalone.min.css" />
 	
 	<!-- ============================================================== -->
     <!-- All Jquery -->
@@ -82,7 +83,7 @@
     
     <script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.contentcarousel.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/carouselSlider/js/jquery.easing.1.3.js"></script>
-    
+	<script src="${pageContext.request.contextPath}/resources/bootstrap-tour-0.12.0/js/bootstrap-tour-standalone.min.js"></script>
 	<!-- 
 	<style type="text/css">
 		.alert{
@@ -483,9 +484,9 @@
 	                             <div class="tab-pane p-20" id="productInfo3" role="tabpanel">
 									<div class="div_scroll">
 							            <div class="card">
-							            	<h4 class="card-header">产品信息清單</h4>
+							            	<h4 class="card-header"><spring:message code="guide_productInfo_0" /></h4>
 							                <div class="card-body">
-							                	<code>點擊左方『产品信息』查看产品信息清單</code><br/>
+							                	<code><spring:message code="guide_productInfo_1" /></code><br/>
 												<img src="${pageContext.request.contextPath}/resources/guide/product/product_list.JPG" /><br/>
 					                         </div>
 					                     </div>
@@ -677,7 +678,7 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="sysMail-tag">
                             <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
                                 <c:if test="${!sysMailMap.listUnread.isEmpty() }"><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div></c:if>
                             </a>
@@ -712,7 +713,7 @@
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="mail-tag">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
                                 <c:if test="${!mailMap.listUnread.isEmpty() }"><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div></c:if>
                             </a>
@@ -747,7 +748,7 @@
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown"> 
+                        <li class="nav-item dropdown" id="contact_us-tag"> 
                         	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         		<i id="contactUsIcon" class="mdi mdi-view-grid"></i>
                         	</a>
@@ -785,7 +786,7 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="member-dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                 <ul class="dropdown-user">
@@ -812,7 +813,7 @@
                             	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> English</a> 
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="guide-dropdown">
                         	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" onclick="showTip(); return false;" aria-expanded="false"> 
                         		<i class="icon-info"></i>
                         	</a>
@@ -834,28 +835,28 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                    	<li>
+                    	<li id="dashboard-tag">
                             <a href="${pageContext.request.contextPath}/"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
                         </li>
-                        <li>
+                        <li id="billboard-tag">
                             <a href="${pageContext.request.contextPath}/manage/billboard/list"> <i class="mdi mdi-content-paste"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
                         </li>
-                        <li>
+                        <li id="visitInfo-tag">
                             <a href="${pageContext.request.contextPath}/visit/list"> <i class="mdi mdi-table"></i><span class="hide-menu"><spring:message code="visitInfo" /></span></a>
                         </li>
-                       	<li>
+                       	<li id="registration-tag">
                             <a href="${pageContext.request.contextPath}/visit/tour"> <i class="mdi mdi-book-multiple"></i><span class="hide-menu"><spring:message code="registration" /></span></a>
                         </li>
-                        <li>
+                        <li id="salon-tag">
                             <a href="${pageContext.request.contextPath}/salon/list"> <i class="mdi mdi-coffee"></i><span class="hide-menu"><spring:message code="salon" /></span></a>
                         </li>
-                        <li>
+                        <li id="productInfo-tag">
                             <a href="${pageContext.request.contextPath}/product/list"> <i class="mdi mdi-file"></i><span class="hide-menu"><spring:message code="productInfo" /></span></a>
                         </li>
-                        <li>
+                        <li id="myChannels-tag">
                             <a href="${pageContext.request.contextPath}/channel/user/list"> <i class="mdi mdi-book-open-variant"></i><span class="hide-menu"><spring:message code="myChannels" /></span></a>
                         </li>
-                        <li>
+                        <li id="myClients-tag">
                             <a href="${pageContext.request.contextPath}/channel/cust/list"> <i class="mdi mdi-face"></i><span class="hide-menu"><spring:message code="myClients" /></span></a>
                         </li>
                         <sec:authorize access="hasAnyRole('ROLE_SU')">
@@ -974,10 +975,94 @@
     <script>
     var showGuide = '${showGuide}';
     $(function() {
-        if("Y"===showGuide)
-        	showTip();
-        
+        //if("Y"===showGuide) showTip();
+    	// Instance the tour
+		var tour = new Tour({
+			backdrop: true,
+			smartPlacement: true,
+			template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« Prev</button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'>Next »</button></div><button class='btn btn-default' data-role='end'>End tour</button></div>",
+			steps: [
+    	  		{
+    	    		element: "#member-dropdown",
+    	    		title: "<spring:message code='basicInformation' />",
+    	    		content: "<spring:message code='guide_persionalInfo_1' />",
+    	    		placement: "bottom"
+    	  		},
+    	  		{
+    	    		element: "#myChannels-tag",
+    	    		title: "<spring:message code='basicInformation' />",
+    	    		content: "<spring:message code='guide_myChannels_1' />"
+    	  		},
+    	  		{
+    	    		element: "#myClients-tag",
+    	    		title: "<spring:message code='basicInformation' />",
+    	    		content: "<spring:message code='guide_myClients_1' />"
+    	  		},
+    	  		{
+    	    		element: "#productInfo-tag",
+    	    		title: "<spring:message code='visitingBusiness' />",
+    	    		content: "<spring:message code='guide_productInfo_1' />"
+    	  		},
+    	  		{
+    	    		element: "#visitInfo-tag",
+    	    		title: "<spring:message code='visitingBusiness' />",
+    	    		content: "<spring:message code='guide_visitInfo_1' />"
+    	  		},
+    	  		{
+    	    		element: "#registration-tag",
+    	    		title: "<spring:message code='visitingBusiness' />",
+    	    		content: "<spring:message code='guide_registration_1' />"
+    	  		},
+    	  		{
+    	    		element: "#salon-tag",
+    	    		title: "<spring:message code='visitingBusiness' />",
+    	    		content: "<spring:message code='guide_salon_1' />"
+    	  		},
+    	  		{
+    	    		element: "#dashboard-tag",
+    	    		title: "<spring:message code='indicatorChart' />",
+    	    		content: "<spring:message code='guide_dashboard_1' />"
+    	  		},
+    	  		{
+    	    		element: "#billboard-tag",
+    	    		title: "<spring:message code='platformRelated' />",
+    	    		content: "<spring:message code='guide_billboard_1' />"
+    	  		},
+				{
+					element: "#sysMail-tag",
+    	    		title: "<spring:message code='platformRelated' />",
+    	    		content: "<spring:message code='guide_sysMail_1' />",
+    	    		placement: "bottom"
+    	  		},
+				{
+					element: "#mail-tag",
+    	    		title: "<spring:message code='platformRelated' />",
+    	    		content: "<spring:message code='guide_mail_1' />",
+    	    		placement: "bottom"
+    	  		},
+				{
+					element: "#contact_us-tag",
+    	    		title: "<spring:message code='platformRelated' />",
+    	    		content: "<spring:message code='guide_contact_us_1' />",
+    	    		placement: "bottom"
+    	  		},
+				{
+					element: "#guide-dropdown",
+    	    		title: "<spring:message code='platformRelated' />",
+    	    		content: "<spring:message code='guide_guide_1' />",
+    	    		placement: "bottom"
+    	  		}
+    	  		
+    	  		
+    		]});
+
+    	// Initialize the tour
+    	tour.init();
+
+    	// Start the tour
+    	tour.start();
     });
+    
     
    	$('.div_scroll').slimScroll({
    		height: '510px'
