@@ -1055,13 +1055,17 @@
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <script>
     var showGuide = '${showGuide}';
+    var isHome = '${active}';
     $(function() {
-        //if("Y"===showGuide) showTip();
+      if("Y"===showGuide && "INDEX"===isHome) {
+		//showTip();
     	// Instance the tour
 		var tour = new Tour({
 			backdrop: true,
 			smartPlacement: true,
-			template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button></div><button class='btn btn-default' data-role='end'><spring:message code='endTour' /></button></div>",
+			template: "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>"
+				+"<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>"
+				+"<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>",
 			steps: [
     	  		{
     	    		element: "#member-dropdown",
@@ -1141,7 +1145,9 @@
     	tour.init();
 
     	// Start the tour
-    	tour.start();
+    	//tour.start();
+    	tour.restart();
+      }
     });
     
     
