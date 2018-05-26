@@ -131,8 +131,11 @@
 	 -->
 	 
 	<style type="text/css">
+	.hide-menu{
+		display:inline-block;
+	}
+	inline-block
 	#tab-guide .tab-pane{
-		min-width: 900px; 
 		padding:10px;
 	}
 	
@@ -147,7 +150,9 @@
 	}
 	
 	#tab-guide .tab-pane .div_scroll .card .card-body img{
-		width: 900px;
+		width: auto;
+		max-height: 100%;  
+		max-width: 100%;
 		border:2px #ccc solid;
 		padding:5px;
 	}
