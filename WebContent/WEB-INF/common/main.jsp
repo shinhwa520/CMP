@@ -512,8 +512,6 @@
 							            <div class="card">
 							            	<h4 class="card-header"><spring:message code="guide_product_0" /></h4>
 							                <div class="card-body">
-							                	<code><spring:message code="guide_productInfo_1" /></code><br/>
-												<img src="${pageContext.request.contextPath}/resources/guide/product/product_list.JPG" /><br/>
 							                	<code><spring:message code="guide_product_1" /></code><br/>
 												<img src="${pageContext.request.contextPath}/resources/guide/product/product_menu.JPG" /><br/>
 					                         </div>
