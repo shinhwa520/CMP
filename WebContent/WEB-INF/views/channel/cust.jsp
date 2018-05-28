@@ -16,6 +16,16 @@
 						<button type="button" class="btn btn-warning pull-right" onclick="btnAddClicked();"><spring:message code='add'/></button>
 					</div>
 					<table id="tblMain" class="table table-bordered table-striped">
+						<colgroup id="guide_step1_tag">
+					        <col>
+					        <col>
+					        <col>
+					        <col>
+					    </colgroup>
+					    <colgroup id="guide_step2_tag">
+					        <col>
+					        <col>
+					    </colgroup>
 						<thead>
 							<tr>
 			                    <th><b><spring:message code="name"/></b></th>
@@ -32,7 +42,7 @@
 								--%>
 			                    <th><b><spring:message code="status"/></b></th>
 								<th style="width: 255px;"></th>
-			                    <th style="width: 50px;"><b><spring:message code="option"/></b></th>
+			                    <th style="width: 70px;"><b><spring:message code="option"/></b></th>
 							</tr>
 						</thead>
 					</table>
@@ -182,7 +192,7 @@
 
 <!--.燈箱 Edit_Demo -->
 <div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg" id="guide_step4_tag">
     <div class="modal-content">
 		<div class="modal-header">
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
@@ -194,7 +204,7 @@
             	<input type="hidden" name="cust_id_Demo" id="cust_id_Demo" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="cust_name"><spring:message code='name'/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <label for="cust_name"><spring:message code='name'/><span class="pull-right" style="color: red;" id="guide_step5_tag">＊ </span></label>
 	                  <input type="text" class="form-control" id="cust_name_Demo" name="cust_name_Demo" placeholder="<spring:message code='name'/>" value="Demo">
 	                </div>
 	            </div>
@@ -306,7 +316,7 @@
 	                </div>
 	            </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code='close'/></button>
+	        		<button type="button" class="btn btn-default"  id="guide_step6_tag" data-dismiss="modal"><spring:message code='close'/></button>
 	        		<button type="button" class="btn btn-success" id="btnProfileSave_Demo" ><spring:message code='save'/></button>
 				</div>
 			</form>
@@ -364,7 +374,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<h4 class="modal-title"><spring:message code="file"/></h4>
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="guide_step12_tag">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -372,9 +382,9 @@
 				<input type="hidden" name="fileType_Demo" id="queryFileType_Demo" value="" />
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<button type="button" class="btn btn-warning pull-right" onclick="btnAddFileClicked();"><spring:message code='add'/></button>
+						<button type="button" class="btn btn-warning pull-right" onclick="btnAddFileClicked();" id="guide_step8_tag"><spring:message code='add'/></button>
 						<span class="pull-right">&nbsp;</span>
-						<button type="button" class="btn btn-danger pull-right" onclick="btnDeleteClicked();"><spring:message code='delete'/></button>
+						<button type="button" class="btn btn-danger pull-right" onclick="btnDeleteClicked();" id="guide_step11_tag" ><spring:message code='delete'/></button>
 					</div>
 					<div class="box-body no-padding">
 						<table class="table table-striped" id="custFileMain_Demo" style="width:100%">
@@ -425,14 +435,14 @@
 		            </div>
 		        </div>
 		        <div class="box-body">
-		        	<div class="form-upload-group">
+		        	<div class="form-upload-group" id="guide_step9_tag">
 						<label for="phone"><spring:message code="fileDescription"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="fileDescription" id="editFileDescription" />
 		            </div>
 		        </div>
 
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-default" id="guide_step10_tag" data-dismiss="modal"><spring:message code="close"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();"><spring:message code="upload"/></button>
 				</div>
 			</form>
@@ -492,6 +502,11 @@ function btnEditClicked(btn) {
 	var _custId = btn.attr('custId');
 	if("_demoId"==_custId) {
 		$('#modal_Edit_Demo').modal();
+		
+		setTimeout(function(){
+			showGuideTour2();
+		}, 500);
+		
 		return false;
 	}
 	
@@ -626,6 +641,11 @@ function btnFileClicked(btn) {
 	var _custId = btn.attr('custId');
 	if("_demoId"==_custId) {
 		$('#modal_File_Demo').modal();
+		
+		setTimeout(function() {
+			showGuideTour3();
+		}, 500);
+		
 		return false;
 	}
 	$('#clickedCustId').val(_custId);
@@ -665,6 +685,7 @@ $(function() {
 					"id":"_demoId"
 			    }).draw();
 			}
+			showGuideTour();
 		},
 		"columns" : [
 			{ "data" : "name" },
@@ -738,11 +759,15 @@ $(function() {
 				"targets" : 6,
 				"data" : 'id',
 				"render" : function(data, type, row) {
-					return '<a href="#">'
-							+'<span class="ti-pencil" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>'
-							+'&nbsp;'
+					return '<div id="guide_step3_tag" style="float:left;width:20px">'
 							+'<a href="#">'
-							+'<span class="ti-files" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));" title="<spring:message javaScriptEscape="true" code="file"/>"></span></a>';
+							+'<span class="ti-pencil" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>'
+							+'</div>'
+							+'<div style="float:left;width:5px">&nbsp;</div>'
+							+'<div id="guide_step7_tag" style="float:left;width:20px">'
+							+'<a href="#">'
+							+'<span class="ti-files" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));" title="<spring:message javaScriptEscape="true" code="file"/>"></span></a>'
+							+'</div>';
 				}
 			}
 		],
@@ -824,6 +849,10 @@ function btnAddFileClicked() {
 	$('#progressBar').css('width','0%');
 
 	$('#modal_Upload').modal();
+	
+	setTimeout(function() {
+		showGuideTour4();
+	}, 500);
 }
 
 //[Upload] modal_Upload >>按下Upload
@@ -998,3 +1027,285 @@ function bsStep(i) {
 	width: 82%;
 }
 </style>
+
+	<script>
+	    var showGuide = '${showGuide}';
+	    var isHome = '${active}';
+	    var title_cust = '<spring:message code="guide_tour_msg_28"/>'; //『我的客户』导览说明
+	    //$(document).ready(function(){
+	    function showGuideTour() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step1_tag",
+	    	    		title: title_cust + " - 1/13",
+	    	    		content: '<spring:message code="guide_tour_msg_29"/>', //我的客户基本个人资料
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_cust + " - 2/13",
+	    	    		content: '<spring:message code="guide_tour_msg_30"/>', //呈显客户当前状态与进度条
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step3_tag",
+	    	    		title: title_cust + " - 3/13",
+	    	    		content: '<spring:message code="guide_tour_msg_31"/>', //点击铅笔图示进入客户基本资料编辑画面
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			$('.ti-pencil').click();
+	    	    			return (new jQuery.Deferred()).promise();
+	    	    	    },
+	    	    		onShown: function() {
+	    	    			$('.btn[data-role="next"]').removeClass("disabled");
+	    	    			$('.btn[data-role="next"]').prop("disabled", false);
+	    	    			$('.btn[data-role="next"]').on("click", function (e) {
+	    	                    tour.end();
+	    	                });
+	    	    		}
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	   // });
+	    }
+	    
+	    function showGuideTour2() {
+		      if("Y"===showGuide) {
+				//showTip();
+		    	// Instance the tour
+				var tour = new Tour({
+					backdrop: true,
+					smartPlacement: true,
+					storage: false,
+					autoscroll: true,
+					template: 
+						function (key, value) { 
+							var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+								reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+								
+							return reString;
+						}
+					,
+					steps: [
+		    	  		{
+		    	    		element: "#guide_step4_tag",
+		    	    		title: title_cust + " - 4/13",
+		    	    		content: '<spring:message code="guide_tour_msg_32"/>', //客户基本资料编辑画面
+		    	    		placement: "top",
+		    	    		animation: false
+		    	  		},
+		    	  		{
+		    	    		element: "#guide_step5_tag",
+		    	    		title: title_cust + " - 5/13",
+		    	    		content: '<spring:message code="guide_tour_msg_33"/>', //星字号栏位为必填
+		    	    		placement: "bottom",
+		    	    		animation: false,
+		    	    		onNext: function() {
+		    	    			$('#modal_Edit_Demo').animate({ scrollTop: $('#btnProfileSave_Demo').offset().top }, 500);
+		    	    		}
+		    	  		},
+		    	  		{
+		    	    		element: "#btnProfileSave_Demo",
+		    	    		title: title_cust + " - 6/13",
+		    	    		content: '<spring:message code="guide_tour_msg_21"/>', //点击「保存」按钮储存修改值
+		    	    		placement: "top",
+		    	    		animation: false,
+		    	    		onHidden: function() {
+		    	    			$('#guide_step6_tag').click();
+		    	    	    }
+		    	  		},
+		    	  		{
+		    	    		element: "#guide_step7_tag",
+		    	    		title: title_cust + " - 7/13",
+		    	    		content: '<spring:message code="guide_tour_msg_34"/>', //点击「文件」图示进入客户档案检视与维护画面
+		    	    		placement: "bottom",
+		    	    		animation: false,
+		    	    		onHidden: function() {
+		    	    			$('.ti-files').click();
+		    	    			return (new jQuery.Deferred()).promise();
+		    	    		},
+		    	    		onShown: function() {
+		    	    			$('.btn[data-role="next"]').removeClass("disabled");
+		    	    			$('.btn[data-role="next"]').prop("disabled", false);
+		    	    			$('.btn[data-role="next"]').on("click", function (e) {
+		    	                    tour.end();
+		    	                });
+		    	    		}
+		    	  		}
+		    		]});
+		
+		    	// Initialize the tour
+		    	tour.init();
+		
+		    	// Start the tour
+		    	tour.start();
+		    	//tour.restart();
+		      }
+		   // });
+		  }
+		  
+		  function showGuideTour3() {
+		      if("Y"===showGuide) {
+				//showTip();
+		    	// Instance the tour
+				var tour = new Tour({
+					backdrop: true,
+					smartPlacement: true,
+					storage: false,
+					autoscroll: true,
+					template: 
+						function (key, value) { 
+							var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+								reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+								
+							return reString;
+						}
+					,
+					steps: [
+		    	  		{
+		    	    		element: "#custFileMain_Demo",
+		    	    		title: title_cust + " - 8/13",
+		    	    		content: '<spring:message code="guide_tour_msg_35"/>', //呈显客户档案资料;点击操作栏位中云图示可下载档案
+		    	    		placement: "top",
+		    	    		animation: false
+		    	  		},
+		    	  		{
+		    	    		element: "#guide_step8_tag",
+		    	    		title: title_cust + " - 9/13",
+		    	    		content: '<spring:message code="guide_tour_msg_36"/>', //点击「新增」按钮进入档案上传画面
+		    	    		placement: "bottom",
+		    	    		animation: false,
+		    	    		onHidden: function() {
+		    	    			$('#guide_step8_tag').click();
+		    	    			return (new jQuery.Deferred()).promise();
+		    	    		},
+		    	    		onShown: function() {
+		    	    			$('.btn[data-role="next"]').removeClass("disabled");
+		    	    			$('.btn[data-role="next"]').prop("disabled", false);
+		    	    			$('.btn[data-role="next"]').on("click", function (e) {
+		    	                    tour.end();
+		    	                });
+		    	    		}
+		    	  		}
+		    		]});
+		
+		    	// Initialize the tour
+		    	tour.init();
+		
+		    	// Start the tour
+		    	tour.start();
+		    	//tour.restart();
+		      }
+		   // });
+		    }
+		    
+		    function showGuideTour4() {
+			      if("Y"===showGuide) {
+					//showTip();
+			    	// Instance the tour
+					var tour = new Tour({
+						backdrop: true,
+						smartPlacement: true,
+						storage: false,
+						autoscroll: true,
+						template: 
+							function (key, value) { 
+								var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+								
+								if (key != 4) {
+									reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+								}
+								
+								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+									
+								return reString;
+							}
+						,
+						steps: [
+			    	  		{
+			    	    		element: "#uploadFile",
+			    	    		title: title_cust + " - 10/13",
+			    	    		content: '<spring:message code="guide_tour_msg_37"/>', //点击「浏览」按钮选择要上传的档案
+			    	    		placement: "bottom",
+			    	    		animation: false
+			    	  		},
+			    	  		{
+			    	    		element: "#guide_step9_tag",
+			    	    		title: title_cust + " - 11/13",
+			    	    		content: '<spring:message code="guide_tour_msg_38"/>', //接着输入此档案描述说明
+			    	    		placement: "bottom",
+			    	    		animation: false
+			    	  		},
+			    	  		{
+			    	    		element: "#btnUpload",
+			    	    		title: title_cust + " - 12/13",
+			    	    		content: '<spring:message code="guide_tour_msg_39"/>', //点击「上传」按钮完成档案上传
+			    	    		placement: "bottom",
+			    	    		animation: false,
+			    	    		onHidden: function() {
+			    	    			$('#guide_step10_tag').click();
+			    	    		}
+			    	  		},
+			    	  		{
+			    	    		element: "#guide_step11_tag",
+			    	    		title: title_cust + " - 13/13",
+			    	    		content: '<spring:message code="guide_tour_msg_40"/>', //勾选要删除的档案，点击「删除」按钮进行删除
+			    	    		placement: "bottom",
+			    	    		animation: false,
+			    	    		onHidden: function() {
+			    	    			$('#guide_step12_tag').click();
+			    	    			return (new jQuery.Deferred()).promise();
+			    	    		}
+			    	  		},
+			    	  		{
+			    	    		element: "#productInfo-tag",
+			    	    		title: '<spring:message code="guide_tour_msg_41"/>', //『产品信息』导览说明
+			    	    		content: '<spring:message code="guide_tour_msg_9"/>', //请点击功能选单进入下一阶段导览
+			    	    		animation: false
+			    	    		/*,
+			    	    		onHidden: function() {
+			    	    			$('#productInfo-menu').get(0).click();
+			    	    			return (new jQuery.Deferred()).promise();
+			    	    	    }
+			    	    		*/
+			    	  		}
+			    		]});
+			
+			    	// Initialize the tour
+			    	tour.init();
+			
+			    	// Start the tour
+			    	tour.start();
+			    	//tour.restart();
+			      }
+			   // });
+			    }
+	</script>

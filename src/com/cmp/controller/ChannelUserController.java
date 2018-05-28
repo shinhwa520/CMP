@@ -143,6 +143,7 @@ public class ChannelUserController extends BaseController {
 		if(!commissionList.isEmpty())
 			model.addAttribute("userName", commissionList.get(0).getUser().getName());
 		model.addAttribute("commissionList", commissionList);
+		model.addAttribute("showGuide", user.getShowGuide());
 		return "channel/commission";
 	}
 	

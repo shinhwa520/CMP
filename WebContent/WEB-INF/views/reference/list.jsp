@@ -10,7 +10,7 @@
 	
 	
 	<spring:message code='reward' var="reward"/>
-	<div class="row el-element-overlay">
+	<div class="row el-element-overlay" id="guide_step1_tag">
 		<h4 class="text-themecolor m-b-0 m-t-0">
 			<span style="padding-left: 15px;">
 				马来西亚 Malaysia
@@ -22,7 +22,7 @@
 				<!-- Card -->
 				<div class="card">
 				  	<div class="el-card-item">
-		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_19.PNG" alt="Universal-通用" />
+		                <div class="el-card-avatar el-overlay-1" id="guide_step5_tag"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_19.PNG" alt="Universal-通用" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
 		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(19);"><i class="icon-docs"></i></a></li>
@@ -181,7 +181,7 @@
 		</div>
 	</div>
 	<br />
-	<div class="row el-element-overlay">
+	<div class="row el-element-overlay" id="guide_step2_tag">
 		<h4 class="text-themecolor m-b-0 m-t-0">
 			<span style="padding-left: 15px;">
 				吉隆坡 Kuala Lumpur
@@ -196,7 +196,7 @@
 		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_15.PNG" alt="Famous school-知名学校" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
-		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(15);"><i class="icon-docs"></i></a></li>
+		                            <li><a id="guide_href1_tag" class="btn default btn-outline" href="javascript:btnFileClicked(15);"><i class="icon-docs"></i></a></li>
 		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(16);"><i class="icon-picture"></i></a></li>
 		                        </ul>
 		                    </div>
@@ -216,7 +216,7 @@
 		</div>
 	</div>
 	<br />
-	<div class="row el-element-overlay">
+	<div class="row el-element-overlay" id="guide_step3_tag">
 		<h4 class="text-themecolor m-b-0 m-t-0">
 			<span style="padding-left: 15px;">
 				新山 Johor
@@ -250,7 +250,7 @@
 		</div>
 	</div>
 	<br />
-	<div class="row el-element-overlay">
+	<div class="row el-element-overlay" id="guide_step4_tag">
 		<h4 class="text-themecolor m-b-0 m-t-0">
 			<span style="padding-left: 15px;">
 				马六甲 Malacca
@@ -291,7 +291,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<h4 class="modal-title"><spring:message code="file"/></h4>
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="guide_step7_tag">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -405,8 +405,9 @@
 							"targets" : 3,
 							"data" : 'seqNo',
 							"render" : function(data, type, row) {
-								return '<a href="#">'
-										+'<span class="icon-cloud-download" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>';
+								return '<div id="guide_step6_tag" style="width:20px"><a href="#">'
+										+'<span class="icon-cloud-download" style="margin-right:10px" fileType="'+ row['fileType'] + '" seqNo="' + row['seqNo'] + '" onclick="btnDownloadClicked($(this));" title="<spring:message code="download"/>"></span></a>'
+										+'</div>';
 							}
 						}
 					],
@@ -425,6 +426,12 @@
 		referenceFileMain.ajax.reload();	//重查資料
 
 		$('#modal_File').modal();
+		
+		if (showGuide == 'Y') {
+			setTimeout(function() {
+				showGuideTour();
+			}, 500);
+		}
 	}
 	
 	//[Download] 按下Download按鈕
@@ -439,3 +446,154 @@
 	  	}, 2000);
 	}
 </script>
+
+	<script>
+	    var showGuide = '${showGuide}';
+	    var isHome = '${active}';
+	    var title_reference = '<spring:message code="guide_tour_msg_51"/>'; //『参考信息』导览说明
+	    $(document).ready(function(){
+	    //function showGuideTour() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step1_tag",
+	    	    		title: title_reference + " - 1/8",
+	    	    		content: '<spring:message code="guide_tour_msg_52"/>', //依地區分別呈顯產品列表 >> 马来西亚
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_reference + " - 2/8",
+	    	    		content: '<spring:message code="guide_tour_msg_42"/>', //依地區分別呈顯產品列表 >> 吉隆坡
+	    	    		placement: "top",
+	    	    		animation: false
+	    	    		
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step3_tag",
+	    	    		title: title_reference + " - 3/8",
+	    	    		content: '<spring:message code="guide_tour_msg_43"/>', //依地區分別呈顯產品列表 >> 新山
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step4_tag",
+	    	    		title: title_reference + " - 4/8",
+	    	    		content: '<spring:message code="guide_tour_msg_44"/>', //依地區分別呈顯產品列表 >> 马六甲
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step5_tag",
+	    	    		title: title_reference + " - 5/8",
+	    	    		content: '<spring:message code="guide_tour_msg_46"/>', //滑鼠移至产品图上呈显档案下载图示;点击图示进入档案下载画面
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			btnFileClicked(19);
+	    	    	    },
+	    	    		onShown: function() {
+	    	    			$('.btn[data-role="next"]').removeClass("disabled");
+	    	    			$('.btn[data-role="next"]').prop("disabled", false);
+	    	    			$('.btn[data-role="next"]').on("click", function (e) {
+	    	                    tour.end();
+	    	                });
+	    	    		}
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    });
+	    //}
+	    
+	    function showGuideTour() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+						
+						if (key != 3) {
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+						}
+						
+						reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#referenceFileMain",
+	    	    		title: title_reference + " - 6/8",
+	    	    		content: '<spring:message code="guide_tour_msg_53"/>', //检视提供下载的档案资料
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step6_tag",
+	    	    		title: title_reference + " - 7/8",
+	    	    		content: '<spring:message code="guide_tour_msg_48"/>', //点击云图示可下载档案
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	    		
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step7_tag",
+	    	    		title: title_reference + " - 8/8",
+	    	    		content: '<spring:message code="guide_tour_msg_49"/>', //点击X图示关闭画面
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			$('#guide_step7_tag').click();
+	    	    		}
+	    	  		},
+	    	  		{
+	    	    		element: "#visitInfo-tag",
+	    	    		title: '<spring:message code="guide_tour_msg_54"/>', //『参团信息』导览说明
+	    	    		content: '<spring:message code="guide_tour_msg_9"/>', //请点击功能选单进入下一阶段导览
+	    	    		animation: false
+	    	    		/*,
+	    	    		onHidden: function() {
+	    	    			$('#visitInfo-menu').get(0).click();
+	    	    		}
+	    	    		*/
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    }
+	</script>

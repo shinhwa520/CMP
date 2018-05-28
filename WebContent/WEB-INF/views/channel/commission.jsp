@@ -7,7 +7,7 @@
 	<div class="box-header with-border">
 		<h3 class="box-title"><a href="${pageContext.request.contextPath}/channel/user/list"><spring:message code="myChannels"/></a>
 		/<spring:message code="reward"/>
-		&nbsp;＞&nbsp;<span class="badge badge-info"><spring:message code="channel"/>&nbsp;:&nbsp; ${ userName }</span></h3>
+		&nbsp;＞&nbsp;<span class="badge badge-info" id="guide_step1_tag"><spring:message code="channel"/>&nbsp;:&nbsp; ${ userName }</span></h3>
 		
 		<button type="button" class="btn btn-success pull-right" id="btnPermissionSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 		<span class="pull-right">&nbsp;</span>
@@ -17,7 +17,7 @@
 		<span class="pull-right" style="margin-right: 1px;"><spring:message code="defaultCommission"/></span>
 	</div>
 	<div class="modal_msg pull-right" style="display: none; width: 100%;" align="center"></div>
-	<div class="box-body no-padding">
+	<div class="box-body no-padding" id="guide_step2_tag">
 		<form role="form" id="formEdit" name="formEdit">
 		<input type="hidden" name="user_id" id="user_id" value="${userId }" />
 		<table class="table table-striped" id="tblLog">
@@ -152,3 +152,90 @@ form .box-body .form-group .form-control{
 	width: 80%;
 
 </style>
+
+	<script>
+	    var showGuide = '${showGuide}';
+	    var isHome = '${active}';
+	    var title_commission = '<spring:message code="guide_tour_msg_23"/>'; //『我的渠道/佣金』导览说明
+	    $(document).ready(function(){
+	    //function showGuideTour() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+						
+						if (key != 5) {
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+						}
+						
+						reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step1_tag",
+	    	    		title: title_commission + " - 1/5",
+	    	    		content: '<spring:message code="guide_tour_msg_24"/>', //显示当前佣金检视画面为哪位渠道商
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_commission + " - 2/5",
+	    	    		content: '<spring:message code="guide_tour_msg_25"/>', //呈显所有产品当前佣金％数;右方输入框可直接调整数值
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#defaultCommission",
+	    	    		title: title_commission + " - 3/5",
+	    	    		content: '<spring:message code="guide_tour_msg_26"/>', //提供一次性调整所有产品佣金％数;在此输入％数
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#oneClickClicked",
+	    	    		title: title_commission + " - 4/5",
+	    	    		content: '<spring:message code="guide_tour_msg_27"/>', //点击「带入预设值」一次性调整所有产品佣金％数
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#btnPermissionSave",
+	    	    		title: title_commission + " - 5/5",
+	    	    		content: '<spring:message code="guide_tour_msg_21"/>', //点击「保存」按钮储存修改值
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#myClients-tag",
+	    	    		title: '<spring:message code="guide_tour_msg_28"/>', //『我的客户』导览说明
+	    	    		content: '<spring:message code="guide_tour_msg_9"/>', //请点击功能选单进入下一阶段导览
+	    	    		animation: false
+	    	    		/*,
+	    	    		onHidden: function() {
+	    	    			$('#myClients-menu').get(0).click();
+	    	    			return (new jQuery.Deferred()).promise();
+	    	    	    }
+	    	    		*/
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    });
+	    //}
+	</script>

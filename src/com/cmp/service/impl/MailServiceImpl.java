@@ -55,7 +55,7 @@ public class MailServiceImpl implements MailService {
 	
 	public HashMap<String, Object> getMailInfo(){
 		HashMap<String, Object> data = new HashMap<String, Object>();
-		String userId = SecurityUtil.getSecurityUser().getUser().getId();
+		String userId = SecurityUtil.getSecurityUser().getUser() != null ? SecurityUtil.getSecurityUser().getUser().getId() : "";
 		data.put("listUnread", mailDAO.findMailByUser(null, userId, 1, false, 0, 3));
 		data.put("countUnread", mailDAO.countMailByUser(null, userId, 1, false));
 		data.put("countSaved", mailDAO.countMailByUser(null, userId, 2, null));

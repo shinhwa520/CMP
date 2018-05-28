@@ -1,6 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/taglib.jsp" %>
 
+<style>
+	.tour-backdrop {
+	  z-index: 19998;
+	}
+	
+	.tour-step-backdrop {
+	  z-index: 19999;
+	}
+	
+	.tour-step-background {
+	  z-index: 19999;
+	}
+	.popover[class*="tour-"] {
+	  z-index: 19999;
+	}
+</style>
 <section class="content">
 
 	<div class="row page-titles">
@@ -18,12 +34,12 @@
 				
 					<!-- Start. 圖片區塊 -->
 					<div class="ca-item">
-						<div class="ca-item-main"> <img src="${pageContext.request.contextPath}/resources/product_2018_0002.jpg" alt="魅力大馬">
+						<div class="ca-item-main" id="guide_step1_tag"> <img src="${pageContext.request.contextPath}/resources/product_2018_0002.jpg" alt="魅力大馬">
 							<h3> 魅力大馬 </h3>
 							<p> <span> 异域海岛 / 一带一路 / 第二家园 </span> </p>
-							<div class="ca-more-wrap"><a class="ca-more" href="#">more...</a></div>
+							<div class="ca-more-wrap" id="guide_step2_tag"><a class="ca-more" href="#">more...</a></div>
 						</div>
-						<div class="ca-content-wrapper">
+						<div class="ca-content-wrapper" id="guide_step3_tag">
 							<div class="ca-content">
 								<h6> 吉隆坡 / 新山 / 马六甲 &nbsp;&nbsp;五天四晚考察团 </h6>
 								<a href="#" class="ca-close">close</a>
@@ -47,14 +63,14 @@
 								</ul>
 								 --%>
 								<ul>
-									<li><a href="#" onclick="btnIntroClicked(1,'JUMP');"><spring:message code="downloadProductImageLink" /></a></li>
-									<li><a href="#" onclick="btnDownloadClicked(1,'DM1',false);"><spring:message code="downloadMarketingPoster" />1</a></li>
-									<li><a href="#" onclick="btnDownloadClicked(1,'DM2',false);"><spring:message code="downloadMarketingPoster" />2</a></li>
-									<li><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
-									<li><a href="#" onclick="btnScheduleClicked(1);"><spring:message code="downloadSchedule" /></a></li>
+									<li id="guide_step4_tag"><a href="#" onclick="btnIntroClicked(1,'JUMP');"><spring:message code="downloadProductImageLink" /></a></li>
+									<li id="guide_step5_tag"><a href="#" onclick="btnDownloadClicked(1,'DM1',false);"><spring:message code="downloadMarketingPoster" />1</a></li>
+									<li id="guide_step6_tag"><a href="#" onclick="btnDownloadClicked(1,'DM2',false);"><spring:message code="downloadMarketingPoster" />2</a></li>
+									<li id="guide_step7_tag"><a href="#" onclick="btnDownloadPdfClicked(1);"><spring:message code="downloadPdf" /></a></li>
+									<li id="guide_step8_tag"><a href="#" onclick="btnScheduleClicked(1);"><spring:message code="downloadSchedule" /></a></li>
 								</ul>
 								<ul>
-									<li><a href="#" onclick="btnIntroClicked(1,'COPY');"><spring:message code="copyProductImageLink" /></a></li>
+									<li id="guide_step9_tag"><a href="#" onclick="btnIntroClicked(1,'COPY');"><spring:message code="copyProductImageLink" /></a></li>
 								</ul>
 								<br />
 							</div>
@@ -209,3 +225,122 @@
 	}
 
 </script>
+
+	<script>
+	    var showGuide = '${showGuide}';
+	    var isHome = '${active}';
+	    var title_visit = '<spring:message code="guide_tour_msg_54"/>'; //『参团信息』导览说明
+	    $(document).ready(function(){
+	    //function showGuideTour() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+						
+						if (key != 9) {
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+						}
+						
+						reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step1_tag",
+	    	    		title: title_visit + " - 1/9",
+	    	    		content: '<spring:message code="guide_tour_msg_55"/>', //呈显当前参团清单
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_visit + " - 2/9",
+	    	    		content: '<spring:message code="guide_tour_msg_56"/>', //点击「more」按钮展开更多资讯
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onNext: function() {
+	    	    			$('.ca-more').click();
+	    	    	        //return (new jQuery.Deferred()).promise();
+	    	    	    }
+	    	    		
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step3_tag",
+	    	    		title: title_visit + " - 3/9",
+	    	    		content: '<spring:message code="guide_tour_msg_57"/>', //检视参团详细内容
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step4_tag",
+	    	    		title: title_visit + " - 4/9",
+	    	    		content: '<spring:message code="guide_tour_msg_58"/>', //点击检视客制化参团H5行销网页
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step5_tag",
+	    	    		title: title_visit + " - 5/9",
+	    	    		content: '<spring:message code="guide_tour_msg_59"/>', //点击下载客制化参团行销海报
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step6_tag",
+	    	    		title: title_visit + " - 6/9",
+	    	    		content: '<spring:message code="guide_tour_msg_59"/>', //点击下载客制化参团行销海报
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step7_tag",
+	    	    		title: title_visit + " - 7/9",
+	    	    		content: '<spring:message code="guide_tour_msg_60"/>', //点击下载客制化参团行销PDF
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step8_tag",
+	    	    		title: title_visit + " - 8/9",
+	    	    		content: '<spring:message code="guide_tour_msg_61"/>', //点击下载参团行程表
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step9_tag",
+	    	    		title: title_visit + " - 9/9",
+	    	    		content: '<spring:message code="guide_tour_msg_62"/>', //点击复制客制化参团H5行销网页网址
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#registration-tag",
+	    	    		title: '<spring:message code="guide_tour_msg_63"/>', //『报团』导览说明
+	    	    		content: '<spring:message code="guide_tour_msg_9"/>', //请点击功能选单进入下一阶段导览
+	    	    		animation: false
+	    	    		/*,
+	    	    		onHidden: function() {
+	    	    			$('#registration-menu').get(0).click();
+	    	    		}
+	    	    		*/
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    });
+	    //}
+	</script>

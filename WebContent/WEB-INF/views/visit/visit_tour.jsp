@@ -8,7 +8,7 @@
 	<div class="row page-titles">
 	    <div class="col-md-6 col-8 align-self-center">
 	        <h3 class="text-themecolor m-b-0 m-t-0"><spring:message code="registration" />&nbsp;
-				<button type="button" class="btn btn-warning" onclick="btnAddClicked();" style="width:30%"><spring:message code='add'/></button>
+				<button type="button" class="btn btn-warning" onclick="btnAddClicked();" style="width:30%" id="guide_step1_tag"><spring:message code='add'/></button>
 		   	</h3>
 	    </div>
 	 </div>
@@ -126,9 +126,84 @@
 		                        </div>
                     		</c:forEach>
                     	</c:if>
-                    	<c:if test="${VisitForm.visitList.isEmpty() }">
-                    		<spring:message code='noVisitTour'/>
+                    	<c:if test="${VisitForm.visitList.isEmpty()}">
+                    		<span id="noVisitTour_span"><spring:message code='noVisitTour'/></span>
                     	</c:if>
+                    	<div class="visit-item col-md-4 col-xs-6 col-sm-12 no-padding" id="guide_demo_tour" style="display:none">
+                            <div class="pricing-box">
+                                <div class="pricing-body b-l b-r">
+                                	<div class="pricing-header">
+                               			<button id="guide_demo_editBtn" class="btn btn-info waves-effect waves-light m-t-20" onClick="btnEditClicked('demo')"><spring:message code="edit"/></button>
+                                        <button id="guide_demo_joinBtn" class="btn btn-success waves-effect waves-light m-t-20 btn-add" visitId="demo" style="width:50%"><spring:message code="joinGo"/></button>
+                                        <button id="guide_demo_delBtn" class="btn btn-danger waves-effect waves-light m-t-20" onClick="btnDeleteClicked('demo', 'demo')"><spring:message code="delete"/></button>
+                                    </div>
+                                    <div class="pricing-header">
+                                        <h2 class="text-center"><b>DEMO</b></h2>
+                                        <p class="uppercase">Demo description&nbsp;</p>
+                                    </div>
+                                    <div class="price-table-content">
+                                    	<!-- 狀態 -->
+                                        <div class="price-row"> 
+                                       	  	<h3 class="text-center">
+                                       	  		<b>
+	                                        		<span style="color:#24d12a"><i class="icon-user-follow"></i> <spring:message code="visitIng"/></span>
+                                       			</b>
+                                       		</h3> 
+                                        </div>
+                                    	<!-- 截止時間 -->
+                                    	<div class="price-row">
+                                        	<p><i class="icon-hourglass"></i> <spring:message code='postTime'/>:</p>
+                                        	<h4 class="text-center"><span style="color:blue">2018-05-01 ~ 2018-12-31</span>&nbsp;</h4>
+                                        </div>
+                                        <!-- 人數限制 -->
+                                        <div class="price-row">
+                                        	<p class="uppercase"><i class="icon-user"></i> <spring:message code='numberLimit'/>: 10 ~ 100</p>
+                                        	<h3 class="text-center" id="guide_step7_tag">
+                                        		<a href="#" onClick="editCustInfo('demo')" style="text-decoration: underline;">
+                                      				<span style="color:blue;font-size:1.5em">1</span>&nbsp;
+                                      				<span style="color:blue;"><spring:message code="member" /></span>
+                                      			</a> 
+                                        	</h3>
+                                        </div>
+                                        <!-- 出發日期 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-calender"></i> <spring:message code='departureDate'/>:</p>
+                                        	<h4 class="text-center">2018-12-31 12:15:00&nbsp;</h4>
+                                        </div>
+                                        <!-- 出發城市 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-plane"></i> <spring:message code='departureCity'/>:</p>
+                                        	<h4 class="text-center">Malaysia&nbsp;</h4>
+                                        </div>
+                                        <!-- 到達日期 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-calender"></i> <spring:message code='arrivalDate'/>:</p>
+                                        	<h4 class="text-center">2018-12-31 18:50:00&nbsp;</h4>
+                                        </div>
+                                        <!-- 到達機場航站樓 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-location-pin"></i> <spring:message code='arrivalAirportTerminal'/>:</p>
+                                        	<h4 class="text-center">Tokyo&nbsp;</h4>
+                                        </div>
+                                        <!-- 返程日期 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-calender"></i> <spring:message code='returnDate'/>:</p>
+                                        	<h4 class="text-center">2019-01-10 20:20:00&nbsp;</h4>
+                                        </div>
+                                        <!-- 返程機場航站樓 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-home"></i> <spring:message code='returnAirportTerminal'/>:</p>
+                                        	<h4 class="text-center">Malaysia&nbsp;</h4>
+                                        </div>
+                                        <!-- 備註 -->
+                                        <div class="price-row"> 
+                                        	<p class="uppercase"><i class="icon-note"></i> <spring:message code='remarks'/>:</p>
+                                        	<h4 class="text-center">This is a remark for demo&nbsp;</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                  </div>
              </div>
@@ -143,12 +218,22 @@
 			<div class="pricing-box">
 				<div class="pricing-body b-l b-r">
 					<div class="pricing-header">
-						<button class="btn btn-info waves-effect waves-light m-t-20" onClick="btnPanelCloseClicked()"><spring:message code="close"/></button>
-		          		<button class="btn btn-success waves-effect waves-light m-t-20" onClick="btnPanelSaveClicked(${vo.visitId })" style="width:30%"><spring:message code="save"/></button>
+						<button id="guide_demo_closeJoinBtn" class="btn btn-info waves-effect waves-light m-t-20" onClick="btnPanelCloseClicked()"><spring:message code="close"/></button>
+		          		<button id="guide_demo_saveJoinBtn" class="btn btn-success waves-effect waves-light m-t-20" onClick="btnPanelSaveClicked(${vo.visitId })" style="width:30%"><spring:message code="save"/></button>
 	                	<button class="btn btn-primary waves-effect waves-light m-t-20" onClick="btnPanelCheckAllClicked()"><spring:message code="selectAll"/></button>
 	                </div>
 	                <div class="price-table-content">
 	                	<table id="tblMain" class="table table-bordered table-striped">
+	                		<colgroup id="guide_step5_tag">
+						        <col>
+						        <col>
+						        <col>
+						        <col>
+						        <col>
+						    </colgroup>
+						    <colgroup id="guide_step6_tag">
+						        <col>
+						    </colgroup>
 							<thead>
 								<tr>
 				                    <th><b><spring:message code="name"/></b></th>
@@ -159,6 +244,16 @@
 				                    <th style="width: 70px;"><b><spring:message code="joinGo"/>?</b></th>
 								</tr>
 							</thead>
+							<tbody>
+								<tr id="guide_demo_joinCustPanel" style="display:none">
+									<td>Demo</td>
+									<td>123456</td>
+									<td>Demo@cmp.com</td>
+									<td>Demo</td>
+									<td><spring:message code="bookedHotel" /></td>
+									<td><input type="checkbox" name="joinCust" value="demo" checked /></td>
+								</tr>
+							</tbody>
 						</table>
 						
 						<input type="hidden" id="oriJoinCustIds" name="oriJoinCustIds" value="" />
@@ -179,12 +274,12 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
-      	<div class="modal-body">                    
+      	<div class="modal-body" id="guide_step2_tag">                    
             <form role="form" id="formEdit" name="formEdit">
             	<input type="hidden" name="visitId" id="visitId" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="visitName" class="control-label"><spring:message code="visitName"/><span class="pull-right" style="color: red;">＊ </span></label>
+	                  <label for="visitName" class="control-label"><spring:message code="visitName"/><span class="pull-right" style="color: red;" id="guide_step3_tag">＊ </span></label>
 	                  <input type="text" class="form-control" id="visitName" name="visitName" placeholder="<spring:message code="visitName"/>">
 	                </div>                              
 	            </div>
@@ -272,7 +367,7 @@
 	                </div>
 	            </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-default" id="guide_step4_tag" data-dismiss="modal"><spring:message code="close"/></button>
 	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
@@ -287,7 +382,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 		<div class="modal-header">
-			<h4 class="modal-title"><spring:message code="edit"/>&nbsp;&nbsp;(<spring:message code="custStatusOrDataNotReadyPS"/>)</h4>
+			<h4 class="modal-title" id="guide_step8_tag"><spring:message code="edit"/>&nbsp;&nbsp;(<spring:message code="custStatusOrDataNotReadyPS"/>)</h4>
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
@@ -307,11 +402,26 @@
 			                    <th><b><spring:message code="status"/></b></th>
 							</tr>
 						</thead>
+						<tbody>
+							<tr id="guide_demo_tourDetail">
+								<td>ABC</td>
+								<td><span>Demo</span></td>
+								<td><input type="text" class="form-control" name="visaStatus" value=""/></td>
+								<td><input type="text" class="form-control" name="accommodationSituation" value=""/></td>
+								<td><input type="text" class="form-control" style="text-align:right" name="amountReceived" value=""/></td>
+								<td><input type="text" class="form-control" name="remark" value=""/></td>
+								<td>
+									<select class="form-control" name="statusSort" style="width:120px;min-width:120px">
+										<option value="5" selected><spring:message code="bookedHotel"/></option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
 					</table>                           
 	            </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/></button>
-	        		<button type="button" class="btn btn-success" id="btnProfileSave" onclick="btnVisitDetailSaveClicked();"><spring:message code="save"/></button>
+	        		<button type="button" class="btn btn-default" id="guide_step9_tag" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-success" id="btnTourDetailSave" onclick="btnVisitDetailSaveClicked();"><spring:message code="save"/></button>
 				</div>
 			</form>
 		</div>	
@@ -335,7 +445,17 @@
 			$item.find('button.btn-add').hide();
 			
 			setTimeout(function(){
-				findCustInfo();
+				if ($("#visitId").val() == 'demo') {
+					$(".visit-wrapper").append($('.visit-cust-panel').html()).fadeIn('slow');
+					$('#guide_demo_joinCustPanel').show();
+					
+					setTimeout(function(){
+						showGuideTour2();
+					}, 300);
+					
+				} else {
+					findCustInfo();
+				}
 				
 			}, 500);
 			
@@ -654,6 +774,12 @@
 		$('#remarks').val('');
 
 		$('#modal_Edit').modal();
+		
+		if("Y"===showGuide) {
+			setTimeout(function() {
+				showGuideTour();
+			}, 500);
+		}
 	}
 	
 	//[Save] modal_Edit >>按下Save 儲存
@@ -814,6 +940,17 @@
 	}
 	
 	function editCustInfo(visitId) {
+		if (visitId == 'demo') {
+			$('#modal_Edit_VisitDetail').modal();
+			$('#guide_demo_tourDetail').show();
+			
+			setTimeout(function() {
+				showGuideTour3();
+			}, 500);
+			
+			return;
+		}
+		
 		$('#custByVisitId').val(visitId);
 		
 		if (tblMain_VisitDetail) {
@@ -886,7 +1023,7 @@
 				{
 					"targets" : [6],
 					"render" : function(data, type, row) {
-								var ret = '<select class="form-control" name="statusSort" width="120" style="min-width:120px" />';
+								var ret = '<select class="form-control" name="statusSort" style="width:120px;min-width:120px">';
 								ret += '<option value="1" ' + ((row['sort'] == 1) ? 'selected' : '') + '><spring:message code="registered"/></option>';
 								ret += '<option value="2" ' + ((row['sort'] == 2) ? 'selected' : '') + '><spring:message code="bookingFeePaid"/></option>';
 								ret += '<option value="3" ' + ((row['sort'] == 3) ? 'selected' : '') + '><spring:message code="bookedAirTicket"/></option>';
@@ -949,3 +1086,292 @@
 	width: 33%;
 }
 </style>
+
+	<script>
+	    var showGuide = '${showGuide}';
+	    var isHome = '${active}';
+	    var title_tour = '<spring:message code="guide_tour_msg_63"/>'; //『报团』导览说明
+	    $(document).ready(function(){
+	      if("Y"===showGuide) {
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step1_tag",
+	    	    		title: title_tour + " - 1/15",
+	    	    		content: '<spring:message code="guide_tour_msg_64"/>', //点击「新增」按钮进入新增报团画面
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			btnAddClicked();
+	    	    		},
+	    	    		onShown: function() {
+	    	    			$('.btn[data-role="next"]').removeClass("disabled");
+	    	    			$('.btn[data-role="next"]').prop("disabled", false);
+	    	    			$('.btn[data-role="next"]').on("click", function (e) {
+	    	                    tour.end();
+	    	                });
+	    	    		}
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    });
+	    
+		function showGuideTour() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_tour + " - 2/15",
+	    	    		content: '<spring:message code="guide_tour_msg_65"/>', //输入报团相关资料
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step3_tag",
+	    	    		title: title_tour + " - 3/15",
+	    	    		content: '<spring:message code="guide_tour_msg_33"/>', //星字号栏位为必填
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onNext: function() {
+	    	    			$('#modal_Edit').animate({ scrollTop: $('#btnProfileSave').offset().top }, 500);
+	    	    		}
+	    	    		
+	    	  		},
+	    	  		{
+	    	    		element: "#btnProfileSave",
+	    	    		title: title_tour + " - 4/15",
+	    	    		content: '<spring:message code="guide_tour_msg_21"/>', //点击「保存」按钮储存修改值
+	    	    		placement: "top",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			$('#guide_step4_tag').click();
+	    	    			$('#noVisitTour_span').hide();
+	    	    			$('#guide_demo_tour').show();
+	    	    		}
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_demo_tour",
+	    	    		title: title_tour + " - 5/15",
+	    	    		content: '<spring:message code="guide_tour_msg_66"/>', //新增报团后呈显结果
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_demo_joinBtn",
+	    	    		title: title_tour + " - 6/15",
+	    	    		content: '<spring:message code="guide_tour_msg_67"/>', //点击「加入/取消」按钮选择客户入团
+	    	    		placement: "top",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			$('#guide_demo_joinBtn').click();
+	    	    			return (new jQuery.Deferred()).promise();
+	    	    		},
+	    	    		onShown: function() {
+	    	    			$('.btn[data-role="next"]').removeClass("disabled");
+	    	    			$('.btn[data-role="next"]').prop("disabled", false);
+	    	    			$('.btn[data-role="next"]').on("click", function (e) {
+	    	                    tour.end();
+	    	                });
+	    	    		}
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    }
+		
+		function showGuideTour2() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step5_tag",
+	    	    		title: title_tour + " - 7/15",
+	    	    		content: '<spring:message code="guide_tour_msg_68"/>', //呈显客户清单及其基本资料与当前所处状态
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step6_tag",
+	    	    		title: title_tour + " - 8/15",
+	    	    		content: '<spring:message code="guide_tour_msg_69"/>', //勾选或取消勾选表示加入或取消此客户入团
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_demo_saveJoinBtn",
+	    	    		title: title_tour + " - 9/15",
+	    	    		content: '<spring:message code="guide_tour_msg_70"/>', //点击「保存」按钮储存此次修改
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			$('#guide_demo_closeJoinBtn').click();
+	    	    		}
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_step7_tag",
+	    	    		title: title_tour + " - 10/15",
+	    	    		content: '<spring:message code="guide_tour_msg_71"/>', //点击已入团人数连结进入已入团客户清单画面
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			editCustInfo('demo');
+	    	    			return (new jQuery.Deferred()).promise();
+	    	    		},
+	    	    		onShown: function() {
+	    	    			$('.btn[data-role="next"]').removeClass("disabled");
+	    	    			$('.btn[data-role="next"]').prop("disabled", false);
+	    	    			$('.btn[data-role="next"]').on("click", function (e) {
+	    	                    tour.end();
+	    	                });
+	    	    		}
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    }
+		
+		function showGuideTour3() {
+	      if("Y"===showGuide) {
+			//showTip();
+	    	// Instance the tour
+			var tour = new Tour({
+				backdrop: true,
+				smartPlacement: true,
+				storage: false,
+				template: 
+					function (key, value) { 
+						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+						
+						if (key != 5) {
+							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+						}
+						
+						reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+							
+						return reString;
+					}
+				,
+				steps: [
+	    	  		{
+	    	    		element: "#guide_step8_tag",
+	    	    		title: title_tour + " - 11/15",
+	    	    		content: '<spring:message code="guide_tour_msg_72"/>', //客户名称若为红字表示尚未缴交团费或资料不齐全，须特别留意
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#tblMain_VisitDetail",
+	    	    		title: title_tour + " - 12/15",
+	    	    		content: '<spring:message code="guide_tour_msg_73"/>', //检视已入团客户相关资料并可进行修改
+	    	    		placement: "bottom",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#btnTourDetailSave",
+	    	    		title: title_tour + " - 13/15",
+	    	    		content: '<spring:message code="guide_tour_msg_21"/>', //点击「保存」按钮储存修改值
+	    	    		placement: "bottom",
+	    	    		animation: false,
+	    	    		onHidden: function() {
+	    	    			$('#guide_step9_tag').click();
+	    	    		}
+	    	  		},
+	    	  		{
+	    	    		element: "#guide_demo_editBtn",
+	    	    		title: title_tour + " - 14/15",
+	    	    		content: '<spring:message code="guide_tour_msg_74"/>', //点击「编辑」按钮进入开团编辑画面，可修改相关资料与状态
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		}
+	    	  		,
+	    	  		{
+	    	    		element: "#guide_demo_delBtn",
+	    	    		title: title_tour + " - 15/15",
+	    	    		content: '<spring:message code="guide_tour_msg_75"/>', //点击「删除」按钮删除此开团
+	    	    		placement: "top",
+	    	    		animation: false
+	    	  		},
+	    	  		{
+	    	    		element: "#salon-tag",
+	    	    		title: '<spring:message code="guide_tour_msg_76"/>', //『活动』导览说明
+	    	    		content: '<spring:message code="guide_tour_msg_9"/>', //请点击功能选单进入下一阶段导览
+	    	    		animation: false
+	    	    		/*,
+	    	    		onHidden: function() {
+	    	    			$('#salon-menu').get(0).click();
+	    	    			return (new jQuery.Deferred()).promise();
+	    	    		}
+	    	    		*/
+	    	  		}
+	    		]});
+	
+	    	// Initialize the tour
+	    	tour.init();
+	
+	    	// Start the tour
+	    	tour.start();
+	    	//tour.restart();
+	      }
+	    }
+	</script>
