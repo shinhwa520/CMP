@@ -16,6 +16,7 @@
 				 <div class="card-body">
 					<div class="table-responsive m-t-0">
 						<table id="tblMain" class="table table-bordered table-striped">
+							<!-- 
 							<colgroup id="guide_step1_tag">
 						        <col>
 						        <col>
@@ -34,6 +35,7 @@
 						        <col>
 						        <col>
 						    </colgroup>
+						     -->
 							<thead>
 								<tr>
 				                    <th rowspan="2"><b><spring:message code="name"/></b></th>
@@ -149,7 +151,7 @@
 
 <!--.燈箱 Edit_Demo -->         
 <div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg" id="guide_step6_tag">
+  <div class="modal-dialog modal-lg" id="guide_step3_tag">
     <div class="modal-content">
 		<div class="modal-header">
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
@@ -160,32 +162,32 @@
             <form role="form" id="formEdit_Demo" name="formEdit_Demo">
             	<input type="hidden" name="user_id_Demo" id="user_id_Demo" value="" />
 		        <div class="box-body">
-		        	<div class="form-group" id="guide_step7_tag">
+		        	<div class="form-group" id="guide_step4_tag">
 						<label for="user_name"><spring:message code="name"/></label>
 						<input type="text" readonly class="form-control" name="user_name_Demo" id="user_name_Demo" value="Demo" />
 		            </div>                              
 		        </div>
-		        <div class="box-body" id="guide_step8_tag">
+		        <div class="box-body" id="guide_step5_tag">
 		        	<div class="form-group">
 						<label for="remark"><spring:message code="remarks"/></label>
 						<input type="text" class="form-control" name="remark_Demo" id="remark_Demo" value="Demo_Remark"/>
 		            </div>
 		        </div>
 		        <div class="box-body">
-		        	<table style="width: 100%">
-		        		<tr id="guide_step9_tag">
+		        	<table id="guide_step6_tag" style="width: 100%">
+		        		<tr>
 		        			<td style="width: 18%"><label><spring:message code="targetChannelsNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" class="form-control" name="agent_user_Demo" id="agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        			<td style="width: 18%"><label><spring:message code="accomplishedChannelsNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_agent_user_Demo" id="_agent_user_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        		</tr>
-		        		<tr id="guide_step10_tag">
+		        		<tr>
 		        			<td style="width: 18%"><label><spring:message code="targetTourNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" class="form-control" name="agent_cust_Demo" id="agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        			<td style="width: 18%"><label><spring:message code="accomplishedTourNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" readonly class="form-control" name="_agent_cust_Demo" id="_agent_cust_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        		</tr>
-		        		<tr id="guide_step11_tag">
+		        		<tr>
 		        			<td style="width: 18%"><label><spring:message code="targetSalesNo"/></label></td>
 		        			<td style="width: 32%" class="form-group"><input type="text" class="form-control" name="volume_Demo" id="volume_Demo" style="width: 80%; text-align:right;" value="0" /></td>
 		        			<td style="width: 18%"><label><spring:message code="accomplishedSalesNo"/></label></td>
@@ -261,12 +263,12 @@ $(function() {
 				"targets" : 10,
 				"data" : 'id',
 				"render" : function(data, type, row) {
-					return '<div id="guide_step5_tag" style="float:left;width:20px">'
+					return '<div id="guide_step2_tag" style="float:left;width:20px">'
 							+'<a href="#">'
 							+'<span class="ti-pencil" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message code="edit"/>"></span></a>'
 							+'</div>'
 							+'<div style="float:left;width:5px">&nbsp;</div>'
-							+'<div id="guide_step12_tag" style="float:left;width:20px">'
+							+'<div id="guide_step8_tag" style="float:left;width:20px">'
 							+'<a href="#">'
 							+'<span class="ti-money" style="margin-right:10px" userId="' + row['id'] + '" onclick="btnCommissionClicked($(this));" title="<spring:message code="reward"/>"></span></a>'
 							+'</div>';
@@ -455,21 +457,18 @@ function validateInt(input) {
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(true);
 					}
 				,
 				steps: [
 	    	  		{
-	    	    		element: "#guide_step1_tag",
-	    	    		title: title_user + " - 1/13",
+	    	    		element: "#tblMain",
+	    	    		title: title_user + " - 1/8",
 	    	    		content: '<spring:message code="guide_tour_msg_10"/>', //我的下层渠道商基本个人资料
 	    	    		placement: "bottom",
 	    	    		animation: false
 	    	  		},
+	    	  		/*
 	    	  		{
 	    	    		element: "#guide_step2_tag",
 	    	    		title: title_user + " - 2/13",
@@ -491,10 +490,11 @@ function validateInt(input) {
 	    	    		placement: "bottom",
 	    	    		animation: false
 	    	  		},
+	    	  		*/
 	    	  		{
-	    	    		element: "#guide_step5_tag",
-	    	    		title: title_user + " - 5/13",
-	    	    		content: '<spring:message code="guide_tour_msg_14"/>', //点击铅笔图示进入渠道商基本资料编辑画面
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_user + " - 2/8",
+	    	    		content: '<spring:message code="guide_tour_msg_31"/>&nbsp;<span class="ti-pencil" style="margin-right:10px"></span><spring:message code="guide_tour_msg_97"/>', //点击铅笔图示进入渠道商基本资料编辑画面
 	    	    		placement: "bottom",
 	    	    		animation: false,
 	    	    		onHidden: function() {
@@ -531,42 +531,39 @@ function validateInt(input) {
 					storage: false,
 					template: 
 						function (key, value) { 
-							var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-								reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-								
-							return reString;
+							return getGuideTourTemplate(true);
 						}
 					,
 					steps: [
 		    	  		{
-		    	    		element: "#guide_step6_tag",
-		    	    		title: title_user + " - 6/13",
+		    	    		element: "#guide_step3_tag",
+		    	    		title: title_user + " - 3/8",
 		    	    		content: '<spring:message code="guide_tour_msg_15"/>', //渠道商基本资料编辑画面
 		    	    		placement: "bottom",
 		    	    		animation: false
 		    	  		},
 		    	  		{
-		    	    		element: "#guide_step7_tag",
-		    	    		title: title_user + " - 7/13",
+		    	    		element: "#guide_step4_tag",
+		    	    		title: title_user + " - 4/8",
 		    	    		content: '<spring:message code="guide_tour_msg_16"/>', //渠道商姓名（不开放修改）
 		    	    		placement: "bottom",
 		    	    		animation: false
 		    	  		},
 		    	  		{
-		    	    		element: "#guide_step8_tag",
-		    	    		title: title_user + " - 8/13",
+		    	    		element: "#guide_step5_tag",
+		    	    		title: title_user + " - 5/8",
 		    	    		content: '<spring:message code="guide_tour_msg_17"/>', //渠道商备注
 		    	    		placement: "bottom",
 		    	    		animation: false
 		    	  		},
 		    	  		{
-		    	    		element: "#guide_step9_tag",
-		    	    		title: title_user + " - 9/13",
+		    	    		element: "#guide_step6_tag",
+		    	    		title: title_user + " - 6/8",
 		    	    		content: '<spring:message code="guide_tour_msg_18"/>', //订定或调整渠道商本月「KPI-渠道商量」目标值;右半部为当前达成状况
 		    	    		placement: "bottom",
 		    	    		animation: false
 		    	  		},
+		    	  		/*
 		    	  		{
 		    	    		element: "#guide_step10_tag",
 		    	    		title: title_user + " - 10/13",
@@ -582,9 +579,10 @@ function validateInt(input) {
 		    	    		placement: "bottom",
 		    	    		animation: false
 		    	  		},
+		    	  		*/
 		    	  		{
 		    	    		element: "#btnProfileSave",
-		    	    		title: title_user + " - 12/13",
+		    	    		title: title_user + " - 7/8",
 		    	    		content: '<spring:message code="guide_tour_msg_21"/>', //点击「保存」按钮储存修改值
 		    	    		placement: "bottom",
 		    	    		animation: false,
@@ -593,9 +591,9 @@ function validateInt(input) {
 		    	    	    }
 		    	  		},
 		    	  		{
-		    	    		element: "#guide_step12_tag",
-		    	    		title: title_user + " - 13/13",
-		    	    		content: '<spring:message code="guide_tour_msg_22"/>', //点击钱符号图示进入渠道商产品佣金％数检视与调整画面
+		    	    		element: "#guide_step8_tag",
+		    	    		title: title_user + " - 8/8",
+		    	    		content: '<spring:message code="guide_tour_msg_31"/>&nbsp;<span class="ti-money" style="margin-right:10px"></span><spring:message code="guide_tour_msg_98"/>', //点击钱符号图示进入渠道商产品佣金％数检视与调整画面
 		    	    		placement: "bottom",
 		    	    		animation: false,
 		    	    		onHidden: function() {

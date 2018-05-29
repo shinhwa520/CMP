@@ -1057,6 +1057,18 @@
     <!-- ============================================================== -->
     <script src="${pageContext.request.contextPath}/resources/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <script>
+	    function getGuideTourTemplate(showNaviBtn) { 
+			var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
+			
+			if (showNaviBtn) {
+				reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+			}
+			
+			reString += "<button class='btn btn-default float-right' data-role='end' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+				
+			return reString;
+		}
+	    
 	   	$('.div_scroll').slimScroll({
 	   		height: '620px'
 	   	});

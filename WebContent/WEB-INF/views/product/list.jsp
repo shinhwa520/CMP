@@ -437,11 +437,7 @@
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(true);
 					}
 				,
 				steps: [
@@ -513,15 +509,11 @@
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-						
+						var isNotLastStep = false;
 						if (key != 4) {
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							isNotLastStep = true
 						}
-						
-						reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(isNotLastStep);
 					}
 				,
 				steps: [
@@ -535,7 +527,7 @@
 	    	  		{
 	    	    		element: "#guide_step6_tag",
 	    	    		title: title_product + " - 7/9",
-	    	    		content: '<spring:message code="guide_tour_msg_48"/>', //点击云图示可下载档案
+	    	    		content: '<spring:message code="guide_tour_msg_31"/>&nbsp;<span class="icon-cloud-download" style="margin-right:10px"></span><spring:message code="guide_tour_msg_101"/>', //点击云图示可下载档案
 	    	    		placement: "bottom",
 	    	    		animation: false
 	    	    		

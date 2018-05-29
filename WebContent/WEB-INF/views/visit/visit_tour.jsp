@@ -224,6 +224,7 @@
 	                </div>
 	                <div class="price-table-content">
 	                	<table id="tblMain" class="table table-bordered table-striped">
+	                		<!-- 
 	                		<colgroup id="guide_step5_tag">
 						        <col>
 						        <col>
@@ -234,6 +235,7 @@
 						    <colgroup id="guide_step6_tag">
 						        <col>
 						    </colgroup>
+						     -->
 							<thead>
 								<tr>
 				                    <th><b><spring:message code="name"/></b></th>
@@ -251,7 +253,7 @@
 									<td>Demo@cmp.com</td>
 									<td>Demo</td>
 									<td><spring:message code="bookedHotel" /></td>
-									<td><input type="checkbox" name="joinCust" value="demo" checked /></td>
+									<td id="guide_step6_tag"><input type="checkbox" name="joinCust" value="demo" checked /></td>
 								</tr>
 							</tbody>
 						</table>
@@ -1100,11 +1102,7 @@
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(true);
 					}
 				,
 				steps: [
@@ -1146,11 +1144,7 @@
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(true);
 					}
 				,
 				steps: [
@@ -1230,16 +1224,12 @@
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(true);
 					}
 				,
 				steps: [
 	    	  		{
-	    	    		element: "#guide_step5_tag",
+	    	    		element: "#tblMain",
 	    	    		title: title_tour + " - 7/15",
 	    	    		content: '<spring:message code="guide_tour_msg_68"/>', //呈显客户清单及其基本资料与当前所处状态
 	    	    		placement: "bottom",
@@ -1301,15 +1291,11 @@
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-						
+						var isNotLastStep = false;
 						if (key != 5) {
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+							isNotLastStep = true
 						}
-						
-						reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(isNotLastStep);
 					}
 				,
 				steps: [

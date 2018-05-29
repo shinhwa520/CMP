@@ -16,6 +16,7 @@
 						<button type="button" class="btn btn-warning pull-right" onclick="btnAddClicked();"><spring:message code='add'/></button>
 					</div>
 					<table id="tblMain" class="table table-bordered table-striped">
+						<!-- 
 						<colgroup id="guide_step1_tag">
 					        <col>
 					        <col>
@@ -26,6 +27,7 @@
 					        <col>
 					        <col>
 					    </colgroup>
+					     -->
 						<thead>
 							<tr>
 			                    <th><b><spring:message code="name"/></b></th>
@@ -192,7 +194,7 @@
 
 <!--.燈箱 Edit_Demo -->
 <div class="modal fade bs-example-modal-lg" id="modal_Edit_Demo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg" id="guide_step4_tag">
+  <div class="modal-dialog modal-lg" id="guide_step3_tag">
     <div class="modal-content">
 		<div class="modal-header">
 			<h4 class="modal-title"><spring:message code="edit"/></h4>
@@ -204,7 +206,7 @@
             	<input type="hidden" name="cust_id_Demo" id="cust_id_Demo" value="" />
 	            <div class="box-body">
 	            	<div class="form-group">
-	                  <label for="cust_name"><spring:message code='name'/><span class="pull-right" style="color: red;" id="guide_step5_tag">＊ </span></label>
+	                  <label for="cust_name"><spring:message code='name'/><span class="pull-right" style="color: red;" id="guide_step4_tag">＊ </span></label>
 	                  <input type="text" class="form-control" id="cust_name_Demo" name="cust_name_Demo" placeholder="<spring:message code='name'/>" value="Demo">
 	                </div>
 	            </div>
@@ -316,7 +318,7 @@
 	                </div>
 	            </div>
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default"  id="guide_step6_tag" data-dismiss="modal"><spring:message code='close'/></button>
+	        		<button type="button" class="btn btn-default"  id="guide_step5_tag" data-dismiss="modal"><spring:message code='close'/></button>
 	        		<button type="button" class="btn btn-success" id="btnProfileSave_Demo" ><spring:message code='save'/></button>
 				</div>
 			</form>
@@ -374,7 +376,7 @@
     <div class="modal-content">
 		<div class="modal-header">
 			<h4 class="modal-title"><spring:message code="file"/></h4>
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="guide_step12_tag">×</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="guide_step13_tag">×</button>
       	</div>
 		<div class="modal_msg" style="display: none"></div>
       	<div class="modal-body">
@@ -384,7 +386,7 @@
 					<div class="box-header with-border">
 						<button type="button" class="btn btn-warning pull-right" onclick="btnAddFileClicked();" id="guide_step8_tag"><spring:message code='add'/></button>
 						<span class="pull-right">&nbsp;</span>
-						<button type="button" class="btn btn-danger pull-right" onclick="btnDeleteClicked();" id="guide_step11_tag" ><spring:message code='delete'/></button>
+						<button type="button" class="btn btn-danger pull-right" onclick="btnDeleteClicked();" id="guide_step12_tag" ><spring:message code='delete'/></button>
 					</div>
 					<div class="box-body no-padding">
 						<table class="table table-striped" id="custFileMain_Demo" style="width:100%">
@@ -435,14 +437,14 @@
 		            </div>
 		        </div>
 		        <div class="box-body">
-		        	<div class="form-upload-group" id="guide_step9_tag">
+		        	<div class="form-upload-group" id="guide_step10_tag">
 						<label for="phone"><spring:message code="fileDescription"/><span class="pull-right" style="color: red;">＊ </span></label>
 						<input type="text" class="form-control" name="fileDescription" id="editFileDescription" />
 		            </div>
 		        </div>
 
 				<div class="modal-footer">
-	        		<button type="button" class="btn btn-default" id="guide_step10_tag" data-dismiss="modal"><spring:message code="close"/></button>
+	        		<button type="button" class="btn btn-default" id="guide_step11_tag" data-dismiss="modal"><spring:message code="close"/></button>
 	        		<button type="button" class="btn btn-primary" id="btnUpload" onclick="btnUploadClicked();"><spring:message code="upload"/></button>
 				</div>
 			</form>
@@ -759,12 +761,12 @@ $(function() {
 				"targets" : 6,
 				"data" : 'id',
 				"render" : function(data, type, row) {
-					return '<div id="guide_step3_tag" style="float:left;width:20px">'
+					return '<div id="guide_step2_tag" style="float:left;width:20px">'
 							+'<a href="#">'
 							+'<span class="ti-pencil" style="margin-right:10px" custId="' + row['id'] + '" onclick="btnEditClicked($(this));" title="<spring:message javaScriptEscape="true" code="edit"/>"></span></a>'
 							+'</div>'
 							+'<div style="float:left;width:5px">&nbsp;</div>'
-							+'<div id="guide_step7_tag" style="float:left;width:20px">'
+							+'<div id="guide_step6_tag" style="float:left;width:20px">'
 							+'<a href="#">'
 							+'<span class="ti-files" style="margin-right:10px" custId="' + row['id'] + '" custName="' + row['name'] + '" onclick="btnFileClicked($(this));" title="<spring:message javaScriptEscape="true" code="file"/>"></span></a>'
 							+'</div>';
@@ -1043,21 +1045,18 @@ function bsStep(i) {
 				storage: false,
 				template: 
 					function (key, value) { 
-						var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-							reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-							reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-							
-						return reString;
+						return getGuideTourTemplate(true);
 					}
 				,
 				steps: [
 	    	  		{
-	    	    		element: "#guide_step1_tag",
-	    	    		title: title_cust + " - 1/13",
+	    	    		element: "#tblMain",
+	    	    		title: title_cust + " - 1/12",
 	    	    		content: '<spring:message code="guide_tour_msg_29"/>', //我的客户基本个人资料
 	    	    		placement: "bottom",
 	    	    		animation: false
 	    	  		},
+	    	  		/*
 	    	  		{
 	    	    		element: "#guide_step2_tag",
 	    	    		title: title_cust + " - 2/13",
@@ -1065,10 +1064,11 @@ function bsStep(i) {
 	    	    		placement: "bottom",
 	    	    		animation: false
 	    	  		},
+	    	  		*/
 	    	  		{
-	    	    		element: "#guide_step3_tag",
-	    	    		title: title_cust + " - 3/13",
-	    	    		content: '<spring:message code="guide_tour_msg_31"/>', //点击铅笔图示进入客户基本资料编辑画面
+	    	    		element: "#guide_step2_tag",
+	    	    		title: title_cust + " - 2/12",
+	    	    		content: '<spring:message code="guide_tour_msg_31"/>&nbsp;<span class="ti-pencil" style="margin-right:10px"></span><spring:message code="guide_tour_msg_99"/>', //点击铅笔图示进入客户基本资料编辑画面
 	    	    		placement: "bottom",
 	    	    		animation: false,
 	    	    		onHidden: function() {
@@ -1106,24 +1106,20 @@ function bsStep(i) {
 					autoscroll: true,
 					template: 
 						function (key, value) { 
-							var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-								reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-								
-							return reString;
+							return getGuideTourTemplate(true);
 						}
 					,
 					steps: [
 		    	  		{
-		    	    		element: "#guide_step4_tag",
-		    	    		title: title_cust + " - 4/13",
+		    	    		element: "#guide_step3_tag",
+		    	    		title: title_cust + " - 3/12",
 		    	    		content: '<spring:message code="guide_tour_msg_32"/>', //客户基本资料编辑画面
 		    	    		placement: "top",
 		    	    		animation: false
 		    	  		},
 		    	  		{
-		    	    		element: "#guide_step5_tag",
-		    	    		title: title_cust + " - 5/13",
+		    	    		element: "#guide_step4_tag",
+		    	    		title: title_cust + " - 4/12",
 		    	    		content: '<spring:message code="guide_tour_msg_33"/>', //星字号栏位为必填
 		    	    		placement: "bottom",
 		    	    		animation: false,
@@ -1133,18 +1129,18 @@ function bsStep(i) {
 		    	  		},
 		    	  		{
 		    	    		element: "#btnProfileSave_Demo",
-		    	    		title: title_cust + " - 6/13",
+		    	    		title: title_cust + " - 5/12",
 		    	    		content: '<spring:message code="guide_tour_msg_21"/>', //点击「保存」按钮储存修改值
 		    	    		placement: "top",
 		    	    		animation: false,
 		    	    		onHidden: function() {
-		    	    			$('#guide_step6_tag').click();
+		    	    			$('#guide_step5_tag').click();
 		    	    	    }
 		    	  		},
 		    	  		{
-		    	    		element: "#guide_step7_tag",
-		    	    		title: title_cust + " - 7/13",
-		    	    		content: '<spring:message code="guide_tour_msg_34"/>', //点击「文件」图示进入客户档案检视与维护画面
+		    	    		element: "#guide_step6_tag",
+		    	    		title: title_cust + " - 6/12",
+		    	    		content: '<spring:message code="guide_tour_msg_31"/>&nbsp;<span class="ti-files" style="margin-right:10px"></span><spring:message code="guide_tour_msg_100"/>', //点击「文件」图示进入客户档案检视与维护画面
 		    	    		placement: "bottom",
 		    	    		animation: false,
 		    	    		onHidden: function() {
@@ -1182,24 +1178,20 @@ function bsStep(i) {
 					autoscroll: true,
 					template: 
 						function (key, value) { 
-							var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-								reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
-								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-								
-							return reString;
+							return getGuideTourTemplate(true);
 						}
 					,
 					steps: [
 		    	  		{
 		    	    		element: "#custFileMain_Demo",
-		    	    		title: title_cust + " - 8/13",
-		    	    		content: '<spring:message code="guide_tour_msg_35"/>', //呈显客户档案资料;点击操作栏位中云图示可下载档案
+		    	    		title: title_cust + " - 7/12",
+		    	    		content: '<spring:message code="guide_tour_msg_35"/>;<spring:message code="guide_tour_msg_31"/>&nbsp;<span class="icon-cloud-download" style="margin-right:10px"></span><spring:message code="guide_tour_msg_101"/>', //呈显客户档案资料;点击操作栏位中云图示可下载档案
 		    	    		placement: "top",
 		    	    		animation: false
 		    	  		},
 		    	  		{
 		    	    		element: "#guide_step8_tag",
-		    	    		title: title_cust + " - 9/13",
+		    	    		title: title_cust + " - 8/12",
 		    	    		content: '<spring:message code="guide_tour_msg_36"/>', //点击「新增」按钮进入档案上传画面
 		    	    		placement: "bottom",
 		    	    		animation: false,
@@ -1238,50 +1230,46 @@ function bsStep(i) {
 						autoscroll: true,
 						template: 
 							function (key, value) { 
-								var reString = "<div class='popover tour' style='min-width:500px;  max-width:555px;'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div>";
-								
+								var isNotLastStep = false;
 								if (key != 4) {
-									reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« <spring:message code='prev' /></button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
+									isNotLastStep = true
 								}
-								
-								reString += "<button class='btn float-right' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
-									
-								return reString;
+								return getGuideTourTemplate(isNotLastStep);
 							}
 						,
 						steps: [
 			    	  		{
 			    	    		element: "#uploadFile",
-			    	    		title: title_cust + " - 10/13",
+			    	    		title: title_cust + " - 9/12",
 			    	    		content: '<spring:message code="guide_tour_msg_37"/>', //点击「浏览」按钮选择要上传的档案
 			    	    		placement: "bottom",
 			    	    		animation: false
 			    	  		},
 			    	  		{
-			    	    		element: "#guide_step9_tag",
-			    	    		title: title_cust + " - 11/13",
+			    	    		element: "#guide_step10_tag",
+			    	    		title: title_cust + " - 10/12",
 			    	    		content: '<spring:message code="guide_tour_msg_38"/>', //接着输入此档案描述说明
 			    	    		placement: "bottom",
 			    	    		animation: false
 			    	  		},
 			    	  		{
 			    	    		element: "#btnUpload",
-			    	    		title: title_cust + " - 12/13",
+			    	    		title: title_cust + " - 11/12",
 			    	    		content: '<spring:message code="guide_tour_msg_39"/>', //点击「上传」按钮完成档案上传
 			    	    		placement: "bottom",
 			    	    		animation: false,
 			    	    		onHidden: function() {
-			    	    			$('#guide_step10_tag').click();
+			    	    			$('#guide_step11_tag').click();
 			    	    		}
 			    	  		},
 			    	  		{
-			    	    		element: "#guide_step11_tag",
-			    	    		title: title_cust + " - 13/13",
+			    	    		element: "#guide_step12_tag",
+			    	    		title: title_cust + " - 12/12",
 			    	    		content: '<spring:message code="guide_tour_msg_40"/>', //勾选要删除的档案，点击「删除」按钮进行删除
 			    	    		placement: "bottom",
 			    	    		animation: false,
 			    	    		onHidden: function() {
-			    	    			$('#guide_step12_tag').click();
+			    	    			$('#guide_step13_tag').click();
 			    	    			return (new jQuery.Deferred()).promise();
 			    	    		}
 			    	  		},
