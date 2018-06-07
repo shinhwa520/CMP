@@ -177,19 +177,19 @@
 	
 	//[btn_Download]
 	function btnDownloadClicked(visitId, fileCategory, useZip) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitFiles?visitId="+visitId+"&fileType=VISIT&fileCategory="+fileCategory+"&useZip="+useZip+"&fromPage=visit/list";
+		var downloadUrl = "${pageContext.request.contextPath}/manage/visitFile/downloadVisitFiles?visitId="+visitId+"&fileType=VISIT&fileCategory="+fileCategory+"&useZip="+useZip+"&fromPage=visit/list";
 	    window.location.href = downloadUrl;
 	}
 	
 	//[btn_Download_PDF]
 	function btnDownloadPdfClicked(visitId) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadVisitPdf?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
+		var downloadUrl = "${pageContext.request.contextPath}/manage/visitFile/downloadVisitPdf?visitId="+visitId+"&fileType=VISIT&fileCategory=PDF&fromPage=visit/list";
 	    window.location.href = downloadUrl;
 	}
 	
 	//[btn_Download_Schedule]
 	function btnScheduleClicked(visitId) {
-		var downloadUrl = "${pageContext.request.contextPath}/manage/file/downloadSchedule?visitId="+visitId+"&fileType=VISIT&fileCategory=SCHEDULE&fromPage=visit/list";
+		var downloadUrl = "${pageContext.request.contextPath}/manage/visitFile/downloadSchedule?visitId="+visitId+"&fileType=VISIT&fileCategory=SCHEDULE&fromPage=visit/list";
 	    window.location.href = downloadUrl;
 	}
 	

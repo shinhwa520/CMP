@@ -162,6 +162,21 @@
 			  	<!-- Card -->
 				<div class="card">
 				  	<div class="el-card-item">
+		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_29.PNG" alt="参团照片-Ritz-Carlton" />
+		                    <div class="el-overlay">
+		                        <ul class="el-info">
+		                            <li><a class="btn default btn-outline" href="javascript:btnFileClicked(29);"><i class="icon-picture"></i></a></li>
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="el-card-content">
+		                    <h4 class="box-title">参团照片<br/>第3天 Ritz-Carlton</h4><br/>
+		                </div>
+		            </div>
+			  	</div>
+			  	<!-- Card -->
+				<div class="card">
+				  	<div class="el-card-item">
 		                <div class="el-card-avatar el-overlay-1"> <img src="${pageContext.request.contextPath}/resources/elastislide/images/pic/P_28.PNG" alt="参团照片-吉隆坡大马金豪" />
 		                    <div class="el-overlay">
 		                        <ul class="el-info">
@@ -175,7 +190,6 @@
 		            </div>
 			  	</div>
 			  	<!-- Card -->
-			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			  	<div class="card" style="background: #f2f7f8">&nbsp;</div>
 			</div>
 		</div>
@@ -546,7 +560,7 @@
 	    	    		element: "#referenceFileMain",
 	    	    		title: title_reference + " - 6/8",
 	    	    		content: '<spring:message code="guide_tour_msg_53"/>', //检视提供下载的档案资料
-	    	    		placement: "bottom",
+	    	    		placement: "top",
 	    	    		animation: false
 	    	  		},
 	    	  		{

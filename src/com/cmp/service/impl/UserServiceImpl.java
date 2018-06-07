@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
 		 * Step 1. 先檢核使用者當月KPI目標資料是否已寫入
 		 */
 		UserKpi kpi = userKpiDAO.findKpiByUserAndYearMonth(id, currentYearMonth);//查詢KPI設定
+		UserKpi newKpi = null;
 		if( null == kpi) {
 			/*
 			 * Step 2. 若當月資料尚未寫入，複製前一月資料寫入；若仍查無資料則新增一筆目標全為0的資料
@@ -64,15 +66,17 @@ public class UserServiceImpl implements UserService {
 			kpi = userKpiDAO.findTheMostRecentlyKpiByUser(id);
 			
 			if ( null != kpi ) {
-				kpi.setId(String.valueOf(new Date().getTime()));
-				kpi.setYearMonth(currentYearMonth);
-				kpi.setCreateBy(editorId);
-				kpi.setCreateDateTime(new Date());
-				kpi.setUpdateBy(editorId);
-				kpi.setUpdateDateTime(new Date());
+				newKpi = new UserKpi();
+				BeanUtils.copyProperties(kpi, newKpi, new String[] {"id"});
+				newKpi.setId(String.valueOf(new Date().getTime()));
+				newKpi.setYearMonth(currentYearMonth);
+				newKpi.setCreateBy(editorId);
+				newKpi.setCreateDateTime(new Date());
+				newKpi.setUpdateBy(editorId);
+				newKpi.setUpdateDateTime(new Date());
 				
 			} else {
-				kpi = new UserKpi(
+				newKpi = new UserKpi(
 					String.valueOf(new Date().getTime())
 					,user
 					,currentYearMonth
@@ -86,7 +90,7 @@ public class UserServiceImpl implements UserService {
 				);
 			}
 			
-			userKpiDAO.saveUserKpi(kpi);
+			userKpiDAO.saveUserKpi(newKpi);
 		}
 		
 		/*

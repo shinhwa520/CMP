@@ -307,6 +307,28 @@
         		}
         	});
         }
+        
+        function pauseStopGuide() {
+        	hideTip();
+        	$.ajax({
+        		url : '${pageContext.request.contextPath}/channel/user/pauseStopGuide',
+        		type : "GET",
+        		dataType : 'json',
+        		async: false,
+        		contentType:"application/json;charset=utf-8", 
+        		success : function(data) {
+                    if (data.code === 200) {
+
+                    } else {
+                    	alert(data.message);
+                    }
+        		},
+        		error : function(xhr, ajaxOptions, thrownError) {
+        			alert(xhr.status);
+        			alert(thrownError);
+        		}
+        	});
+        }
 
 	</script>
 </head>
@@ -1064,7 +1086,7 @@
 				reString += "<div class='popover-navigation'><button class='btn btn-default' data-role='next'><spring:message code='next' /> »</button>";
 			}
 			
-			reString += "<button class='btn btn-default float-right' data-role='end' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end'><spring:message code='endTour' /></button></div></div>";
+			reString += "<button class='btn btn-default float-right' data-role='end' onclick='doCloseGuide();' aria-hidden='true'><i class='fa fa-ban'></i> <spring:message code='noShowAgain' /></button><button class='btn btn-default float-right' data-role='end' onclick='pauseStopGuide();'><spring:message code='endTour' /></button></div></div>";
 				
 			return reString;
 		}

@@ -120,6 +120,7 @@
 		        			<option value="25">参团照片(第2天 马六甲Haleton介绍会)</option>
 		        			<option value="26">参团照片(第2天 马六甲Haleton产业)</option>
 		        			<option value="27">参团照片(第3天 柔佛双威依斯干达)</option>
+		        			<option value="29">参团照片(第3天 Ritz-Carlton)</option>
 		        			<option value="28">参团照片(第4天 吉隆坡大马金豪)</option>
 		        		</select>
 		        	</div>

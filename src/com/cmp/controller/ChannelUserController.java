@@ -162,10 +162,24 @@ public class ChannelUserController extends BaseController {
     }
     
 	@RequestMapping(value = { "/doCloseGuide" }, method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody AppResponse contactUs(HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody AppResponse doCloseGuide(HttpServletRequest request, HttpServletResponse response) {
 		AppResponse appResponse = null;
 		try {
 			userService.closeGuide();
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
+		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
+			e.printStackTrace();
+		}
+		return appResponse;
+    }
+	
+	@RequestMapping(value = { "/pauseStopGuide" }, method = RequestMethod.GET, produces="application/json")
+    public @ResponseBody AppResponse pauseStopGuide(Model model, HttpServletRequest request, HttpServletResponse response) {
+		AppResponse appResponse = null;
+		try {
+			System.out.println(request.getSession().getAttribute("showGuide"));
+			model.addAttribute("showGuide", "N");
 			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
 		} catch (Exception e) {
 			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
