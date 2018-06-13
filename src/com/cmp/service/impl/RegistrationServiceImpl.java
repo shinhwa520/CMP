@@ -77,6 +77,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		}
 		
 		Date current = new Date();
+		List<Token> tokens = tokenDAO.findTokenByUserAndType(user.getId(), "R");
+		tokenDAO.deleteTokens(tokens);
 		Token token = tokenDAO.saveToken(new Token(RandomGenerator.getRandom(), "R", user, current));
 		String mailbody = "请於页面输入下列验证码。<br>";
 		mailbody += "Please enter the following verification code on the page.<br>";
