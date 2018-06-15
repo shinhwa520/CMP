@@ -759,7 +759,7 @@
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                         <li class="nav-item" id="menuIcon-tag"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
                         <!-- ============================================================== -->
-                        <!-- Comment -->
+                        <!-- sysMail -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown" id="sysMail-tag">
                             <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
@@ -791,10 +791,10 @@
                             </div>
                         </li>
                         <!-- ============================================================== -->
-                        <!-- End Comment -->
+                        <!-- End sysMail -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
-                        <!-- Messages -->
+                        <!-- mail -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown" id="mail-tag">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
@@ -826,10 +826,10 @@
                             </div>
                         </li>
                         <!-- ============================================================== -->
-                        <!-- End Messages -->
+                        <!-- End mail -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
-                        <!-- Messages -->
+                        <!-- contact_us -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown" id="contact_us-tag"> 
                         	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -862,7 +862,17 @@
                             </div>
                         </li>
                         <!-- ============================================================== -->
-                        <!-- End Messages -->
+                        <!-- End contact_us -->
+                        <!-- ============================================================== -->
+                        
+                        <!-- ============================================================== -->
+                        <!-- dashboard -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown" id="dashboard-tag"> 
+                        	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="${pageContext.request.contextPath}/dashboard"> <i class="mdi mdi-gauge"></i></a>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End dashboard -->
                         <!-- ============================================================== -->
                     </ul>
                     <!-- ============================================================== -->
@@ -918,9 +928,11 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                    	<!--
                     	<li id="dashboard-tag">
                             <a href="${pageContext.request.contextPath}/dashboard"> <i class="mdi mdi-gauge"></i><span class="hide-menu"><spring:message code="dashboard" /></span></a>
                         </li>
+                        -->
                         <li id="billboard-tag">
                             <a href="${pageContext.request.contextPath}/manage/billboard/list" id="billboard-menu"> <i class="mdi mdi-content-paste"></i><span class="hide-menu"><spring:message code="billboard" /></span></a>
                         </li>
