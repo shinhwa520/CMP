@@ -107,7 +107,7 @@
 		        	<div class="form-group">
 		        		<label for="referenceName"><spring:message code="referenceName"/><span class="pull-right" style="color: red;">＊ </span> </label>
 		        		<select class="form-control" style="width:80%" name="referenceId">
-ㄊ		        			<option value="15">Famous school - 知名学校(文档)</option>
+		        			<option value="15">Famous school - 知名学校(文档)</option>
 		        			<option value="16">Famous school - 知名学校(图档)</option>
 		        			<option value="17">Regional(Johor) - 地區通用(新山)</option>
 		        			<option value="18">Regional(Malacca) - 地區通用(马六甲)</option>
