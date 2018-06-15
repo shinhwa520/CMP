@@ -721,7 +721,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/manage/billboard/list">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">
                         <!-- Logo icon -->
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->

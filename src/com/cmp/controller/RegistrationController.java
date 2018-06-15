@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContext;
 
 import com.cmp.AppResponse;
-import com.cmp.Response;
 import com.cmp.form.registration.UserInfoForm;
 import com.cmp.model.User;
 import com.cmp.service.RegistrationService;
@@ -78,13 +77,16 @@ public class RegistrationController extends BaseController {
 	 * [重新获取验证码]
 	 */
 	@RequestMapping(value = { "/reGenToken" }, method = RequestMethod.GET)
-    public @ResponseBody String reGenToken(@RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody AppResponse reGenToken(@RequestParam(name="userId", required=true) String userId, HttpServletRequest request, HttpServletResponse response) {
+		AppResponse appResponse = null;
 		try {
 			registrationService.reGenToken(userId);
+			appResponse = new AppResponse(HttpServletResponse.SC_OK, "");
 		} catch (Exception e) {
+			appResponse = new AppResponse(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "");
 			e.printStackTrace();
 		}
-        return jsonResponse(Response.UPDATE_SUCCESS);
+        return appResponse;
     }
 	
 	/**
