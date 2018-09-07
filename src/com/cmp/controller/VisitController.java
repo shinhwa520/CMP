@@ -39,6 +39,12 @@ public class VisitController extends BaseController {
 		return "visit/list";
     }
 	
+	@RequestMapping(value = { "visit_detail" }, method = RequestMethod.GET)
+    public String showVisitInfoDetail(Model model, HttpServletRequest request, HttpServletResponse response) {
+		setActiveMenu(model, MenuItem.VISIT_INFO);
+		return "visit/visit_detail";
+    }
+	
 	@RequestMapping(value = { "tour/{statusId}","tour" }, method = RequestMethod.GET)
     public String showTourList(Model model, @ModelAttribute("VisitForm") VisitForm visitForm, HttpServletRequest request, HttpServletResponse response,
     							@PathVariable Optional<Integer> statusId) {
