@@ -754,126 +754,41 @@
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
-                    <ul class="navbar-nav mr-auto mt-md-0 ">
-                        <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <li class="nav-item" id="menuIcon-tag"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
-                        <!-- ============================================================== -->
-                        <!-- sysMail -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown" id="sysMail-tag">
-                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
-                                <c:if test="${!sysMailMap.listUnread.isEmpty() }"><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div></c:if>
-                            </a>
-                            <div class="dropdown-menu mailbox animated bounceInDown">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">
-                                        	<spring:message code="youHave" /> ${sysMailMap.countUnread} <spring:message code="newSysMSG" />
-                                        	<a href='${pageContext.request.contextPath}/sysMail/sysMailbox' title="<spring:message code='moveTo'/><spring:message code='sysMail'/>" ><i class="mdi mdi-folder-move"></i></a>
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-                                        <div class="message-center">
-											<c:if test="${!sysMailMap.listUnread.isEmpty() }">
-											<c:forEach var="vo" items="${ sysMailMap.listUnread }">
-												<a href='${pageContext.request.contextPath}/sysMail/sysMailbox/${ vo.id }'>
-													<div class="mail-contnet">
-														<h5>${vo.mailFrom.name}</h5> <span class="mail-desc">${vo.subject}</span> <span class="time">${vo.createTime}</span> 
-													</div>
-												</a>
-											</c:forEach>
-											</c:if>
-                                        </div>
-                                    </li>
-                                </ul>
+                    <ul class="navbar-nav mr-auto mt-md-0 " style="margin-right: inherit !important;width: 35%">
+                        <li class="nav-item hidden-sm-down" style="margin-left: 20px;">
+                        	<!-- 
+                            <form class="app-search">
+                               <a class="srh-btn" style="background-color: rgba(245,245,245,1);"><i class="ti-search"></i></a>
+                               <input class="form-control" placeholder="请输入…" type="text" style="background-color: rgba(245,245,245,1);border-radius: 4px;width:358px;"> 
+                            </form>
+                            -->
+                            <div class="input-group mb-8">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-info" type="button"><i class="ti-search"></i></button>
+                                </div>
+                                <input class="form-control" placeholder="请输入…" type="text" style="background-color: rgba(245,245,245,1);border-radius: 4px;width:358px;">
                             </div>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- End sysMail -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- mail -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown" id="mail-tag">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
-                                <c:if test="${!mailMap.listUnread.isEmpty() }"><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div></c:if>
-                            </a>
-                            <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">
-                                        	<spring:message code="youHave" /> ${mailMap.countUnread} <spring:message code="newMSG" />
-                                        	<a href='${pageContext.request.contextPath}/mail/mailbox' title="<spring:message code='moveTo'/><spring:message code='emailApp'/>" ><i class="mdi mdi-folder-move"></i></a>
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-                                        <div class="message-center">
-											<c:if test="${!mailMap.listUnread.isEmpty() }">
-											<c:forEach var="vo" items="${ mailMap.listUnread }">
-												<a href='${pageContext.request.contextPath}/mail/mailbox/${ vo.id }'>
-													<div class="mail-contnet">
-														<h5>${vo.mailFrom.name}</h5> <span class="mail-desc">${vo.subject}</span> <span class="time">${vo.createTime}</span> 
-													</div>
-												</a>
-											</c:forEach>
-											</c:if>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                    </ul>
+                    
+                    <ul class="navbar-nav mr-auto mt-md-0 " style="display: table;border-collapse:separate;/*border-spacing:30px 0px;*/margin-right: inherit !important;width: 15%">
+                        <li style="display: table-cell;vertical-align: middle;;border-left-width: 50px">
+                        	<span style="font-size:16px;font-family:PingFangSC-Regular;font-weight:400;color:rgba(82,92,102,1);line-height:22px;">如何使用</span>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- End mail -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- contact_us -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown" id="contact_us-tag"> 
-                        	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        		<i id="contactUsIcon" class="mdi mdi-view-grid"></i>
-                        	</a>
-                            
-                            <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">
-                                        	<spring:message code="contact_us" />
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-			                            <div class="card">
-			                                <div class="card-body">
-				                                 <form>
-				                                     <div class="form-group">
-				                                         <input type="text" class="form-control" id="contactSubject" placeholder="<spring:message code="subject" />"> </div>
-				                                     <div class="form-group">
-				                                         <textarea class="form-control" id="contactContent" placeholder="<spring:message code="content" />" style="min-height: 88px;"></textarea>
-				                                     </div>
-				                                     <button type="button" class="btn btn-info" onclick="contactUs();"><spring:message code="submit" /></button>
-				                                 </form>
-			                                </div>
-			                            </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <li style="display: table-cell;vertical-align: middle;">
+                        	<span style="font-size:16px;font-family:PingFangSC-Regular;font-weight:400;color:rgba(82,92,102,1);line-height:22px;">关于我们</span>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- End contact_us -->
-                        <!-- ============================================================== -->
-                        
-                        <!-- ============================================================== -->
-                        <!-- dashboard -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown" id="dashboard-tag"> 
-                        	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="${pageContext.request.contextPath}/dashboard"> <i class="mdi mdi-gauge"></i></a>
+                    </ul>
+                    
+                    <ul class="navbar-nav mr-auto mt-md-0 " style="display: table;border-collapse:separate;border-spacing:40px 0px;padding-left:24%">
+                        <li style="display: table-cell;vertical-align: middle;;border-left-width: 50px">
+                        	<span style="font-size:16px;font-family:PingFangSC-Regular;font-weight:400;color:rgba(42,145,238,1);line-height:22px;border-radius:1px;">
+                        		<i class="icon-plus"></i>&nbsp;发布活动
+                        	</span>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- End dashboard -->
-                        <!-- ============================================================== -->
+                        <li style="display: table-cell;vertical-align: middle;">
+                        	<i class="icon-bell"></i><div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                        </li>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
@@ -881,6 +796,7 @@
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown" id="member-dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="${pageContext.request.contextPath}/resources/dist/img/user2-160x160.png" alt="user" class="profile-pic" /></a>
+                            <span style="font-size:16px;font-family:PingFangSC-Regular;font-weight:400;color:rgba(82,92,102,1);line-height:22px;">高素芳</span>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                 <ul class="dropdown-user">
                                     <li>
@@ -899,19 +815,6 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item dropdown" id="language-dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-globe"></i></a>
-                            <div class="dropdown-menu  dropdown-menu-right animated bounceInDown"> 
-                            	<a class="dropdown-item" href="#" onclick="doChangeLang('zh_CN')"><i class="flag-icon flag-icon-cn"></i> 简体中文</a> 
-                            	<a class="dropdown-item" href="#" onclick="doChangeLang('en_US')"><i class="flag-icon flag-icon-us"></i> English</a> 
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown" id="guide-dropdown">
-                        	<a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#" onclick="showTip(); return false;" aria-expanded="false"> 
-                        		<i class="icon-info"></i>
-                        	</a>
-                        </li>
-                        
                     </ul>
                 </div>
             </nav>

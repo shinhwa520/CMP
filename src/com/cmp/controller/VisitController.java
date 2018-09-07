@@ -33,6 +33,12 @@ public class VisitController extends BaseController {
 	@Autowired
 	private VisitService visitService;
 	
+	@RequestMapping(value = { "list_new" }, method = RequestMethod.GET)
+    public String showVisitInfoList_new(Model model, HttpServletRequest request, HttpServletResponse response) {
+		setActiveMenu(model, MenuItem.VISIT_INFO_NEW);
+		return "visit/list_new";
+    }
+	
 	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
     public String showVisitInfoList(Model model, HttpServletRequest request, HttpServletResponse response) {
 		setActiveMenu(model, MenuItem.VISIT_INFO);

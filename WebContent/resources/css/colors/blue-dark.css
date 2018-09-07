@@ -36,14 +36,18 @@ File: scss
 /*Top bar
 *******************/
 .topbar {
+  /* (原設定)
   background: #009efb;
-  /* Old browsers */
+  /* Old browsers 
   background: -moz-linear-gradient(left, #0178bc 0%, #00bdda 100%);
-  /* FF3.6-15 */
+  /* FF3.6-15 
   background: -webkit-linear-gradient(left, #0178bc 0%, #00bdda 100%);
-  /* Chrome10-25,Safari5.1-6 */
+  /* Chrome10-25,Safari5.1-6 
   background: linear-gradient(to right, #0178bc 0%, #00bdda 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ 
+  */
+  background:rgba(255,255,255,1);
+  box-shadow:0px -1px 0px 0px rgba(231,232,233,1);
 }
 
 .topbar .navbar-header {

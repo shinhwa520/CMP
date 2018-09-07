@@ -1739,7 +1739,8 @@ Layouts
   background: #ffffff; }
 
 .card-no-border .sidebar-nav > ul > li > a.active {
-  background: #f2f7f8; }
+  /*background: #f2f7f8; (原色)*/
+  background: rgba(58,69,80,1); }
 
 .card-no-border .shadow-none {
   -webkit-box-shadow: none;

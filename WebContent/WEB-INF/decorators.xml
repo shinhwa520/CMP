@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <decorators defaultdir="/WEB-INF/common">
 
-	<decorator name="main" page="main.jsp">
+	<decorator name="main" page="main_new.jsp">
 		<pattern>/*</pattern>
 	</decorator>
 	<decorator name="monster-admin_login" page="monster-admin_login2.jsp">
