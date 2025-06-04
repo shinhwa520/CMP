@@ -124,10 +124,11 @@ public class BillboardServiceImpl implements BillboardService {
 			billSetting.setOnTop(StringUtils.isNotBlank(bsVO.getOnTopChkbox()) ? bsVO.getOnTopChkbox() : "N");
 			billSetting.setActivationBegin(beginDate == null ? null : new Timestamp(beginDate.getTime()));
 			billSetting.setActivationEnd(endDate == null ? null : new Timestamp(endDate.getTime()));
-			billSetting.setCreateBy(isAdd ? SecurityUtil.getSecurityUser().getUser().getAccount() : billContent.getCreateBy());
-			billContent.setCreateTime(isAdd ? new Timestamp(new Date().getTime()) : billSetting.getCreateTime());
-			billSetting.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
-			billContent.setUpdateTime(new Timestamp(new Date().getTime()));
+                        billSetting.setCreateBy(isAdd ? SecurityUtil.getSecurityUser().getUser().getAccount() : billSetting.getCreateBy());
+                        billSetting.setCreateTime(isAdd ? new Timestamp(new Date().getTime()) : billSetting.getCreateTime());
+                        billSetting.setUpdateBy(SecurityUtil.getSecurityUser().getUser().getAccount());
+                        billSetting.setUpdateTime(new Timestamp(new Date().getTime()));
+                        billContent.setUpdateTime(new Timestamp(new Date().getTime()));
 			
 			if (isAdd) {
 				BillboardPermission newBillPermission = new BillboardPermission();
